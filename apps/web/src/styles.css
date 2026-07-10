@@ -56,8 +56,7 @@ h1 {
   letter-spacing: 1.4px;
   color: #4e5968;
 }
-.badge,
-.state {
+.badge {
   border-radius: 999px;
   padding: 7px 12px;
   font-size: 13px;
@@ -72,11 +71,10 @@ h1 {
   color: #ad5700;
 }
 .query-panel,
-.result,
-.empty {
+.result {
   background: #fff;
   border-radius: 22px;
-  padding: 26px;
+  padding: 22px;
   box-shadow: 0 1px 2px #0000000a;
 }
 label {
@@ -124,19 +122,6 @@ label {
   color: #333d4b;
   font-weight: 700;
 }
-.conversation {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
-.conversation span {
-  border-radius: 999px;
-  padding: 7px 11px;
-  background: #f2f4f6;
-  color: #4e5968;
-  font-size: 13px;
-}
 .ptt.active {
   background: #fee;
   color: #d22030;
@@ -154,50 +139,49 @@ footer {
 .result.critical {
   border: 2px solid #e42939;
 }
-.result-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #6b7684;
-  font-size: 13px;
+.primary-guidance {
+  padding: 4px 0 8px;
 }
-.state-stable,
-.state-final {
-  background: #e8faf0;
-  color: #087443;
-}
-.state-provisional {
-  background: #fff4e5;
-  color: #ad5700;
-}
-.state-blocked {
-  background: #ffebee;
-  color: #c91c2b;
-}
-.result article {
-  padding: 19px 0;
-  border-bottom: 1px solid #eef1f5;
-}
-.result h2,
-.empty h2 {
+.result-kicker {
   font-size: 15px;
   color: #4e5968;
-  margin: 0 0 11px;
+  font-weight: 700;
+  margin: 0 0 12px;
 }
 .say,
-.ask {
-  font-size: 20px;
+.ask,
+.recommendation {
+  font-size: 22px;
   font-weight: 720;
-  line-height: 1.55;
-  margin: 6px 0;
+  line-height: 1.48;
+  margin: 8px 0;
 }
 .ask {
   color: #1b64da;
 }
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+.recommendation {
+  color: #087443;
+}
+.supporting-details {
+  border-top: 1px solid #eef1f5;
+  margin-top: 14px;
+  padding-top: 12px;
+  color: #6b7684;
+  font-size: 13px;
+}
+.supporting-details summary {
+  cursor: pointer;
+  font-weight: 700;
+  width: fit-content;
+}
+.supporting-content {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f7f8fa;
+}
+.supporting-content p {
+  margin: 5px 0;
 }
 .critical-lock {
   padding: 26px 0;
@@ -208,23 +192,6 @@ footer {
 }
 .critical-lock button {
   padding: 13px 18px;
-}
-.source-toggle {
-  border: 0;
-  background: none;
-  color: #1b64da;
-  font-weight: 700;
-  padding: 18px 0 4px;
-}
-.source {
-  background: #f7f8fa;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: 13px;
-  color: #4e5968;
-}
-.empty {
-  margin-top: 18px;
 }
 kbd {
   padding: 2px 6px;
@@ -259,11 +226,9 @@ footer {
   .query-row button {
     padding: 15px;
   }
-  .two-col {
-    grid-template-columns: 1fr;
-  }
   .say,
-  .ask {
-    font-size: 18px;
+  .ask,
+  .recommendation {
+    font-size: 19px;
   }
 }

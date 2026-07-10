@@ -25,6 +25,7 @@ export async function requestAiReadiness(
 export async function requestAiFallback(
   input: RuntimeInput,
   instant: RuntimeOutput,
+  conversationHistory: readonly string[],
   signal: AbortSignal,
 ): Promise<RuntimeOutput | undefined> {
   const response = await fetch(`${apiBaseUrl()}/v1/consult/refine`, {
@@ -35,12 +36,9 @@ export async function requestAiFallback(
       "x-tenant": "local-demo",
       "x-user": "local-user",
     },
-    body: JSON.stringify({
-      runtime_input: input,
-      instant_output: instant,
-      candidate_card_ids: [],
-      knowledge_version: instant.knowledge_version,
-    }),
+    body: JSON.stringify(
+      buildAiRefinementBody(input, instant, conversationHistory),
+    ),
     signal,
   });
   if (!response.ok) return undefined;
@@ -56,4 +54,18 @@ export async function requestAiFallback(
     return parsed.output;
   }
   return undefined;
+}
+
+export function buildAiRefinementBody(
+  input: RuntimeInput,
+  instant: RuntimeOutput,
+  conversationHistory: readonly string[],
+) {
+  return {
+    runtime_input: input,
+    instant_output: instant,
+    candidate_card_ids: [],
+    conversation_history: conversationHistory.slice(-6),
+    knowledge_version: instant.knowledge_version,
+  };
 }

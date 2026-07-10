@@ -156,7 +156,7 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
                 intent: null,
                 say_now: [],
                 ask_next: [],
-                actions: [],
+                actions: context.instant.actions,
                 avoid: [],
                 candidate_intents: [],
               },

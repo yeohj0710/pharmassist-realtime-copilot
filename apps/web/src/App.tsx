@@ -46,7 +46,6 @@ export function App() {
   const [result, setResult] = useState<RuntimeOutput>();
   const [online, setOnline] = useState(navigator.onLine);
   const [listening, setListening] = useState(false);
-  const [sourceOpen, setSourceOpen] = useState(false);
   const [confirmedCritical, setConfirmedCritical] = useState(false);
   const [aiInterpreting, setAiInterpreting] = useState(false);
   const [aiReady, setAiReady] = useState(false);
@@ -54,6 +53,7 @@ export function App() {
   const workerRef = useRef<Worker | null>(null);
   const sequenceRef = useRef(0);
   const inputsRef = useRef(new Map<number, RuntimeInput>());
+  const historyRef = useRef<readonly string[]>([]);
   const aiAbortRef = useRef<AbortController | null>(null);
   const mediaRef = useRef<MediaStream | null>(null);
   const statusRef = useRef<RuntimeOutput["status"] | undefined>(undefined);
@@ -91,7 +91,9 @@ export function App() {
     )
       return;
     sequenceRef.current += 1;
-    setHistory((current) => [...current, normalized].slice(-4));
+    const nextHistory = [...historyRef.current, normalized].slice(-6);
+    historyRef.current = nextHistory;
+    setHistory(nextHistory);
     setQuery("");
     applySession({ type: "INPUT", sequence: sequenceRef.current });
     const input = newInput(
@@ -137,7 +139,12 @@ export function App() {
             const controller = new AbortController();
             aiAbortRef.current = controller;
             setAiInterpreting(true);
-            void requestAiFallback(input, event.data.output, controller.signal)
+            void requestAiFallback(
+              input,
+              event.data.output,
+              historyRef.current,
+              controller.signal,
+            )
               .then((refined) => {
                 if (
                   refined?.sequence === sequenceRef.current &&
@@ -221,6 +228,7 @@ export function App() {
     sessionRef.current = next;
     setSession(next);
     setHistory([]);
+    historyRef.current = [];
     setQuery("");
     setResult(undefined);
     setConfirmedCritical(false);
@@ -347,15 +355,6 @@ export function App() {
             확인
           </button>
         </div>
-        {history.length > 0 && (
-          <div className="conversation" aria-label="현재 상담 내용">
-            {history.map((text, index) => (
-              <span key={`${index}-${text}`}>
-                {index + 1}. {text}
-              </span>
-            ))}
-          </div>
-        )}
         <button
           className={`ptt ${listening ? "active" : ""}`}
           onPointerDown={() => void startPtt()}
@@ -376,20 +375,6 @@ export function App() {
           className={`result ${critical ? "critical" : ""}`}
           aria-live="polite"
         >
-          <div className="result-heading">
-            <span className={`state state-${result.status}`}>
-              {result.status === "stable"
-                ? result.mode === "instant"
-                  ? "후보 준비"
-                  : "확인 중"
-                : result.status === "provisional"
-                  ? "임시"
-                  : result.status === "blocked"
-                    ? "확인 필요"
-                    : "최종"}
-            </span>
-            <span>신뢰도 {Math.round(result.confidence * 100)}%</span>
-          </div>
           {critical && !confirmedCritical ? (
             <div className="critical-lock">
               <h2>먼저 위험 신호를 확인하세요</h2>
@@ -405,75 +390,49 @@ export function App() {
             </div>
           ) : (
             <>
-              <article>
-                <h2>지금 말할 내용</h2>
-                {result.say_now.map((line) => (
-                  <p className="say" key={line}>
-                    {line}
+              <article className="primary-guidance">
+                <p className="result-kicker">지금 말할 내용</p>
+                {result.actions.length > 0
+                  ? result.actions.map((item) => (
+                      <p className="recommendation" key={item.text}>
+                        {item.text}
+                      </p>
+                    ))
+                  : result.say_now.map((line) => (
+                      <p className="say" key={line}>
+                        {line}
+                      </p>
+                    ))}
+                {result.ask_next.map((item) => (
+                  <p className="ask" key={item.slot}>
+                    {item.question}
                   </p>
                 ))}
               </article>
-              {result.ask_next.length > 0 && (
-                <article>
-                  <h2>다음 질문</h2>
-                  {result.ask_next.map((item) => (
-                    <div key={item.slot}>
-                      <p className="ask">{item.question}</p>
-                      <small>{item.reason}</small>
-                    </div>
-                  ))}
-                </article>
-              )}
-              <div className="two-col">
-                <article>
-                  <h2>{result.mode === "instant" ? "약 후보" : "조치"}</h2>
-                  {result.actions.length ? (
-                    result.actions.map((item) => (
-                      <p key={item.text}>{item.text}</p>
-                    ))
-                  ) : (
-                    <p className="muted">다음 질문에 답하면 후보가 나옵니다.</p>
-                  )}
-                </article>
-                <article>
-                  <h2>피할 것</h2>
+              <details className="supporting-details">
+                <summary>근거·주의사항</summary>
+                <div className="supporting-content">
                   {result.avoid.map((item) => (
                     <p key={item}>{item}</p>
                   ))}
-                </article>
-              </div>
+                  <p>
+                    상태 {result.status} · 신뢰도{" "}
+                    {Math.round(result.confidence * 100)}%
+                  </p>
+                  <p>
+                    지식팩 {result.knowledge_version} · 처리{" "}
+                    {result.latency.total_ms.toFixed(1)}ms
+                  </p>
+                  <p>
+                    합성 fixture 기반 데모이며 공식 임상 출처 검토는
+                    미완료입니다.
+                  </p>
+                </div>
+              </details>
             </>
           )}
-          <button
-            className="source-toggle"
-            onClick={() => setSourceOpen((v) => !v)}
-            aria-expanded={sourceOpen}
-          >
-            출처·버전 {sourceOpen ? "접기" : "보기"}
-          </button>
-          {sourceOpen && (
-            <div className="source">
-              <p>지식팩: {result.knowledge_version}</p>
-              <p>
-                검증: 합성 fixture 자동 테스트 완료. 공식 임상 출처 검토는
-                미완료.
-              </p>
-              <p>처리 시간: {result.latency.total_ms.toFixed(1)} ms</p>
-            </div>
-          )}
         </section>
-      ) : (
-        <section className="empty">
-          <h2>빠른 시작</h2>
-          <p>
-            <kbd>/</kbd> 입력으로 이동 · <kbd>Enter</kbd> 실행 · <kbd>Esc</kbd>{" "}
-            초기화
-          </p>
-          <p>
-            이 화면은 상담 흐름과 안전 차단을 검증하기 위한 합성 데모입니다.
-          </p>
-        </section>
-      )}
+      ) : null}
       <footer>
         개인정보를 입력하지 마세요. 진단·처방 변경·확정 용량을 생성하지
         않습니다.

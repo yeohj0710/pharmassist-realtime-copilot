@@ -7,6 +7,17 @@ export interface RefinementRequestEnvelope {
    * @maxItems 3
    */
   candidate_card_ids: [] | [string] | [string, string] | [string, string, string];
+  /**
+   * @maxItems 6
+   */
+  conversation_history?:
+    | []
+    | [string]
+    | [string, string]
+    | [string, string, string]
+    | [string, string, string, string]
+    | [string, string, string, string, string]
+    | [string, string, string, string, string, string];
   knowledge_version: string;
 }
 export interface RuntimeInput {
