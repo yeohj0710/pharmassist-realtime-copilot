@@ -12,9 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.11.0, run_install: false }
       - uses: actions/setup-node@v4
         with: { node-version: 24.12.0, cache: pnpm }
-      - run: corepack enable && pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile
       - run: pnpm test:security
       - run: pnpm audit --prod --audit-level high
       - run: pnpm run sbom:generate

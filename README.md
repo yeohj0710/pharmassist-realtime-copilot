@@ -4,6 +4,16 @@
 
 ## 바로 실행
 
+Windows에서는 저장소 루트의 `PharmAssist.exe`를 더블클릭한다. 첫 실행만 의존성을 자동 설치하고, 준비되면 브라우저를 연다. 열린 서버 창을 닫으면 종료된다. 기본 설정은 OpenAI 호출이 꺼진 로컬 데모라 API 비용이 발생하지 않는다.
+
+API 키를 안전하게 로컬에 저장하려면 다음 명령을 실행한다. 입력 문자는 화면에 표시되지 않으며 `.env`는 Git에서 제외된다.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/set-openai-key.ps1
+```
+
+명령줄 실행은 아래와 같다.
+
 요구 환경: Node 24.12.x, Corepack, pnpm 11.11.x.
 
 ```powershell
@@ -11,6 +21,10 @@ Copy-Item .env.example .env
 corepack pnpm install --frozen-lockfile
 corepack pnpm dev:demo
 ```
+
+### OpenAI 비용
+
+기본 `.env`는 OpenAI 기능이 모두 꺼져 있어 비용이 발생하지 않는다. 활성화 시에도 저비용 `gpt-5.4-mini`, reasoning 없음, 최대 출력 420토큰, 2.5초 timeout, refinement 60회/시간, 음성 20 session/시간을 강제한다. 계정 전체 월 지출 제한과 알림은 OpenAI 프로젝트 설정에서 별도로 지정해야 한다.
 
 - 상담 PWA: `http://127.0.0.1:4173`
 - Reviewer: `http://127.0.0.1:4174`
