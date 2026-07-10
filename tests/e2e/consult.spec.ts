@@ -47,3 +47,17 @@ test("critical result cannot be cleared before acknowledgement", async ({
   await page.keyboard.press("Escape");
   await expect(page.getByRole("heading", { name: "빠른 시작" })).toBeVisible();
 });
+
+test("short second answer completes a routine consult", async ({ page }) => {
+  await page.goto("/");
+  const input = page.getByLabel("증상이나 질문을 입력하세요");
+  await input.fill("기침이 나요");
+  await input.press("Enter");
+  await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
+  await input.fill("아침이요");
+  await input.press("Enter");
+  await expect(page.getByText("후보 준비")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "약 후보" })).toBeVisible();
+  await expect(page.getByText(/진해제.*거담제/)).toBeVisible();
+  await expect(page.getByText("기침은 언제부터 시작됐나요?")).toHaveCount(0);
+});

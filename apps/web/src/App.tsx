@@ -37,6 +37,7 @@ const newInput = (
 
 export function App() {
   const [query, setQuery] = useState("");
+  const [history, setHistory] = useState<readonly string[]>([]);
   const [result, setResult] = useState<RuntimeOutput>();
   const [online, setOnline] = useState(navigator.onLine);
   const [listening, setListening] = useState(false);
@@ -81,6 +82,8 @@ export function App() {
     )
       return;
     sequenceRef.current += 1;
+    setHistory((current) => [...current, normalized].slice(-4));
+    setQuery("");
     applySession({ type: "INPUT", sequence: sequenceRef.current });
     workerRef.current?.postMessage(
       newInput(
@@ -130,10 +133,7 @@ export function App() {
         inputRef.current?.focus();
       }
       if (event.key === "Escape" && !sessionRef.current.criticalLocked) {
-        setQuery("");
-        setResult(undefined);
-        applySession({ type: "CLEAR" });
-        inputRef.current?.focus();
+        resetConsult();
       }
       if (event.key.toLowerCase() === "f" && statusRef.current === "blocked") {
         setConfirmedCritical(true);
@@ -156,6 +156,31 @@ export function App() {
 
   const consult = () => {
     submitText(query);
+  };
+
+  const resetConsult = () => {
+    const previousSessionId = sessionIdRef.current;
+    workerRef.current?.postMessage({
+      type: "reset",
+      sessionId: previousSessionId,
+    });
+    const sessionId = crypto.randomUUID();
+    sessionIdRef.current = sessionId;
+    sequenceRef.current = 0;
+    const next: SessionState = {
+      sessionId,
+      sequence: 0,
+      frozen: false,
+      criticalLocked: false,
+      acknowledged: false,
+    };
+    sessionRef.current = next;
+    setSession(next);
+    setHistory([]);
+    setQuery("");
+    setResult(undefined);
+    setConfirmedCritical(false);
+    inputRef.current?.focus();
   };
 
   const startPtt = async () => {
@@ -237,9 +262,16 @@ export function App() {
           <p className="eyebrow">PHARMACIST LOCAL COPILOT</p>
           <h1>지금 확인할 상담</h1>
         </div>
-        <span className={`badge ${online ? "online" : "offline"}`}>
-          {online ? "로컬 준비됨" : "오프라인 · 로컬 사용 가능"}
-        </span>
+        <div className="header-actions">
+          <span className={`badge ${online ? "online" : "offline"}`}>
+            {online ? "로컬 준비됨" : "오프라인 · 로컬 사용 가능"}
+          </span>
+          {history.length > 0 && (
+            <button className="reset-button" onClick={resetConsult}>
+              새 상담
+            </button>
+          )}
+        </div>
       </header>
       <section className="query-panel" aria-label="상담 입력">
         <label htmlFor="consult-query">증상이나 질문을 입력하세요</label>
@@ -261,6 +293,15 @@ export function App() {
             확인
           </button>
         </div>
+        {history.length > 0 && (
+          <div className="conversation" aria-label="현재 상담 내용">
+            {history.map((text, index) => (
+              <span key={`${index}-${text}`}>
+                {index + 1}. {text}
+              </span>
+            ))}
+          </div>
+        )}
         <button
           className={`ptt ${listening ? "active" : ""}`}
           onPointerDown={() => void startPtt()}
@@ -284,11 +325,13 @@ export function App() {
           <div className="result-heading">
             <span className={`state state-${result.status}`}>
               {result.status === "stable"
-                ? "안정"
+                ? result.mode === "instant"
+                  ? "후보 준비"
+                  : "확인 중"
                 : result.status === "provisional"
                   ? "임시"
                   : result.status === "blocked"
-                    ? "중단·확인"
+                    ? "확인 필요"
                     : "최종"}
             </span>
             <span>신뢰도 {Math.round(result.confidence * 100)}%</span>
@@ -316,30 +359,26 @@ export function App() {
                   </p>
                 ))}
               </article>
-              <article>
-                <h2>다음 질문</h2>
-                {result.ask_next.length ? (
-                  result.ask_next.map((item) => (
+              {result.ask_next.length > 0 && (
+                <article>
+                  <h2>다음 질문</h2>
+                  {result.ask_next.map((item) => (
                     <div key={item.slot}>
                       <p className="ask">{item.question}</p>
                       <small>{item.reason}</small>
                     </div>
-                  ))
-                ) : (
-                  <p className="muted">
-                    추가 질문보다 즉시 안전 조치가 우선입니다.
-                  </p>
-                )}
-              </article>
+                  ))}
+                </article>
+              )}
               <div className="two-col">
                 <article>
-                  <h2>조치</h2>
+                  <h2>{result.mode === "instant" ? "약 후보" : "조치"}</h2>
                   {result.actions.length ? (
                     result.actions.map((item) => (
                       <p key={item.text}>{item.text}</p>
                     ))
                   ) : (
-                    <p className="muted">필수 정보를 확인한 뒤 판단하세요.</p>
+                    <p className="muted">다음 질문에 답하면 후보가 나옵니다.</p>
                   )}
                 </article>
                 <article>
