@@ -18,6 +18,8 @@ const candidateText: Readonly<Record<string, string>> = {
     "쓰린 윗배 통증은 제산제 계열, 쥐어짜는 복부 불편은 진경제 계열을 먼저 비교하세요.",
   bowel_urgency_general:
     "묽은 변이 반복되면 수분·전해질 보충제와 장 흡착제 계열, 변이 안 나오면 변비 완화제 계열을 먼저 비교하세요.",
+  musculoskeletal_pain:
+    "가벼운 근육·관절 통증은 경구 진통소염제 또는 바르는 소염진통제 계열을 먼저 비교하세요.",
   skin_general:
     "가려움은 항히스타민제, 건조 자극은 보습·보호제 성분군을 먼저 비교하세요.",
 };

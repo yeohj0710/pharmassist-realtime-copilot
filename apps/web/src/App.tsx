@@ -9,6 +9,7 @@ import {
   connectTranscriptionPeer,
   type TranscriptionPeer,
 } from "./realtime.js";
+import { requestAiFallback } from "./ai-fallback.js";
 
 interface EngineMessage {
   output: RuntimeOutput;
@@ -43,9 +44,12 @@ export function App() {
   const [listening, setListening] = useState(false);
   const [sourceOpen, setSourceOpen] = useState(false);
   const [confirmedCritical, setConfirmedCritical] = useState(false);
+  const [aiInterpreting, setAiInterpreting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
   const sequenceRef = useRef(0);
+  const inputsRef = useRef(new Map<number, RuntimeInput>());
+  const aiAbortRef = useRef<AbortController | null>(null);
   const mediaRef = useRef<MediaStream | null>(null);
   const statusRef = useRef<RuntimeOutput["status"] | undefined>(undefined);
   const realtimeAbortRef = useRef<AbortController | null>(null);
@@ -85,14 +89,14 @@ export function App() {
     setHistory((current) => [...current, normalized].slice(-4));
     setQuery("");
     applySession({ type: "INPUT", sequence: sequenceRef.current });
-    workerRef.current?.postMessage(
-      newInput(
-        normalized,
-        sequenceRef.current,
-        sessionIdRef.current,
-        inputType,
-      ),
+    const input = newInput(
+      normalized,
+      sequenceRef.current,
+      sessionIdRef.current,
+      inputType,
     );
+    inputsRef.current.set(input.sequence, input);
+    workerRef.current?.postMessage(input);
   };
 
   useEffect(() => {
@@ -111,6 +115,30 @@ export function App() {
         !(sessionRef.current.criticalLocked && !sessionRef.current.acknowledged)
       ) {
         setResult(event.data.output);
+        if (event.data.output.intent === null && navigator.onLine) {
+          const input = inputsRef.current.get(event.data.output.sequence);
+          if (input) {
+            aiAbortRef.current?.abort();
+            const controller = new AbortController();
+            aiAbortRef.current = controller;
+            setAiInterpreting(true);
+            void requestAiFallback(input, event.data.output, controller.signal)
+              .then((refined) => {
+                if (
+                  refined?.sequence === sequenceRef.current &&
+                  refined.session_id === sessionIdRef.current
+                )
+                  setResult(refined);
+              })
+              .catch(() => undefined)
+              .finally(() => {
+                if (aiAbortRef.current === controller) {
+                  aiAbortRef.current = null;
+                  setAiInterpreting(false);
+                }
+              });
+          }
+        }
         if (
           event.data.output.mode === "escalate" ||
           (event.data.output.status === "blocked" &&
@@ -143,6 +171,7 @@ export function App() {
     addEventListener("keydown", keyboard);
     return () => {
       worker.terminate();
+      aiAbortRef.current?.abort();
       realtimeAbortRef.current?.abort();
       transcriptionPeerRef.current?.close();
       if (finalizationTimerRef.current)
@@ -180,6 +209,10 @@ export function App() {
     setQuery("");
     setResult(undefined);
     setConfirmedCritical(false);
+    aiAbortRef.current?.abort();
+    aiAbortRef.current = null;
+    setAiInterpreting(false);
+    inputsRef.current.clear();
     inputRef.current?.focus();
   };
 
@@ -264,7 +297,11 @@ export function App() {
         </div>
         <div className="header-actions">
           <span className={`badge ${online ? "online" : "offline"}`}>
-            {online ? "로컬 준비됨" : "오프라인 · 로컬 사용 가능"}
+            {aiInterpreting
+              ? "AI 해석 중"
+              : online
+                ? "로컬 준비됨"
+                : "오프라인 · 로컬 사용 가능"}
           </span>
           {history.length > 0 && (
             <button className="reset-button" onClick={resetConsult}>

@@ -5,7 +5,7 @@ OpenAI는 선택적 refinement와 음성→텍스트에만 쓴다. safety, claim
 ## Responses
 
 - 기본 model: `gpt-5.4-mini`; ambiguity/authoring: `gpt-5.5`
-- timeout 2.5초, max output 420, `store:false`
+- 로컬 결과는 즉시 표시하고 조건부 AI fallback만 최대 5초, max output 420, `store:false`
 - 기본 비용 guard: refinement 60회/시간, realtime session 20회/시간. 환경변수로 더 낮출 수 있으며 코드상 최대치는 각각 300/100이다.
 - RuntimeOutput JSON Schema strict format
 - request allowlist 밖 claim/source/entity/숫자, red-flag 약화, missing slot 제거를 post-validator가 거부

@@ -1,24 +1,26 @@
 $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $repoRoot
+$logDirectory = Join-Path $repoRoot "logs"
+$logPath = Join-Path $logDirectory "pharmassist.log"
+New-Item -ItemType Directory -Path $logDirectory -Force | Out-Null
 
 $host.UI.RawUI.WindowTitle = "PharmAssist Realtime Copilot"
-Write-Host "Starting PharmAssist..." -ForegroundColor Cyan
+"[$(Get-Date -Format o)] Starting PharmAssist" | Set-Content -Encoding utf8 -LiteralPath $logPath
 
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
-  Write-Host "Node.js 24 is required: https://nodejs.org" -ForegroundColor Red
-  Read-Host "Press Enter to close"
+  "Node.js 24 is required: https://nodejs.org" | Add-Content -Encoding utf8 -LiteralPath $logPath
   exit 1
 }
 
 if (-not (Test-Path -LiteralPath ".env")) {
   Copy-Item -LiteralPath ".env.example" -Destination ".env"
-  Write-Host ".env created (default: local demo with zero API cost)" -ForegroundColor Green
+  ".env created (default: local demo with zero API cost)" | Add-Content -Encoding utf8 -LiteralPath $logPath
 }
 
 if (-not (Test-Path -LiteralPath "node_modules")) {
-  Write-Host "Installing first-run dependencies..." -ForegroundColor Yellow
-  & corepack pnpm install --frozen-lockfile
+  "Installing first-run dependencies" | Add-Content -Encoding utf8 -LiteralPath $logPath
+  & corepack pnpm install --frozen-lockfile *>> $logPath
   if ($LASTEXITCODE -ne 0) { throw "Dependency install failed: $LASTEXITCODE" }
 }
 
@@ -29,10 +31,9 @@ Start-Process powershell.exe -WindowStyle Hidden -ArgumentList @(
   "-File", ('"{0}"' -f $waitScript)
 )
 
-Write-Host "Server is running. Close this window to stop PharmAssist." -ForegroundColor Green
-& corepack pnpm dev:demo
+"Starting local services" | Add-Content -Encoding utf8 -LiteralPath $logPath
+& corepack pnpm dev:demo *>> $logPath
 if ($LASTEXITCODE -ne 0) {
-  Write-Host "Launch failed: $LASTEXITCODE" -ForegroundColor Red
-  Read-Host "Press Enter to close"
+  "Launch failed: $LASTEXITCODE" | Add-Content -Encoding utf8 -LiteralPath $logPath
   exit $LASTEXITCODE
 }

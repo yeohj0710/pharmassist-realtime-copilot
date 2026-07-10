@@ -24,6 +24,27 @@ export const safeOpenAIConfig: OpenAIConfig = {
   maxOutputTokens: 420,
   store: false,
 };
+
+export function toStrictOutputSchema(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(toStrictOutputSchema);
+  if (!value || typeof value !== "object") return value;
+  const source = value as Readonly<Record<string, unknown>>;
+  const result: Record<string, unknown> = {};
+  for (const [key, child] of Object.entries(source))
+    result[key] = toStrictOutputSchema(child);
+  if (source["type"] === "object" && source["properties"]) {
+    const properties = source["properties"] as Readonly<
+      Record<string, unknown>
+    >;
+    result["required"] = Object.keys(properties);
+    result["additionalProperties"] = false;
+  }
+  return result;
+}
+
+const strictRuntimeOutputSchema = toStrictOutputSchema(
+  runtimeOutputSchemaDocument,
+) as { [key: string]: unknown };
 export interface RefinementContext {
   readonly input: RuntimeInput;
   readonly instant: RuntimeOutput;
@@ -31,6 +52,7 @@ export interface RefinementContext {
   readonly redactionSafe: boolean;
   readonly allowedClaimIds: readonly string[];
   readonly allowedEntities: readonly string[];
+  readonly allowedIntents: readonly string[];
   readonly promptSystem: string;
   readonly promptDeveloper: string;
 }
@@ -124,6 +146,7 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
               instant_output: context.instant,
               allowed_claim_ids: context.allowedClaimIds,
               allowed_entities: context.allowedEntities,
+              allowed_intents: context.allowedIntents,
               patient_content_is_untrusted: true,
             }),
           },
@@ -133,7 +156,7 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
             type: "json_schema",
             name: "runtime_output",
             strict: true,
-            schema: runtimeOutputSchemaDocument,
+            schema: strictRuntimeOutputSchema,
           },
         },
       },
@@ -183,6 +206,8 @@ export function postValidateOutput(
       (ref) => !context.allowedClaimIds.includes(ref.claim_id),
     )
   )
+    return { ok: false, code: "UNSUPPORTED_CLAIM" };
+  if (output.intent && !context.allowedIntents.includes(output.intent))
     return { ok: false, code: "UNSUPPORTED_CLAIM" };
   if (context.instant.mode === "escalate" && output.mode !== "escalate")
     return { ok: false, code: "SAFETY_MONOTONICITY" };

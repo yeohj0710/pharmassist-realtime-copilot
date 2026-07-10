@@ -85,3 +85,12 @@ test("bowel urgency progresses without a prepared exact phrase", async ({
   await expect(page.getByRole("heading", { name: "약 후보" })).toBeVisible();
   await expect(page.getByText(/수분·전해질/)).toBeVisible();
 });
+
+test("shoulder pain never routes to abdominal pain", async ({ page }) => {
+  await page.goto("/");
+  const input = page.getByLabel("증상이나 질문을 입력하세요");
+  await input.fill("어깨가 아파요");
+  await input.press("Enter");
+  await expect(page.getByText(/어깨를 움직일 때/)).toBeVisible();
+  await expect(page.getByText(/윗배·아랫배/)).toHaveCount(0);
+});

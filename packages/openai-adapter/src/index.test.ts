@@ -8,6 +8,7 @@ import {
   reduceRealtime,
   safeOpenAIConfig,
   stablePrefix,
+  toStrictOutputSchema,
 } from "./index.js";
 
 const base: RuntimeOutput = {
@@ -54,11 +55,29 @@ const context = {
   redactionSafe: true,
   allowedClaimIds: [],
   allowedEntities: [],
+  allowedIntents: ["test_intent"],
   promptSystem: "s",
   promptDeveloper: "d",
 };
 
 describe("OpenAI boundaries", () => {
+  it("converts nested objects to strict structured-output schemas", () => {
+    const strict = toStrictOutputSchema({
+      type: "object",
+      properties: {
+        nested: {
+          type: "object",
+          properties: { optional: { type: "string" } },
+        },
+      },
+    }) as Readonly<Record<string, unknown>>;
+    expect(strict["required"]).toEqual(["nested"]);
+    expect(
+      (strict["properties"] as Record<string, Record<string, unknown>>)[
+        "nested"
+      ]?.["required"],
+    ).toEqual(["optional"]);
+  });
   it("pins store false", () => expect(safeOpenAIConfig.store).toBe(false));
   it("mock falls back deterministically", async () => {
     const events = [];

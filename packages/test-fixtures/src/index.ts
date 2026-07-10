@@ -123,6 +123,29 @@ export const syntheticCards: readonly KnowledgeCard[] = [
     avoid: ["배변감만으로 설사나 변비를 단정하지 않습니다."],
   }),
   make({
+    cardId: "CARD-SYN-MUSCULOSKELETAL",
+    intent: "musculoskeletal_pain",
+    title: "근육·관절 통증 확인",
+    anchors: ["어깨", "허리", "무릎", "관절", "근육", "팔", "손목", "발목"],
+    aliases: [
+      "어깨가 아파요",
+      "허리가 아파요",
+      "무릎이 아파요",
+      "근육통이 있어요",
+      "관절이 아파요",
+    ],
+    keywords: ["어깨 허리 무릎 근육 관절 통증 부상 움직임 부종"],
+    sayNow: ["근육·관절 통증의 양상을 빠르게 확인하겠습니다."],
+    askNext: {
+      question:
+        "어깨를 움직일 때 더 아픈가요, 다치거나 붓고 뜨거운 증상이 있나요?",
+      reason: "움직임·부상·염증 양상 확인",
+      priority: 1,
+      slot: "pain_pattern",
+    },
+    avoid: ["통증 부위만으로 원인을 확정하지 않습니다."],
+  }),
+  make({
     cardId: "CARD-SYN-SKIN",
     intent: "skin_general",
     title: "피부 증상 확인",

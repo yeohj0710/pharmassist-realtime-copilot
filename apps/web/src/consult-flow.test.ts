@@ -68,4 +68,13 @@ describe("stateful fast consult flow", () => {
     expect(second.output.ask_next).toEqual([]);
     expect(second.output.say_now.join(" ")).toContain("찾지 못했습니다");
   });
+
+  it("routes shoulder pain to musculoskeletal instead of abdominal pain", () => {
+    const flow = new StatefulConsultFlow(syntheticPack);
+    const result = flow.run(input("어깨가 아파요", 1));
+
+    expect(result.output.intent).toBe("musculoskeletal_pain");
+    expect(result.output.ask_next[0]?.question).toContain("어깨");
+    expect(result.output.say_now.join(" ")).not.toContain("배의");
+  });
 });
