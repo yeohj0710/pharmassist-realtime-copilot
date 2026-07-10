@@ -13,11 +13,52 @@ const cards: KnowledgeCard[] = [
     intent: "cough",
     domain: "human_otc",
     title: "기침 확인",
+    anchors: ["기침"],
     aliases: ["기침약 주세요", "기침"],
     keywords: ["기침 기간 호흡"],
     sayNow: ["먼저 위험 신호를 확인하겠습니다."],
     askNext: {
       question: "언제부터 기침했나요?",
+      reason: "기간",
+      priority: 1,
+      slot: "duration",
+    },
+    avoid: [],
+    approved: true,
+    synthetic: true,
+    expiresAt: "2099-01-01T00:00:00Z",
+  },
+  {
+    cardId: "CARD-ABDOMINAL",
+    intent: "abdominal_pain",
+    domain: "human_otc",
+    title: "복통",
+    anchors: ["배", "복통"],
+    aliases: ["배가 아파요"],
+    keywords: ["배 복통 위치"],
+    sayNow: ["배의 위치를 확인합니다."],
+    askNext: {
+      question: "배의 어느 위치가 아픈가요?",
+      reason: "위치",
+      priority: 1,
+      slot: "body_site",
+    },
+    avoid: [],
+    approved: true,
+    synthetic: true,
+    expiresAt: "2099-01-01T00:00:00Z",
+  },
+  {
+    cardId: "CARD-THROAT",
+    intent: "sore_throat",
+    domain: "human_otc",
+    title: "목 통증",
+    anchors: ["목", "인후"],
+    aliases: ["목이 아파요"],
+    keywords: ["목 통증"],
+    sayNow: ["목 증상을 확인합니다."],
+    askNext: {
+      question: "목은 언제부터 아팠나요?",
       reason: "기간",
       priority: 1,
       slot: "duration",
@@ -73,5 +114,14 @@ describe("local retrieval", () => {
         2,
       ).current?.cardId,
     ).toBe("A");
+  });
+
+  it("does not route an anchored body site to a different site", () => {
+    const index = buildIndex(cards);
+    const result = retrieve(input("배가 아파요"), "human_otc", index);
+    expect(result[0]?.cardId).toBe("CARD-ABDOMINAL");
+    expect(result.some((candidate) => candidate.cardId === "CARD-THROAT")).toBe(
+      false,
+    );
   });
 });

@@ -14,6 +14,8 @@ const candidateText: Readonly<Record<string, string>> = {
     "통증 완화제와 목 국소 제형(트로키·스프레이) 성분군을 먼저 비교하세요.",
   dyspepsia_general:
     "속쓰림은 제산제, 더부룩함은 소화효소제 성분군을 먼저 비교하세요.",
+  abdominal_pain_general:
+    "쓰린 윗배 통증은 제산제 계열, 쥐어짜는 복부 불편은 진경제 계열을 먼저 비교하세요.",
   skin_general:
     "가려움은 항히스타민제, 건조 자극은 보습·보호제 성분군을 먼저 비교하세요.",
 };

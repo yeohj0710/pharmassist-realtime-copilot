@@ -37,4 +37,13 @@ describe("stateful fast consult flow", () => {
     expect(result.output.mode).toBe("escalate");
     expect(result.output.red_flags).not.toHaveLength(0);
   });
+
+  it("routes abdominal pain to the abdominal card instead of throat pain", () => {
+    const flow = new StatefulConsultFlow(syntheticPack);
+    const result = flow.run(input("배가 아파요", 1));
+
+    expect(result.output.intent).toBe("abdominal_pain_general");
+    expect(result.output.say_now.join(" ")).not.toContain("삼키기");
+    expect(result.output.ask_next[0]?.question).toContain("배");
+  });
 });

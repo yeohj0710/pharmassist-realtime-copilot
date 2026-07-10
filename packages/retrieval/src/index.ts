@@ -10,6 +10,7 @@ export interface KnowledgeCard {
   readonly intent: string;
   readonly domain: Domain;
   readonly title: string;
+  readonly anchors?: readonly string[];
   readonly aliases: readonly string[];
   readonly keywords: readonly string[];
   readonly sayNow: readonly string[];
@@ -82,6 +83,7 @@ export interface RetrievalIndex {
   readonly documents: ReadonlyMap<string, ReadonlyMap<string, number>>;
   readonly documentFrequency: ReadonlyMap<string, number>;
   readonly averageLength: number;
+  readonly anchorToIds: ReadonlyMap<string, ReadonlySet<string>>;
 }
 
 export function buildIndex(
@@ -96,7 +98,15 @@ export function buildIndex(
   const documents = new Map<string, ReadonlyMap<string, number>>();
   const df = new Map<string, number>();
   let totalLength = 0;
+  const anchorToIds = new Map<string, Set<string>>();
   for (const card of active) {
+    for (const anchor of card.anchors ?? []) {
+      const normalized = anchor.normalize("NFKC").trim().toLowerCase();
+      anchorToIds.set(
+        normalized,
+        new Set(anchorToIds.get(normalized) ?? []).add(card.cardId),
+      );
+    }
     for (const alias of card.aliases) {
       const key = alias.normalize("NFKC").trim().toLowerCase();
       exactMutable.set(key, [...(exactMutable.get(key) ?? []), card.cardId]);
@@ -121,6 +131,7 @@ export function buildIndex(
     documents,
     documentFrequency: df,
     averageLength: active.length ? totalLength / active.length : 0,
+    anchorToIds,
   };
 }
 
@@ -163,6 +174,10 @@ export function retrieve(
   index: RetrievalIndex,
   limit = 3,
 ): readonly Candidate[] {
+  const anchoredIds = new Set<string>();
+  for (const [anchor, ids] of index.anchorToIds)
+    if (input.normalizedText.includes(anchor))
+      for (const id of ids) anchoredIds.add(id);
   const features = new Map<string, MatchFeature[]>();
   const add = (id: string, feature: MatchFeature) =>
     features.set(id, [...(features.get(id) ?? []), feature]);
@@ -198,7 +213,11 @@ export function retrieve(
       });
   }
   return [...features.entries()]
-    .filter(([id]) => index.cards.get(id)?.domain === domain)
+    .filter(
+      ([id]) =>
+        index.cards.get(id)?.domain === domain &&
+        (!anchoredIds.size || anchoredIds.has(id)),
+    )
     .map(([cardId, matchFeatures]) => ({
       cardId,
       intent: index.cards.get(cardId)!.intent,

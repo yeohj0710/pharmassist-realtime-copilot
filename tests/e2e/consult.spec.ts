@@ -61,3 +61,13 @@ test("short second answer completes a routine consult", async ({ page }) => {
   await expect(page.getByText(/진해제.*거담제/)).toBeVisible();
   await expect(page.getByText("기침은 언제부터 시작됐나요?")).toHaveCount(0);
 });
+
+test("abdominal pain never routes to the throat card", async ({ page }) => {
+  await page.goto("/");
+  const input = page.getByLabel("증상이나 질문을 입력하세요");
+  await input.fill("배가 아파요");
+  await input.press("Enter");
+  await expect(page.getByText(/윗배·아랫배 중 어디가/)).toBeVisible();
+  await expect(page.getByText(/목 통증은 언제부터/)).toHaveCount(0);
+  await expect(page.getByText(/삼키기 어렵거나/)).toHaveCount(0);
+});

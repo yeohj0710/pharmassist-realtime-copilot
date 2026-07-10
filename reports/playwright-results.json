@@ -94,12 +94,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1059,
+                  "duration": 573,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:32:34.944Z",
+                  "startTime": "2026-07-10T11:40:48.742Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -128,12 +128,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 201,
+                  "duration": 167,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:32:36.345Z",
+                  "startTime": "2026-07-10T11:40:49.407Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -162,12 +162,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 343,
+                  "duration": 340,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:32:36.553Z",
+                  "startTime": "2026-07-10T11:40:49.582Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -196,12 +196,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 344,
+                  "duration": 310,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:32:36.904Z",
+                  "startTime": "2026-07-10T11:40:49.929Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -213,15 +213,49 @@
           "file": "consult.spec.ts",
           "line": 51,
           "column": 5
+        },
+        {
+          "title": "abdominal pain never routes to the throat card",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 251,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-10T11:40:50.244Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-2e4636864d8df78cff81",
+          "file": "consult.spec.ts",
+          "line": 65,
+          "column": 5
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-10T11:32:33.336Z",
-    "duration": 4233.326,
-    "expected": 4,
+    "startTime": "2026-07-10T11:40:47.430Z",
+    "duration": 3325.045,
+    "expected": 5,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

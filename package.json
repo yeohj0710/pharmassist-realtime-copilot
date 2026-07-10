@@ -18,7 +18,7 @@
     "test:unit": "vitest run --config vitest.config.ts packages",
     "test:integration": "vitest run --config vitest.config.ts tests/integration",
     "test:security": "vitest run --config vitest.security.config.ts && node scripts/security-scan.mjs",
-    "test:e2e": "pnpm --filter @pharmassist/web build && playwright test",
+    "test:e2e": "turbo build --filter=@pharmassist/web... && playwright test",
     "schema:generate": "node scripts/generate-types.mjs && node scripts/generate-openapi.mjs",
     "schema:check": "node scripts/check-generated.mjs",
     "pack:lint": "pnpm --filter @pharmassist/pack-cli lint",
