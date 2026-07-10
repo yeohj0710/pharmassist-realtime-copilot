@@ -1,0 +1,55 @@
+{
+  "schemaHash": "362c2fe2233a7d2ace5f64f74deb03b3e5c054d972c8406ff4441abd4a1b63ab",
+  "generated": [
+    {
+      "file": "claim.ts",
+      "title": "Claim",
+      "sha256": "5a8da90a1daf6fa119a28abb94c5b9aae158bd939551408a9135858d89bbcaac"
+    },
+    {
+      "file": "consultation_card.ts",
+      "title": "ConsultationCard",
+      "sha256": "6408ad908e6ab2bb912fd3c8aac2df40f473990200ef6ebe1d9cbca659092491"
+    },
+    {
+      "file": "drug_product.ts",
+      "title": "DrugProduct",
+      "sha256": "a0421d3768452dbe71eaedd2fca0d12c8a3dcf08817676bf02c943a5f67961b9"
+    },
+    {
+      "file": "error_envelope.ts",
+      "title": "ErrorEnvelope",
+      "sha256": "56038f225e859d880da9be574e76bb2002ed1323b2b55599e95cebab7c20ccc8"
+    },
+    {
+      "file": "feedback.ts",
+      "title": "Feedback",
+      "sha256": "f47b88cc4941e1291a9190114580b236833e4b5ea5fa7fb82af5cd66db8d20db"
+    },
+    {
+      "file": "pack_manifest.ts",
+      "title": "PackManifest",
+      "sha256": "81c60d8e41a03bca771ac7bda590f2f7e5e536a84acad7b30939620f35f9a350"
+    },
+    {
+      "file": "refinement_request.ts",
+      "title": "RefinementRequestEnvelope",
+      "sha256": "33555b6414c14783bf34057e83ecb7684ed38388e4ce0e6ab58bbca328f8b638"
+    },
+    {
+      "file": "runtime_input.ts",
+      "title": "RuntimeInput",
+      "sha256": "0555b9a07adae176e938b3eb22bc9d32417a2c6e1c7d1f817166dd742fb4e510"
+    },
+    {
+      "file": "runtime_output.ts",
+      "title": "RuntimeOutput",
+      "sha256": "3d94080700022080dbf02e70b1749d5eb912da0485f0b7c71b68d0a1f236ad0a"
+    },
+    {
+      "file": "source_record.ts",
+      "title": "SourceRecord",
+      "sha256": "85343f82b6ce5ddfec13bddfe67c6d5f8c29e3ff81ba1be668c2f0a1f426383e"
+    }
+  ]
+}

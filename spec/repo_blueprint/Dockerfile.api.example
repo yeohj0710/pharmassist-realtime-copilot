@@ -1,0 +1,16 @@
+# Resolve the current active LTS image and pin a digest in the implementation.
+FROM node:<ACTIVE_LTS>-alpine AS build
+WORKDIR /app
+RUN corepack enable
+COPY . .
+RUN pnpm install --frozen-lockfile && pnpm --filter @pharmassist/api build
+
+FROM node:<ACTIVE_LTS>-alpine AS runtime
+ENV NODE_ENV=production
+WORKDIR /app
+RUN addgroup -S app && adduser -S -G app app
+COPY --from=build --chown=app:app /app/apps/api/dist ./dist
+COPY --from=build --chown=app:app /app/apps/api/package.json ./package.json
+USER app
+EXPOSE 8080
+CMD ["node", "dist/server.js"]

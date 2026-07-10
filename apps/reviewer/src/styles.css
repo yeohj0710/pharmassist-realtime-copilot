@@ -1,0 +1,142 @@
+:root {
+  font-family: Pretendard, system-ui;
+  color: #191f28;
+  background: #f2f4f6;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 100vh;
+}
+aside {
+  background: #191f28;
+  color: #fff;
+  padding: 28px 20px;
+}
+aside h1 {
+  font-size: 20px;
+}
+aside p {
+  color: #8b95a1;
+  font-size: 13px;
+  margin-bottom: 28px;
+}
+aside button {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #b0b8c1;
+  padding: 12px;
+  margin: 2px 0;
+}
+aside button.active {
+  background: #333d4b;
+  color: #fff;
+  font-weight: 750;
+}
+section {
+  padding: 38px;
+  max-width: 1000px;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+h2 {
+  font-size: 30px;
+  margin: 5px 0 20px;
+}
+select {
+  padding: 9px 12px;
+  border: 1px solid #d1d6db;
+  border-radius: 10px;
+}
+.warning {
+  padding: 13px 16px;
+  background: #fff4e5;
+  color: #ad5700;
+  border-radius: 12px;
+  font-weight: 700;
+}
+article {
+  margin-top: 18px;
+  background: #fff;
+  padding: 26px;
+  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.tag {
+  color: #1b64da;
+  background: #e8f3ff;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 750;
+}
+h3 {
+  font-size: 22px;
+}
+dl {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  margin: 0;
+}
+dt,
+dd {
+  padding: 10px 0;
+  border-bottom: 1px solid #eef1f5;
+  margin: 0;
+}
+dt {
+  color: #6b7684;
+}
+.actions {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 18px;
+}
+.actions button {
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 11px;
+  background: #e5e8eb;
+  font-weight: 700;
+}
+.actions .publish {
+  background: #3182f6;
+  color: #fff;
+}
+.actions button:disabled {
+  opacity: 0.45;
+}
+.audit {
+  color: #6b7684;
+  font-size: 13px;
+  text-align: right;
+}
+@media (max-width: 700px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+  aside {
+    min-height: auto;
+  }
+  section {
+    padding: 20px;
+  }
+  article {
+    grid-template-columns: 1fr;
+  }
+}

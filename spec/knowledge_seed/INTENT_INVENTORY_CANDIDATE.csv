@@ -1,0 +1,74 @@
+﻿intent_id,domain,category,display_title,authoring_wave,clinical_risk,source_refs,status,official_verification_required,default_runtime_enabled,notes
+safety_no_match,human_otc,safety,일치하는 승인 카드 없음,0,low,SRC-003|SRC-086|SRC-090,candidate,true,false,추정 대신 선택/추가질문 UI
+safety_product_identity_unknown,human_otc,safety,제품 식별 불명확,0,high,SRC-003|SRC-083|SRC-090,candidate,true,false,외형만으로 제품 식별 금지
+safety_dose_request_missing_data,human_otc,safety,용량 질문의 필수정보 누락,0,critical,SRC-003|SRC-086|SRC-090,candidate,true,false,제품·대상·함량 확인 전 숫자 금지
+safety_duplicate_ingredient_check,human_otc,safety,중복 성분 확인,0,high,SRC-083|SRC-090|SRC-119,candidate,true,false,공식 제품 성분/DUR 연결 필요
+safety_allergy_context,human_otc,safety,약물 알레르기 확인,0,critical,SRC-003|SRC-086|SRC-090,candidate,true,false,추천 전 알레르기 slot
+safety_pregnancy_lactation_context,human_otc,safety,임신·수유 맥락,0,critical,SRC-003|SRC-086|SRC-090|SRC-097,candidate,true,false,공식 제품별 검증 없이는 제한
+safety_current_medication_query,human_otc,safety,현재 복용약과 병용 문의,0,high,SRC-083|SRC-090,candidate,true,false,제품 식별·DUR/공식 출처 필요
+urgent_breathing_signal,human_otc,urgent,호흡 관련 긴급 신호,0,critical,SRC-003|SRC-086|SRC-090,candidate,true,false,공식 triage rule 검증 필수
+urgent_allergic_swelling_signal,human_otc,urgent,급성 알레르기·부종 긴급 신호,0,critical,SRC-003|SRC-086|SRC-090,candidate,true,false,공식 triage rule 검증 필수
+urgent_chest_signal,human_otc,urgent,흉부 관련 긴급 신호,0,critical,SRC-003|SRC-086|SRC-090,candidate,true,false,공식 triage rule 검증 필수
+urgent_neurologic_signal,human_otc,urgent,신경학적 긴급 신호,0,critical,SRC-003|SRC-086|SRC-090,candidate,true,false,공식 triage rule 검증 필수
+urgent_bleeding_signal,human_otc,urgent,출혈 관련 긴급 신호,0,critical,SRC-086|SRC-090|SRC-109,candidate,true,false,공식 triage rule 검증 필수
+urgent_dehydration_signal,human_otc,urgent,중증 탈수 위험 신호,0,critical,SRC-086|SRC-090|SRC-109|SRC-120,candidate,true,false,성인/소아 분리 검증
+urgent_overdose_or_ingestion,human_otc,urgent,과량복용·오인 섭취,0,critical,SRC-083|SRC-090,candidate,true,false,중독 대응 공식 경로 필요
+cold_general,human_otc,respiratory,감기 증상 일반 문의,1,medium,SRC-003|SRC-086|SRC-090|SRC-091|SRC-099,candidate,true,false,증상 분해 카드의 상위 intent
+cold_early_symptoms,human_otc,respiratory,초기 감기 기운,1,medium,SRC-099,candidate,true,false,진단 단정 없이 증상/기간 질문
+cold_prevention_request,human_otc,respiratory,감기 예방 요청,1,medium,SRC-100,candidate,true,false,예방 효능 과장 차단
+nasal_symptom_general,human_otc,respiratory,콧물·코막힘 일반,1,medium,SRC-003|SRC-086|SRC-090|SRC-091|SRC-101,candidate,true,false,감기/알레르기/기타 원인 구분 질문
+rhinitis_vs_cold,human_otc,respiratory,비염과 감기 구분 문의,1,medium,SRC-101,candidate,true,false,진단이 아닌 분기 질문
+discolored_nasal_discharge,human_otc,respiratory,색 있는 콧물 문의,1,medium,SRC-102,candidate,true,false,색만으로 감염/항생제 단정 금지
+cough_general,human_otc,respiratory,기침 일반 문의,1,medium,SRC-003|SRC-086|SRC-090|SRC-091|SRC-103,candidate,true,false,기간·가래·호흡·연령 분기
+cough_not_improving,human_otc,respiratory,기침이 호전되지 않음,1,high,SRC-103,candidate,true,false,기간/위험신호/의뢰 기준 공식 검증
+sore_throat,human_otc,respiratory,인후통 문의,1,medium,SRC-003|SRC-086|SRC-090|SRC-091|SRC-104,candidate,true,false,삼킴/호흡/기간 분기
+adult_fever,human_otc,respiratory,성인 발열 문의,1,high,SRC-003|SRC-086|SRC-090|SRC-092,candidate,true,false,체온/기간/동반신호 필요
+dyspepsia_general,human_otc,gastrointestinal,소화불량 일반,1,medium,SRC-003|SRC-086|SRC-090|SRC-093|SRC-105,candidate,true,false,증상 subtype 분해
+indigestion_fullness,human_otc,gastrointestinal,체기·더부룩함,1,medium,SRC-105|SRC-106,candidate,true,false,위험 복통과 구분
+digestive_medicine_not_working,human_otc,gastrointestinal,소화제 효과 부족,1,high,SRC-107,candidate,true,false,반복/지속/위험신호 질문
+heartburn_reflux_symptom,human_otc,gastrointestinal,속쓰림·역류 증상,1,medium,SRC-003|SRC-086|SRC-090|SRC-093|SRC-108,candidate,true,false,"흉통과 분리, 기간/약물 확인"
+nausea_vomiting_adult,human_otc,gastrointestinal,성인 구역·구토,1,high,SRC-086|SRC-090|SRC-093|SRC-109,candidate,true,false,탈수/출혈/임신 등 분기
+diarrhea_adult,human_otc,gastrointestinal,성인 설사,1,high,SRC-003|SRC-086|SRC-090|SRC-093|SRC-109,candidate,true,false,혈변/탈수/기간 분기
+suspected_gastroenteritis,human_otc,gastrointestinal,장염·급성 위장증상 문의,1,high,SRC-109,candidate,true,false,진단 단정 없이 의뢰/수분/증상 분기
+constipation,human_otc,gastrointestinal,변비 문의,1,medium,SRC-003|SRC-086|SRC-090|SRC-093,candidate,true,false,기간/복통/약물/특수군 분기
+abdominal_pain_unknown,human_otc,gastrointestinal,원인 불명 복통,1,high,SRC-086|SRC-090|SRC-093,candidate,true,false,"진단·진통제 우선 금지, red flag 우선"
+headache,human_otc,pain,두통 문의,1,high,SRC-003|SRC-086|SRC-090|SRC-092,candidate,true,false,신경학적/갑작스러운 위험신호 분리
+musculoskeletal_pain,human_otc,pain,근육·관절 통증,1,medium,SRC-003|SRC-086|SRC-090|SRC-092|SRC-094,candidate,true,false,부상/부종/기간/특수군 분기
+dental_pain,human_otc,pain,치통 문의,1,high,SRC-086|SRC-090|SRC-092|SRC-094,candidate,true,false,치과 의뢰 기준과 단기 완화 구분
+pain_fever_product_selection,human_otc,pain,해열·진통 제품 선택 문의,2,high,SRC-003|SRC-086|SRC-090|SRC-092|SRC-118,candidate,true,false,성분·중복·특수군 공식 검증 필요
+dysmenorrhea,human_otc,womens_health,생리통 문의,1,high,SRC-003|SRC-086|SRC-090|SRC-097|SRC-110,candidate,true,false,출혈/임신 가능성/중증도 분기
+menstrual_delay_request,human_otc,womens_health,생리 일정 조절 문의,2,critical,SRC-071|SRC-072|SRC-097|SRC-111,candidate,true,false,제품/임신 가능성/시작시점 공식 검증
+oral_contraceptive_initial_counseling,prescription_counseling,womens_health,경구피임제 시작 복약상담,2,critical,SRC-071|SRC-072,candidate,true,false,exact product current label 필수
+oral_contraceptive_missed_dose,prescription_counseling,womens_health,경구피임제 복용 누락,2,critical,SRC-071|SRC-072|SRC-112,candidate,true,false,제품/누락수/포장위치 공식 규칙만
+oral_contraceptive_adverse_effect_query,prescription_counseling,womens_health,경구피임제 이상반응 문의,2,critical,SRC-071|SRC-072,candidate,true,false,red flag와 제품 라벨 검증
+vaginal_symptom,human_otc,womens_health,질 분비물·가려움 문의,2,high,SRC-097|SRC-113,candidate,true,false,진단 단정/반복 자가치료 금지
+urinary_symptom,human_otc,womens_health,배뇨통·빈뇨 문의,2,high,SRC-097|SRC-114,candidate,true,false,발열/옆구리통증/임신 등 의뢰 분기
+pms_symptom,human_otc,womens_health,월경전 증상 문의,2,medium,SRC-097|SRC-115,candidate,true,false,증상·기간·기분 위험 분기
+menopause_symptom,human_otc,womens_health,갱년기 증상 문의,2,high,SRC-097|SRC-116,candidate,true,false,출혈/유방/혈전 등 검증된 분기 필요
+pediatric_fever,human_otc,pediatrics,소아 발열 문의,2,critical,SRC-003|SRC-086|SRC-090|SRC-117|SRC-118,candidate,true,false,연령/체온/상태/기간 공식 triage
+pediatric_antipyretic_dose,human_otc,pediatrics,소아 해열제 용량,2,critical,SRC-003|SRC-086|SRC-090|SRC-117|SRC-118,candidate,true,false,체중+exact product+농도 전 숫자 금지
+pediatric_cold_combination,human_otc,pediatrics,소아 감기약 병용·중복,2,critical,SRC-003|SRC-086|SRC-090|SRC-119,candidate,true,false,제품 성분/DUR 공식 검증
+pediatric_vomiting_diarrhea,human_otc,pediatrics,소아 구토·설사,2,critical,SRC-086|SRC-090|SRC-120,candidate,true,false,연령/수분/소변/활력/혈변 분기
+pediatric_cold_cough,human_otc,pediatrics,소아 감기·기침,2,critical,SRC-003|SRC-086|SRC-090|SRC-091|SRC-119,candidate,true,false,연령 제한/호흡 위험 공식 검증
+allergy_eczema,human_otc,dermatology,알레르기성 피부·습진,1,high,SRC-003|SRC-086|SRC-090|SRC-096|SRC-121,candidate,true,false,감염/범위/얼굴/소아/임신 분기
+tinea_foot,human_otc,dermatology,무좀 문의,1,medium,SRC-003|SRC-086|SRC-090|SRC-095|SRC-122,candidate,true,false,진단 불확실/손발톱/당뇨 분기
+pediatric_atopic_skin,human_otc,dermatology,소아 아토피·건조 피부 문의,2,high,SRC-096|SRC-123,candidate,true,false,감염/범위/연령/기존 처방 확인
+acne,human_otc,dermatology,여드름 문의,1,medium,SRC-003|SRC-086|SRC-090|SRC-096|SRC-124,candidate,true,false,임신 가능성/중증/흉터/제품 병용 분기
+wound_burn,human_otc,dermatology,상처·가벼운 화상 문의,1,high,SRC-003|SRC-086|SRC-090|SRC-094|SRC-096,candidate,true,false,깊이/범위/감염/특수부위 의뢰 분기
+insect_bite,human_otc,dermatology,벌레 물림 문의,1,high,SRC-003|SRC-086|SRC-090|SRC-096,candidate,true,false,전신 알레르기/감염 분리
+hemorrhoid_symptom,human_otc,other_otc,치질 증상 문의,1,high,SRC-003|SRC-086|SRC-090|SRC-095,candidate,true,false,출혈/통증/임신/기간 분기
+hair_loss_query,human_otc,other_otc,탈모 문의,2,high,SRC-003|SRC-086|SRC-090|SRC-095,candidate,true,false,"원인 진단/과장 효능 금지, 제품별 주의 검증"
+topical_medicine_use,human_otc,administration,외용제 사용법,1,medium,SRC-003|SRC-086|SRC-090|SRC-096,candidate,true,false,exact product/부위/기간 확인
+nasal_spray_use,human_otc,administration,비강 스프레이 사용법,1,medium,SRC-003|SRC-086|SRC-090|SRC-091|SRC-101,candidate,true,false,제품별 사용법 검증
+eye_drop_use,human_otc,administration,점안제 사용법,1,medium,SRC-003|SRC-086|SRC-090,candidate,true,false,제품/렌즈/간격 공식 검증
+general_administration_timing,prescription_counseling,administration,복용 시점·방법 문의,2,high,SRC-083|SRC-090,candidate,true,false,exact 처방/제품과 공식 라벨 필요
+general_missed_dose,prescription_counseling,administration,일반 복용 누락 문의,2,critical,SRC-083,candidate,true,false,exact drug/product rule only
+medicine_storage,prescription_counseling,administration,의약품 보관 문의,2,high,SRC-083|SRC-090,candidate,true,false,제품별 보관조건 확인
+prescription_counseling_general,prescription_counseling,rx,처방약 복약지도 일반,3,high,SRC-083,candidate,true,false,처방 항목이 구조화되어야 활성
+dispensing_crush_split_query,prescription_counseling,rx,분할·분쇄 가능 여부,3,critical,SRC-083,candidate,true,false,exact formulation/product official source
+supplement_calcium_query,supplement,supplement,칼슘 관련 문의,3,high,SRC-005,candidate,true,false,"별도 모드, 상호작용/특수군 공식 검증"
+supplement_carnitine_query,supplement,supplement,카르니틴 관련 문의,3,high,SRC-004,candidate,true,false,"별도 모드, 치료·감량 과장 금지"
+supplement_pycnogenol_query,supplement,supplement,피크노제놀 관련 문의,3,high,SRC-006,candidate,true,false,"별도 모드, 효능/상호작용 공식 검증"
+supplement_vitamin_d_query,supplement,supplement,비타민 D 관련 문의,3,critical,SRC-088,candidate,true,false,"이미지 수치 직접 사용 금지, 공식 기준 필요"
+supplement_drug_nutrient_chart_query,supplement,supplement,복용약-영양소 표 문의,3,critical,SRC-082|SRC-084,candidate,true,false,quarantine; 상호작용·결핍을 자동 단정하지 않음
+admin_pharmacy_operations,operations,admin,근무·조제실 운영 자료,9,nonclinical,SRC-001|SRC-083,candidate,true,false,환자 임상 runtime과 별도 관리자 모듈

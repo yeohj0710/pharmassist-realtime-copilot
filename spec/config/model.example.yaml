@@ -1,0 +1,40 @@
+config_version: "1.0.0"
+openai:
+  api_mode: responses_and_realtime
+  safety_identifier: hashed_internal_pharmacist_or_tenant_id
+  responses:
+    default_model: gpt-5.6-luna
+    ambiguity_model: gpt-5.6-terra
+    offline_authoring_model: gpt-5.6-sol
+    reasoning_effort_default: none
+    reasoning_effort_ambiguous: low
+    max_output_tokens: 420
+    store: false
+    stream: true
+    structured_outputs: true
+    timeout_ms: 2500
+  transcription:
+    model: gpt-realtime-whisper
+    language: ko
+    transport_browser: webrtc
+    transport_server: websocket
+    raw_audio_retention: false
+  optional_voice_agent:
+    enabled: false
+    model: gpt-realtime-2.1-mini
+  embeddings:
+    enabled_in_runtime: false
+    purpose: offline_authoring_or_admin_search_only
+routing:
+  exact_match: local_only
+  high_confidence: local_only
+  phrasing_refinement: gpt-5.6-luna
+  multi_intent_or_ambiguous: gpt-5.6-terra
+  offline_claim_extraction_and_conflict_review: gpt-5.6-sol
+fallbacks:
+  openai_unavailable: instant_local_card_only
+  transcription_unavailable: typed_input_only
+  knowledge_stale: block_high_risk_actions_and_show_update_required
+notes:
+  - "Model IDs must remain configuration, not scattered constants."
+  - "Snapshot pinning is recommended after validation; aliases are acceptable only during development."

@@ -1,0 +1,61 @@
+name: pharmassist
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: pharmassist
+      POSTGRES_PASSWORD: pharmassist
+      POSTGRES_DB: pharmassist
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pharmassist -d pharmassist"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - pharmassist_pg:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.api
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/generated-dev-pack:/app/packs:ro
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.web
+    depends_on: [api]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports:
+      - "4173:4173"
+
+  reviewer:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.reviewer
+    depends_on: [api]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports:
+      - "4174:4174"
+
+volumes:
+  pharmassist_pg:

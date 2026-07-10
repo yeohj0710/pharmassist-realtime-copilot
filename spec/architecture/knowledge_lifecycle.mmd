@@ -1,0 +1,19 @@
+flowchart TD
+  A[Authorized source inventory + hash] --> B[Text/image extraction]
+  B --> C[Domain and trust-tier classification]
+  C --> D[Candidate claim/card extraction]
+  D --> E[Deterministic lint and schema validation]
+  E --> F[Official-source comparison]
+  F --> G{Conflict or high risk?}
+  G -- yes --> H[Pharmacist adjudication]
+  G -- no --> I[Pharmacist review]
+  H --> I
+  I --> J{All publication gates pass?}
+  J -- no --> K[Quarantine or revise]
+  J -- yes --> L[Compile immutable signed pack]
+  L --> M[Golden tests + latency benchmark]
+  M --> N{Release gate pass?}
+  N -- no --> K
+  N -- yes --> O[Publish version]
+  O --> P[Monitor expiry, label changes, incidents]
+  P --> Q[Stale/retire/rollback]

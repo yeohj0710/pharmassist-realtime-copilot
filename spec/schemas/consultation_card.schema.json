@@ -1,0 +1,331 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/consultation_card.schema.json",
+  "title": "ConsultationCard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "card_id",
+    "version",
+    "status",
+    "domain",
+    "intent",
+    "triggers",
+    "required_slots",
+    "red_flags",
+    "say_now",
+    "ask_next",
+    "actions",
+    "avoid",
+    "source_refs",
+    "review"
+  ],
+  "properties": {
+    "card_id": {
+      "type": "string",
+      "pattern": "^CARD-[A-Z0-9_-]+$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "review",
+        "published",
+        "stale",
+        "retired"
+      ]
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "human_otc",
+        "prescription_counseling",
+        "supplement",
+        "animal_medicine"
+      ]
+    },
+    "intent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "display_title": {
+      "type": "string"
+    },
+    "triggers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact",
+        "synonyms",
+        "negative"
+      ],
+      "properties": {
+        "exact": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "synonyms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "phonetic": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "negative": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "required_slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "slot",
+          "when",
+          "blocking",
+          "question"
+        ],
+        "properties": {
+          "slot": {
+            "type": "string"
+          },
+          "when": {
+            "type": "string"
+          },
+          "blocking": {
+            "type": "boolean"
+          },
+          "question": {
+            "type": "string"
+          },
+          "validation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "red_flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "flag_id",
+          "patterns",
+          "negation_aware",
+          "action",
+          "say"
+        ],
+        "properties": {
+          "flag_id": {
+            "type": "string"
+          },
+          "patterns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "negation_aware": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "emergency",
+              "same_day",
+              "doctor",
+              "stop_and_verify"
+            ]
+          },
+          "say": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "say_now": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "maxLength": 180
+      }
+    },
+    "ask_next": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "priority",
+          "question",
+          "reason",
+          "slot"
+        ],
+        "properties": {
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "question": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "slot": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "text",
+          "claim_ids"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "self_care",
+              "ingredient_category",
+              "administration",
+              "monitor",
+              "refer",
+              "verify_product"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "claim_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "avoid": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "claim_id",
+          "source_id",
+          "locator",
+          "trust_tier"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "string"
+          },
+          "trust_tier": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B"
+            ]
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pharmacist_approved",
+        "medical_safety_approved",
+        "approved_at",
+        "expires_at"
+      ],
+      "properties": {
+        "pharmacist_approved": {
+          "type": "boolean"
+        },
+        "medical_safety_approved": {
+          "type": "boolean"
+        },
+        "reviewer_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "priority": {
+          "type": "integer"
+        },
+        "color_token": {
+          "type": "string"
+        },
+        "hotkey": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

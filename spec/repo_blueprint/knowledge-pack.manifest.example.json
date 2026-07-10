@@ -1,0 +1,17 @@
+{
+  "pack_version": "0.0.0-synthetic-dev",
+  "schema_version": "1.0.0",
+  "min_app_version": "0.1.0",
+  "domain": "human_otc",
+  "synthetic": true,
+  "clinical_use_prohibited": true,
+  "created_at": "2026-07-10T00:00:00Z",
+  "approved_at": null,
+  "expires_at": "2026-07-11T00:00:00Z",
+  "counts": {"cards": 0, "claims": 0, "sources": 0, "products": 0},
+  "files": [],
+  "golden_suite_version": "synthetic-1.0.0",
+  "prompt_registry_version": "1.0.0",
+  "sha256": "<canonical-manifest-payload-hash>",
+  "signature": {"algorithm": "Ed25519", "key_id": "dev-only", "value": "<base64>"}
+}

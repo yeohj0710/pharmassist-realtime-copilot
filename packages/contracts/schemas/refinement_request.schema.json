@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/refinement_request.schema.json",
+  "title": "RefinementRequestEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "runtime_input",
+    "instant_output",
+    "candidate_card_ids",
+    "knowledge_version"
+  ],
+  "properties": {
+    "runtime_input": { "$ref": "runtime_input.schema.json" },
+    "instant_output": { "$ref": "runtime_output.schema.json" },
+    "candidate_card_ids": {
+      "type": "array",
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^CARD-[A-Z0-9_-]+$" }
+    },
+    "knowledge_version": { "type": "string", "maxLength": 80 }
+  }
+}

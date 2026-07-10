@@ -1,0 +1,41 @@
+version: "1.0.0"
+defaults:
+  data_minimization: strict
+  raw_audio_persisted: false
+  raw_transcript_persisted: false
+  patient_name_collected: false
+  phone_or_address_collected: false
+  government_identifier_collected: false
+  free_text_logs: false
+  responses_store: false
+  background_mode: false
+  visible_microphone_indicator: true
+  push_to_talk_default: true
+  consent_notice_required_for_audio: true
+  retention_days:
+    coded_audit_events: 365
+    deidentified_metrics: 730
+    pharmacist_feedback_labels: 365
+  identifiers:
+    patient: none_by_default
+    pharmacist: tenant_scoped_pseudonym
+    openai_safety_identifier: one_way_hashed_stable_identifier
+redaction:
+  before_external_api:
+    - names
+    - phone_numbers
+    - addresses
+    - resident_registration_numbers
+    - email_addresses
+    - payment_information
+  before_logs:
+    - all_free_text
+    - raw_transcript
+    - raw_audio
+legal_review_required:
+  - health_sensitive_information_lawful_basis
+  - audio_notice_and_consent
+  - cross_border_transfer_or_overseas_processor_notice
+  - data_processing_agreement
+  - openai_retention_tier_and_zdr_eligibility
+  - digital_medical_product_classification

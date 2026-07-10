@@ -1,0 +1,220 @@
+﻿alias_id,intent_id,phrase,alias_type,synthetic,review_status,production_enabled
+ALIAS-SEED-0001,safety_no_match,무슨 약이 좋을까요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0002,safety_no_match,잘 모르겠어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0003,safety_no_match,증상을 어떻게 말해야 해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0004,safety_product_identity_unknown,이 빨간 약 뭐예요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0005,safety_product_identity_unknown,약 이름을 모르겠어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0006,safety_product_identity_unknown,포장 없이 알약만 있어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0007,safety_dose_request_missing_data,몇 개 먹어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0008,safety_dose_request_missing_data,몇 미리 먹여요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0009,safety_dose_request_missing_data,용량 알려주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0010,safety_duplicate_ingredient_check,같이 먹어도 돼요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0011,safety_duplicate_ingredient_check,성분 겹치나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0012,safety_duplicate_ingredient_check,감기약 두 개 같이,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0013,safety_allergy_context,약 알레르기 있어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0014,safety_allergy_context,전에 약 먹고 두드러기,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0015,safety_allergy_context,알레르기약 문의,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0016,safety_pregnancy_lactation_context,임신 중인데,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0017,safety_pregnancy_lactation_context,수유 중 약,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0018,safety_pregnancy_lactation_context,임신 가능성이 있어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0019,safety_current_medication_query,먹는 약이 있는데 같이,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0020,safety_current_medication_query,처방약이랑 같이 먹어도,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0021,safety_current_medication_query,약끼리 괜찮나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0022,urgent_breathing_signal,숨이 안 쉬어져요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0023,urgent_breathing_signal,숨쉬기 너무 힘들어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0024,urgent_breathing_signal,말하기 힘들 만큼 숨차요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0025,urgent_allergic_swelling_signal,입술이 갑자기 부었어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0026,urgent_allergic_swelling_signal,목이 붓고 숨이,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0027,urgent_allergic_swelling_signal,약 먹고 얼굴이 부어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0028,urgent_chest_signal,가슴이 짓눌려요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0029,urgent_chest_signal,가슴 아프고 식은땀,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0030,urgent_chest_signal,갑자기 심한 흉통,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0031,urgent_neurologic_signal,말이 갑자기 어눌해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0032,urgent_neurologic_signal,한쪽 팔에 힘이 없어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0033,urgent_neurologic_signal,갑자기 의식이 이상해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0034,urgent_bleeding_signal,검은 변이 나와요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0035,urgent_bleeding_signal,피를 토했어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0036,urgent_bleeding_signal,피 섞인 설사,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0037,urgent_dehydration_signal,물도 못 마셔요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0038,urgent_dehydration_signal,소변이 거의 안 나와요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0039,urgent_dehydration_signal,계속 토해서 축 늘어져요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0040,urgent_overdose_or_ingestion,약을 너무 많이 먹었어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0041,urgent_overdose_or_ingestion,아이가 약을 주워 먹었어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0042,urgent_overdose_or_ingestion,몇 알 먹었는지 몰라요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0043,cold_general,감기약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0044,cold_general,감기 걸린 것 같아요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0045,cold_general,몸살 감기,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0046,cold_early_symptoms,감기 기운 있어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0047,cold_early_symptoms,감기 오려는 것 같아요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0048,cold_early_symptoms,목이 간질하고 으슬으슬,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0049,cold_prevention_request,감기 예방약 있어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0050,cold_prevention_request,감기 안 걸리게 뭐 먹어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0051,cold_prevention_request,주변이 다 감기예요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0052,nasal_symptom_general,콧물약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0053,nasal_symptom_general,코가 막혀요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0054,nasal_symptom_general,재채기하고 콧물,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0055,rhinitis_vs_cold,비염인지 감기인지,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0056,rhinitis_vs_cold,맑은 콧물이 계속,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0057,rhinitis_vs_cold,아침마다 재채기,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0058,discolored_nasal_discharge,노란 콧물,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0059,discolored_nasal_discharge,콧물이 초록색,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0060,discolored_nasal_discharge,진한 콧물,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0061,cough_general,기침약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0062,cough_general,기침이 나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0063,cough_general,밤에 기침,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0064,cough_not_improving,기침약이 안 들어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0065,cough_not_improving,기침이 계속돼요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0066,cough_not_improving,며칠째 기침이 심해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0067,sore_throat,목이 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0068,sore_throat,침 삼키기 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0069,sore_throat,인후통약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0070,adult_fever,열이 나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0071,adult_fever,성인 해열제,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0072,adult_fever,몸살에 열,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0073,dyspepsia_general,소화가 안 돼요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0074,dyspepsia_general,소화제 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0075,dyspepsia_general,배가 더부룩,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0076,indigestion_fullness,체했어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0077,indigestion_fullness,명치가 답답해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0078,indigestion_fullness,먹은 게 얹힌 느낌,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0079,digestive_medicine_not_working,소화제 먹어도 안 나아요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0080,digestive_medicine_not_working,계속 더부룩해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0081,digestive_medicine_not_working,약이 안 들어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0082,heartburn_reflux_symptom,속이 쓰려요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0083,heartburn_reflux_symptom,신물이 올라와요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0084,heartburn_reflux_symptom,가슴이 타는 느낌,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0085,nausea_vomiting_adult,토할 것 같아요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0086,nausea_vomiting_adult,계속 토해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0087,nausea_vomiting_adult,메스꺼워요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0088,diarrhea_adult,설사약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0089,diarrhea_adult,물설사를 해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0090,diarrhea_adult,배탈 났어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0091,suspected_gastroenteritis,장염인 것 같아요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0092,suspected_gastroenteritis,토하고 설사해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0093,suspected_gastroenteritis,배가 아프고 설사,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0094,constipation,변비약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0095,constipation,며칠째 변을 못 봐요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0096,constipation,변이 너무 딱딱해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0097,abdominal_pain_unknown,배가 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0098,abdominal_pain_unknown,복통약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0099,abdominal_pain_unknown,갑자기 배가 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0100,headache,두통약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0101,headache,머리가 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0102,headache,편두통 같은데,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0103,musculoskeletal_pain,근육통약,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0104,musculoskeletal_pain,허리가 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0105,musculoskeletal_pain,관절이 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0106,dental_pain,이가 너무 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0107,dental_pain,치통약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0108,dental_pain,잇몸이 붓고 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0109,pain_fever_product_selection,어떤 진통제가 나아요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0110,pain_fever_product_selection,해열제 종류,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0111,pain_fever_product_selection,진통제 추천,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0112,dysmenorrhea,생리통약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0113,dysmenorrhea,생리할 때 배가 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0114,dysmenorrhea,월경통,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0115,menstrual_delay_request,생리 미루고 싶어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0116,menstrual_delay_request,여행 때문에 생리 조절,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0117,menstrual_delay_request,피임약으로 생리 미루기,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0118,oral_contraceptive_initial_counseling,피임약 처음 먹어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0119,oral_contraceptive_initial_counseling,피임약 어떻게 시작,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0120,oral_contraceptive_initial_counseling,경구피임약 복용법,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0121,oral_contraceptive_missed_dose,피임약 빼먹었어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0122,oral_contraceptive_missed_dose,한 알 깜빡했어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0123,oral_contraceptive_missed_dose,피임약 이틀 못 먹었어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0124,oral_contraceptive_adverse_effect_query,피임약 먹고 불편해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0125,oral_contraceptive_adverse_effect_query,피임약 부작용,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0126,oral_contraceptive_adverse_effect_query,먹고 다리가 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0127,vaginal_symptom,질염약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0128,vaginal_symptom,분비물이 이상해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0129,vaginal_symptom,질이 가렵고 따가워요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0130,urinary_symptom,방광염약 있어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0131,urinary_symptom,소변 볼 때 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0132,urinary_symptom,자꾸 소변이 마려워요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0133,pms_symptom,PMS가 심해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0134,pms_symptom,생리 전 붓고 예민,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0135,pms_symptom,월경전 증후군,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0136,menopause_symptom,갱년기인 것 같아요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0137,menopause_symptom,얼굴이 화끈거려요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0138,menopause_symptom,폐경 후 불편,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0139,pediatric_fever,아이 열이 나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0140,pediatric_fever,아기 열,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0141,pediatric_fever,몇 도면 해열제,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0142,pediatric_antipyretic_dose,아이 해열제 몇 mL,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0143,pediatric_antipyretic_dose,아기 몇 cc,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0144,pediatric_antipyretic_dose,소아 해열제 양,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0145,pediatric_cold_combination,아이 감기약 같이 먹여도,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0146,pediatric_cold_combination,시럽 두 개 같이,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0147,pediatric_cold_combination,소아 약 성분 겹쳐요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0148,pediatric_vomiting_diarrhea,아이가 토하고 설사,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0149,pediatric_vomiting_diarrhea,아기 장염,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0150,pediatric_vomiting_diarrhea,소아 구토설사,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0151,pediatric_cold_cough,아이 기침약,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0152,pediatric_cold_cough,아기 감기약,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0153,pediatric_cold_cough,소아 콧물약,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0154,allergy_eczema,습진약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0155,allergy_eczema,피부가 가렵고 빨개요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0156,allergy_eczema,알레르기 피부,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0157,tinea_foot,무좀약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0158,tinea_foot,발가락 사이가 가려워요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0159,tinea_foot,발에 각질과 가려움,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0160,pediatric_atopic_skin,아이 아토피,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0161,pediatric_atopic_skin,아기 피부가 너무 건조,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0162,pediatric_atopic_skin,아이 습진,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0163,acne,여드름약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0164,acne,좁쌀 여드름,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0165,acne,뾰루지가 계속,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0166,wound_burn,상처에 바를 약,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0167,wound_burn,화상 연고,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0168,wound_burn,베인 데 소독,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0169,insect_bite,벌레 물렸어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0170,insect_bite,모기 물린 데 약,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0171,insect_bite,벌에 쏘였어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0172,hemorrhoid_symptom,치질약 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0173,hemorrhoid_symptom,항문이 아파요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0174,hemorrhoid_symptom,배변할 때 피,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0175,hair_loss_query,탈모약 문의,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0176,hair_loss_query,머리가 많이 빠져요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0177,hair_loss_query,발모제,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0178,topical_medicine_use,연고 어떻게 발라요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0179,topical_medicine_use,하루 몇 번 바르나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0180,topical_medicine_use,바르는 약 사용법,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0181,nasal_spray_use,코 스프레이 어떻게,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0182,nasal_spray_use,비강분무제 사용법,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0183,nasal_spray_use,코약 뿌리는 법,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0184,eye_drop_use,안약 넣는 법,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0185,eye_drop_use,점안액 같이 써도,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0186,eye_drop_use,렌즈 끼고 안약,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0187,general_administration_timing,식전 식후 언제,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0188,general_administration_timing,약 언제 먹어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0189,general_administration_timing,공복에 먹어도 돼요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0190,general_missed_dose,약을 깜빡했어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0191,general_missed_dose,한 번 빼먹었어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0192,general_missed_dose,지금 두 알 먹나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0193,medicine_storage,냉장 보관해야 하나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0194,medicine_storage,약 보관 어떻게,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0195,medicine_storage,시럽 개봉 후 보관,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0196,prescription_counseling_general,처방약 설명해 주세요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0197,prescription_counseling_general,이 약들 어떻게 먹어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0198,prescription_counseling_general,복약지도,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0199,dispensing_crush_split_query,알약 쪼개도 돼요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0200,dispensing_crush_split_query,약을 갈아 먹어도,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0201,dispensing_crush_split_query,캡슐 열어도 되나요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0202,supplement_calcium_query,칼슘 영양제,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0203,supplement_calcium_query,칼슘 언제 먹어요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0204,supplement_calcium_query,칼슘 같이 먹어도,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0205,supplement_carnitine_query,카르니틴 문의,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0206,supplement_carnitine_query,엘카르니틴,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0207,supplement_carnitine_query,카르니틴 영양제,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0208,supplement_pycnogenol_query,피크노제놀,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0209,supplement_pycnogenol_query,피크노제놀 영양제,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0210,supplement_pycnogenol_query,이 성분 뭐예요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0211,supplement_vitamin_d_query,비타민D 용량,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0212,supplement_vitamin_d_query,아이 비타민D,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0213,supplement_vitamin_d_query,비타민 디 얼마나,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0214,supplement_drug_nutrient_chart_query,이 약 먹으면 영양소 부족,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0215,supplement_drug_nutrient_chart_query,드럭머거,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0216,supplement_drug_nutrient_chart_query,약과 영양제 조합,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0217,admin_pharmacy_operations,근무약사 가이드,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0218,admin_pharmacy_operations,조제실 업무,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0219,admin_pharmacy_operations,약국 운영 절차,patient_phrase,True,unreviewed,False

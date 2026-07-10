@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "lib": ["ES2024"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@pharmassist/contracts": ["./packages/contracts/src/index.ts"],
+      "@pharmassist/domain": ["./packages/domain/src/index.ts"],
+      "@pharmassist/normalizer": ["./packages/normalizer/src/index.ts"],
+      "@pharmassist/safety": ["./packages/safety/src/index.ts"],
+      "@pharmassist/retrieval": ["./packages/retrieval/src/index.ts"],
+      "@pharmassist/runtime": ["./packages/runtime/src/index.ts"],
+      "@pharmassist/knowledge": ["./packages/knowledge/src/index.ts"],
+      "@pharmassist/openai-adapter": ["./packages/openai-adapter/src/index.ts"],
+      "@pharmassist/observability": ["./packages/observability/src/index.ts"],
+      "@pharmassist/ui": ["./packages/ui/src/index.ts"],
+      "@pharmassist/test-fixtures": ["./packages/test-fixtures/src/index.ts"]
+    },
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "useUnknownInCatchVariables": true,
+    "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node"],
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "skipLibCheck": false
+  }
+}

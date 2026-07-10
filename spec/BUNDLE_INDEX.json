@@ -1,0 +1,598 @@
+{
+  "bundle_name": "pharmacist_realtime_copilot_handoff",
+  "version": "1.0.0",
+  "created_at": "2026-07-10T00:00:00Z",
+  "source_files_audited": 124,
+  "raw_source_files_included": 0,
+  "integrity_scope": "All files except BUNDLE_INDEX.json and SHA256SUMS.txt themselves",
+  "files": [
+    {
+      "path": "MASTER_HANDOFF.md",
+      "category": "root",
+      "size_bytes": 11795,
+      "sha256": "7f8de3acabae57b6a40a671c2f4a461db41b6e54e5ddc58d48da15fb3139e5fb",
+      "description": "전체 제품·안전·아키텍처 결론"
+    },
+    {
+      "path": "PACKAGE_VALIDATION_REPORT.md",
+      "category": "root",
+      "size_bytes": 1710,
+      "sha256": "df8027337467fb2a8e3c346727a4b3f4475f817111e7947d32e9ff21c1f6ee45",
+      "description": "패키지 구조·스키마·무결성 검증 결과"
+    },
+    {
+      "path": "README.md",
+      "category": "root",
+      "size_bytes": 3620,
+      "sha256": "c79cdfeeab3cc214bf037daf2c9fcd62ce3d856a3a50ad1f4e8645d31b0bfc40",
+      "description": ""
+    },
+    {
+      "path": "SOURCE_AUDIT.csv",
+      "category": "root",
+      "size_bytes": 76668,
+      "sha256": "d2c2a5285854d432eacecf394955914cff100060170640afd4b57af8539f21e0",
+      "description": "124개 원본 파일별 사용/차단 판정"
+    },
+    {
+      "path": "SOURCE_AUDIT_SUMMARY.json",
+      "category": "root",
+      "size_bytes": 1485,
+      "sha256": "36d0c37efa9b9599c27fbc1df3bd5f4494ff1f458c68f93b22a0a1929ef83f66",
+      "description": "감사 통계 요약"
+    },
+    {
+      "path": "SOURCE_MANIFEST.csv",
+      "category": "root",
+      "size_bytes": 32438,
+      "sha256": "fc0f3eebf6da23725d29ae0b4d82af3f6ff5aede508ceb70c498c55095ec0b34",
+      "description": "원본 파일 인벤토리와 해시"
+    },
+    {
+      "path": "START_HERE.md",
+      "category": "root",
+      "size_bytes": 1412,
+      "sha256": "d9e1079f17f93c1d8a5b2e3532eddc15a3516ec6747825199f0bd27e81bb8616",
+      "description": "인계 순서와 핵심 전제"
+    },
+    {
+      "path": "architecture/component_diagram.mmd",
+      "category": "architecture",
+      "size_bytes": 871,
+      "sha256": "db6f60172e688ca52bebaafdfaa1388565169c87a8424b07abacaa7413164a96",
+      "description": ""
+    },
+    {
+      "path": "architecture/knowledge_lifecycle.mmd",
+      "category": "architecture",
+      "size_bytes": 718,
+      "sha256": "d3602d07163d68cc8485f578082e98c2edade50095d14e2fb92d11c2fdc354fe",
+      "description": ""
+    },
+    {
+      "path": "architecture/sequence_diagram.mmd",
+      "category": "architecture",
+      "size_bytes": 1089,
+      "sha256": "7ebf02b3d8f477bdefb7dadf5a5ab20ec749a55f4ebbf78f8bf6f0690cc227ee",
+      "description": ""
+    },
+    {
+      "path": "architecture/state_machine.mmd",
+      "category": "architecture",
+      "size_bytes": 922,
+      "sha256": "2a348dc9a87d18755915eb271905d46a3edba5e8709db92247332311930d2f31",
+      "description": ""
+    },
+    {
+      "path": "codex/ACCEPTANCE_CRITERIA.md",
+      "category": "codex",
+      "size_bytes": 16228,
+      "sha256": "885f9c71bb4fdb4816985c446dc54bff5e6d025eaafd72332376a3168efae95a",
+      "description": "구현/배포 완료 판정 계약"
+    },
+    {
+      "path": "codex/COPY_PASTE_START_PROMPT.txt",
+      "category": "codex",
+      "size_bytes": 739,
+      "sha256": "3294235d6d91f9c77200c5ab2f8676441621da37169fea70e461312128f93d9f",
+      "description": ""
+    },
+    {
+      "path": "codex/IMPLEMENTATION_REPORT_TEMPLATE.md",
+      "category": "codex",
+      "size_bytes": 2214,
+      "sha256": "adc0ca06b5926d0741fb5bc1f3f86199e10e49214e4ee9beaed884daa927532a",
+      "description": ""
+    },
+    {
+      "path": "codex/IMPLEMENTATION_TASKS.yaml",
+      "category": "codex",
+      "size_bytes": 2506,
+      "sha256": "7078797bf2ba44c2c067bc74632aa1adfc6a7e7257f81e695e656e62f8c25089",
+      "description": ""
+    },
+    {
+      "path": "codex/MASTER_IMPLEMENTATION_PROMPT.md",
+      "category": "codex",
+      "size_bytes": 23715,
+      "sha256": "24c67038da758a3c71db5c804a3e5b10d7a6d43b7525f836b078a34d2eee768c",
+      "description": "Codex/GPT-5.6용 자율 구현 지시"
+    },
+    {
+      "path": "codex/REPO_TREE.md",
+      "category": "codex",
+      "size_bytes": 5909,
+      "sha256": "ef86c9614ead898bf707946b2d7770424a35351d1f886ab83386e2108fd9fbc4",
+      "description": ""
+    },
+    {
+      "path": "config/feature_flags.example.yaml",
+      "category": "config",
+      "size_bytes": 685,
+      "sha256": "45a6f888c98a2e13ad7c63d3d29668f7b93cda6a3cdc412e3ec96859792138f8",
+      "description": ""
+    },
+    {
+      "path": "config/latency_budget.yaml",
+      "category": "config",
+      "size_bytes": 1263,
+      "sha256": "6d89f57b61ae349db77fc8f82090acdc7892bee53564310867f01aa5f436be53",
+      "description": ""
+    },
+    {
+      "path": "config/model.example.yaml",
+      "category": "config",
+      "size_bytes": 1316,
+      "sha256": "f82fc743dc4b37f8a9cbf8260f006e033baf5c8fa335752f956f485d9ad4004a",
+      "description": ""
+    },
+    {
+      "path": "config/privacy.example.yaml",
+      "category": "config",
+      "size_bytes": 1178,
+      "sha256": "3fcfc1885a01a02f8e75e312b8145678c99b613b097dfdb19fcc8486e87f6f0d",
+      "description": ""
+    },
+    {
+      "path": "config/source_policy.yaml",
+      "category": "config",
+      "size_bytes": 2166,
+      "sha256": "a56ee3a0e77714e4bee3a8a56248eb71721790cd5022b9b9d7a53a103f1e5af5",
+      "description": ""
+    },
+    {
+      "path": "docs/00_EXECUTIVE_SUMMARY.md",
+      "category": "docs",
+      "size_bytes": 2126,
+      "sha256": "8d7d58f9365b299ee004d41ff3bc7533aac7733d2d020c8b89087a769fe74ea6",
+      "description": ""
+    },
+    {
+      "path": "docs/01_PRODUCT_REQUIREMENTS.md",
+      "category": "docs",
+      "size_bytes": 8110,
+      "sha256": "3cc716c5ecabd6b1f32e9af902e6c763db21d6d60bfb5aac78d3b2f3a532593f",
+      "description": ""
+    },
+    {
+      "path": "docs/02_SOURCE_AUDIT_AND_TRUST_POLICY.md",
+      "category": "docs",
+      "size_bytes": 6237,
+      "sha256": "e92ce925150f33f005eece16a68fd0534d29bc238b2669eb2f90a365c97bb5dc",
+      "description": ""
+    },
+    {
+      "path": "docs/03_SYSTEM_ARCHITECTURE.md",
+      "category": "docs",
+      "size_bytes": 9380,
+      "sha256": "0c0c18b12222c93033e85f4af976bf6a627ccadc763f64034265b40c4acde064",
+      "description": ""
+    },
+    {
+      "path": "docs/04_DATA_MODEL_AND_SCHEMAS.md",
+      "category": "docs",
+      "size_bytes": 5830,
+      "sha256": "b7e37a7bc01e5b60a234526715fb0ea14601d5a53428e13fd9a6e4c0a8941c36",
+      "description": ""
+    },
+    {
+      "path": "docs/05_INGESTION_PIPELINE.md",
+      "category": "docs",
+      "size_bytes": 6878,
+      "sha256": "4de09134a264760e49a8b152f21568e076e9f17d7f225d259987fcde5743587d",
+      "description": ""
+    },
+    {
+      "path": "docs/06_REALTIME_RUNTIME_AND_LATENCY.md",
+      "category": "docs",
+      "size_bytes": 8992,
+      "sha256": "55e0ddaa646793d0310081d1e33ebf54d365f564cb8c1f9e7e18a795f652ee96",
+      "description": ""
+    },
+    {
+      "path": "docs/07_SAFETY_GUARDRAILS.md",
+      "category": "docs",
+      "size_bytes": 8246,
+      "sha256": "fa1ee21da5c1b4ca027ef3d12f6b7f106e0b32f9c16f695843b3c9084c96f3ac",
+      "description": ""
+    },
+    {
+      "path": "docs/08_UI_UX_SPEC.md",
+      "category": "docs",
+      "size_bytes": 7688,
+      "sha256": "9f785f2a4ef3b1c789204e06f13626d0729dc6b2c6813c88b4faf6871f39aee7",
+      "description": ""
+    },
+    {
+      "path": "docs/09_EVALUATION_AND_GOLDEN_TESTS.md",
+      "category": "docs",
+      "size_bytes": 6530,
+      "sha256": "6e65bd78690f2ff16c5ba891b8db43d8e2e25d123b212c7337860c0ef1ea6481",
+      "description": ""
+    },
+    {
+      "path": "docs/10_DEPLOYMENT_SECURITY_OBSERVABILITY.md",
+      "category": "docs",
+      "size_bytes": 6746,
+      "sha256": "f1ac3f73a7d605ea44b6e1d92d072bc25c1c36add0d3341218b49d933481ffe9",
+      "description": ""
+    },
+    {
+      "path": "docs/11_IMPLEMENTATION_PLAN.md",
+      "category": "docs",
+      "size_bytes": 5458,
+      "sha256": "b788c7edbf806e37afc3d3544904009d52c355bc6a7169cc1a75718a20d696b6",
+      "description": ""
+    },
+    {
+      "path": "docs/12_API_CONTRACT.md",
+      "category": "docs",
+      "size_bytes": 5107,
+      "sha256": "e43613a393d0e1f5cddf3497741a1aa8ae81a7836bc22bdd716dc84b50e396c7",
+      "description": ""
+    },
+    {
+      "path": "docs/13_LEGAL_PRIVACY_NOTES.md",
+      "category": "docs",
+      "size_bytes": 6681,
+      "sha256": "93ead3256119aa7bd3b24176a5fb079bded859d5f738d9d260a26ef6e8d5de21",
+      "description": ""
+    },
+    {
+      "path": "docs/14_SOURCE_CONTENT_MAP.md",
+      "category": "docs",
+      "size_bytes": 4252,
+      "sha256": "fc77ad0c0d48390b87141a836b0d13b7cfab340a0b9f6ce5f3646a444764aaa9",
+      "description": ""
+    },
+    {
+      "path": "docs/15_DECISION_LOG.md",
+      "category": "docs",
+      "size_bytes": 2576,
+      "sha256": "914e110edb0877b6127b07e44218840914a5994e864e390fbf53e2436d0d9426",
+      "description": ""
+    },
+    {
+      "path": "docs/16_OPENAI_INTEGRATION_RECIPES.md",
+      "category": "docs",
+      "size_bytes": 5571,
+      "sha256": "1f1ef6dccafc4852573f5a77ccb89935539bbf6b7ce154b4e9889f19a2712240",
+      "description": ""
+    },
+    {
+      "path": "examples/README.md",
+      "category": "examples",
+      "size_bytes": 768,
+      "sha256": "4927c160ebcc0336b471d7aae2b601a103c4dcac236b6bfc118f4b4b76bfed7f",
+      "description": ""
+    },
+    {
+      "path": "examples/consultation_cards.sample.jsonl",
+      "category": "examples",
+      "size_bytes": 5727,
+      "sha256": "44b7ce57d23293ce85c10b4cc80818de55a8a28afc3a53f615469b249397b1e0",
+      "description": ""
+    },
+    {
+      "path": "examples/golden_cases.sample.jsonl",
+      "category": "examples",
+      "size_bytes": 18758,
+      "sha256": "880b60d9a019d33fcf739bb8db803b651a7178d1ce0ec7986c49eee35dcbbd67",
+      "description": ""
+    },
+    {
+      "path": "examples/runtime_input.sample.json",
+      "category": "examples",
+      "size_bytes": 679,
+      "sha256": "ea4aafe3234476578cd9d9862533aa7c9ea8fa5ab8659a741ce8845e7e6c1f2f",
+      "description": ""
+    },
+    {
+      "path": "examples/runtime_output.sample.json",
+      "category": "examples",
+      "size_bytes": 1365,
+      "sha256": "f4ddc734db27fa0f1b941df101dd2b5ebb1b24f9a2832fcb5ecf4ad5a3ec8fe3",
+      "description": ""
+    },
+    {
+      "path": "knowledge_seed/ALIAS_SEED_CANDIDATE.csv",
+      "category": "knowledge_seed",
+      "size_bytes": 21825,
+      "sha256": "42282c7b24f8c7c1dba65352e865b2b4dfafd504cd11987febfef7d7aad03cfd",
+      "description": "합성 local-retrieval alias seed"
+    },
+    {
+      "path": "knowledge_seed/AUTHORING_WAVES.md",
+      "category": "knowledge_seed",
+      "size_bytes": 1632,
+      "sha256": "16b14495b953a3636d3d817363f51e6559684432d16e0c658bfdd96e1ac6ed92",
+      "description": ""
+    },
+    {
+      "path": "knowledge_seed/INTENT_INVENTORY_CANDIDATE.csv",
+      "category": "knowledge_seed",
+      "size_bytes": 12296,
+      "sha256": "1ffc353e1496e2c8073c2f324476663604dacf5049e950cc156df5c6159f4993",
+      "description": "candidate intent 저작 큐"
+    },
+    {
+      "path": "knowledge_seed/README.md",
+      "category": "knowledge_seed",
+      "size_bytes": 1155,
+      "sha256": "be2f0d5f93fd96f4ec4864dc9af3baf547f1917ab3c22affefcbb9ea86809e70",
+      "description": ""
+    },
+    {
+      "path": "knowledge_seed/SLOT_TAXONOMY.csv",
+      "category": "knowledge_seed",
+      "size_bytes": 3082,
+      "sha256": "7a3f5ee6947477ee980434bea73696df0a752d3c130976c4894b6b237c9d0754",
+      "description": "구조화 상담 slot 초안"
+    },
+    {
+      "path": "prompts/PROMPT_REGISTRY.json",
+      "category": "prompts",
+      "size_bytes": 2077,
+      "sha256": "64480405b5852dd96fa68684df9e02317f0b44962e7795013fbbf27e8c05ae0e",
+      "description": "프롬프트 버전과 해시"
+    },
+    {
+      "path": "prompts/README.md",
+      "category": "prompts",
+      "size_bytes": 1951,
+      "sha256": "90d6f813ff56ac52c3e93c32f2d3c4b8038329d2e19e511bad2a43e10db0556a",
+      "description": ""
+    },
+    {
+      "path": "prompts/offline_card_extractor_prompt.md",
+      "category": "prompts",
+      "size_bytes": 5131,
+      "sha256": "1ca6bf979f4c96948f2b86019ae35d70e493436d4b2f5f4a0000fbfc4ad5ac28",
+      "description": ""
+    },
+    {
+      "path": "prompts/pharmacist_review_prompt.md",
+      "category": "prompts",
+      "size_bytes": 1407,
+      "sha256": "b9a67deaa5dd739f2a58910ab8978043a30e00ed983a7d10d734d4dc9d6224c0",
+      "description": ""
+    },
+    {
+      "path": "prompts/realtime_transcription_router_prompt.md",
+      "category": "prompts",
+      "size_bytes": 2318,
+      "sha256": "c71c0d6c19b1a514e5dd99df0d12ac1c002b4ce7f00517bc1641507730908eb2",
+      "description": ""
+    },
+    {
+      "path": "prompts/runtime_refiner_prompt.md",
+      "category": "prompts",
+      "size_bytes": 3125,
+      "sha256": "9a1caa9b5831c10a471f380079d878c45a8bdf044379b8beac86157897280e9c",
+      "description": ""
+    },
+    {
+      "path": "prompts/runtime_system_prompt.md",
+      "category": "prompts",
+      "size_bytes": 3849,
+      "sha256": "8aea9d0ddb441de0f6a3d9c90588b67bfe0ffdf76aa8c073ae9aea196dacaaf8",
+      "description": ""
+    },
+    {
+      "path": "prompts/safety_reviewer_prompt.md",
+      "category": "prompts",
+      "size_bytes": 2750,
+      "sha256": "787bcf85fe6e9c5e846f47aa60835b3c5486765b2c83e879c6f81fe0ed68661c",
+      "description": ""
+    },
+    {
+      "path": "prompts/source_conflict_resolver_prompt.md",
+      "category": "prompts",
+      "size_bytes": 2355,
+      "sha256": "50334335d4878ad1438c7f17211fb032b182c279dd3e31b73d67c73f4ab49e67",
+      "description": ""
+    },
+    {
+      "path": "references/OFFICIAL_REFERENCES.csv",
+      "category": "references",
+      "size_bytes": 1790,
+      "sha256": "fc430257bd31a0fc5b6e7c25cdacf98f490f277ce0e6f3b54306454c96560071",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/.env.example",
+      "category": "repo_blueprint",
+      "size_bytes": 1709,
+      "sha256": "cbb8de1722d480c90763585da05b101efa4e6d7efd70395976a7e90917992ddf",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/Dockerfile.api.example",
+      "category": "repo_blueprint",
+      "size_bytes": 547,
+      "sha256": "dc04975fe36c5eae35494c90c542c2502c26edd0b553c35d9e5add5314996b48",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/README.md",
+      "category": "repo_blueprint",
+      "size_bytes": 1395,
+      "sha256": "9f2462304f783965d1bb734d76b3f97235466f45b7dba0f4d9a701dc160f26ec",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/ci.example.yml",
+      "category": "repo_blueprint",
+      "size_bytes": 898,
+      "sha256": "10fe33bb46e5c768fa74d022f92a4bff3f125a942ed03ee63388f520a5617bd9",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/compose.example.yaml",
+      "category": "repo_blueprint",
+      "size_bytes": 1299,
+      "sha256": "c4b7bfb398c641ab5ecdcc0285580570d4502c46b8d2a3d07b2a5c4f81b0fee6",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/gitignore.example",
+      "category": "repo_blueprint",
+      "size_bytes": 203,
+      "sha256": "eb6c3bca7aa4bfc7f4e062f9858622d4162437d98f86d0be1efb49792d6445b3",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/knowledge-pack.manifest.example.json",
+      "category": "repo_blueprint",
+      "size_bytes": 586,
+      "sha256": "3f100559d094f23f97d8df31e8681485f76822fa35dab6d702986622a3027715",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/observability-allowlist.example.yaml",
+      "category": "repo_blueprint",
+      "size_bytes": 715,
+      "sha256": "6a699e30190aec946179c3eee87c8fb06967c60755435dd53d63400cd79d0ada",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/openai-adapter-contract.example.ts",
+      "category": "repo_blueprint",
+      "size_bytes": 1691,
+      "sha256": "087f70cae317d30c272933084c45780ffbb0927df1e32423bda2e59a9a8ad9be",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/package.root.example.json",
+      "category": "repo_blueprint",
+      "size_bytes": 922,
+      "sha256": "5b14a6168b1a3054066ea3b2d79856779f570ef22ab287cfa317c7b2a7425e69",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/pnpm-workspace.example.yaml",
+      "category": "repo_blueprint",
+      "size_bytes": 48,
+      "sha256": "e56067a24c6e74ad1d8724d61afefe9cf4825d0f98ea8407ccfed4a6d0468e0a",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/production-gates.example.yaml",
+      "category": "repo_blueprint",
+      "size_bytes": 633,
+      "sha256": "b3ac9b47ba9ae3294ba454a0045fa7555c451a7344f66829ae700f03a668c08f",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/tsconfig.base.example.json",
+      "category": "repo_blueprint",
+      "size_bytes": 506,
+      "sha256": "116d7ffafdf148a27269b318664c0f29c242bf3b9f453e70197d966110a38be4",
+      "description": ""
+    },
+    {
+      "path": "repo_blueprint/turbo.example.json",
+      "category": "repo_blueprint",
+      "size_bytes": 481,
+      "sha256": "5e4f6a3af9042967480d39875d5bef1b67bffdeefa9f0b2a75478673c5339a45",
+      "description": ""
+    },
+    {
+      "path": "schemas/claim.schema.json",
+      "category": "schemas",
+      "size_bytes": 2994,
+      "sha256": "c3dee5eaec59b4687513d56981de4f84806ec1f9d45664cc28a1ded198d3420a",
+      "description": ""
+    },
+    {
+      "path": "schemas/consultation_card.schema.json",
+      "category": "schemas",
+      "size_bytes": 6700,
+      "sha256": "f49a060b482d1ced2cd6172a5d1739dd0f07628c0712e599795f7b0be411c053",
+      "description": ""
+    },
+    {
+      "path": "schemas/drug_product.schema.json",
+      "category": "schemas",
+      "size_bytes": 3117,
+      "sha256": "035257047972402ed426b1869195185a5ab17725784c0b0c67cdb45a024e8451",
+      "description": ""
+    },
+    {
+      "path": "schemas/runtime_input.schema.json",
+      "category": "schemas",
+      "size_bytes": 3761,
+      "sha256": "fb04e20412fce10a6529c7c2dafaede2f8ab11df9706fd9ddd5a8a0018e1ce28",
+      "description": ""
+    },
+    {
+      "path": "schemas/runtime_output.schema.json",
+      "category": "schemas",
+      "size_bytes": 5426,
+      "sha256": "3d2ecd8f91412fea4a65f78f8d03e7574c3bad4aa18cbd0462275c1bc597fffa",
+      "description": ""
+    },
+    {
+      "path": "schemas/source_record.schema.json",
+      "category": "schemas",
+      "size_bytes": 2859,
+      "sha256": "68d35f4f672759dbdf609fe30711d5ad29a3509945932795f7de63db1dd3f309",
+      "description": ""
+    },
+    {
+      "path": "tests/LATENCY_BENCHMARK_SPEC.md",
+      "category": "tests",
+      "size_bytes": 1453,
+      "sha256": "24a382dbebca99d46c095c3ba1ffcb9e4526da2ecd5766f0d654a85ae3693598",
+      "description": ""
+    },
+    {
+      "path": "tests/PRIVACY_SECURITY_TESTS.md",
+      "category": "tests",
+      "size_bytes": 1289,
+      "sha256": "91f88c63e9720955d5a2d4939680e2e15c15b29dae2bd703a00fa98ad42df25c",
+      "description": ""
+    },
+    {
+      "path": "tests/SAFETY_TEST_MATRIX.csv",
+      "category": "tests",
+      "size_bytes": 6735,
+      "sha256": "637db632388f8a5823a6fa3bf8e77f90c04df2a4ae68c2d29853c4b2e6b4e1e5",
+      "description": ""
+    },
+    {
+      "path": "tests/TEST_PLAN.md",
+      "category": "tests",
+      "size_bytes": 1445,
+      "sha256": "bf0fc5f8f5a3d9cbd2d5dced03915b3a871b9607b4e44b1c738f665e84a1c888",
+      "description": ""
+    },
+    {
+      "path": "tests/adversarial_cases.jsonl",
+      "category": "tests",
+      "size_bytes": 12682,
+      "sha256": "4c436834e360f499baa987ad93b097409f9565d1e6b5634d0e039bd33975c854",
+      "description": "안전·보안 adversarial behavior cases"
+    }
+  ]
+}

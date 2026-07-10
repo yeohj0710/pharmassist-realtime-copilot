@@ -1,0 +1,26 @@
+{
+  "request_id": "9b1deb4d-3b7d-4ca4-9e2a-77d62f095349",
+  "session_id": "c5beed71-acde-4a33-8c5a-a33ffdd81f6d",
+  "sequence": 7,
+  "input_type": "typed",
+  "text": "아이 해열제 몇 mL",
+  "is_partial": false,
+  "locale": "ko-KR",
+  "domain": "human_otc",
+  "patient_context": {
+    "age_years": 4,
+    "weight_kg": null,
+    "sex_at_birth": "unknown",
+    "pregnancy_status": null,
+    "gestational_weeks": null,
+    "lactating": null,
+    "symptom_duration_text": null,
+    "allergies": [],
+    "current_medications": [],
+    "conditions": [],
+    "product_name": null,
+    "product_concentration": null
+  },
+  "asr": null,
+  "client_timestamp": "2026-07-10T00:00:00Z"
+}

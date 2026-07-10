@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/runtime_input.schema.json",
+  "title": "RuntimeInput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "session_id",
+    "sequence",
+    "input_type",
+    "text",
+    "is_partial",
+    "locale",
+    "domain",
+    "patient_context",
+    "client_timestamp"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "session_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "input_type": {
+      "type": "string",
+      "enum": ["typed", "voice_partial", "voice_final", "card_action"]
+    },
+    "text": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "is_partial": {
+      "type": "boolean"
+    },
+    "locale": {
+      "type": "string",
+      "const": "ko-KR"
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "human_otc",
+        "prescription_counseling",
+        "supplement",
+        "animal_medicine"
+      ]
+    },
+    "patient_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "age_years": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 130
+        },
+        "weight_kg": {
+          "type": ["number", "null"],
+          "minimum": 0.1,
+          "maximum": 500
+        },
+        "sex_at_birth": {
+          "type": ["string", "null"],
+          "enum": ["female", "male", "intersex", "unknown", null]
+        },
+        "pregnancy_status": {
+          "type": ["string", "null"],
+          "enum": [
+            "not_pregnant",
+            "pregnant",
+            "possible",
+            "postpartum",
+            "unknown",
+            null
+          ]
+        },
+        "gestational_weeks": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 45
+        },
+        "lactating": {
+          "type": ["boolean", "null"]
+        },
+        "symptom_duration_text": {
+          "type": ["string", "null"]
+        },
+        "allergies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "current_medications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "product_name": {
+          "type": ["string", "null"]
+        },
+        "product_concentration": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "asr": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stable_prefix_chars": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "client_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

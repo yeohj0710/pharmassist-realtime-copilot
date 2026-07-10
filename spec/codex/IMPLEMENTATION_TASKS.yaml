@@ -1,0 +1,130 @@
+version: 1.0.0
+execution_policy:
+  autonomous: true
+  ask_only_when: A safety-critical ambiguity cannot be resolved from the spec; otherwise
+    choose the safer default and document it.
+  priority:
+  - clinical_safety
+  - privacy
+  - provenance
+  - correctness
+  - latency
+  - usability
+  - resilience
+  - cost
+  - feature_count
+  external_dependency_policy: Implement interface, mock, fixture, tests, and activation
+    runbook without inventing credentials or official data.
+phases:
+- id: P0
+  name: workspace_contracts
+  deliverables:
+  - monorepo
+  - strict_ts
+  - schema_types_validators
+  - openapi
+  - ci_baseline
+  - traceability_matrix
+  gates:
+  - clean_install
+  - lint
+  - typecheck
+  - schema_tests
+  - build
+- id: P1
+  name: deterministic_engine
+  deliverables:
+  - normalizer
+  - pii_redactor
+  - negation_temporality
+  - slot_extractor
+  - safety_gate
+  - retrieval
+  - hysteresis
+  - worker
+  - synthetic_pack
+  gates:
+  - 50_golden_cases
+  - offline_without_key
+  - exact_p95_target
+  - no_raw_logs
+- id: P2
+  name: knowledge_lifecycle
+  deliverables:
+  - source_claim_card_store
+  - reviewer_app
+  - policy_lint
+  - conflict_workflow
+  - compiler
+  - ed25519_pack
+  - update_rollback_revoke
+  gates:
+  - synthetic_production_block
+  - tier_policy
+  - traceability
+  - signature_tests
+  - atomic_rollback
+- id: P3
+  name: responses_refinement
+  deliverables:
+  - redacted_builder
+  - prompt_registry
+  - responses_adapter
+  - strict_output
+  - sse
+  - abort_timeout_stale
+  - post_validator
+  - mock_provider
+  gates:
+  - store_false_test
+  - allowlist_tests
+  - local_fallback
+  - prompt_injection_tests
+  - no_payload_logging
+- id: P4
+  name: realtime_transcription
+  deliverables:
+  - ptt_ui
+  - webrtc_adapter
+  - server_broker
+  - event_reducer
+  - stable_prefix
+  - alternatives
+  - fallback
+  gates:
+  - no_client_standard_key
+  - fake_realtime_e2e
+  - audio_not_persisted
+  - voice_replay_benchmark
+- id: P5
+  name: operations_security
+  deliverables:
+  - auth_rbac
+  - tenant_isolation
+  - safe_observability
+  - docker_compose
+  - migrations
+  - runbooks
+  - threat_model
+  - security_ci
+  - sbom
+  gates:
+  - security_tests
+  - privacy_leak_test
+  - nonroot_container
+  - backup_restore
+  - incident_drill
+- id: P6
+  name: release_evidence
+  deliverables:
+  - full_e2e
+  - benchmark_report
+  - accessibility
+  - acceptance_evidence
+  - implementation_report
+  - known_external_gates
+  gates:
+  - all_auto_green
+  - benchmark_recorded
+  - no_todo_fixme
+  - local_demo_verified

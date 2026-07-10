@@ -1,0 +1,34 @@
+version: "1.0.0"
+allowed_event_fields:
+  common:
+    - event_name
+    - timestamp
+    - request_id
+    - tenant_pseudonym
+    - pharmacist_pseudonym
+    - session_pseudonym
+    - sequence
+    - domain
+    - intent_id
+    - card_id
+    - rule_ids
+    - knowledge_version
+    - model_id
+    - prompt_version
+    - latency_bucket
+    - status_code
+    - error_code
+    - feedback_reason_codes
+  forbidden:
+    - raw_text
+    - normalized_text
+    - transcript
+    - audio
+    - patient_name
+    - phone
+    - address
+    - resident_registration_number
+    - medication_free_text
+    - prompt_body
+    - model_output_body
+serializer_policy: "Reject unknown keys; never recursively serialize arbitrary request objects."

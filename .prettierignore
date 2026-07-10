@@ -1,0 +1,8 @@
+spec/
+data/generated-dev-pack/
+reports/
+playwright-report/
+coverage/
+pnpm-lock.yaml
+packages/contracts/src/generated/
+packages/contracts/openapi/

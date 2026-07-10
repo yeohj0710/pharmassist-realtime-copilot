@@ -1,0 +1,60 @@
+policy_version: "1.0.0"
+clinical_runtime_default_domain: human_otc
+trust_tiers:
+  A:
+    label: authoritative_current
+    examples:
+      - MFDS official product label and safety notice
+      - HIRA DUR current data
+      - current national/public-health guidance within scope
+    publish_rule: "Pharmacist review plus freshness check; required for high-risk factual claims."
+  B:
+    label: high_quality_clinical_evidence
+    examples:
+      - current peer-reviewed guideline
+      - systematic review or high-quality consensus
+    publish_rule: "May support a card when no more specific official label conflicts."
+  C:
+    label: practitioner_education
+    publish_rule: "Candidate extraction only. May contribute workflow and wording, never become truth without A/B verification."
+  D:
+    label: marketing_or_product_material
+    publish_rule: "Metadata or UX vocabulary only. No clinical truth and no automatic recommendation."
+  X:
+    label: excluded_or_wrong_domain
+    publish_rule: "Never available to the human clinical runtime."
+conflict_resolution:
+  precedence: [A, B, C, D, X]
+  rules:
+    - "Never average contradictory dose, contraindication, interaction, pregnancy, age, or referral claims."
+    - "A current product-specific label overrides generic educational material for that product."
+    - "A conflict blocks publication until a pharmacist resolves and records the rationale."
+    - "Expired or unverifiable claims are treated as absent."
+publication_gates:
+  high_risk_claims:
+    - dose
+    - pediatric_dose
+    - pregnancy
+    - lactation
+    - contraindication
+    - interaction
+    - allergy
+    - referral
+    - emergency
+  requirements:
+    - pharmacist_approved
+    - official_source_verified
+    - source_locator_present
+    - verification_date_present
+    - expiry_date_present
+    - automated_schema_validation_passed
+    - golden_tests_passed
+runtime_exclusions:
+  - diagnosis_from_appearance_or_constitution
+  - supplement_as_disease_treatment
+  - aggressive_upsell
+  - animal_medicine_in_human_mode
+  - unverified_exact_dose
+  - unverified_missed_dose_rule
+  - unverified_pregnancy_or_age_rule
+  - raw_source_passage_generation

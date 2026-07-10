@@ -1,0 +1,39 @@
+{
+  "name": "@pharmassist/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/server.js"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --config ../../vitest.package.config.ts",
+    "db:migrate": "node ../../database/migrate.mjs",
+    "db:seed:synthetic": "node ../../database/seed.mjs"
+  },
+  "dependencies": {
+    "@fastify/cors": "11.3.0",
+    "@fastify/helmet": "13.1.0",
+    "@fastify/rate-limit": "11.1.0",
+    "@pharmassist/contracts": "workspace:*",
+    "@pharmassist/knowledge": "workspace:*",
+    "@pharmassist/normalizer": "workspace:*",
+    "@pharmassist/observability": "workspace:*",
+    "@pharmassist/openai-adapter": "workspace:*",
+    "@pharmassist/runtime": "workspace:*",
+    "@pharmassist/test-fixtures": "workspace:*",
+    "fastify": "5.10.0",
+    "jose": "6.2.3",
+    "pino": "10.3.1",
+    "pg": "8.22.0"
+  },
+  "devDependencies": {
+    "tsx": "4.23.0",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}

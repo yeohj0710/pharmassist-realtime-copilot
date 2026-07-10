@@ -1,0 +1,25 @@
+{
+  "name": "@pharmassist/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 4173",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@pharmassist/contracts": "workspace:*",
+    "@pharmassist/domain": "workspace:*",
+    "@pharmassist/runtime": "workspace:*",
+    "@pharmassist/test-fixtures": "workspace:*",
+    "@vitejs/plugin-react": "6.0.3",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "vite": "8.1.4",
+    "vite-plugin-pwa": "1.3.0",
+    "workbox-window": "7.4.1"
+  }
+}

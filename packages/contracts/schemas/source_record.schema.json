@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/source_record.schema.json",
+  "title": "SourceRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "title",
+    "domain",
+    "trust_tier",
+    "runtime_policy",
+    "sha256",
+    "copyright",
+    "review"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "pattern": "^SRC-[A-Z0-9_-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "human_otc",
+        "prescription_counseling",
+        "supplement",
+        "animal_medicine",
+        "operations",
+        "marketing",
+        "unknown"
+      ]
+    },
+    "trust_tier": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "X"]
+    },
+    "runtime_policy": {
+      "type": "string",
+      "enum": [
+        "publishable",
+        "candidate_only",
+        "metadata_only",
+        "admin_only",
+        "separate_domain",
+        "quarantine",
+        "excluded"
+      ]
+    },
+    "jurisdiction": {
+      "type": ["string", "null"]
+    },
+    "published_at": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "verified_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "locator": {
+      "type": ["string", "null"]
+    },
+    "copyright": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["redistribution_allowed", "notes"],
+      "properties": {
+        "redistribution_allowed": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reviewer_ids",
+        "claim_level_verification_required"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "inventoried",
+            "extracted",
+            "reviewed",
+            "verified",
+            "published",
+            "stale",
+            "retired"
+          ]
+        },
+        "reviewer_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "claim_level_verification_required": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

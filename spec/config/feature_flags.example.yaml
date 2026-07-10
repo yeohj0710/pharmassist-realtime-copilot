@@ -1,0 +1,28 @@
+version: "1.0.0"
+flags:
+  typed_input: true
+  push_to_talk: true
+  always_listening: false
+  realtime_transcription: false
+  llm_refinement: false
+  supplement_mode: false
+  animal_medicine_mode: false
+  prescription_mode: false
+  brand_recommendations: false
+  product_inventory_integration: false
+  dur_adapter: false
+  official_label_sync: false
+  raw_transcript_logging: false
+  raw_audio_logging: false
+  anonymous_latency_telemetry: true
+  pharmacist_feedback: true
+  local_offline_mode: true
+rollout_order:
+  - typed_input
+  - local_offline_mode
+  - pharmacist_feedback
+  - llm_refinement
+  - realtime_transcription
+  - prescription_mode
+  - official_label_sync
+  - dur_adapter

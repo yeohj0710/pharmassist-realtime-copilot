@@ -1,0 +1,23 @@
+{
+  "name": "@pharmassist/pack-cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --config ../../vitest.package.config.ts",
+    "lint": "tsx src/cli.ts lint",
+    "build:dev": "tsx src/cli.ts build-dev",
+    "verify": "tsx src/cli.ts verify"
+  },
+  "dependencies": {
+    "@pharmassist/knowledge": "workspace:*",
+    "@pharmassist/test-fixtures": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "4.23.0",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}

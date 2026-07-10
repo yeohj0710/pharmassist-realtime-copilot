@@ -1,0 +1,13 @@
+﻿name,url,purpose,accessed_at
+OpenAI models,https://developers.openai.com/api/docs/models,GPT-5.6 Sol/Terra/Luna and realtime model selection,2026-07-10
+OpenAI realtime transcription,https://developers.openai.com/api/docs/guides/realtime-transcription,Live transcript deltas and gpt-realtime-whisper,2026-07-10
+OpenAI WebRTC,https://developers.openai.com/api/docs/guides/realtime-webrtc,Browser WebRTC connection patterns,2026-07-10
+OpenAI streaming Responses,https://developers.openai.com/api/docs/guides/streaming-responses,Streaming output,2026-07-10
+OpenAI Structured Outputs,https://developers.openai.com/api/docs/guides/structured-outputs,JSON Schema-constrained output,2026-07-10
+OpenAI data controls,https://developers.openai.com/api/docs/guides/your-data,"Retention, ZDR/MAM, endpoint behavior",2026-07-10
+PIPC generative AI privacy guide,https://www.pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS074&mCode=C020010000&nttId=11410,Service-type LLM/API privacy lifecycle,2026-07-10
+PIPC unstructured data pseudonymization,https://www.pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS074&mCode=C020010000&nttId=9899,Audio/text/medical scenarios,2026-07-10
+Korean Personal Information Protection Act,https://www.law.go.kr/LSW/lsInfoP.do?ancYnChk=0&lsId=011357,"Purpose limitation, minimization, sensitive information",2026-07-10
+MFDS NEDrug,https://nedrug.mfds.go.kr/,Official Korean drug product information,2026-07-10
+HIRA DUR public service,https://www.hira.or.kr/ra/medi/form.do?pgmid=HIRAA030029000000,Contraindication and duplicate ingredient safety checks,2026-07-10
+Korean Digital Medical Products Act,https://www.law.go.kr/LSW/lsInfoP.do?ancYnChk=&chrClsCd=010202&efYd=20250124&lsiSeq=259299&urlMode=lsInfoP,Regulatory classification review,2026-07-10

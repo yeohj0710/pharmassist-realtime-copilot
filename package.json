@@ -1,0 +1,52 @@
+{
+  "name": "pharmassist-realtime-copilot",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:demo": "turbo dev --filter=@pharmassist/web --filter=@pharmassist/api --filter=@pharmassist/reviewer",
+    "build": "turbo build",
+    "lint": "node scripts/static-check.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "turbo typecheck",
+    "test": "vitest run --config vitest.config.ts",
+    "test:unit": "vitest run --config vitest.config.ts packages",
+    "test:integration": "vitest run --config vitest.config.ts tests/integration",
+    "test:security": "vitest run --config vitest.security.config.ts && node scripts/security-scan.mjs",
+    "test:e2e": "pnpm --filter @pharmassist/web build && playwright test",
+    "schema:generate": "node scripts/generate-types.mjs && node scripts/generate-openapi.mjs",
+    "schema:check": "node scripts/check-generated.mjs",
+    "pack:lint": "pnpm --filter @pharmassist/pack-cli lint",
+    "pack:build:dev": "pnpm --filter @pharmassist/pack-cli build:dev",
+    "pack:verify": "pnpm --filter @pharmassist/pack-cli verify",
+    "test:knowledge": "vitest run packages/knowledge",
+    "test:openai": "vitest run packages/openai-adapter",
+    "benchmark": "pnpm --filter @pharmassist/benchmark benchmark",
+    "db:migrate": "pnpm --filter @pharmassist/api db:migrate",
+    "db:seed:synthetic": "pnpm --filter @pharmassist/api db:seed:synthetic",
+    "sbom:generate": "pnpm sbom --sbom-format cyclonedx --sbom-spec-version 1.6 --prod --out reports/sbom.cdx.json",
+    "docs:check": "node scripts/docs-check.mjs",
+    "check": "pnpm lint && pnpm format:check && pnpm schema:check && pnpm typecheck && pnpm test && pnpm build && pnpm docs:check"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "fake-indexeddb": "6.2.5",
+    "fast-check": "4.9.0",
+    "json-schema-to-typescript": "15.0.4",
+    "prettier": "3.9.5",
+    "pnpm": "11.11.0",
+    "tsx": "4.23.0",
+    "turbo": "2.10.4",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}

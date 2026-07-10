@@ -1,0 +1,25 @@
+flowchart LR
+  P[Patient speech or pharmacist keywords] --> UI[Pharmacist PWA]
+  UI --> N[Normalizer and slot extractor\nWeb Worker]
+  N --> S[Deterministic safety gate]
+  S --> R[In-memory alias trie + rules + BM25]
+  R --> C[Instant consultation card]
+  C --> UI
+
+  UI -. push-to-talk audio .-> RT[OpenAI Realtime transcription\ngpt-realtime-whisper]
+  RT -. transcript deltas .-> N
+
+  C -. optional structured context .-> API[Fastify API]
+  API --> RED[PHI redactor]
+  RED --> RESP[OpenAI Responses API\nGPT-5.6 Luna/Terra]
+  RESP --> API
+  API --> UI
+
+  K[Offline knowledge compiler] --> V[Pharmacist review + official verification]
+  V --> PACK[Signed immutable knowledge pack]
+  PACK --> R
+  PACK --> API
+
+  API --> AUDIT[Coded audit and latency events\nNo raw audio/transcript]
+  ADMIN[Reviewer console] --> K
+  OFFICIAL[MFDS / HIRA DUR / approved evidence] --> V

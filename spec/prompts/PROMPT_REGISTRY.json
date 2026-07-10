@@ -1,0 +1,62 @@
+{
+  "registry_version": "1.0.0",
+  "generated_at": "2026-07-10T00:00:00Z",
+  "prompts": [
+    {
+      "prompt_id": "offline-card-extractor",
+      "version": "1.0.0",
+      "path": "prompts/offline_card_extractor_prompt.md",
+      "sha256": "1ca6bf979f4c96948f2b86019ae35d70e493436d4b2f5f4a0000fbfc4ad5ac28",
+      "runtime": false,
+      "requires_strict_schema": true
+    },
+    {
+      "prompt_id": "pharmacist-review-assistant",
+      "version": "1.0.0",
+      "path": "prompts/pharmacist_review_prompt.md",
+      "sha256": "b9a67deaa5dd739f2a58910ab8978043a30e00ed983a7d10d734d4dc9d6224c0",
+      "runtime": false,
+      "requires_strict_schema": false
+    },
+    {
+      "prompt_id": "realtime-transcription-router",
+      "version": "1.0.0",
+      "path": "prompts/realtime_transcription_router_prompt.md",
+      "sha256": "c71c0d6c19b1a514e5dd99df0d12ac1c002b4ce7f00517bc1641507730908eb2",
+      "runtime": true,
+      "requires_strict_schema": false
+    },
+    {
+      "prompt_id": "runtime-refiner",
+      "version": "1.0.0",
+      "path": "prompts/runtime_refiner_prompt.md",
+      "sha256": "9a1caa9b5831c10a471f380079d878c45a8bdf044379b8beac86157897280e9c",
+      "runtime": true,
+      "requires_strict_schema": true
+    },
+    {
+      "prompt_id": "runtime-system",
+      "version": "1.0.0",
+      "path": "prompts/runtime_system_prompt.md",
+      "sha256": "8aea9d0ddb441de0f6a3d9c90588b67bfe0ffdf76aa8c073ae9aea196dacaaf8",
+      "runtime": true,
+      "requires_strict_schema": true
+    },
+    {
+      "prompt_id": "safety-reviewer",
+      "version": "1.0.0",
+      "path": "prompts/safety_reviewer_prompt.md",
+      "sha256": "787bcf85fe6e9c5e846f47aa60835b3c5486765b2c83e879c6f81fe0ed68661c",
+      "runtime": false,
+      "requires_strict_schema": true
+    },
+    {
+      "prompt_id": "source-conflict-resolver",
+      "version": "1.0.0",
+      "path": "prompts/source_conflict_resolver_prompt.md",
+      "sha256": "50334335d4878ad1438c7f17211fb032b182c279dd3e31b73d67c73f4ab49e67",
+      "runtime": false,
+      "requires_strict_schema": true
+    }
+  ]
+}

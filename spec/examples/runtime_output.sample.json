@@ -1,0 +1,54 @@
+{
+  "request_id": "9b1deb4d-3b7d-4ca4-9e2a-77d62f095349",
+  "session_id": "c5beed71-acde-4a33-8c5a-a33ffdd81f6d",
+  "sequence": 7,
+  "mode": "clarify",
+  "status": "stable",
+  "intent": "pediatric_dose_request_missing_data",
+  "say_now": [
+    "정확한 양은 체중과 제품 농도를 확인한 뒤 계산해야 합니다. 우선 체중과 제품 라벨을 확인하겠습니다."
+  ],
+  "ask_next": [
+    {
+      "question": "아이의 현재 체중이 몇 kg인가요?",
+      "reason": "소아 용량 계산의 필수 입력값",
+      "priority": 1,
+      "slot": "weight_kg"
+    }
+  ],
+  "red_flags": [],
+  "actions": [
+    {
+      "type": "verify_product",
+      "text": "제품명과 농도를 확인한다.",
+      "requires_confirmation": true
+    }
+  ],
+  "avoid": [
+    "체중·농도 없이 mL를 추정하지 않는다."
+  ],
+  "missing_slots": [
+    "weight_kg",
+    "product_name",
+    "product_concentration"
+  ],
+  "confidence": 0.99,
+  "candidate_intents": [
+    {
+      "intent": "pediatric_dose_request_missing_data",
+      "score": 0.99
+    }
+  ],
+  "source_refs": [],
+  "latency": {
+    "total_ms": 34,
+    "normalize_ms": 3,
+    "safety_ms": 4,
+    "retrieve_ms": 18,
+    "refine_ms": 0
+  },
+  "knowledge_version": "sample-unverified-0.1.0",
+  "model": null,
+  "generated_at": "2026-07-10T00:00:00Z",
+  "stale_response_dropped": false
+}

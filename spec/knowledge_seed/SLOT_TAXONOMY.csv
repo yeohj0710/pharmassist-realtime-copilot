@@ -1,0 +1,32 @@
+﻿slot_id,data_type,validation_shape,risk,external_send_policy,notes
+person_scope,enum,self|child|family|other|unknown,critical,structured_only,현재 환자/타인/과거 혼동 방지
+age_years,number,0..130,critical,structured_only,소아·고령 규칙의 필수 범위
+age_months,number,0..1560,critical,structured_only,영유아 연령 세분
+weight_kg,number,0.1..300,critical,structured_only,소아 계산은 검증된 측정값만
+pregnancy_status,enum,pregnant|possible|not_pregnant|unknown,critical,structured_only,불확실하면 possible/unknown
+gestational_weeks,number,0..45,critical,structured_only,정확히 제공된 경우만
+lactation_status,enum,yes|no|unknown,critical,structured_only,수유 관련 제품별 검증
+symptom_concepts,array,controlled concept IDs,high,structured_only,free text를 직접 외부 전송하지 않음
+body_site,array,controlled body-site IDs,high,structured_only,증상 위치
+onset,datetime_or_relative,normalized temporal value,high,structured_only,현재/과거 구분
+duration,duration,ISO-like normalized duration,high,structured_only,지속기간
+severity,ordinal,mild|moderate|severe|unknown,high,structured_only,환자 표현을 보수적으로 매핑
+temperature_c,number,plausible measured range,critical,structured_only,측정값/추정 구분
+oral_intake,enum,normal|reduced|none|unknown,critical,structured_only,탈수 위험 분기
+urine_output,enum,normal|reduced|none|unknown,critical,structured_only,탈수 위험 분기
+red_flag_evidence,array,flag ID + positive/negative/uncertain,critical,never_raw,negation/person/temporality 포함
+allergies,array,verified ingredient/reaction or unknown,critical,structured_only,성분 식별이 안 되면 unresolved
+medical_conditions,array,controlled condition IDs,high,structured_only,필요 최소한만
+current_products,array,verified product IDs,critical,structured_only,자유 제품명보다 공식 ID 우선
+product_name,string,label/pack text,critical,redacted_minimal,제품 식별 전 provisional
+product_code,string,official KR product ID,critical,structured_only,제품별 rule key
+active_ingredients,array,official ingredient IDs,critical,structured_only,중복성분/DUR
+concentration,object,value+unit+basis,critical,structured_only,액상 용량 계산 필수
+dosage_form,enum,tablet|capsule|liquid|topical|etc,critical,structured_only,분쇄/투여 경로
+route,enum,oral|topical|ophthalmic|nasal|etc,critical,structured_only,제품별 허가사항
+last_dose_at,datetime,ISO date-time or unknown,critical,structured_only,복용 누락 규칙
+missed_count,integer,0..bounded,critical,structured_only,복용 누락 규칙
+pack_position,string,verified product-specific position,critical,structured_only,피임약 등 product-specific
+prior_treatments,array,verified products/actions,high,structured_only,효과 부족/중복 확인
+treatment_response,enum,better|same|worse|unknown,high,structured_only,의뢰/추가질문
+asr_alternatives,array,token alternatives + confidence,high,never_persist,제품명 오인식 보존

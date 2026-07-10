@@ -1,0 +1,26 @@
+version: "1.0.0"
+startup_fail_closed:
+  - active_pack_missing
+  - pack_signature_invalid
+  - pack_schema_invalid
+  - pack_expired
+  - pack_synthetic
+  - placeholder_locator_found
+  - unapproved_claim_found
+  - source_tier_not_A_or_B
+  - unresolved_conflict_found
+  - domain_index_leak_found
+  - raw_audio_or_transcript_logging_enabled
+  - always_listening_enabled
+  - standard_openai_key_detected_in_client_bundle
+publish_requires:
+  - pharmacist_approval
+  - medical_safety_approval
+  - distinct_publisher_role
+  - source_locator
+  - verification_date
+  - expiry_date
+  - golden_tests
+  - schema_lint
+  - signature
+  - audit_reason

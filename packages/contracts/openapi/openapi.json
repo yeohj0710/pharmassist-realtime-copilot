@@ -1,0 +1,1332 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pharmassist API",
+    "version": "0.1.0",
+    "description": "Synthetic-demo contract. Not clinical production approval."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8080"
+    }
+  ],
+  "paths": {
+    "/v1/consult/instant": {
+      "post": {
+        "operationId": "consultInstant",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RuntimeInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RuntimeOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/consult/refine": {
+      "post": {
+        "operationId": "consultRefine",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefinementRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SSE refinement stream",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/realtime/session": {
+      "post": {
+        "operationId": "createRealtimeSession",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/sdp": {
+              "schema": {
+                "type": "string",
+                "maxLength": 128000
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "WebRTC SDP answer",
+            "content": {
+              "application/sdp": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid SDP",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/knowledge/manifest": {
+      "get": {
+        "operationId": "getKnowledgeManifest",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackManifest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/knowledge/packs/{version}": {
+      "get": {
+        "operationId": "getKnowledgePack",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/feedback": {
+      "post": {
+        "operationId": "createFeedback",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Feedback"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Recorded"
+          },
+          "400": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/health/live": {
+      "get": {
+        "operationId": "healthLive",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/health/ready": {
+      "get": {
+        "operationId": "healthReady",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/sources": {
+      "post": {
+        "operationId": "admin_sources",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/claims/import": {
+      "post": {
+        "operationId": "admin_claims_import",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/cards": {
+      "post": {
+        "operationId": "admin_cards",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/reviews": {
+      "post": {
+        "operationId": "admin_reviews",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/packs/build": {
+      "post": {
+        "operationId": "admin_packs_build",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/packs/{version}/publish": {
+      "post": {
+        "operationId": "admin_packs__version__publish",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/packs/{version}/rollback": {
+      "post": {
+        "operationId": "admin_packs__version__rollback",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/revocations": {
+      "post": {
+        "operationId": "admin_revocations",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/claims/{id}": {
+      "patch": {
+        "operationId": "admin_patch_claim",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "reason_code"
+                ],
+                "properties": {
+                  "reason_code": {
+                    "type": "string",
+                    "pattern": "^[A-Z0-9_]{2,64}$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RuntimeInput": {
+        "title": "RuntimeInput",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "request_id",
+          "session_id",
+          "sequence",
+          "input_type",
+          "text",
+          "is_partial",
+          "locale",
+          "domain",
+          "patient_context",
+          "client_timestamp"
+        ],
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "session_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "input_type": {
+            "type": "string",
+            "enum": [
+              "typed",
+              "voice_partial",
+              "voice_final",
+              "card_action"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "is_partial": {
+            "type": "boolean"
+          },
+          "locale": {
+            "type": "string",
+            "const": "ko-KR"
+          },
+          "domain": {
+            "type": "string",
+            "enum": [
+              "human_otc",
+              "prescription_counseling",
+              "supplement",
+              "animal_medicine"
+            ]
+          },
+          "patient_context": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "age_years": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 130
+              },
+              "weight_kg": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0.1,
+                "maximum": 500
+              },
+              "sex_at_birth": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "female",
+                  "male",
+                  "intersex",
+                  "unknown",
+                  null
+                ]
+              },
+              "pregnancy_status": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "not_pregnant",
+                  "pregnant",
+                  "possible",
+                  "postpartum",
+                  "unknown",
+                  null
+                ]
+              },
+              "gestational_weeks": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 45
+              },
+              "lactating": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "symptom_duration_text": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "allergies": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "current_medications": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "product_name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "product_concentration": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "asr": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "confidence": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "alternatives": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "stable_prefix_chars": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "client_timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RuntimeOutput": {
+        "title": "RuntimeOutput",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "request_id",
+          "session_id",
+          "sequence",
+          "mode",
+          "status",
+          "intent",
+          "say_now",
+          "ask_next",
+          "red_flags",
+          "actions",
+          "avoid",
+          "missing_slots",
+          "confidence",
+          "source_refs",
+          "latency",
+          "knowledge_version",
+          "generated_at"
+        ],
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "session_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sequence": {
+            "type": "integer"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "instant",
+              "refined",
+              "escalate",
+              "clarify",
+              "no_match"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "provisional",
+              "stable",
+              "blocked",
+              "final"
+            ]
+          },
+          "intent": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "say_now": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "string",
+              "maxLength": 180
+            }
+          },
+          "ask_next": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "question",
+                "reason",
+                "priority",
+                "slot"
+              ],
+              "properties": {
+                "question": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                },
+                "slot": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "red_flags": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "flag_id",
+                "label",
+                "action",
+                "matched"
+              ],
+              "properties": {
+                "flag_id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "action": {
+                  "type": "string",
+                  "enum": [
+                    "emergency",
+                    "same_day",
+                    "doctor",
+                    "stop_and_verify"
+                  ]
+                },
+                "matched": {
+                  "type": "boolean"
+                },
+                "negated": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "text",
+                "requires_confirmation"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "requires_confirmation": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "avoid": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "missing_slots": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "candidate_intents": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "intent",
+                "score"
+              ],
+              "properties": {
+                "intent": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            }
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "claim_id",
+                "source_id",
+                "locator",
+                "verified_at"
+              ],
+              "properties": {
+                "claim_id": {
+                  "type": "string"
+                },
+                "source_id": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "string"
+                },
+                "verified_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "latency": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "total_ms",
+              "normalize_ms",
+              "safety_ms",
+              "retrieve_ms",
+              "refine_ms"
+            ],
+            "properties": {
+              "total_ms": {
+                "type": "number",
+                "minimum": 0
+              },
+              "normalize_ms": {
+                "type": "number",
+                "minimum": 0
+              },
+              "safety_ms": {
+                "type": "number",
+                "minimum": 0
+              },
+              "retrieve_ms": {
+                "type": "number",
+                "minimum": 0
+              },
+              "refine_ms": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "knowledge_version": {
+            "type": "string"
+          },
+          "model": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stale_response_dropped": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Feedback": {
+        "title": "Feedback",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "session_id",
+          "sequence",
+          "card_id",
+          "outcome",
+          "reason_codes",
+          "knowledge_version",
+          "latency_bucket"
+        ],
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "card_id": {
+            "type": "string",
+            "pattern": "^CARD-[A-Z0-9_-]+$"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "edited",
+              "rejected",
+              "escalated"
+            ]
+          },
+          "reason_codes": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 5,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z0-9_]+$"
+            }
+          },
+          "knowledge_version": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "latency_bucket": {
+            "type": "string",
+            "enum": [
+              "0-50",
+              "50-100",
+              "100-250",
+              "250-500",
+              "500+"
+            ]
+          }
+        }
+      },
+      "ErrorEnvelope": {
+        "title": "ErrorEnvelope",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code",
+              "message",
+              "request_id",
+              "retryable",
+              "safe_fallback"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "INVALID_INPUT",
+                  "DOMAIN_DISABLED",
+                  "KNOWLEDGE_STALE",
+                  "CARD_REVOKED",
+                  "MISSING_BLOCKING_SLOT",
+                  "PRODUCT_AMBIGUOUS",
+                  "UNSUPPORTED_CLAIM",
+                  "MODEL_SCHEMA_INVALID",
+                  "MODEL_TIMEOUT",
+                  "REALTIME_UNAVAILABLE",
+                  "STALE_SEQUENCE",
+                  "RATE_LIMITED",
+                  "PRIVACY_REDACTION_FAILED",
+                  "FORBIDDEN",
+                  "INTERNAL_SAFE_FAILURE"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 180
+              },
+              "request_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "retryable": {
+                "type": "boolean"
+              },
+              "safe_fallback": {
+                "type": "string",
+                "enum": [
+                  "instant",
+                  "typed_input",
+                  "clarify_or_refer",
+                  "previous_pack",
+                  "none"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "PackManifest": {
+        "title": "PackManifest",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pack_version",
+          "schema_version",
+          "min_app_version",
+          "domain",
+          "synthetic",
+          "clinical_use_prohibited",
+          "created_at",
+          "expires_at",
+          "counts",
+          "files",
+          "sha256",
+          "signature"
+        ],
+        "properties": {
+          "pack_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "schema_version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          },
+          "min_app_version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          },
+          "domain": {
+            "type": "string",
+            "enum": [
+              "human_otc",
+              "prescription_counseling",
+              "supplement",
+              "animal_medicine"
+            ]
+          },
+          "synthetic": {
+            "type": "boolean"
+          },
+          "clinical_use_prohibited": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "approved_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "counts": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "cards",
+              "claims",
+              "sources",
+              "products"
+            ],
+            "properties": {
+              "cards": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "claims": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "sources": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "products": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256",
+                "bytes"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9._/-]+$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "golden_suite_version": {
+            "type": "string"
+          },
+          "prompt_registry_version": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "signature": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "algorithm",
+              "key_id",
+              "value"
+            ],
+            "properties": {
+              "algorithm": {
+                "const": "Ed25519"
+              },
+              "key_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "revoked_card_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^CARD-[A-Z0-9_-]+$"
+            }
+          }
+        }
+      },
+      "RefinementRequest": {
+        "title": "RefinementRequestEnvelope",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "runtime_input",
+          "instant_output",
+          "candidate_card_ids",
+          "knowledge_version"
+        ],
+        "properties": {
+          "runtime_input": {
+            "$ref": "#/components/schemas/RuntimeInput"
+          },
+          "instant_output": {
+            "$ref": "#/components/schemas/RuntimeOutput"
+          },
+          "candidate_card_ids": {
+            "type": "array",
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^CARD-[A-Z0-9_-]+$"
+            }
+          },
+          "knowledge_version": {
+            "type": "string",
+            "maxLength": 80
+          }
+        }
+      }
+    }
+  }
+}

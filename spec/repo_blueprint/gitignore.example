@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+coverage/
+playwright-report/
+.local/
+.env
+.env.*
+!.env.example
+source_materials/
+raw_sources/
+patient_audio/
+transcripts/
+*.pem
+*.key
+!config/dev-pack-public-key.pem
+.DS_Store

@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/drug_product.schema.json",
+  "title": "DrugProduct",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "product_id",
+    "display_name",
+    "jurisdiction",
+    "active_ingredients",
+    "label_source",
+    "status"
+  ],
+  "properties": {
+    "product_id": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "manufacturer": {
+      "type": ["string", "null"]
+    },
+    "jurisdiction": {
+      "type": "string",
+      "const": "KR"
+    },
+    "product_code": {
+      "type": ["string", "null"]
+    },
+    "active_ingredients": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ingredient_id", "name", "strength_text"],
+        "properties": {
+          "ingredient_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "strength_text": {
+            "type": "string"
+          },
+          "normalized_amount": {
+            "type": ["number", "null"]
+          },
+          "normalized_unit": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "dosage_form": {
+      "type": ["string", "null"]
+    },
+    "route": {
+      "type": ["string", "null"]
+    },
+    "label_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "retrieved_at", "sha256"],
+      "properties": {
+        "source_id": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "discontinued", "withdrawn", "unknown"]
+    },
+    "dur_flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "code", "description"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "duplicate",
+              "age",
+              "pregnancy",
+              "coadministration",
+              "elderly",
+              "dose",
+              "duration",
+              "other"
+            ]
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "effective_date": {
+            "type": ["string", "null"],
+            "format": "date"
+          }
+        }
+      }
+    }
+  }
+}

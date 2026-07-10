@@ -1,0 +1,29 @@
+{
+  "name": "@pharmassist/runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --config ../../vitest.package.config.ts"
+  },
+  "dependencies": {
+    "@pharmassist/contracts": "workspace:*",
+    "@pharmassist/domain": "workspace:*",
+    "@pharmassist/normalizer": "workspace:*",
+    "@pharmassist/retrieval": "workspace:*",
+    "@pharmassist/safety": "workspace:*"
+  },
+  "devDependencies": {
+    "@pharmassist/test-fixtures": "workspace:*",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}

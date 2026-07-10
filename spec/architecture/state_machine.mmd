@@ -1,0 +1,20 @@
+stateDiagram-v2
+  [*] --> Idle
+  Idle --> Listening: push-to-talk or typing
+  Listening --> Provisional: stable query prefix
+  Provisional --> Escalate: critical red flag
+  Provisional --> Clarify: blocking slot missing
+  Provisional --> StableCard: confidence threshold met
+  Provisional --> Ambiguous: top candidates too close
+  Ambiguous --> StableCard: pharmacist selects or more input arrives
+  StableCard --> Frozen: pharmacist freezes/selects
+  StableCard --> Refining: optional LLM request
+  Refining --> StableCard: valid current-sequence refinement
+  Refining --> StableCard: timeout/error; retain local card
+  Refining --> Dropped: stale sequence
+  Frozen --> Frozen: transcript changes ignored for main card
+  Frozen --> Listening: unfreeze or clear
+  Escalate --> Frozen: pharmacist acknowledges
+  Clarify --> Listening: answer to next question
+  Dropped --> Listening
+  Listening --> Idle: clear/session end

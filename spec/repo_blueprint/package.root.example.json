@@ -1,0 +1,23 @@
+{
+  "name": "pharmassist-realtime-copilot",
+  "private": true,
+  "packageManager": "pnpm@<LOCKED_VERSION>",
+  "engines": {"node": ">=<CURRENT_ACTIVE_LTS>"},
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:demo": "APP_PROFILE=local-demo turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e",
+    "test:security": "turbo test:security",
+    "benchmark": "pnpm --filter @pharmassist/benchmark benchmark",
+    "pack:lint": "pnpm --filter @pharmassist/pack-cli lint",
+    "pack:build:dev": "pnpm --filter @pharmassist/pack-cli build:dev",
+    "pack:verify": "pnpm --filter @pharmassist/pack-cli verify",
+    "db:migrate": "pnpm --filter @pharmassist/api db:migrate",
+    "db:seed:synthetic": "pnpm --filter @pharmassist/api db:seed:synthetic",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+  }
+}

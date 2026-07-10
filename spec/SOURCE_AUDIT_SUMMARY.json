@@ -1,0 +1,64 @@
+{
+  "total_files": 124,
+  "total_bytes": 319299359,
+  "extensions": {
+    "pdf": 52,
+    "jpg": 59,
+    "jpeg": 2,
+    "png": 9,
+    "xlsx": 1,
+    "docx": 1
+  },
+  "source_groups": {
+    "pharmacy_operations": 1,
+    "otc_sales_scenarios": 1,
+    "otc_quick_reference": 1,
+    "nutrition_education": 3,
+    "nqna_health_signs": 6,
+    "cellmed_images": 59,
+    "oral_contraceptive_counseling": 2,
+    "natures_pharm_typology": 9,
+    "drug_nutrient_chart": 1,
+    "rx_dispensing_workflow": 1,
+    "supplement_adverse_effect_spreadsheet": 1,
+    "functional_medicine_book_review": 1,
+    "otc_practical_handbook": 1,
+    "vitamin_d_chart": 1,
+    "pharmacy_marketing": 1,
+    "otc_core_reference": 1,
+    "otc_topic_sales_guides": 7,
+    "animal_medicine_guide": 1,
+    "topic_answer_notes": 26
+  },
+  "domains": {
+    "operations": 1,
+    "human_otc": 37,
+    "supplement": 6,
+    "supplement_nonstandard": 16,
+    "product_marketing": 59,
+    "human_rx_otc": 2,
+    "prescription_counseling": 1,
+    "marketing": 1,
+    "animal_medicine": 1
+  },
+  "trust_tiers": {
+    "X": 19,
+    "D": 62,
+    "C": 36,
+    "C-D": 7
+  },
+  "runtime_policies": {
+    "admin_only": 1,
+    "quarantine": 2,
+    "candidate_only": 39,
+    "candidate_only_separate_mode": 5,
+    "excluded": 16,
+    "metadata_only": 59,
+    "nonclinical_ux_only": 1,
+    "separate_domain_disabled": 1
+  },
+  "pdf_pages": 1730,
+  "pdf_text_chars": 1123893,
+  "raw_source_files_in_bundle": 0,
+  "audit_date": "2026-07-10"
+}

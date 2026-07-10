@@ -1,0 +1,23 @@
+{
+  "sha256": "6602d4d996cf92c36ca1cd8b33ffe9b1a6d5590f886a4d81376df0950f40773d",
+  "sourceSchemaHash": "362c2fe2233a7d2ace5f64f74deb03b3e5c054d972c8406ff4441abd4a1b63ab",
+  "paths": [
+    "/v1/admin/cards",
+    "/v1/admin/claims/import",
+    "/v1/admin/claims/{id}",
+    "/v1/admin/packs/build",
+    "/v1/admin/packs/{version}/publish",
+    "/v1/admin/packs/{version}/rollback",
+    "/v1/admin/reviews",
+    "/v1/admin/revocations",
+    "/v1/admin/sources",
+    "/v1/consult/instant",
+    "/v1/consult/refine",
+    "/v1/feedback",
+    "/v1/health/live",
+    "/v1/health/ready",
+    "/v1/knowledge/manifest",
+    "/v1/knowledge/packs/{version}",
+    "/v1/realtime/session"
+  ]
+}

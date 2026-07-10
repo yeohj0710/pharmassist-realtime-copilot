@@ -1,0 +1,38 @@
+version: "1.0.0"
+definition:
+  t0_typed: first keystroke that creates a stable query
+  t0_voice: arrival of a stable transcript prefix containing a routable clinical signal
+  first_useful_card: "A pharmacist-readable say-now line or an urgent red-flag instruction, not a completed LLM narrative."
+budgets_ms:
+  typed_exact:
+    p50: 50
+    p95: 250
+    p99: 500
+  typed_fuzzy:
+    p50: 100
+    p95: 400
+    p99: 800
+  voice_after_stable_prefix:
+    p50: 250
+    p95: 700
+    p99: 1200
+  llm_refinement_first_update:
+    p50: 700
+    p95: 1500
+    p99: 2500
+  ui_render_after_result:
+    p95: 16
+hard_rules:
+  - "The 1-second product promise applies to the first useful local card under the benchmark environment."
+  - "Do not put a network LLM call in the typed exact-match critical path."
+  - "Voice end-to-end latency cannot be guaranteed across arbitrary networks or before the patient says enough words."
+  - "Critical red-flag pattern matches bypass debounce and preempt all other results."
+  - "All stale network responses are discarded by sequence number."
+benchmark_environment:
+  browser: latest_stable_chromium
+  cpu: mainstream_4_core_or_better
+  memory_gb: 8
+  network_profiles:
+    - local_only
+    - wifi_30ms_rtt
+    - degraded_100ms_rtt_1pct_loss

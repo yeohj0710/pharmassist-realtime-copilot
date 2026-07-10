@@ -1,0 +1,39 @@
+name: pharmassist-demo
+services:
+  postgres:
+    image: postgres:18.2-alpine
+    environment:
+      POSTGRES_DB: pharmassist
+      POSTGRES_USER: pharmassist
+      POSTGRES_PASSWORD: local-demo-only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pharmassist"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
+  api:
+    build: { context: ., dockerfile: infra/docker/Dockerfile.api }
+    environment:
+      APP_PROFILE: local-demo
+      AUTH_MODE: mock-local
+      DATABASE_URL: postgresql://pharmassist:local-demo-only@postgres:5432/pharmassist
+      RAW_AUDIO_PERSIST: "false"
+      RAW_TRANSCRIPT_PERSIST: "false"
+      FREE_TEXT_LOGGING: "false"
+    depends_on: { postgres: { condition: service_healthy } }
+    ports: ["8080:8080"]
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+  web:
+    build: { context: ., dockerfile: infra/docker/Dockerfile.web }
+    depends_on: [api]
+    ports: ["4173:8080"]
+    read_only: true
+    tmpfs: ["/tmp", "/var/cache/nginx", "/var/run"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+volumes:
+  postgres-data:

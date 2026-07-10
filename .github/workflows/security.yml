@@ -1,0 +1,22 @@
+name: Security
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 20 * * 1"
+permissions: { contents: read, security-events: write }
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24.12.0, cache: pnpm }
+      - run: corepack enable && pnpm install --frozen-lockfile
+      - run: pnpm test:security
+      - run: pnpm audit --prod --audit-level high
+      - run: pnpm run sbom:generate
+      - uses: actions/upload-artifact@v4
+        with: { name: sbom, path: reports/sbom.cdx.json }

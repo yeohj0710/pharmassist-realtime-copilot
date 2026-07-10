@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+  - tools/*
+allowBuilds:
+  esbuild: true
+  libxmljs2: true
+minimumReleaseAgeExclude:
+  - prettier@3.9.5
+  - pnpm@11.11.0
+  - openai@6.46.0

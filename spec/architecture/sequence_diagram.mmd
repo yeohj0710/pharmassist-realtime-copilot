@@ -1,0 +1,30 @@
+sequenceDiagram
+  actor Patient
+  participant Pharmacist
+  participant Web as PWA + Web Worker
+  participant RT as OpenAI Realtime STT
+  participant API as Application API
+  participant LLM as OpenAI Responses
+
+  Patient->>Pharmacist: Symptom, question, or medication concern
+  alt Typed keywords
+    Pharmacist->>Web: Enter short phrase
+  else Push-to-talk
+    Pharmacist->>Web: Hold microphone control
+    Web->>RT: WebRTC audio stream
+    RT-->>Web: Partial transcript deltas
+  end
+  Web->>Web: Normalize, extract slots, detect negation
+  Web->>Web: Critical red-flag gate
+  Web->>Web: Exact/rule/BM25 retrieval
+  Web-->>Pharmacist: Instant say-now card
+  opt Ambiguous or wording refinement requested
+    Web->>API: Redacted slots + card IDs + sequence
+    API->>LLM: store:false, strict schema, streamed request
+    LLM-->>API: Structured update
+    API-->>Web: SSE refinement
+    Web->>Web: Drop if sequence is stale
+    Web-->>Pharmacist: Refined card without replacing a frozen card
+  end
+  Pharmacist->>Web: Accept, override, or ask next question
+  Web->>API: Coded feedback only

@@ -1,0 +1,36 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "<ACTIVE_LTS>"
+          cache: pnpm
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm pack:lint
+      - run: pnpm pack:verify
+      - run: pnpm test:e2e
+      - run: pnpm test:security
+      - run: pnpm benchmark -- --ci
+      - run: ./scripts/scan-no-secrets-no-raw-content.sh
+      - run: ./scripts/generate-sbom.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verification-reports
+          path: |
+            reports/**
+            coverage/**
+            playwright-report/**

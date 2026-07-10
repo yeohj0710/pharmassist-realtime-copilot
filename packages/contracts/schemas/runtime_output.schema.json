@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/runtime_output.schema.json",
+  "title": "RuntimeOutput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "session_id",
+    "sequence",
+    "mode",
+    "status",
+    "intent",
+    "say_now",
+    "ask_next",
+    "red_flags",
+    "actions",
+    "avoid",
+    "missing_slots",
+    "confidence",
+    "source_refs",
+    "latency",
+    "knowledge_version",
+    "generated_at"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "session_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "sequence": {
+      "type": "integer"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["instant", "refined", "escalate", "clarify", "no_match"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["provisional", "stable", "blocked", "final"]
+    },
+    "intent": {
+      "type": ["string", "null"]
+    },
+    "say_now": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "maxLength": 180
+      }
+    },
+    "ask_next": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["question", "reason", "priority", "slot"],
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "slot": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "red_flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["flag_id", "label", "action", "matched"],
+        "properties": {
+          "flag_id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["emergency", "same_day", "doctor", "stop_and_verify"]
+          },
+          "matched": {
+            "type": "boolean"
+          },
+          "negated": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "text", "requires_confirmation"],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "requires_confirmation": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "avoid": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_slots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "candidate_intents": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["intent", "score"],
+        "properties": {
+          "intent": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "source_id", "locator", "verified_at"],
+        "properties": {
+          "claim_id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "string"
+          },
+          "verified_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "latency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "total_ms",
+        "normalize_ms",
+        "safety_ms",
+        "retrieve_ms",
+        "refine_ms"
+      ],
+      "properties": {
+        "total_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "normalize_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "safety_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "retrieve_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "refine_ms": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "knowledge_version": {
+      "type": "string"
+    },
+    "model": {
+      "type": ["string", "null"]
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "stale_response_dropped": {
+      "type": "boolean"
+    }
+  }
+}
