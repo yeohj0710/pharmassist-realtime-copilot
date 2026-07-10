@@ -90,6 +90,7 @@ label {
 }
 .query-row input {
   width: 100%;
+  min-width: 0;
   padding: 17px;
   border: 1px solid #d1d6db;
   border-radius: 14px;
@@ -109,6 +110,10 @@ label {
   font-weight: 750;
   padding: 0 24px;
   cursor: pointer;
+}
+.query-row button {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 .ptt {
   margin-top: 14px;
