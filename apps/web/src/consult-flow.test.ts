@@ -46,4 +46,26 @@ describe("stateful fast consult flow", () => {
     expect(result.output.say_now.join(" ")).not.toContain("삼키기");
     expect(result.output.ask_next[0]?.question).toContain("배");
   });
+
+  it("routes bowel urgency and progresses after one short answer", () => {
+    const flow = new StatefulConsultFlow(syntheticPack);
+    const first = flow.run(input("똥이 마려워요", 1));
+    const second = flow.run(input("3분 전부터요", 2));
+
+    expect(first.output.intent).toBe("bowel_urgency_general");
+    expect(first.output.ask_next[0]?.question).toContain("묽은 변");
+    expect(second.output.mode).toBe("instant");
+    expect(second.output.ask_next).toEqual([]);
+    expect(second.output.actions[0]?.text).toContain("수분");
+  });
+
+  it("ends unsupported loops instead of repeating the generic question", () => {
+    const flow = new StatefulConsultFlow(syntheticPack);
+    flow.run(input("알 수 없는 표현", 1));
+    const second = flow.run(input("두 번째 설명", 2));
+
+    expect(second.output.status).toBe("final");
+    expect(second.output.ask_next).toEqual([]);
+    expect(second.output.say_now.join(" ")).toContain("찾지 못했습니다");
+  });
 });

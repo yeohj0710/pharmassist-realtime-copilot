@@ -101,6 +101,28 @@ export const syntheticCards: readonly KnowledgeCard[] = [
     avoid: ["통증 위치와 양상만으로 원인을 확정하지 않습니다."],
   }),
   make({
+    cardId: "CARD-SYN-BOWEL-URGENCY",
+    intent: "bowel_urgency_general",
+    title: "배변 급박·장 증상 확인",
+    anchors: ["똥", "대변", "배변", "화장실", "설사", "변비"],
+    aliases: [
+      "똥이 마려워요",
+      "갑자기 화장실 가고 싶어요",
+      "변이 자주 마려워요",
+      "설사할 것 같아요",
+      "변이 안 나와요",
+    ],
+    keywords: ["배변 급박 설사 변비 묽은변 횟수 기간"],
+    sayNow: ["장 증상 유형을 한 번만 구분하겠습니다."],
+    askNext: {
+      question: "묽은 변이 자주 나오는 건가요, 마려운데 변이 안 나오는 건가요?",
+      reason: "설사와 변비성 불편 구분",
+      priority: 1,
+      slot: "stool_pattern",
+    },
+    avoid: ["배변감만으로 설사나 변비를 단정하지 않습니다."],
+  }),
+  make({
     cardId: "CARD-SYN-SKIN",
     intent: "skin_general",
     title: "피부 증상 확인",

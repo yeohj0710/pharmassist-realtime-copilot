@@ -94,12 +94,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 573,
+                  "duration": 612,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:40:48.742Z",
+                  "startTime": "2026-07-10T11:45:37.096Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -128,12 +128,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 167,
+                  "duration": 171,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:40:49.407Z",
+                  "startTime": "2026-07-10T11:45:37.844Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -162,12 +162,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 340,
+                  "duration": 311,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:40:49.582Z",
+                  "startTime": "2026-07-10T11:45:38.020Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -201,7 +201,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:40:49.929Z",
+                  "startTime": "2026-07-10T11:45:38.336Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -230,12 +230,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 251,
+                  "duration": 265,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:40:50.244Z",
+                  "startTime": "2026-07-10T11:45:38.652Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -247,15 +247,49 @@
           "file": "consult.spec.ts",
           "line": 65,
           "column": 5
+        },
+        {
+          "title": "bowel urgency progresses without a prepared exact phrase",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 274,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-10T11:45:38.921Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-52b2fc5cf8786a729f47",
+          "file": "consult.spec.ts",
+          "line": 75,
+          "column": 5
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-10T11:40:47.430Z",
-    "duration": 3325.045,
-    "expected": 5,
+    "startTime": "2026-07-10T11:45:35.664Z",
+    "duration": 3821.312,
+    "expected": 6,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

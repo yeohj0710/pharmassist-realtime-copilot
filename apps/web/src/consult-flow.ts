@@ -16,6 +16,8 @@ const candidateText: Readonly<Record<string, string>> = {
     "속쓰림은 제산제, 더부룩함은 소화효소제 성분군을 먼저 비교하세요.",
   abdominal_pain_general:
     "쓰린 윗배 통증은 제산제 계열, 쥐어짜는 복부 불편은 진경제 계열을 먼저 비교하세요.",
+  bowel_urgency_general:
+    "묽은 변이 반복되면 수분·전해질 보충제와 장 흡착제 계열, 변이 안 나오면 변비 완화제 계열을 먼저 비교하세요.",
   skin_general:
     "가려움은 항히스타민제, 건조 자극은 보습·보호제 성분군을 먼저 비교하세요.",
 };
@@ -50,6 +52,33 @@ export class StatefulConsultFlow {
       result.ruleIds.every((rule) => rule === "ASK_ONE");
     const durationIncluded =
       /(?:\d+|한|두|세|네)\s*(?:시간|일|주|개월)(?:째|간)?/u.test(combined);
+    if (
+      !result.output.intent &&
+      result.output.red_flags.length === 0 &&
+      turns.length >= 2
+    )
+      return {
+        ...result,
+        output: {
+          ...result.output,
+          mode: "no_match",
+          status: "final",
+          say_now: [
+            "두 번 확인했지만 현재 지식팩에서 맞는 상담 카드를 찾지 못했습니다.",
+          ],
+          ask_next: [],
+          actions: [
+            {
+              type: "restart_with_symptom",
+              text: "새 상담을 눌러 증상 부위와 느낌을 한 문장으로 입력하세요.",
+              requires_confirmation: false,
+            },
+          ],
+          avoid: ["같은 질문을 반복하지 않습니다."],
+          missing_slots: [],
+          confidence: 0,
+        },
+      };
     if (
       !candidate ||
       !routineClarification ||

@@ -71,3 +71,17 @@ test("abdominal pain never routes to the throat card", async ({ page }) => {
   await expect(page.getByText(/목 통증은 언제부터/)).toHaveCount(0);
   await expect(page.getByText(/삼키기 어렵거나/)).toHaveCount(0);
 });
+
+test("bowel urgency progresses without a prepared exact phrase", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const input = page.getByLabel("증상이나 질문을 입력하세요");
+  await input.fill("똥이 마려워요");
+  await input.press("Enter");
+  await expect(page.getByText(/묽은 변.*변이 안 나오는/)).toBeVisible();
+  await input.fill("3분 전부터요");
+  await input.press("Enter");
+  await expect(page.getByRole("heading", { name: "약 후보" })).toBeVisible();
+  await expect(page.getByText(/수분·전해질/)).toBeVisible();
+});
