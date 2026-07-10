@@ -9,7 +9,11 @@ import {
   connectTranscriptionPeer,
   type TranscriptionPeer,
 } from "./realtime.js";
-import { requestAiFallback } from "./ai-fallback.js";
+import {
+  requestAiFallback,
+  requestAiReadiness,
+  shouldRequestAiRefinement,
+} from "./ai-fallback.js";
 
 interface EngineMessage {
   output: RuntimeOutput;
@@ -45,6 +49,7 @@ export function App() {
   const [sourceOpen, setSourceOpen] = useState(false);
   const [confirmedCritical, setConfirmedCritical] = useState(false);
   const [aiInterpreting, setAiInterpreting] = useState(false);
+  const [aiReady, setAiReady] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
   const sequenceRef = useRef(0);
@@ -104,6 +109,14 @@ export function App() {
   }, [result?.status]);
 
   useEffect(() => {
+    const controller = new AbortController();
+    void requestAiReadiness(controller.signal)
+      .then(setAiReady)
+      .catch(() => setAiReady(false));
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
     const worker = new Worker(
       new URL("./clinical-engine.worker.ts", import.meta.url),
       { type: "module" },
@@ -115,7 +128,9 @@ export function App() {
         !(sessionRef.current.criticalLocked && !sessionRef.current.acknowledged)
       ) {
         setResult(event.data.output);
-        if (event.data.output.intent === null && navigator.onLine) {
+        if (
+          shouldRequestAiRefinement(navigator.onLine, event.data.output.mode)
+        ) {
           const input = inputsRef.current.get(event.data.output.sequence);
           if (input) {
             aiAbortRef.current?.abort();
@@ -299,9 +314,11 @@ export function App() {
           <span className={`badge ${online ? "online" : "offline"}`}>
             {aiInterpreting
               ? "AI 해석 중"
-              : online
-                ? "로컬 준비됨"
-                : "오프라인 · 로컬 사용 가능"}
+              : aiReady
+                ? "AI 연결됨"
+                : online
+                  ? "AI 연결 확인 중"
+                  : "오프라인 · 로컬 사용 가능"}
           </span>
           {history.length > 0 && (
             <button className="reset-button" onClick={resetConsult}>

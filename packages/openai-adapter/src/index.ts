@@ -143,7 +143,23 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
               sequence: context.input.sequence,
               knowledge_version: context.instant.knowledge_version,
               redacted_normalized_text: context.redactedText,
-              instant_output: context.instant,
+              provisional_local_context: {
+                intent: context.instant.intent,
+                mode: context.instant.mode,
+                status: context.instant.status,
+                ask_next: context.instant.ask_next,
+                red_flags: context.instant.red_flags,
+                missing_slots: context.instant.missing_slots,
+              },
+              output_template: {
+                ...context.instant,
+                intent: null,
+                say_now: [],
+                ask_next: [],
+                actions: [],
+                avoid: [],
+                candidate_intents: [],
+              },
               allowed_claim_ids: context.allowedClaimIds,
               allowed_entities: context.allowedEntities,
               allowed_intents: context.allowedIntents,
@@ -182,12 +198,16 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
       };
       return;
     }
-    const checked = postValidateOutput(context, valid.value);
+    const attributedOutput: RuntimeOutput = {
+      ...valid.value,
+      model: response.model,
+    };
+    const checked = postValidateOutput(context, attributedOutput);
     if (!checked.ok) {
       yield { type: "rejected", code: checked.code, fallback: "instant" };
       return;
     }
-    yield { type: "completed", output: valid.value };
+    yield { type: "completed", output: attributedOutput };
   }
 }
 export function postValidateOutput(

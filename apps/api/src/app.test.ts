@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { buildApp } from "./app.js";
+import { buildApp, cardsForAiRefinement } from "./app.js";
+import { syntheticPack } from "@pharmassist/test-fixtures";
+import { MockResponsesRefiner } from "@pharmassist/openai-adapter";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 process.env["AUTH_MODE"] = "mock-local";
@@ -16,6 +18,13 @@ const input = {
   client_timestamp: "2026-07-10T00:00:00Z",
 };
 describe("API", () => {
+  it("lets AI compare the full active domain catalog instead of the provisional local intent", () => {
+    const cards = cardsForAiRefinement(syntheticPack.cards, "cough_general");
+    expect(cards.map((card) => card.intent)).toContain("cough_general");
+    expect(cards.map((card) => card.intent)).toContain(
+      "abdominal_pain_general",
+    );
+  });
   it("serves deterministic no-store output", async () => {
     const app = await buildApp();
     const res = await app.inject({
@@ -108,6 +117,46 @@ describe("API", () => {
     expect(response.body).toContain("MOCK_LOCAL_ONLY");
     expect(response.body).toContain('"fallback":"instant"');
     await app.close();
+  });
+  it("returns AI refinement events with CORS headers to the browser", async () => {
+    const priorKey = process.env["OPENAI_API_KEY"];
+    const priorFeature = process.env["FEATURE_LLM_REFINEMENT"];
+    process.env["OPENAI_API_KEY"] = "test-only";
+    process.env["FEATURE_LLM_REFINEMENT"] = "true";
+    const app = await buildApp({
+      responsesRefiner: new MockResponsesRefiner("success"),
+    });
+    try {
+      const instant = (
+        await app.inject({
+          method: "POST",
+          url: "/v1/consult/instant",
+          payload: input,
+        })
+      ).json();
+      const response = await app.inject({
+        method: "POST",
+        url: "/v1/consult/refine",
+        headers: { origin: "http://127.0.0.1:4173" },
+        payload: {
+          runtime_input: input,
+          instant_output: instant,
+          candidate_card_ids: [],
+          knowledge_version: instant.knowledge_version,
+        },
+      });
+      expect(response.headers["access-control-allow-origin"]).toBe(
+        "http://127.0.0.1:4173",
+      );
+      expect(response.body).toContain("refinement.completed");
+    } finally {
+      await app.close();
+      if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];
+      else process.env["OPENAI_API_KEY"] = priorKey;
+      if (priorFeature === undefined)
+        delete process.env["FEATURE_LLM_REFINEMENT"];
+      else process.env["FEATURE_LLM_REFINEMENT"] = priorFeature;
+    }
   });
   it("rejects oversized JSON bodies", async () => {
     const app = await buildApp();

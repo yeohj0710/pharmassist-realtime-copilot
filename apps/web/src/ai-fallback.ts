@@ -1,14 +1,33 @@
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 
+const apiBaseUrl = () =>
+  (import.meta.env["VITE_API_BASE_URL"] as string | undefined) ??
+  "http://127.0.0.1:8080";
+
+export function shouldRequestAiRefinement(
+  online: boolean,
+  mode: RuntimeOutput["mode"],
+): boolean {
+  return online && mode !== "escalate";
+}
+
+export async function requestAiReadiness(
+  signal: AbortSignal,
+): Promise<boolean> {
+  const response = await fetch(`${apiBaseUrl()}/v1/health/ready`, { signal });
+  if (!response.ok) return false;
+  const body = (await response.json()) as Readonly<{
+    components?: Readonly<{ openai_responses?: string }>;
+  }>;
+  return body.components?.openai_responses === "ready";
+}
+
 export async function requestAiFallback(
   input: RuntimeInput,
   instant: RuntimeOutput,
   signal: AbortSignal,
 ): Promise<RuntimeOutput | undefined> {
-  const baseUrl =
-    (import.meta.env["VITE_API_BASE_URL"] as string | undefined) ??
-    "http://127.0.0.1:8080";
-  const response = await fetch(`${baseUrl}/v1/consult/refine`, {
+  const response = await fetch(`${apiBaseUrl()}/v1/consult/refine`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

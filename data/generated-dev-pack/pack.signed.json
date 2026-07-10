@@ -10,6 +10,10 @@
         "cardId": "CARD-SYN-COUGH",
         "intent": "cough_general",
         "title": "기침 확인",
+        "anchors": [
+          "기침",
+          "가래"
+        ],
         "aliases": [
           "기침약",
           "기침약 주세요",
@@ -40,6 +44,12 @@
         "cardId": "CARD-SYN-NASAL",
         "intent": "nasal_symptom_general",
         "title": "콧물·코막힘 확인",
+        "anchors": [
+          "콧물",
+          "코막힘",
+          "코가 막",
+          "재채기"
+        ],
         "aliases": [
           "콧물",
           "콧물약 주세요",
@@ -70,6 +80,11 @@
         "cardId": "CARD-SYN-THROAT",
         "intent": "sore_throat",
         "title": "인후통 확인",
+        "anchors": [
+          "목",
+          "인후",
+          "삼키"
+        ],
         "aliases": [
           "목이 따끔",
           "목이 아파요",
@@ -99,6 +114,13 @@
         "cardId": "CARD-SYN-DYSPEPSIA",
         "intent": "dyspepsia_general",
         "title": "소화 불편 확인",
+        "anchors": [
+          "소화",
+          "더부룩",
+          "명치",
+          "체했",
+          "속쓰림"
+        ],
         "aliases": [
           "속이 더부룩",
           "소화가 안 돼요",
@@ -126,9 +148,133 @@
         "expiresAt": "2099-12-31T23:59:59Z"
       },
       {
+        "cardId": "CARD-SYN-ABDOMINAL",
+        "intent": "abdominal_pain_general",
+        "title": "복통 확인",
+        "anchors": [
+          "배",
+          "복통",
+          "아랫배",
+          "윗배",
+          "배꼽"
+        ],
+        "aliases": [
+          "배가 아파요",
+          "복통이 있어요",
+          "아랫배가 아파요",
+          "윗배가 아파요"
+        ],
+        "keywords": [
+          "배 복통 윗배 아랫배 위치 양상 기간"
+        ],
+        "sayNow": [
+          "배의 어느 위치가 어떻게 아픈지 빠르게 확인하겠습니다."
+        ],
+        "askNext": {
+          "question": "윗배·아랫배 중 어디가, 쓰리거나 쥐어짜는 느낌 중 어떻게 아픈가요?",
+          "reason": "통증 위치와 양상 확인",
+          "priority": 1,
+          "slot": "body_site"
+        },
+        "avoid": [
+          "통증 위치와 양상만으로 원인을 확정하지 않습니다."
+        ],
+        "domain": "human_otc",
+        "approved": true,
+        "synthetic": true,
+        "expiresAt": "2099-12-31T23:59:59Z"
+      },
+      {
+        "cardId": "CARD-SYN-BOWEL-URGENCY",
+        "intent": "bowel_urgency_general",
+        "title": "배변 급박·장 증상 확인",
+        "anchors": [
+          "똥",
+          "대변",
+          "배변",
+          "화장실",
+          "설사",
+          "변비"
+        ],
+        "aliases": [
+          "똥이 마려워요",
+          "갑자기 화장실 가고 싶어요",
+          "변이 자주 마려워요",
+          "설사할 것 같아요",
+          "변이 안 나와요"
+        ],
+        "keywords": [
+          "배변 급박 설사 변비 묽은변 횟수 기간"
+        ],
+        "sayNow": [
+          "장 증상 유형을 한 번만 구분하겠습니다."
+        ],
+        "askNext": {
+          "question": "묽은 변이 자주 나오는 건가요, 마려운데 변이 안 나오는 건가요?",
+          "reason": "설사와 변비성 불편 구분",
+          "priority": 1,
+          "slot": "stool_pattern"
+        },
+        "avoid": [
+          "배변감만으로 설사나 변비를 단정하지 않습니다."
+        ],
+        "domain": "human_otc",
+        "approved": true,
+        "synthetic": true,
+        "expiresAt": "2099-12-31T23:59:59Z"
+      },
+      {
+        "cardId": "CARD-SYN-MUSCULOSKELETAL",
+        "intent": "musculoskeletal_pain",
+        "title": "근육·관절 통증 확인",
+        "anchors": [
+          "어깨",
+          "허리",
+          "무릎",
+          "관절",
+          "근육",
+          "팔",
+          "손목",
+          "발목"
+        ],
+        "aliases": [
+          "어깨가 아파요",
+          "허리가 아파요",
+          "무릎이 아파요",
+          "근육통이 있어요",
+          "관절이 아파요"
+        ],
+        "keywords": [
+          "어깨 허리 무릎 근육 관절 통증 부상 움직임 부종"
+        ],
+        "sayNow": [
+          "근육·관절 통증의 양상을 빠르게 확인하겠습니다."
+        ],
+        "askNext": {
+          "question": "어깨를 움직일 때 더 아픈가요, 다치거나 붓고 뜨거운 증상이 있나요?",
+          "reason": "움직임·부상·염증 양상 확인",
+          "priority": 1,
+          "slot": "pain_pattern"
+        },
+        "avoid": [
+          "통증 부위만으로 원인을 확정하지 않습니다."
+        ],
+        "domain": "human_otc",
+        "approved": true,
+        "synthetic": true,
+        "expiresAt": "2099-12-31T23:59:59Z"
+      },
+      {
         "cardId": "CARD-SYN-SKIN",
         "intent": "skin_general",
         "title": "피부 증상 확인",
+        "anchors": [
+          "피부",
+          "가려",
+          "습진",
+          "연고",
+          "발진"
+        ],
         "aliases": [
           "피부가 가려워요",
           "습진약",
@@ -158,6 +304,12 @@
         "cardId": "CARD-SYN-FEVER",
         "intent": "fever_general",
         "title": "발열 확인",
+        "anchors": [
+          "열",
+          "발열",
+          "몸살",
+          "체온"
+        ],
         "aliases": [
           "열나요",
           "열이 나요",
@@ -184,9 +336,9 @@
         "expiresAt": "2099-12-31T23:59:59Z"
       }
     ],
-    "builtAt": "2026-07-10T06:48:17.796Z"
+    "builtAt": "2026-07-10T12:49:31.377Z"
   },
-  "sha256": "e279a8fcd1e3b68ddef4ef3d69b2c779da5bae4c50798060ec642025db39d645",
-  "signature": "AgTZ+/xk92MiY7f+4DKvEfs4BkcNzElivFL2vgm+jZhglm6Trz/NanEpR9PWOT0VfGt/KA8KlqrGU2N7ONdMAA==",
+  "sha256": "7ab6c018d50b57f495c5c08a6e8f6c8b1502a3f768c18cd552551156f362a284",
+  "signature": "pGn1la5ORmaFC4Suxv3gTTs7vNKpPAQGkIAlIG0NwViDlPDlCAp1XrE7dvbr13JK6TRcf/9KEd3U2zwK5CrDAA==",
   "keyId": "dev-ephemeral-1"
 }
