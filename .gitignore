@@ -18,4 +18,5 @@ transcripts/
 *.key
 !config/dev-pack-public-key.pem
 reports/*.tmp
+release/
 .DS_Store

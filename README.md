@@ -1,5 +1,15 @@
 # PharmAssist Realtime Copilot
 
+## Windows 다운로드
+
+**[PharmAssist 최신 버전 다운로드](https://github.com/yeohj0710/pharmassist-realtime-copilot/releases/latest/download/PharmAssist-Windows.zip)**
+
+1. ZIP 파일을 내려받아 압축을 풉니다.
+2. `PharmAssist.exe`를 더블클릭합니다.
+3. 첫 실행은 필요한 구성요소 설치 때문에 시간이 조금 걸릴 수 있습니다.
+
+OpenAI API 키 없이도 합성 데이터 기반 로컬 데모가 실행됩니다. AI 보정을 사용하려면 압축을 푼 폴더의 `app\scripts\set-openai-key.ps1`을 실행해 본인의 키를 로컬에만 저장하세요. 키는 GitHub 배포 파일에 포함되지 않습니다.
+
 약사 상담 중 “지금 말할 내용, 다음 질문, 위험 신호, 피할 것”을 빠르게 보여주는 로컬 우선 PWA다. 현재 포함된 지식은 전부 합성 fixture다. **임상 사용 금지.** 공식 데이터·면허자 승인·법률 검토가 끝나기 전에는 실제 환자 상담에 쓰면 안 된다.
 
 ## 바로 실행

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PharmAssist 사용설명서</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Pretendard, "Noto Sans KR", sans-serif;
+        background: #f2f4f6;
+        color: #191f28;
+      }
+      main {
+        max-width: 720px;
+        margin: 48px auto;
+        padding: 40px;
+        background: #fff;
+        border-radius: 24px;
+      }
+      h1 {
+        font-size: 34px;
+      }
+      h2 {
+        margin-top: 32px;
+        font-size: 20px;
+      }
+      li,
+      p {
+        line-height: 1.7;
+      }
+      code {
+        background: #f2f4f6;
+        padding: 3px 7px;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>PharmAssist 사용설명서</h1>
+      <h2>실행</h2>
+      <ol>
+        <li>ZIP 압축을 완전히 풉니다.</li>
+        <li><code>PharmAssist.exe</code>를 더블클릭합니다.</li>
+        <li>브라우저가 열릴 때까지 기다립니다.</li>
+      </ol>
+      <h2>OpenAI 연결</h2>
+      <p>
+        API 키 없이도 로컬 데모가 동작합니다. AI 보정은
+        <code>app\scripts\set-openai-key.ps1</code>을 실행해 켤 수 있습니다.
+      </p>
+      <h2>문제가 있을 때</h2>
+      <p><code>app\logs\pharmassist.log</code>를 확인하세요.</p>
+      <h2>주의</h2>
+      <p>현재 버전은 합성 데이터 데모이며 임상 사용용 제품이 아닙니다.</p>
+    </main>
+  </body>
+</html>

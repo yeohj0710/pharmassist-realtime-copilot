@@ -1,0 +1,33 @@
+name: Windows Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package Windows app
+        shell: pwsh
+        run: ./scripts/package-windows-release.ps1
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: PharmAssist ${{ github.ref_name }}
+          body: |
+            Windows용 PharmAssist 합성 데이터 데모입니다.
+
+            1. PharmAssist-Windows.zip을 다운로드합니다.
+            2. 압축을 완전히 풉니다.
+            3. PharmAssist.exe를 더블클릭합니다.
+
+            API 키는 포함되어 있지 않습니다. 임상 사용용 제품이 아닙니다.
+          files: release/PharmAssist-Windows.zip
+          fail_on_unmatched_files: true
