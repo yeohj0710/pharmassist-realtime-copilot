@@ -12,7 +12,7 @@ internal static class PharmAssistLauncher
         var script = Path.Combine(root, "scripts", "run-pharmassist.ps1");
         if (!File.Exists(script))
         {
-            MessageBox.Show("scripts\\run-pharmassist.ps1을 찾을 수 없습니다.", "PharmAssist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Cannot find scripts\\run-pharmassist.ps1.", "PharmAssist", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
