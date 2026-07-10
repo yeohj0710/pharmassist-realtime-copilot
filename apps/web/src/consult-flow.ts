@@ -26,6 +26,8 @@ const candidateText: Readonly<Record<string, string>> = {
 
 interface ConsultMemory {
   readonly turns: readonly string[];
+  readonly activeIntent: string | null;
+  readonly completed: boolean;
 }
 
 export class StatefulConsultFlow {
@@ -41,11 +43,30 @@ export class StatefulConsultFlow {
   }
 
   run(input: RuntimeInput): EngineResult {
-    const prior = this.sessions.get(input.session_id)?.turns ?? [];
+    const memory = this.sessions.get(input.session_id);
+    const standalone = this.engine.run(input);
+    const startsDifferentTopic = Boolean(
+      memory?.completed &&
+      standalone.output.intent &&
+      standalone.output.intent !== memory.activeIntent,
+    );
+    const prior = startsDifferentTopic ? [] : (memory?.turns ?? []);
     const turns = [...prior, input.text].slice(-4);
-    this.sessions.set(input.session_id, { turns });
     const combined = turns.join(" ").slice(-2_000);
-    const result = this.engine.run({ ...input, text: combined });
+    const result = startsDifferentTopic
+      ? standalone
+      : this.engine.run({ ...input, text: combined });
+    const remember = (next: EngineResult): EngineResult => {
+      const completed =
+        next.output.ask_next.length === 0 &&
+        (next.output.actions.length > 0 || next.output.status === "final");
+      this.sessions.set(input.session_id, {
+        turns,
+        activeIntent: next.output.intent ?? memory?.activeIntent ?? null,
+        completed,
+      });
+      return next;
+    };
     const candidate = result.output.intent
       ? candidateText[result.output.intent]
       : undefined;
@@ -59,7 +80,7 @@ export class StatefulConsultFlow {
       result.output.red_flags.length === 0 &&
       turns.length >= 2
     )
-      return {
+      return remember({
         ...result,
         output: {
           ...result.output,
@@ -80,16 +101,16 @@ export class StatefulConsultFlow {
           missing_slots: [],
           confidence: 0,
         },
-      };
+      });
     if (
       !candidate ||
       !routineClarification ||
       result.output.red_flags.length > 0 ||
       (turns.length < 2 && !durationIncluded)
     )
-      return result;
+      return remember(result);
 
-    return {
+    return remember({
       ...result,
       output: {
         ...result.output,
@@ -108,6 +129,6 @@ export class StatefulConsultFlow {
         missing_slots: [],
       },
       ruleIds: result.ruleIds.filter((rule) => rule !== "ASK_ONE"),
-    };
+    });
   }
 }
