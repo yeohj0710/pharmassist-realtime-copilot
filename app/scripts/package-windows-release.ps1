@@ -24,7 +24,8 @@ foreach ($file in $trackedFiles) {
 
 Copy-Item -LiteralPath (Join-Path $repoRoot "PharmAssist.exe") -Destination $bundleRoot
 Copy-Item -LiteralPath (Join-Path $repoRoot "README.md") -Destination $bundleRoot
-$guidePath = (Resolve-Path -LiteralPath (Join-Path $repoRoot "사용설명서.html")).Path
+$guidePath = Get-ChildItem -LiteralPath $repoRoot -File -Filter "*.html" | Select-Object -First 1 -ExpandProperty FullName
+if (-not $guidePath) { throw "Root user guide HTML was not found." }
 Copy-Item -LiteralPath $guidePath -Destination $bundleRoot -Force
 
 $archivePath = Join-Path $releaseRoot "PharmAssist-Windows.zip"
