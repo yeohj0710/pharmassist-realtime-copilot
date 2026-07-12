@@ -95,6 +95,20 @@ describe("OpenAI boundaries", () => {
         { ...base, mode: "refined" },
       ).ok,
     ).toBe(false));
+  it("rejects an unverified exact dosage while allowing ordinary guidance", () => {
+    expect(
+      postValidateOutput(context, {
+        ...base,
+        say_now: ["이 약을 500mg씩 복용하세요."],
+      }),
+    ).toEqual({ ok: false, code: "UNSUPPORTED_ENTITY" });
+    expect(
+      postValidateOutput(context, {
+        ...base,
+        say_now: ["해열진통제 계열을 비교해 볼 수 있어요."],
+      }),
+    ).toEqual({ ok: true });
+  });
   it("reduces duplicate events and stable prefixes", () => {
     const one = reduceRealtime(emptyTranscriptState, {
       event_id: "1",

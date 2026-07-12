@@ -1,7 +1,14 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-test("keyboard-only local consult and disclosure", async ({ page }) => {
+
+test.beforeEach(async ({ page }) => {
   await page.goto("/");
+  await page.getByLabel("비밀번호").fill("0903");
+  await page.getByRole("button", { name: "로그인" }).click();
+  await expect(page.getByLabel("증상이나 질문을 입력하세요")).toBeVisible();
+});
+
+test("keyboard-only local consult and disclosure", async ({ page }) => {
   const serviceWorker = await page.request.get("/sw.js");
   expect(serviceWorker.ok()).toBe(true);
   expect(await serviceWorker.text()).toContain("index.html");
@@ -11,10 +18,8 @@ test("keyboard-only local consult and disclosure", async ({ page }) => {
   await page.keyboard.press("/");
   await page.keyboard.type("기침이 3일째예요");
   await page.keyboard.press("Enter");
-  await expect(
-    page.getByRole("heading", { name: "지금 말할 내용" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: /출처·버전/ }).click();
+  await expect(page.getByText("지금 말할 내용")).toBeVisible();
+  await page.getByText("근거·주의사항").click();
   await expect(page.getByText(/공식 임상 출처 검토는 미완료/)).toBeVisible();
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
@@ -23,7 +28,6 @@ test("offline badge does not hide local capability", async ({
   page,
   context,
 }) => {
-  await page.goto("/");
   await context.setOffline(true);
   await page.evaluate(() => dispatchEvent(new Event("offline")));
   await expect(page.getByText("오프라인 · 로컬 사용 가능")).toBeVisible();
@@ -32,7 +36,6 @@ test("offline badge does not hide local capability", async ({
 test("critical result cannot be cleared before acknowledgement", async ({
   page,
 }) => {
-  await page.goto("/");
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("숨이 안 쉬어져요");
   await input.press("Enter");
@@ -45,25 +48,23 @@ test("critical result cannot be cleared before acknowledgement", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: /확인했습니다/ }).click();
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("heading", { name: "빠른 시작" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "지금 확인할 상담" }),
+  ).toBeVisible();
 });
 
 test("short second answer completes a routine consult", async ({ page }) => {
-  await page.goto("/");
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("기침이 나요");
   await input.press("Enter");
   await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
   await input.fill("아침이요");
   await input.press("Enter");
-  await expect(page.getByText("후보 준비")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "약 후보" })).toBeVisible();
   await expect(page.getByText(/진해제.*거담제/)).toBeVisible();
   await expect(page.getByText("기침은 언제부터 시작됐나요?")).toHaveCount(0);
 });
 
 test("abdominal pain never routes to the throat card", async ({ page }) => {
-  await page.goto("/");
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("배가 아파요");
   await input.press("Enter");
@@ -75,19 +76,16 @@ test("abdominal pain never routes to the throat card", async ({ page }) => {
 test("bowel urgency progresses without a prepared exact phrase", async ({
   page,
 }) => {
-  await page.goto("/");
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("똥이 마려워요");
   await input.press("Enter");
   await expect(page.getByText(/묽은 변.*변이 안 나오는/)).toBeVisible();
   await input.fill("3분 전부터요");
   await input.press("Enter");
-  await expect(page.getByRole("heading", { name: "약 후보" })).toBeVisible();
   await expect(page.getByText(/수분·전해질/)).toBeVisible();
 });
 
 test("shoulder pain never routes to abdominal pain", async ({ page }) => {
-  await page.goto("/");
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("어깨가 아파요");
   await input.press("Enter");

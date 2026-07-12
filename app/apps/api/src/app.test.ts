@@ -158,6 +158,54 @@ describe("API", () => {
       else process.env["FEATURE_LLM_REFINEMENT"] = priorFeature;
     }
   });
+  it("redacts PII from prior conversation before external refinement", async () => {
+    const priorKey = process.env["OPENAI_API_KEY"];
+    const priorFeature = process.env["FEATURE_LLM_REFINEMENT"];
+    process.env["OPENAI_API_KEY"] = "test-only";
+    process.env["FEATURE_LLM_REFINEMENT"] = "true";
+    let providerPrompt = "";
+    const app = await buildApp({
+      responsesRefiner: {
+        async *refine(context) {
+          providerPrompt = `${context.promptDeveloper}\n${context.promptDeveloperOverride ?? ""}`;
+          yield { type: "started" as const, sequence: 1 };
+        },
+      },
+    });
+    try {
+      const instant = (
+        await app.inject({
+          method: "POST",
+          url: "/v1/consult/instant",
+          payload: { ...input, text: "기침이 나요" },
+        })
+      ).json();
+      const response = await app.inject({
+        method: "POST",
+        url: "/v1/consult/refine",
+        payload: {
+          runtime_input: { ...input, text: "기침이 나요" },
+          instant_output: instant,
+          candidate_card_ids: [],
+          knowledge_version: instant.knowledge_version,
+          conversation_history: [
+            "환자: 제 번호는 010-1234-5678이에요",
+            "환자: 기침이 나요",
+          ],
+        },
+      });
+      expect(response.body).toContain("refinement.started");
+      expect(providerPrompt).not.toContain("010-1234-5678");
+      expect(providerPrompt).toContain("[REDACTED_PHONE]");
+    } finally {
+      await app.close();
+      if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];
+      else process.env["OPENAI_API_KEY"] = priorKey;
+      if (priorFeature === undefined)
+        delete process.env["FEATURE_LLM_REFINEMENT"];
+      else process.env["FEATURE_LLM_REFINEMENT"] = priorFeature;
+    }
+  });
   it("rejects oversized JSON bodies", async () => {
     const app = await buildApp();
     const response = await app.inject({

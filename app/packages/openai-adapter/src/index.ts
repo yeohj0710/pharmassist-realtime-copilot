@@ -270,23 +270,22 @@ export function postValidateOutput(
     return { ok: false, code: "UNSUPPORTED_CLAIM" };
   if (context.instant.mode === "escalate" && output.mode !== "escalate")
     return { ok: false, code: "SAFETY_MONOTONICITY" };
-  // Normal conversational content is model-led. Local enforcement is limited
-  // to sequence integrity, source attribution, and immutable escalation.
-  return { ok: true };
-  /* legacy entity allowlist retained below for removal after migration */
   const text = [...output.say_now, ...output.actions.map((a) => a.text)].join(
     " ",
   );
-  const entities =
-    text.match(/[A-Za-z가-힣]+|\d+(?:\.\d+)?\s*(?:mg|g|mL|ml|cc|정|회|일)/gu) ??
-    [];
-  const newClinical = entities.filter(
-    (item) =>
-      /\d|mg|ml|정$/iu.test(item) && !context.allowedEntities.includes(item),
-  );
-  return newClinical.length
-    ? { ok: false, code: "UNSUPPORTED_ENTITY" }
-    : { ok: true };
+  const dosageClaims =
+    text.match(
+      /\d+(?:\.\d+)?\s*(?:mg|g|mL|ml|cc|정|캡슐|포|회)(?:\s*(?:씩|복용|투여|하루|매일))?/gu,
+    ) ?? [];
+  if (
+    dosageClaims.some(
+      (claim) => !context.allowedEntities.some((entity) => entity === claim),
+    )
+  )
+    return { ok: false, code: "UNSUPPORTED_ENTITY" };
+  // Natural conversation stays model-led, while exact dose claims, source
+  // attribution, request integrity, and emergency escalation remain enforced.
+  return { ok: true };
 }
 
 export interface TranscriptState {

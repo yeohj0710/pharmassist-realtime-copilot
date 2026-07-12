@@ -530,13 +530,13 @@ export function App() {
         </div>
         <div className="header-actions">
           <span className={`badge ${online ? "online" : "offline"}`}>
-            {aiInterpreting
-              ? "AI 해석 중"
-              : aiReady
-                ? "AI 연결됨"
-                : online
-                  ? "AI 연결 확인 중"
-                  : "오프라인 · 로컬 사용 가능"}
+            {!online
+              ? "오프라인 · 로컬 사용 가능"
+              : aiInterpreting
+                ? "AI 해석 중"
+                : aiReady
+                  ? "AI 연결됨"
+                  : "AI 연결 확인 중"}
           </span>
           {history.length > 0 && (
             <button className="reset-button" onClick={resetConsult}>

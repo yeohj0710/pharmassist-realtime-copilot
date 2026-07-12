@@ -416,8 +416,19 @@ export async function buildApp(
         body.runtime_input.text,
         body.runtime_input.asr?.alternatives ?? [],
       );
-      if (!normalized.safeForExternal)
+      const normalizedHistory = (
+        body.conversation_history ?? [body.runtime_input.text]
+      ).map((turn) => normalizeKorean(turn, []));
+      if (
+        !normalized.safeForExternal ||
+        normalizedHistory.some((turn) => !turn.safeForExternal)
+      )
         return `event: refinement.rejected\ndata: ${JSON.stringify({ code: "PRIVACY_REDACTION_FAILED", fallback: "instant", instant_retained: true })}\n\n`;
+      const redactedHistory = normalizedHistory.map(
+        (turn) => turn.redactedText,
+      );
+      // From this boundary onward, prompts can only access redacted history.
+      Object.assign(body, { conversation_history: redactedHistory });
       const allowedEntities =
         [
           ...body.instant_output.say_now,
@@ -545,6 +556,11 @@ export async function buildApp(
             error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id),
           );
       const apiKey = process.env["OPENAI_API_KEY"];
+      const user = await identity(req, profile, options.authProvider);
+      if (!user || !["pharmacist", "admin"].includes(user.role))
+        return reply
+          .code(403)
+          .send(error("FORBIDDEN", "인증이 필요합니다.", req.id));
       if (!apiKey || !Buffer.isBuffer(req.body) || req.body.length < 100)
         return reply
           .code(400)

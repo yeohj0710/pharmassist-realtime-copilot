@@ -22,7 +22,11 @@ internal static class PharmAssistLauncher
         {
             using (var client = new WebClient())
             {
-                client.DownloadString("http://127.0.0.1:4173");
+                var page = client.DownloadString("http://127.0.0.1:4173");
+                if (!page.Contains("<title>PharmAssist 데모</title>"))
+                {
+                    throw new WebException("Port 4173 is occupied by another application.");
+                }
             }
             Process.Start(new ProcessStartInfo("http://127.0.0.1:4173") { UseShellExecute = true });
             return;

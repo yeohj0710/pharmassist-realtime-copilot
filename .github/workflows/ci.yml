@@ -56,3 +56,28 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: failure()
         with: { name: playwright-failure, path: "app/playwright-report/**" }
+  windows-package:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Windows distribution
+        shell: pwsh
+        run: ./app/scripts/package-windows-release.ps1
+      - name: Verify packaged launcher and archive
+        shell: pwsh
+        run: |
+          $required = @(
+            "app/release/PharmAssist/PharmAssist.exe",
+            "app/release/PharmAssist/README.md",
+            "app/release/PharmAssist/사용설명서.html",
+            "app/release/PharmAssist-Windows.zip"
+          )
+          foreach ($path in $required) {
+            if (-not (Test-Path -LiteralPath $path)) { throw "Missing package artifact: $path" }
+            if ((Get-Item -LiteralPath $path).Length -le 0) { throw "Empty package artifact: $path" }
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-package
+          path: app/release/PharmAssist-Windows.zip
