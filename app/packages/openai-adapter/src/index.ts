@@ -16,7 +16,7 @@ export interface OpenAIConfig {
   readonly store: false;
 }
 export const safeOpenAIConfig: OpenAIConfig = {
-  model: "gpt-4.1-mini",
+  model: "gpt-5-nano",
   ambiguityModel: "gpt-5.4-mini",
   authoringModel: "gpt-5.5",
   transcriptionModel: "gpt-realtime-whisper",
@@ -131,10 +131,12 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
         model: this.config.model,
         store: false,
         stream: false,
-        ...(this.config.model.startsWith("gpt-5") ||
-        this.config.model.startsWith("o")
-          ? { reasoning: { effort: "none" as const } }
-          : {}),
+        ...(this.config.model === "gpt-5-nano"
+          ? { reasoning: { effort: "minimal" as const } }
+          : this.config.model.startsWith("gpt-5") ||
+              this.config.model.startsWith("o")
+            ? { reasoning: { effort: "none" as const } }
+            : {}),
         max_output_tokens: this.config.maxOutputTokens,
         input: [
           { role: "system", content: context.promptSystem },
