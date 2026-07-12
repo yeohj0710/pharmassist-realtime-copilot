@@ -1,4 +1,5 @@
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
+import { isPatientFacingText } from "./consult-memory.js";
 
 const apiBaseUrl = () =>
   (import.meta.env["VITE_API_BASE_URL"] as string | undefined) ??
@@ -51,7 +52,15 @@ export async function requestAiFallback(
       ?.slice(6);
     if (!data) continue;
     const parsed = JSON.parse(data) as Readonly<{ output?: RuntimeOutput }>;
-    return parsed.output;
+    if (
+      parsed.output &&
+      [
+        ...parsed.output.say_now,
+        ...parsed.output.ask_next.map((item) => item.question),
+      ].every(isPatientFacingText)
+    )
+      return parsed.output;
+    return undefined;
   }
   return undefined;
 }

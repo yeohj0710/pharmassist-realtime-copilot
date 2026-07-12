@@ -17,6 +17,7 @@ import {
 import {
   buildPatientSummary,
   outputText,
+  patientVisibleLines,
   upsertAssistantTurn,
 } from "./consult-memory.js";
 
@@ -414,20 +415,12 @@ export function App() {
               <>
                 <article className="primary-guidance">
                   <p className="result-kicker">지금 말할 내용</p>
-                  {result.actions.length > 0
-                    ? result.actions.map((item) => (
-                        <p className="recommendation" key={item.text}>
-                          {item.text}
-                        </p>
-                      ))
-                    : result.say_now.map((line) => (
-                        <p className="say" key={line}>
-                          {line}
-                        </p>
-                      ))}
-                  {result.ask_next.map((item) => (
-                    <p className="ask" key={item.slot}>
-                      {item.question}
+                  {patientVisibleLines(result).map((line, index) => (
+                    <p
+                      className={index < result.say_now.length ? "say" : "ask"}
+                      key={line}
+                    >
+                      {line}
                     </p>
                   ))}
                 </article>

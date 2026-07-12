@@ -2,6 +2,7 @@ import type { RuntimeInput } from "@pharmassist/contracts";
 import { syntheticPack } from "@pharmassist/test-fixtures";
 import { describe, expect, it } from "vitest";
 import { StatefulConsultFlow } from "./consult-flow.js";
+import { patientVisibleLines } from "./consult-memory.js";
 
 const input = (text: string, sequence: number): RuntimeInput => ({
   request_id: crypto.randomUUID(),
@@ -26,9 +27,10 @@ describe("stateful fast consult flow", () => {
     expect(second.output.intent).toBe("cough_general");
     expect(second.output.mode).toBe("instant");
     expect(second.output.ask_next).toEqual([]);
-    expect(second.output.actions[0]?.text).toContain("진해제");
-    expect(second.output.actions[0]?.text).not.toContain("비교하세요");
-    expect(second.output.actions[0]?.text).toMatch(/요\.$/u);
+    expect(second.output.say_now[0]).toContain("진해제");
+    expect(second.output.say_now[0]).not.toContain("비교하세요");
+    expect(second.output.say_now[0]).toMatch(/요\.$/u);
+    expect(second.output.actions[0]?.text).toContain("검토한다");
   });
 
   it("still escalates when a later turn contains a red flag", () => {
@@ -58,7 +60,7 @@ describe("stateful fast consult flow", () => {
     expect(first.output.ask_next[0]?.question).toContain("묽은 변");
     expect(second.output.mode).toBe("instant");
     expect(second.output.ask_next).toEqual([]);
-    expect(second.output.actions[0]?.text).toContain("수분");
+    expect(second.output.say_now[0]).toContain("수분");
   });
 
   it("ends unsupported loops instead of repeating the generic question", () => {
@@ -68,7 +70,7 @@ describe("stateful fast consult flow", () => {
 
     expect(second.output.status).toBe("final");
     expect(second.output.ask_next).toEqual([]);
-    expect(second.output.say_now.join(" ")).toContain("찾지 못했습니다");
+    expect(second.output.say_now.join(" ")).toContain("다시 말씀해 주세요");
   });
 
   it("routes shoulder pain to musculoskeletal instead of abdominal pain", () => {
@@ -78,5 +80,27 @@ describe("stateful fast consult flow", () => {
     expect(result.output.intent).toBe("musculoskeletal_pain");
     expect(result.output.ask_next[0]?.question).toContain("어깨");
     expect(result.output.say_now.join(" ")).not.toContain("배의");
+  });
+
+  it.each([
+    ["기침이 나요", "어제부터요"],
+    ["콧물이 나요", "어제부터요"],
+    ["목이 아파요", "어제부터요"],
+    ["소화가 안 돼요", "윗배가 더부룩해요"],
+    ["배가 아파요", "윗배가 쓰려요"],
+    ["설사할 것 같아요", "묽은 변이 나와요"],
+    ["어깨가 아파요", "움직일 때 아파요"],
+    ["피부가 가려워요", "팔이 어제부터 가려워요"],
+    ["열이 나요", "30살이고 38도예요"],
+  ])("keeps every supported route patient-facing: %s", (symptom, answer) => {
+    const flow = new StatefulConsultFlow(syntheticPack);
+    flow.run(input(symptom, 1));
+    const result = flow.run(input(answer, 2));
+    const visible = patientVisibleLines(result.output);
+
+    expect(visible.length).toBeGreaterThan(0);
+    expect(visible.join(" ")).not.toMatch(
+      /비교하세요|확인한다|평가한다|검토한다|출력하지|판매를? 중단/u,
+    );
   });
 });

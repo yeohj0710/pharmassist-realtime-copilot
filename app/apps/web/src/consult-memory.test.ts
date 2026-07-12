@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { buildPatientSummary, upsertAssistantTurn } from "./consult-memory.js";
+import {
+  buildPatientSummary,
+  isPatientFacingText,
+  patientVisibleLines,
+  upsertAssistantTurn,
+} from "./consult-memory.js";
 
 describe("consultation memory", () => {
   it("keeps accumulated patient facts beyond six turns", () => {
@@ -34,5 +39,23 @@ describe("consultation memory", () => {
       "환자: 기침이 나요",
       "상담 도우미: 기침은 언제부터 시작됐나요?",
     ]);
+  });
+
+  it("never exposes pharmacist-only actions as patient speech", () => {
+    const visible = patientVisibleLines({
+      say_now: ["기침 양상을 조금 더 여쭤볼게요."],
+      ask_next: [{ question: "가래도 함께 나오나요?" }],
+      actions: [
+        {
+          text: "진해제와 거담제 성분군 후보를 검토한다.",
+        },
+      ],
+    });
+
+    expect(visible).toEqual([
+      "기침 양상을 조금 더 여쭤볼게요.",
+      "가래도 함께 나오나요?",
+    ]);
+    expect(isPatientFacingText("성분군 후보를 검토한다.")).toBe(false);
   });
 });

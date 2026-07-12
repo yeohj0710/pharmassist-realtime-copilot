@@ -22,6 +22,8 @@ const candidateText: Readonly<Record<string, string>> = {
     "가벼운 근육이나 관절 통증에는 먹는 진통소염제나 바르는 소염진통제 계열을 살펴볼 수 있어요.",
   skin_general:
     "가려움에는 항히스타민제 계열, 건조해서 자극된 피부에는 보습·보호제를 살펴볼 수 있어요.",
+  fever_general:
+    "열이나 몸살에는 해열진통제 계열을 살펴볼 수 있어요. 현재 체온과 복용 중인 약이 있다면 함께 알려주세요.",
 };
 
 interface ConsultMemory {
@@ -87,7 +89,7 @@ export class StatefulConsultFlow {
           mode: "no_match",
           status: "final",
           say_now: [
-            "두 번 확인했지만 현재 지식팩에서 맞는 상담 카드를 찾지 못했습니다.",
+            "말씀해 주신 내용만으로는 알맞은 안내를 드리기 어려워요. 가장 불편한 부위와 느낌을 한 문장으로 다시 말씀해 주세요.",
           ],
           ask_next: [],
           actions: [
@@ -116,12 +118,12 @@ export class StatefulConsultFlow {
         ...result.output,
         mode: "instant",
         status: "stable",
-        say_now: ["말씀해 주신 증상에 맞춰 안내해 드릴게요."],
+        say_now: [candidate],
         ask_next: [],
         actions: [
           {
             type: "compare_candidate_class",
-            text: candidate,
+            text: "확인된 증상 양상에 맞는 일반약 성분군 후보를 검토한다.",
             requires_confirmation: false,
           },
         ],
