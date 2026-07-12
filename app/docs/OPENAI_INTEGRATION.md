@@ -4,7 +4,7 @@ OpenAI는 선택적 refinement와 음성→텍스트에만 쓴다. safety, claim
 
 ## Responses
 
-- 기본 model: `gpt-5.4-mini`; ambiguity/authoring: `gpt-5.5`
+- 기본 model: `gpt-5-nano`; 복합·모호 상담 상향 후보: `gpt-5.4-mini`; authoring: `gpt-5.5`
 - 로컬 결과는 즉시 표시하고 조건부 AI fallback만 최대 5초, max output 420, `store:false`
 - 기본 비용 guard: refinement 60회/시간, realtime session 20회/시간. 환경변수로 더 낮출 수 있으며 코드상 최대치는 각각 300/100이다.
 - RuntimeOutput JSON Schema strict format
@@ -30,7 +30,7 @@ OpenAI는 선택적 refinement와 음성→텍스트에만 쓴다. safety, claim
 ## 비용 기본값
 
 - `FEATURE_LLM_REFINEMENT=false`, `FEATURE_REALTIME_TRANSCRIPTION=false`: 기본 데모에서는 API 호출과 비용이 없다.
-- refinement는 `gpt-5.4-mini`, reasoning `none`, 최대 420 output token, 2.5초 timeout을 사용한다.
+- runtime refinement는 비용 우선 기본값 `gpt-5-nano`, reasoning `none`, 최대 420 output token을 사용한다. 승인 카드와 로컬 위험 신호가 우선하며, nano 결과를 임상 production-ready로 간주하지 않는다. 복합·모호 상담은 `gpt-5.4-mini` 상향 대상으로 기록한다.
 - 서버가 `OPENAI_REFINEMENT_MAX_REQUESTS_PER_HOUR=60`, `OPENAI_REALTIME_MAX_SESSIONS_PER_HOUR=20`을 강제한다.
 - 더 보수적으로 쓰려면 각각 `20`, `10`으로 낮춘다.
 - 서버 제한은 프로세스별 보호장치다. 계정 전체 지출 한도와 알림은 OpenAI 프로젝트 설정에서도 별도로 구성한다.

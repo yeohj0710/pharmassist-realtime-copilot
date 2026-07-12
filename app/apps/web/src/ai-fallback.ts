@@ -36,6 +36,7 @@ export async function requestAiFallback(
       "x-role": "pharmacist",
       "x-tenant": "local-demo",
       "x-user": "local-user",
+      "x-app-passcode": sessionStorage.getItem("pharmassist_access") ?? "",
     },
     body: JSON.stringify(
       buildAiRefinementBody(input, instant, conversationHistory),

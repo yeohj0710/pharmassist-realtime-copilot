@@ -16,8 +16,8 @@ export interface OpenAIConfig {
   readonly store: false;
 }
 export const safeOpenAIConfig: OpenAIConfig = {
-  model: "gpt-5.4-mini",
-  ambiguityModel: "gpt-5.5",
+  model: "gpt-5-nano",
+  ambiguityModel: "gpt-5.4-mini",
   authoringModel: "gpt-5.5",
   transcriptionModel: "gpt-realtime-whisper",
   timeoutMs: 2500,

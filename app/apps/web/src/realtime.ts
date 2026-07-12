@@ -29,7 +29,13 @@ export async function connectTranscriptionPeer(
   }
   const response = await fetch(brokerUrl, {
     method: "POST",
-    headers: { "Content-Type": "application/sdp" },
+    headers: {
+      "Content-Type": "application/sdp",
+      "x-role": "pharmacist",
+      "x-tenant": "local-demo",
+      "x-user": "local-user",
+      "x-app-passcode": sessionStorage.getItem("pharmassist_access") ?? "",
+    },
     body: offerSdp,
     cache: "no-store",
     signal,

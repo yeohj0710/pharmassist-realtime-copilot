@@ -372,6 +372,8 @@ export async function buildApp(
     },
     async (req, reply) => {
       reply.header("Cache-Control", "no-store");
+      if (process.env["APP_PASSCODE"] && req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"])
+        return reply.code(403).send(error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id));
       const validated = validateContract("refinementRequest", req.body);
       if (!validated.ok)
         return reply
@@ -519,6 +521,8 @@ export async function buildApp(
     },
     async (req, reply) => {
       reply.header("Cache-Control", "no-store");
+      if (process.env["APP_PASSCODE"] && req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"])
+        return reply.code(403).send(error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id));
       const user = await identity(req, profile, options.authProvider);
       if (!user)
         return reply

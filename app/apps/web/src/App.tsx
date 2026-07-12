@@ -28,6 +28,25 @@ interface EngineMessage {
 }
 type WorkerMessage = EngineMessage | { readonly error: string };
 
+interface BrowserSpeechRecognitionEvent extends Event {
+  readonly results: SpeechRecognitionResultList;
+}
+interface BrowserSpeechRecognitionErrorEvent extends Event {
+  readonly error: string;
+}
+interface BrowserSpeechRecognition {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((event: BrowserSpeechRecognitionEvent) => void) | null;
+  onerror: ((event: BrowserSpeechRecognitionErrorEvent) => void) | null;
+  onend: (() => void) | null;
+  start(): void;
+  stop(): void;
+  abort(): void;
+}
+type BrowserSpeechRecognitionConstructor = new () => BrowserSpeechRecognition;
+
 const newInput = (
   text: string,
   sequence: number,
@@ -47,11 +66,17 @@ const newInput = (
 });
 
 export function App() {
+  const [accessGranted, setAccessGranted] = useState(
+    sessionStorage.getItem("pharmassist_access") === "0903",
+  );
+  const [passcode, setPasscode] = useState("");
+  const [passcodeError, setPasscodeError] = useState(false);
   const [query, setQuery] = useState("");
   const [history, setHistory] = useState<readonly string[]>([]);
   const [result, setResult] = useState<RuntimeOutput>();
   const [online, setOnline] = useState(navigator.onLine);
   const [listening, setListening] = useState(false);
+  const [voiceMessage, setVoiceMessage] = useState("");
   const [confirmedCritical, setConfirmedCritical] = useState(false);
   const [aiInterpreting, setAiInterpreting] = useState(false);
   const [aiReady, setAiReady] = useState(false);
@@ -65,6 +90,7 @@ export function App() {
   const statusRef = useRef<RuntimeOutput["status"] | undefined>(undefined);
   const realtimeAbortRef = useRef<AbortController | null>(null);
   const transcriptionPeerRef = useRef<TranscriptionPeer | null>(null);
+  const browserSpeechRef = useRef<BrowserSpeechRecognition | null>(null);
   const pttReleasedRef = useRef(false);
   const finalizationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
@@ -216,6 +242,7 @@ export function App() {
       aiAbortRef.current?.abort();
       realtimeAbortRef.current?.abort();
       transcriptionPeerRef.current?.close();
+      browserSpeechRef.current?.abort();
       if (finalizationTimerRef.current)
         clearTimeout(finalizationTimerRef.current);
       mediaRef.current?.getTracks().forEach((track) => track.stop());
@@ -264,12 +291,13 @@ export function App() {
       realtimeAbortRef.current?.abort();
       transcriptionPeerRef.current?.close();
       pttReleasedRef.current = false;
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRef.current = stream;
-      setListening(true);
+      setVoiceMessage("");
       const brokerUrl = import.meta.env["VITE_REALTIME_BROKER_URL"] as
         string | undefined;
       if (brokerUrl) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRef.current = stream;
+        setListening(true);
         const controller = new AbortController();
         realtimeAbortRef.current = controller;
         void connectTranscriptionPeer(
@@ -303,13 +331,68 @@ export function App() {
             setListening(false);
             inputRef.current?.focus();
           });
+        return;
       }
+
+      const speechWindow = window as typeof window & {
+        SpeechRecognition?: BrowserSpeechRecognitionConstructor;
+        webkitSpeechRecognition?: BrowserSpeechRecognitionConstructor;
+      };
+      const Recognition =
+        speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
+      if (!Recognition) {
+        setVoiceMessage("이 브라우저에서는 음성 입력을 지원하지 않아요.");
+        return;
+      }
+      const recognition = new Recognition();
+      browserSpeechRef.current = recognition;
+      recognition.lang = "ko-KR";
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.onresult = (event) => {
+        let transcript = "";
+        let finalTranscript = "";
+        for (let index = 0; index < event.results.length; index += 1) {
+          const result = event.results[index];
+          const text = result?.[0]?.transcript ?? "";
+          transcript += text;
+          if (result?.isFinal) finalTranscript += text;
+        }
+        setQuery(transcript.trim());
+        if (finalTranscript.trim()) {
+          submitText(finalTranscript, "voice_final");
+          setVoiceMessage("");
+        }
+      };
+      recognition.onerror = (event) => {
+        setListening(false);
+        browserSpeechRef.current = null;
+        setVoiceMessage(
+          event.error === "not-allowed"
+            ? "주소창의 마이크를 허용한 뒤 다시 눌러주세요."
+            : event.error === "no-speech"
+              ? "음성이 들리지 않았어요. 다시 말해주세요."
+              : "음성 인식을 시작하지 못했어요.",
+        );
+      };
+      recognition.onend = () => {
+        setListening(false);
+        browserSpeechRef.current = null;
+        inputRef.current?.focus();
+      };
+      recognition.start();
+      setListening(true);
     } catch {
       setListening(false);
+      setVoiceMessage("마이크를 시작하지 못했어요.");
       inputRef.current?.focus();
     }
   };
   const stopPtt = () => {
+    if (browserSpeechRef.current) {
+      browserSpeechRef.current.stop();
+      return;
+    }
     pttReleasedRef.current = true;
     transcriptionPeerRef.current?.commit();
     mediaRef.current?.getTracks().forEach((track) => track.stop());
@@ -357,6 +440,36 @@ export function App() {
         </div>
       </header>
       <section className="query-panel" aria-label="상담 입력">
+        {!accessGranted && (
+          <div className="access-gate">
+            <strong>상담 기능 잠금</strong>
+            <p>내용은 볼 수 있지만 상담·음성 기능은 비밀번호 입력 후 사용할 수 있어요.</p>
+            <div className="query-row">
+              <input
+                type="password"
+                inputMode="numeric"
+                value={passcode}
+                onChange={(event) => { setPasscode(event.target.value); setPasscodeError(false); }}
+                onKeyDown={(event) => {
+                  if (event.key !== "Enter") return;
+                  if (passcode === "0903") {
+                    sessionStorage.setItem("pharmassist_access", "0903");
+                    setAccessGranted(true);
+                  } else setPasscodeError(true);
+                }}
+                placeholder="비밀번호"
+                aria-label="기능 사용 비밀번호"
+              />
+              <button onClick={() => {
+                if (passcode === "0903") {
+                  sessionStorage.setItem("pharmassist_access", "0903");
+                  setAccessGranted(true);
+                } else setPasscodeError(true);
+              }}>사용하기</button>
+            </div>
+            {passcodeError && <p className="voice-message" role="alert">비밀번호가 맞지 않아요.</p>}
+          </div>
+        )}
         <label htmlFor="consult-query">증상이나 질문을 입력하세요</label>
         <div className="query-row">
           <input
@@ -371,21 +484,24 @@ export function App() {
             placeholder="예: 기침이 3일째예요"
             autoFocus
             maxLength={2000}
+            disabled={!accessGranted}
           />
-          <button onClick={consult} aria-disabled={session.criticalLocked}>
+          <button onClick={consult} disabled={!accessGranted} aria-disabled={session.criticalLocked}>
             확인
           </button>
         </div>
         <button
           className={`ptt ${listening ? "active" : ""}`}
-          onPointerDown={() => void startPtt()}
-          onPointerUp={stopPtt}
-          onPointerCancel={stopPtt}
+          onClick={() => (listening ? stopPtt() : void startPtt())}
           aria-pressed={listening}
+          disabled={!accessGranted}
           aria-label="누르는 동안 음성 입력"
         >
-          {listening ? "● 듣는 중 — 놓으면 중지" : "🎙 누르고 말하기"}
+          {listening ? "● 듣는 중 · 눌러서 종료" : "🎙 말하기"}
         </button>
+        {voiceMessage && (
+          <p className="voice-message" role="status">{voiceMessage}</p>
+        )}
         <p className="privacy">
           음성은 이 데모에서 저장되지 않습니다. 음성 인식 연결 전에는 직접
           입력을 사용하세요.
