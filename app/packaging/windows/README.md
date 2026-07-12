@@ -13,7 +13,7 @@
 API 키 없이도 합성 데이터 기반 로컬 데모가 동작합니다. AI 보정을 켜려면 PowerShell에서 다음 파일을 실행하고 본인의 API 키를 입력합니다.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File app\scripts\set-openai-key.ps1
+powershell -ExecutionPolicy Bypass -File "app\scripts\set-openai-key.ps1"
 ```
 
 키는 `app\.env`에만 저장되며 배포 파일이나 GitHub에 포함되지 않습니다.

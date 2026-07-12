@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Package Windows app
         shell: pwsh
-        run: ./scripts/package-windows-release.ps1
+        run: ./app/scripts/package-windows-release.ps1
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -29,5 +29,5 @@ jobs:
             3. PharmAssist.exe를 더블클릭합니다.
 
             API 키는 포함되어 있지 않습니다. 임상 사용용 제품이 아닙니다.
-          files: release/PharmAssist-Windows.zip
+          files: app/release/PharmAssist-Windows.zip
           fail_on_unmatched_files: true

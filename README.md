@@ -8,18 +8,18 @@
 2. `PharmAssist.exe`를 더블클릭합니다.
 3. 첫 실행은 필요한 구성요소 설치 때문에 시간이 조금 걸릴 수 있습니다.
 
-OpenAI API 키 없이도 합성 데이터 기반 로컬 데모가 실행됩니다. AI 보정을 사용하려면 압축을 푼 폴더의 `app\scripts\set-openai-key.ps1`을 실행해 본인의 키를 로컬에만 저장하세요. 키는 GitHub 배포 파일에 포함되지 않습니다.
+OpenAI API 키 없이도 합성 데이터 기반 로컬 데모가 실행됩니다. AI 보정을 사용하려면 `app\scripts\set-openai-key.ps1`을 실행해 본인의 키를 로컬에만 저장하세요. 키는 GitHub 배포 파일에 포함되지 않습니다.
 
 약사 상담 중 “지금 말할 내용, 다음 질문, 위험 신호, 피할 것”을 빠르게 보여주는 로컬 우선 PWA다. 현재 포함된 지식은 전부 합성 fixture다. **임상 사용 금지.** 공식 데이터·면허자 승인·법률 검토가 끝나기 전에는 실제 환자 상담에 쓰면 안 된다.
 
 ## 바로 실행
 
-Windows에서는 저장소 루트의 `PharmAssist.exe`를 더블클릭한다. 첫 실행만 의존성을 자동 설치하고, 서버는 백그라운드에서 조용히 실행되며 준비되면 브라우저만 열린다. 다시 실행하면 기존 서버를 재사용해 브라우저만 연다. 문제 진단 로그는 `logs/pharmassist.log`에 저장된다. 기본 설정은 OpenAI 호출이 꺼진 로컬 데모라 API 비용이 발생하지 않는다.
+Windows에서는 저장소 루트의 `PharmAssist.exe`를 더블클릭한다. 첫 실행만 의존성을 자동 설치하고, 서버는 백그라운드에서 조용히 실행되며 준비되면 브라우저만 열린다. 다시 실행하면 기존 서버를 재사용해 브라우저만 연다. 문제 진단 로그는 `app\logs\pharmassist.log`에 저장된다. 기본 설정은 OpenAI 호출이 꺼진 로컬 데모라 API 비용이 발생하지 않는다.
 
 API 키를 안전하게 로컬에 저장하려면 다음 명령을 실행한다. 입력 문자는 화면에 표시되지 않으며 `.env`는 Git에서 제외된다.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/set-openai-key.ps1
+powershell -ExecutionPolicy Bypass -File "app/scripts/set-openai-key.ps1"
 ```
 
 명령줄 실행은 아래와 같다.
@@ -27,6 +27,7 @@ powershell -ExecutionPolicy Bypass -File scripts/set-openai-key.ps1
 요구 환경: Node 24.12.x, Corepack, pnpm 11.11.x.
 
 ```powershell
+Set-Location "app"
 Copy-Item .env.example .env
 corepack pnpm install --frozen-lockfile
 corepack pnpm dev:demo

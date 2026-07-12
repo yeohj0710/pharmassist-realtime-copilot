@@ -1,6 +1,6 @@
 import { access, readFile } from "node:fs/promises";
 const required = [
-  "README.md",
+  "../README.md",
   "IMPLEMENTATION_REPORT.md",
   "docs/ARCHITECTURE.md",
   "docs/DECISIONS.md",

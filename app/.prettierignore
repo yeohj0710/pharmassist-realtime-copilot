@@ -3,6 +3,11 @@ data/generated-dev-pack/
 reports/
 playwright-report/
 coverage/
+.turbo/
+dist/
+**/dist/
+release/
+test-results/
 pnpm-lock.yaml
 packages/contracts/src/generated/
 packages/contracts/openapi/

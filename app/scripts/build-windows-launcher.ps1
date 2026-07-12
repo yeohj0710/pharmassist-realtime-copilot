@@ -1,8 +1,9 @@
 $ErrorActionPreference = "Stop"
-$repoRoot = Split-Path -Parent $PSScriptRoot
+$projectRoot = Split-Path -Parent $PSScriptRoot
+$repoRoot = Split-Path -Parent $projectRoot
 $source = Join-Path $PSScriptRoot "PharmAssistLauncher.cs"
 $output = Join-Path $repoRoot "PharmAssist.exe"
-$icon = Join-Path $repoRoot "assets\PharmAssist.ico"
+$icon = Join-Path $projectRoot "assets\PharmAssist.ico"
 
 & (Join-Path $PSScriptRoot "build-windows-icon.ps1")
 $csc = Join-Path $env:WINDIR "Microsoft.NET\Framework64\v4.0.30319\csc.exe"

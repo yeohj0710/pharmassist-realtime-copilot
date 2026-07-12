@@ -10,13 +10,8 @@ internal static class PharmAssistLauncher
     private static void Main()
     {
         var root = AppDomain.CurrentDomain.BaseDirectory;
-        var script = Path.Combine(root, "scripts", "run-pharmassist.ps1");
-        var workingDirectory = root;
-        if (!File.Exists(script))
-        {
-            workingDirectory = Path.Combine(root, "app");
-            script = Path.Combine(workingDirectory, "scripts", "run-pharmassist.ps1");
-        }
+        var workingDirectory = Path.Combine(root, "app");
+        var script = Path.Combine(workingDirectory, "scripts", "run-pharmassist.ps1");
         if (!File.Exists(script))
         {
             MessageBox.Show("Cannot find PharmAssist program files.", "PharmAssist", MessageBoxButtons.OK, MessageBoxIcon.Error);
