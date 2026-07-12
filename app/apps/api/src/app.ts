@@ -378,8 +378,15 @@ export async function buildApp(
     },
     async (req, reply) => {
       reply.header("Cache-Control", "no-store");
-      if (process.env["APP_PASSCODE"] && req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"])
-        return reply.code(403).send(error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id));
+      if (
+        process.env["APP_PASSCODE"] &&
+        req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"]
+      )
+        return reply
+          .code(403)
+          .send(
+            error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id),
+          );
       const validated = validateContract("refinementRequest", req.body);
       if (!validated.ok)
         return reply
@@ -528,11 +535,20 @@ export async function buildApp(
     },
     async (req, reply) => {
       reply.header("Cache-Control", "no-store");
-      if (process.env["APP_PASSCODE"] && req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"])
-        return reply.code(403).send(error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id));
+      if (
+        process.env["APP_PASSCODE"] &&
+        req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"]
+      )
+        return reply
+          .code(403)
+          .send(
+            error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id),
+          );
       const apiKey = process.env["OPENAI_API_KEY"];
       if (!apiKey || !Buffer.isBuffer(req.body) || req.body.length < 100)
-        return reply.code(400).send(error("INVALID_INPUT", "녹음된 음성을 확인해 주세요.", req.id));
+        return reply
+          .code(400)
+          .send(error("INVALID_INPUT", "녹음된 음성을 확인해 주세요.", req.id));
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 15_000);
       try {
@@ -541,15 +557,32 @@ export async function buildApp(
           audio: new Uint8Array(req.body),
           mimeType: "audio/webm",
           signal: controller.signal,
-          model: process.env["OPENAI_TRANSCRIPTION_MODEL"] ?? "gpt-4o-transcribe",
+          model:
+            process.env["OPENAI_TRANSCRIPTION_MODEL"] ?? "gpt-4o-transcribe",
           prompt:
             "한국 약국에서 환자와 약사가 나누는 짧은 상담입니다. 증상, 기간, 복용약, 알레르기, 임신, 수유와 일반의약품·의약품 성분명을 자연스러운 한국어 문장으로 정확히 받아쓰세요. 예: 배가 아파요. 기침이 어제부터 났어요. 타이레놀, 아세트아미노펜, 이부프로펜, 소화제, 진통제, 항히스타민제.",
         });
-        if (!transcript) return reply.code(422).send(error("INVALID_INPUT", "음성이 들리지 않았어요.", req.id));
+        if (!transcript)
+          return reply
+            .code(422)
+            .send(error("INVALID_INPUT", "음성이 들리지 않았어요.", req.id));
         return { transcript };
       } catch (cause) {
-        req.log.error({ error_name: cause instanceof Error ? cause.name : "UnknownError" }, "audio transcription failed");
-        return reply.code(503).send(error("REALTIME_UNAVAILABLE", "음성을 글자로 바꾸지 못했어요.", req.id, true, "typed_input"));
+        req.log.error(
+          { error_name: cause instanceof Error ? cause.name : "UnknownError" },
+          "audio transcription failed",
+        );
+        return reply
+          .code(503)
+          .send(
+            error(
+              "REALTIME_UNAVAILABLE",
+              "음성을 글자로 바꾸지 못했어요.",
+              req.id,
+              true,
+              "typed_input",
+            ),
+          );
       } finally {
         clearTimeout(timeout);
       }
@@ -564,8 +597,15 @@ export async function buildApp(
     },
     async (req, reply) => {
       reply.header("Cache-Control", "no-store");
-      if (process.env["APP_PASSCODE"] && req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"])
-        return reply.code(403).send(error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id));
+      if (
+        process.env["APP_PASSCODE"] &&
+        req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"]
+      )
+        return reply
+          .code(403)
+          .send(
+            error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id),
+          );
       const user = await identity(req, profile, options.authProvider);
       if (!user)
         return reply

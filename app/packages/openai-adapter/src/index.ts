@@ -131,7 +131,8 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
         model: this.config.model,
         store: false,
         stream: false,
-        ...(this.config.model.startsWith("gpt-5") || this.config.model.startsWith("o")
+        ...(this.config.model.startsWith("gpt-5") ||
+        this.config.model.startsWith("o")
           ? { reasoning: { effort: "none" as const } }
           : {}),
         max_output_tokens: this.config.maxOutputTokens,

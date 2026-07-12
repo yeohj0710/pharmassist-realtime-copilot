@@ -77,7 +77,9 @@ export function App() {
   const [online, setOnline] = useState(navigator.onLine);
   const [listening, setListening] = useState(false);
   const [voiceMessage, setVoiceMessage] = useState("");
-  const [microphones, setMicrophones] = useState<readonly MediaDeviceInfo[]>([]);
+  const [microphones, setMicrophones] = useState<readonly MediaDeviceInfo[]>(
+    [],
+  );
   const [microphoneId, setMicrophoneId] = useState("");
   const [confirmedCritical, setConfirmedCritical] = useState(false);
   const [aiInterpreting, setAiInterpreting] = useState(false);
@@ -304,12 +306,16 @@ export function App() {
       if (brokerUrl) {
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: microphoneId
-            ? { deviceId: { exact: microphoneId }, echoCancellation: true, noiseSuppression: true }
+            ? {
+                deviceId: { exact: microphoneId },
+                echoCancellation: true,
+                noiseSuppression: true,
+              }
             : { echoCancellation: true, noiseSuppression: true },
         });
-        const devices = (await navigator.mediaDevices.enumerateDevices()).filter(
-          (device) => device.kind === "audioinput",
-        );
+        const devices = (
+          await navigator.mediaDevices.enumerateDevices()
+        ).filter((device) => device.kind === "audioinput");
         setMicrophones(devices);
         mediaRef.current = stream;
         const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
@@ -327,41 +333,51 @@ export function App() {
           mediaRef.current = null;
           mediaRecorderRef.current = null;
           setListening(false);
-          const blob = new Blob(recordedChunksRef.current, { type: "audio/webm" });
+          const blob = new Blob(recordedChunksRef.current, {
+            type: "audio/webm",
+          });
           recordedChunksRef.current = [];
           if (blob.size < 100) {
             setVoiceMessage("음성이 들리지 않았어요. 다시 말해주세요.");
             return;
           }
           setVoiceMessage("음성을 글자로 바꾸는 중이에요…");
-          const endpoint = brokerUrl.replace("/v1/realtime/session", "/v1/audio/transcribe");
+          const endpoint = brokerUrl.replace(
+            "/v1/realtime/session",
+            "/v1/audio/transcribe",
+          );
           void fetch(endpoint, {
             method: "POST",
             headers: {
               "Content-Type": "audio/webm",
-              "x-app-passcode": sessionStorage.getItem("pharmassist_access") ?? "",
+              "x-app-passcode":
+                sessionStorage.getItem("pharmassist_access") ?? "",
             },
             body: blob,
-          }).then(async (response) => {
-            if (!response.ok) throw new Error(`TRANSCRIBE_${response.status}`);
-            const body = await response.json() as { transcript?: string };
-            if (!body.transcript) throw new Error("TRANSCRIPT_EMPTY");
-            setQuery(body.transcript);
-            submitText(body.transcript, "voice_final");
-            setVoiceMessage("");
-          }).catch((cause: unknown) => {
-            const code = cause instanceof Error ? cause.message : "UNKNOWN";
-            setVoiceMessage(
-              code === "TRANSCRIBE_422"
-                ? "소리가 감지되지 않았어요. 마이크를 바꾸거나 조금 더 가까이 말해주세요."
-                : "음성 인식에 실패했어요. 다시 눌러주세요.",
-            );
-          });
+          })
+            .then(async (response) => {
+              if (!response.ok)
+                throw new Error(`TRANSCRIBE_${response.status}`);
+              const body = (await response.json()) as { transcript?: string };
+              if (!body.transcript) throw new Error("TRANSCRIPT_EMPTY");
+              setQuery(body.transcript);
+              submitText(body.transcript, "voice_final");
+              setVoiceMessage("");
+            })
+            .catch((cause: unknown) => {
+              const code = cause instanceof Error ? cause.message : "UNKNOWN";
+              setVoiceMessage(
+                code === "TRANSCRIBE_422"
+                  ? "소리가 감지되지 않았어요. 마이크를 바꾸거나 조금 더 가까이 말해주세요."
+                  : "음성 인식에 실패했어요. 다시 눌러주세요.",
+              );
+            });
         };
         recorder.start(250);
         setListening(true);
         recordingTimerRef.current = setTimeout(() => {
-          if (mediaRecorderRef.current?.state === "recording") mediaRecorderRef.current.stop();
+          if (mediaRecorderRef.current?.state === "recording")
+            mediaRecorderRef.current.stop();
         }, 8_000);
         return;
       }
@@ -462,10 +478,14 @@ export function App() {
     return (
       <main className="login-shell">
         <section className="login-card" aria-labelledby="login-title">
-          <div className="login-logo" aria-hidden="true">P</div>
+          <div className="login-logo" aria-hidden="true">
+            P
+          </div>
           <p className="login-eyebrow">PHARMASSIST</p>
           <h1 id="login-title">상담 도우미에 로그인</h1>
-          <p className="login-copy">허용된 사용자만 상담 기능을 이용할 수 있어요.</p>
+          <p className="login-copy">
+            허용된 사용자만 상담 기능을 이용할 수 있어요.
+          </p>
           <label htmlFor="access-passcode">비밀번호</label>
           <input
             id="access-passcode"
@@ -484,8 +504,14 @@ export function App() {
             placeholder="비밀번호를 입력하세요"
             aria-invalid={passcodeError}
           />
-          {passcodeError && <p className="login-error" role="alert">비밀번호가 맞지 않아요.</p>}
-          <button className="login-button" onClick={unlock}>로그인</button>
+          {passcodeError && (
+            <p className="login-error" role="alert">
+              비밀번호가 맞지 않아요.
+            </p>
+          )}
+          <button className="login-button" onClick={unlock}>
+            로그인
+          </button>
           <small>합성 데이터 데모 · 임상 사용 금지</small>
         </section>
       </main>
@@ -548,12 +574,17 @@ export function App() {
           {listening ? "● 듣는 중 · 눌러서 종료" : "🎙 말하기"}
         </button>
         {voiceMessage && (
-          <p className="voice-message" role="status">{voiceMessage}</p>
+          <p className="voice-message" role="status">
+            {voiceMessage}
+          </p>
         )}
         {microphones.length > 1 && (
           <label className="microphone-picker">
             마이크
-            <select value={microphoneId} onChange={(event) => setMicrophoneId(event.target.value)}>
+            <select
+              value={microphoneId}
+              onChange={(event) => setMicrophoneId(event.target.value)}
+            >
               <option value="">기본 마이크</option>
               {microphones.map((device, index) => (
                 <option key={device.deviceId} value={device.deviceId}>

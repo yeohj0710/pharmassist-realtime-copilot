@@ -99,7 +99,9 @@
   cursor: pointer;
 }
 
-.login-button:hover { background: #1b64da; }
+.login-button:hover {
+  background: #1b64da;
+}
 
 .login-card small {
   display: block;
@@ -129,7 +131,10 @@
 }
 
 @media (max-width: 520px) {
-  .login-card { padding: 36px 24px 28px; border-radius: 20px; }
+  .login-card {
+    padding: 36px 24px 28px;
+    border-radius: 20px;
+  }
 }
 * {
   box-sizing: border-box;
