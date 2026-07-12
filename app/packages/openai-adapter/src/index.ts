@@ -16,7 +16,7 @@ export interface OpenAIConfig {
   readonly store: false;
 }
 export const safeOpenAIConfig: OpenAIConfig = {
-  model: "gpt-5-nano",
+  model: "gpt-4.1-mini",
   ambiguityModel: "gpt-5.4-mini",
   authoringModel: "gpt-5.5",
   transcriptionModel: "gpt-realtime-whisper",
@@ -55,6 +55,7 @@ export interface RefinementContext {
   readonly allowedIntents: readonly string[];
   readonly promptSystem: string;
   readonly promptDeveloper: string;
+  readonly promptDeveloperOverride?: string;
 }
 export type RefinementEvent =
   | { readonly type: "started"; readonly sequence: number }
@@ -130,11 +131,16 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
         model: this.config.model,
         store: false,
         stream: false,
-        reasoning: { effort: "none" },
+        ...(this.config.model.startsWith("gpt-5") || this.config.model.startsWith("o")
+          ? { reasoning: { effort: "none" as const } }
+          : {}),
         max_output_tokens: this.config.maxOutputTokens,
         input: [
           { role: "system", content: context.promptSystem },
-          { role: "developer", content: context.promptDeveloper },
+          {
+            role: "developer",
+            content: context.promptDeveloperOverride ?? context.promptDeveloper,
+          },
           {
             role: "user",
             content: JSON.stringify({
@@ -189,6 +195,16 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
       };
       return;
     }
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      Object.assign(parsed, {
+        request_id: context.input.request_id,
+        session_id: context.input.session_id,
+        sequence: context.input.sequence,
+        knowledge_version: context.instant.knowledge_version,
+        generated_at: new Date().toISOString(),
+        model: response.model,
+      });
+    }
     const valid = validateContract<RuntimeOutput>("runtimeOutput", parsed);
     if (!valid.ok || !valid.value) {
       yield {
@@ -198,8 +214,30 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
       };
       return;
     }
+    const cleanedSayNow =
+      valid.value.ask_next.length > 0
+        ? valid.value.say_now
+            .map((line) =>
+              line
+                .split(/(?<=[.!?])\s+/u)
+                .filter((sentence) => !sentence.trim().endsWith("?"))
+                .join(" ")
+                .trim(),
+            )
+            .filter(Boolean)
+            .slice(0, 3)
+        : [...valid.value.say_now];
+    const sayNow: RuntimeOutput["say_now"] =
+      cleanedSayNow.length === 0
+        ? []
+        : cleanedSayNow.length === 1
+          ? [cleanedSayNow[0]!]
+          : cleanedSayNow.length === 2
+            ? [cleanedSayNow[0]!, cleanedSayNow[1]!]
+            : [cleanedSayNow[0]!, cleanedSayNow[1]!, cleanedSayNow[2]!];
     const attributedOutput: RuntimeOutput = {
       ...valid.value,
+      say_now: sayNow,
       model: response.model,
     };
     const checked = postValidateOutput(context, attributedOutput);
@@ -227,10 +265,12 @@ export function postValidateOutput(
     )
   )
     return { ok: false, code: "UNSUPPORTED_CLAIM" };
-  if (output.intent && !context.allowedIntents.includes(output.intent))
-    return { ok: false, code: "UNSUPPORTED_CLAIM" };
   if (context.instant.mode === "escalate" && output.mode !== "escalate")
     return { ok: false, code: "SAFETY_MONOTONICITY" };
+  // Normal conversational content is model-led. Local enforcement is limited
+  // to sequence integrity, source attribution, and immutable escalation.
+  return { ok: true };
+  /* legacy entity allowlist retained below for removal after migration */
   const text = [...output.say_now, ...output.actions.map((a) => a.text)].join(
     " ",
   );

@@ -5,6 +5,7 @@ const headers = {
   "x-role": "pharmacist",
   "x-tenant": "local-demo",
   "x-user": "local-user",
+  "x-app-passcode": "0903",
 };
 const input = {
   request_id: crypto.randomUUID(),
@@ -52,6 +53,8 @@ console.log(
     http: refinedResponse.status,
     event: event?.type,
     ai_intent: event?.output?.intent,
+    say_now: event?.output?.say_now,
+    ask_next: event?.output?.ask_next,
     events,
     rejection_code: rejection ? JSON.parse(rejection.slice(6)).code : undefined,
   }),
