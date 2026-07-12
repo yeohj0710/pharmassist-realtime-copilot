@@ -381,6 +381,8 @@ export async function transcribeRecordedAudio(options: {
   readonly audio: Uint8Array;
   readonly mimeType: string;
   readonly signal: AbortSignal;
+  readonly model?: string;
+  readonly prompt?: string;
 }): Promise<string> {
   const client = new OpenAI({ apiKey: options.apiKey });
   const extension = options.mimeType.includes("ogg") ? "ogg" : "webm";
@@ -389,8 +391,9 @@ export async function transcribeRecordedAudio(options: {
       file: new File([options.audio], `voice.${extension}`, {
         type: options.mimeType,
       }),
-      model: "gpt-4o-mini-transcribe",
+      model: options.model ?? "gpt-4o-transcribe",
       language: "ko",
+      ...(options.prompt ? { prompt: options.prompt } : {}),
     },
     { signal: options.signal },
   );
