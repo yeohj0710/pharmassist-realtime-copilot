@@ -375,3 +375,24 @@ export async function createRealtimeTranscriptionCall(
     );
   return answer;
 }
+
+export async function transcribeRecordedAudio(options: {
+  readonly apiKey: string;
+  readonly audio: Uint8Array;
+  readonly mimeType: string;
+  readonly signal: AbortSignal;
+}): Promise<string> {
+  const client = new OpenAI({ apiKey: options.apiKey });
+  const extension = options.mimeType.includes("ogg") ? "ogg" : "webm";
+  const result = await client.audio.transcriptions.create(
+    {
+      file: new File([options.audio], `voice.${extension}`, {
+        type: options.mimeType,
+      }),
+      model: "gpt-4o-mini-transcribe",
+      language: "ko",
+    },
+    { signal: options.signal },
+  );
+  return result.text.trim();
+}

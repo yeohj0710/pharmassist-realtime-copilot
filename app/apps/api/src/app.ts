@@ -22,6 +22,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import {
   createRealtimeTranscriptionCall,
+  transcribeRecordedAudio,
   type ResponsesRefiner,
   OfficialResponsesRefiner,
   safeOpenAIConfig,
@@ -254,6 +255,11 @@ export async function buildApp(
   app.addContentTypeParser(
     "application/sdp",
     { parseAs: "string", bodyLimit: 128_000 },
+    (_request, body, done) => done(null, body),
+  );
+  app.addContentTypeParser(
+    "audio/webm",
+    { parseAs: "buffer", bodyLimit: 10_000_000 },
     (_request, body, done) => done(null, body),
   );
   const allowedOrigins = [
@@ -510,6 +516,39 @@ export async function buildApp(
         reply.raw.end();
       }
       return reply;
+    },
+  );
+  app.post(
+    "/v1/audio/transcribe",
+    {
+      config: {
+        rateLimit: { max: realtimeSessionsPerHour, timeWindow: "1 hour" },
+      },
+    },
+    async (req, reply) => {
+      reply.header("Cache-Control", "no-store");
+      if (process.env["APP_PASSCODE"] && req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"])
+        return reply.code(403).send(error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id));
+      const apiKey = process.env["OPENAI_API_KEY"];
+      if (!apiKey || !Buffer.isBuffer(req.body) || req.body.length < 100)
+        return reply.code(400).send(error("INVALID_INPUT", "녹음된 음성을 확인해 주세요.", req.id));
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15_000);
+      try {
+        const transcript = await transcribeRecordedAudio({
+          apiKey,
+          audio: new Uint8Array(req.body),
+          mimeType: "audio/webm",
+          signal: controller.signal,
+        });
+        if (!transcript) return reply.code(422).send(error("INVALID_INPUT", "음성이 들리지 않았어요.", req.id));
+        return { transcript };
+      } catch (cause) {
+        req.log.error({ error_name: cause instanceof Error ? cause.name : "UnknownError" }, "audio transcription failed");
+        return reply.code(503).send(error("REALTIME_UNAVAILABLE", "음성을 글자로 바꾸지 못했어요.", req.id, true, "typed_input"));
+      } finally {
+        clearTimeout(timeout);
+      }
     },
   );
   app.post(

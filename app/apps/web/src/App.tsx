@@ -77,6 +77,8 @@ export function App() {
   const [online, setOnline] = useState(navigator.onLine);
   const [listening, setListening] = useState(false);
   const [voiceMessage, setVoiceMessage] = useState("");
+  const [microphones, setMicrophones] = useState<readonly MediaDeviceInfo[]>([]);
+  const [microphoneId, setMicrophoneId] = useState("");
   const [confirmedCritical, setConfirmedCritical] = useState(false);
   const [aiInterpreting, setAiInterpreting] = useState(false);
   const [aiReady, setAiReady] = useState(false);
@@ -87,6 +89,9 @@ export function App() {
   const historyRef = useRef<readonly string[]>([]);
   const aiAbortRef = useRef<AbortController | null>(null);
   const mediaRef = useRef<MediaStream | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
+  const recordingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const statusRef = useRef<RuntimeOutput["status"] | undefined>(undefined);
   const realtimeAbortRef = useRef<AbortController | null>(null);
   const transcriptionPeerRef = useRef<TranscriptionPeer | null>(null);
@@ -246,6 +251,8 @@ export function App() {
       if (finalizationTimerRef.current)
         clearTimeout(finalizationTimerRef.current);
       mediaRef.current?.getTracks().forEach((track) => track.stop());
+      mediaRecorderRef.current?.stop();
+      if (recordingTimerRef.current) clearTimeout(recordingTimerRef.current);
       removeEventListener("online", updateOnline);
       removeEventListener("offline", updateOnline);
       removeEventListener("keydown", keyboard);
@@ -295,42 +302,67 @@ export function App() {
       const brokerUrl = import.meta.env["VITE_REALTIME_BROKER_URL"] as
         string | undefined;
       if (brokerUrl) {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: microphoneId
+            ? { deviceId: { exact: microphoneId }, echoCancellation: true, noiseSuppression: true }
+            : { echoCancellation: true, noiseSuppression: true },
+        });
+        const devices = (await navigator.mediaDevices.enumerateDevices()).filter(
+          (device) => device.kind === "audioinput",
+        );
+        setMicrophones(devices);
         mediaRef.current = stream;
-        setListening(true);
-        const controller = new AbortController();
-        realtimeAbortRef.current = controller;
-        void connectTranscriptionPeer(
-          stream,
-          brokerUrl,
-          (event) => {
-            if (event && typeof event === "object") {
-              const value = event as Readonly<Record<string, unknown>>;
-              if (
-                value["type"] ===
-                  "conversation.item.input_audio_transcription.completed" &&
-                typeof value["transcript"] === "string"
-              ) {
-                submitText(value["transcript"], "voice_final");
-                setQuery("");
-                transcriptionPeerRef.current?.close();
-                transcriptionPeerRef.current = null;
-                if (finalizationTimerRef.current)
-                  clearTimeout(finalizationTimerRef.current);
-              }
-            }
-          },
-          controller.signal,
-        )
-          .then((peer) => {
-            transcriptionPeerRef.current = peer;
-            if (pttReleasedRef.current) peer.commit();
-          })
-          .catch(() => {
-            stream.getTracks().forEach((track) => track.stop());
-            setListening(false);
-            inputRef.current?.focus();
+        const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+        mediaRecorderRef.current = recorder;
+        recordedChunksRef.current = [];
+        recorder.ondataavailable = (event) => {
+          if (event.data.size > 0) recordedChunksRef.current.push(event.data);
+        };
+        recorder.onerror = () => {
+          setListening(false);
+          setVoiceMessage("녹음을 시작하지 못했어요.");
+        };
+        recorder.onstop = () => {
+          stream.getTracks().forEach((track) => track.stop());
+          mediaRef.current = null;
+          mediaRecorderRef.current = null;
+          setListening(false);
+          const blob = new Blob(recordedChunksRef.current, { type: "audio/webm" });
+          recordedChunksRef.current = [];
+          if (blob.size < 100) {
+            setVoiceMessage("음성이 들리지 않았어요. 다시 말해주세요.");
+            return;
+          }
+          setVoiceMessage("음성을 글자로 바꾸는 중이에요…");
+          const endpoint = brokerUrl.replace("/v1/realtime/session", "/v1/audio/transcribe");
+          void fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "audio/webm",
+              "x-app-passcode": sessionStorage.getItem("pharmassist_access") ?? "",
+            },
+            body: blob,
+          }).then(async (response) => {
+            if (!response.ok) throw new Error(`TRANSCRIBE_${response.status}`);
+            const body = await response.json() as { transcript?: string };
+            if (!body.transcript) throw new Error("TRANSCRIPT_EMPTY");
+            setQuery(body.transcript);
+            submitText(body.transcript, "voice_final");
+            setVoiceMessage("");
+          }).catch((cause: unknown) => {
+            const code = cause instanceof Error ? cause.message : "UNKNOWN";
+            setVoiceMessage(
+              code === "TRANSCRIBE_422"
+                ? "소리가 감지되지 않았어요. 마이크를 바꾸거나 조금 더 가까이 말해주세요."
+                : "음성 인식에 실패했어요. 다시 눌러주세요.",
+            );
           });
+        };
+        recorder.start(250);
+        setListening(true);
+        recordingTimerRef.current = setTimeout(() => {
+          if (mediaRecorderRef.current?.state === "recording") mediaRecorderRef.current.stop();
+        }, 8_000);
         return;
       }
 
@@ -389,6 +421,12 @@ export function App() {
     }
   };
   const stopPtt = () => {
+    if (mediaRecorderRef.current?.state === "recording") {
+      if (recordingTimerRef.current) clearTimeout(recordingTimerRef.current);
+      recordingTimerRef.current = null;
+      mediaRecorderRef.current.stop();
+      return;
+    }
     if (browserSpeechRef.current) {
       browserSpeechRef.current.stop();
       return;
@@ -511,6 +549,19 @@ export function App() {
         </button>
         {voiceMessage && (
           <p className="voice-message" role="status">{voiceMessage}</p>
+        )}
+        {microphones.length > 1 && (
+          <label className="microphone-picker">
+            마이크
+            <select value={microphoneId} onChange={(event) => setMicrophoneId(event.target.value)}>
+              <option value="">기본 마이크</option>
+              {microphones.map((device, index) => (
+                <option key={device.deviceId} value={device.deviceId}>
+                  {device.label || `마이크 ${index + 1}`}
+                </option>
+              ))}
+            </select>
+          </label>
         )}
         <p className="privacy">
           음성은 이 데모에서 저장되지 않습니다. 음성 인식 연결 전에는 직접

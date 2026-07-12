@@ -109,6 +109,25 @@
   font-size: 12px;
 }
 
+.microphone-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
+  color: #6b7684;
+  font-size: 13px;
+}
+
+.microphone-picker select {
+  max-width: 260px;
+  height: 36px;
+  padding: 0 30px 0 10px;
+  border: 1px solid #d1d6db;
+  border-radius: 10px;
+  background: #fff;
+  color: #333d4b;
+}
+
 @media (max-width: 520px) {
   .login-card { padding: 36px 24px 28px; border-radius: 20px; }
 }
