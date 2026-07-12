@@ -412,6 +412,48 @@ export function App() {
     result?.mode === "escalate" || Boolean(result?.red_flags.length);
   const patientSummary = buildPatientSummary(history);
 
+  if (!accessGranted) {
+    const unlock = () => {
+      if (passcode !== "0903") {
+        setPasscodeError(true);
+        return;
+      }
+      sessionStorage.setItem("pharmassist_access", "0903");
+      setAccessGranted(true);
+    };
+    return (
+      <main className="login-shell">
+        <section className="login-card" aria-labelledby="login-title">
+          <div className="login-logo" aria-hidden="true">P</div>
+          <p className="login-eyebrow">PHARMASSIST</p>
+          <h1 id="login-title">상담 도우미에 로그인</h1>
+          <p className="login-copy">허용된 사용자만 상담 기능을 이용할 수 있어요.</p>
+          <label htmlFor="access-passcode">비밀번호</label>
+          <input
+            id="access-passcode"
+            type="password"
+            inputMode="numeric"
+            autoComplete="current-password"
+            autoFocus
+            value={passcode}
+            onChange={(event) => {
+              setPasscode(event.target.value);
+              setPasscodeError(false);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") unlock();
+            }}
+            placeholder="비밀번호를 입력하세요"
+            aria-invalid={passcodeError}
+          />
+          {passcodeError && <p className="login-error" role="alert">비밀번호가 맞지 않아요.</p>}
+          <button className="login-button" onClick={unlock}>로그인</button>
+          <small>합성 데이터 데모 · 임상 사용 금지</small>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="shell">
       <div className="demo-banner" role="note">
@@ -440,36 +482,6 @@ export function App() {
         </div>
       </header>
       <section className="query-panel" aria-label="상담 입력">
-        {!accessGranted && (
-          <div className="access-gate">
-            <strong>상담 기능 잠금</strong>
-            <p>내용은 볼 수 있지만 상담·음성 기능은 비밀번호 입력 후 사용할 수 있어요.</p>
-            <div className="query-row">
-              <input
-                type="password"
-                inputMode="numeric"
-                value={passcode}
-                onChange={(event) => { setPasscode(event.target.value); setPasscodeError(false); }}
-                onKeyDown={(event) => {
-                  if (event.key !== "Enter") return;
-                  if (passcode === "0903") {
-                    sessionStorage.setItem("pharmassist_access", "0903");
-                    setAccessGranted(true);
-                  } else setPasscodeError(true);
-                }}
-                placeholder="비밀번호"
-                aria-label="기능 사용 비밀번호"
-              />
-              <button onClick={() => {
-                if (passcode === "0903") {
-                  sessionStorage.setItem("pharmassist_access", "0903");
-                  setAccessGranted(true);
-                } else setPasscodeError(true);
-              }}>사용하기</button>
-            </div>
-            {passcodeError && <p className="voice-message" role="alert">비밀번호가 맞지 않아요.</p>}
-          </div>
-        )}
         <label htmlFor="consult-query">증상이나 질문을 입력하세요</label>
         <div className="query-row">
           <input
@@ -484,9 +496,8 @@ export function App() {
             placeholder="예: 기침이 3일째예요"
             autoFocus
             maxLength={2000}
-            disabled={!accessGranted}
           />
-          <button onClick={consult} disabled={!accessGranted} aria-disabled={session.criticalLocked}>
+          <button onClick={consult} aria-disabled={session.criticalLocked}>
             확인
           </button>
         </div>
@@ -494,7 +505,6 @@ export function App() {
           className={`ptt ${listening ? "active" : ""}`}
           onClick={() => (listening ? stopPtt() : void startPtt())}
           aria-pressed={listening}
-          disabled={!accessGranted}
           aria-label="누르는 동안 음성 입력"
         >
           {listening ? "● 듣는 중 · 눌러서 종료" : "🎙 말하기"}
