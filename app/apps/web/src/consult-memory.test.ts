@@ -17,6 +17,7 @@ describe("consultation memory", () => {
       "상담 도우미: 어떤 느낌인가요?",
       "환자: 쓰려요",
       "상담 도우미: 다른 증상도 있나요?",
+      "환자: 잘 모르겠어요",
     ];
     const summary = buildPatientSummary(turns);
 
@@ -24,6 +25,7 @@ describe("consultation memory", () => {
     expect(summary.duration).toBe("어제부터요");
     expect(summary.facts).toContain("윗배요");
     expect(summary.facts).toContain("쓰려요");
+    expect(summary.facts).not.toContain("잘 모르겠어요");
   });
 
   it("replaces the provisional assistant turn with the refined answer", () => {

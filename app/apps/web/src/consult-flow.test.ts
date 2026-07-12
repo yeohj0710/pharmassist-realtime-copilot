@@ -42,6 +42,39 @@ describe("stateful fast consult flow", () => {
     expect(result.output.red_flags).not.toHaveLength(0);
   });
 
+  it.each(["잘 모르겠어요", "기억이 안 나요", "애매한데요", "글쎄요"])(
+    "handles uncertain free-form answers without completing: %s",
+    (answer) => {
+      const flow = new StatefulConsultFlow(syntheticPack);
+      flow.run(input("배가 아파요", 1));
+      const result = flow.run(input(answer, 2));
+
+      expect(result.output.mode).toBe("clarify");
+      expect(result.output.actions).toEqual([]);
+      expect(result.output.say_now.join(" ")).toContain("모르셔도");
+      expect(result.output.ask_next[0]?.question).toContain("윗배·아랫배");
+    },
+  );
+
+  it("does not treat an unrelated answer as a completed slot", () => {
+    const flow = new StatefulConsultFlow(syntheticPack);
+    flow.run(input("기침이 나요", 1));
+    const result = flow.run(input("그런데 약이 졸린가요?", 2));
+
+    expect(result.output.mode).toBe("clarify");
+    expect(result.output.actions).toEqual([]);
+    expect(result.output.ask_next).not.toEqual([]);
+  });
+
+  it("switches to a clear new symptom before the previous topic completes", () => {
+    const flow = new StatefulConsultFlow(syntheticPack);
+    flow.run(input("배가 아파요", 1));
+    const result = flow.run(input("아, 그리고 어깨도 아파요", 2));
+
+    expect(result.output.intent).toBe("musculoskeletal_pain");
+    expect(result.output.ask_next[0]?.question).toContain("어깨");
+  });
+
   it("routes abdominal pain to the abdominal card instead of throat pain", () => {
     const flow = new StatefulConsultFlow(syntheticPack);
     const result = flow.run(input("배가 아파요", 1));

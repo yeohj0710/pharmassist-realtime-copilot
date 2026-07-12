@@ -17,6 +17,8 @@ const symptomLabels: ReadonlyArray<readonly [RegExp, string]> = [
 const riskPattern = /숨|호흡|의식|실신|피가|혈변|토혈|마비|경련/u;
 const durationPattern =
   /(?:오늘|어제|그제|방금|아까|며칠|일주일|한달|\d+\s*(?:시간|일|주|개월))(?:부터|째)?/u;
+const nonFactPattern =
+  /모르|몰라|애매|기억 안|글쎄|확실하지|그냥 그래|무슨 말|왜요|뭔가요/u;
 
 export function upsertAssistantTurn(
   turns: readonly string[],
@@ -35,7 +37,7 @@ export function buildPatientSummary(turns: readonly string[]): PatientSummary {
       turns
         .filter((turn) => turn.startsWith("환자:"))
         .map((turn) => turn.slice("환자:".length).trim())
-        .filter(Boolean),
+        .filter((fact) => fact.length > 0 && !nonFactPattern.test(fact)),
     ),
   ];
   const joined = facts.join(" ");
