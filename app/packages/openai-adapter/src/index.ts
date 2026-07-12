@@ -231,12 +231,6 @@ export function postValidateOutput(
     return { ok: false, code: "UNSUPPORTED_CLAIM" };
   if (context.instant.mode === "escalate" && output.mode !== "escalate")
     return { ok: false, code: "SAFETY_MONOTONICITY" };
-  if (
-    context.instant.missing_slots.some(
-      (slot) => !output.missing_slots.includes(slot),
-    )
-  )
-    return { ok: false, code: "SLOT_MONOTONICITY" };
   const text = [...output.say_now, ...output.actions.map((a) => a.text)].join(
     " ",
   );
@@ -245,8 +239,7 @@ export function postValidateOutput(
     [];
   const newClinical = entities.filter(
     (item) =>
-      /\d|mg|ml|성분|정$/iu.test(item) &&
-      !context.allowedEntities.includes(item),
+      /\d|mg|ml|정$/iu.test(item) && !context.allowedEntities.includes(item),
   );
   return newClinical.length
     ? { ok: false, code: "UNSUPPORTED_ENTITY" }

@@ -101,6 +101,7 @@ export function App() {
     historyRef.current = nextHistory;
     setHistory(nextHistory);
     setQuery("");
+    setResult(undefined);
     applySession({ type: "INPUT", sequence: sequenceRef.current });
     const input = newInput(
       normalized,
@@ -135,17 +136,18 @@ export function App() {
         event.data.output.sequence === sequenceRef.current &&
         !(sessionRef.current.criticalLocked && !sessionRef.current.acknowledged)
       ) {
-        setResult(event.data.output);
-        const localHistory = upsertAssistantTurn(
-          historyRef.current,
-          event.data.output.sequence,
-          outputText(event.data.output),
-        );
-        historyRef.current = localHistory;
-        setHistory(localHistory);
-        if (
-          shouldRequestAiRefinement(navigator.onLine, event.data.output.mode)
-        ) {
+        const localOutput = event.data.output;
+        const commitOutput = (output: RuntimeOutput) => {
+          setResult(output);
+          const nextHistory = upsertAssistantTurn(
+            historyRef.current,
+            output.sequence,
+            outputText(output),
+          );
+          historyRef.current = nextHistory;
+          setHistory(nextHistory);
+        };
+        if (shouldRequestAiRefinement(navigator.onLine, localOutput.mode)) {
           const input = inputsRef.current.get(event.data.output.sequence);
           if (input) {
             aiAbortRef.current?.abort();
@@ -154,8 +156,8 @@ export function App() {
             setAiInterpreting(true);
             void requestAiFallback(
               input,
-              event.data.output,
-              localHistory,
+              localOutput,
+              historyRef.current,
               controller.signal,
             )
               .then((refined) => {
@@ -163,25 +165,22 @@ export function App() {
                   refined?.sequence === sequenceRef.current &&
                   refined.session_id === sessionIdRef.current
                 ) {
-                  setResult(refined);
-                  const refinedHistory = upsertAssistantTurn(
-                    historyRef.current,
-                    refined.sequence,
-                    outputText(refined),
-                  );
-                  historyRef.current = refinedHistory;
-                  setHistory(refinedHistory);
-                }
+                  commitOutput(refined);
+                } else if (localOutput.sequence === sequenceRef.current)
+                  commitOutput(localOutput);
               })
-              .catch(() => undefined)
+              .catch(() => {
+                if (localOutput.sequence === sequenceRef.current)
+                  commitOutput(localOutput);
+              })
               .finally(() => {
                 if (aiAbortRef.current === controller) {
                   aiAbortRef.current = null;
                   setAiInterpreting(false);
                 }
               });
-          }
-        }
+          } else commitOutput(localOutput);
+        } else commitOutput(localOutput);
         if (
           event.data.output.mode === "escalate" ||
           (event.data.output.status === "blocked" &&
