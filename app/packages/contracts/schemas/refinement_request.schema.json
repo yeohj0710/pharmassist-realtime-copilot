@@ -21,7 +21,7 @@
     },
     "conversation_history": {
       "type": "array",
-      "maxItems": 6,
+      "maxItems": 12,
       "items": { "type": "string", "minLength": 1, "maxLength": 2000 }
     },
     "knowledge_version": { "type": "string", "maxLength": 80 }

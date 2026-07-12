@@ -8,7 +8,7 @@ export interface RefinementRequestEnvelope {
    */
   candidate_card_ids: [] | [string] | [string, string] | [string, string, string];
   /**
-   * @maxItems 6
+   * @maxItems 12
    */
   conversation_history?:
     | []
@@ -17,7 +17,13 @@ export interface RefinementRequestEnvelope {
     | [string, string, string]
     | [string, string, string, string]
     | [string, string, string, string, string]
-    | [string, string, string, string, string, string];
+    | [string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string, string, string, string, string, string];
   knowledge_version: string;
 }
 export interface RuntimeInput {

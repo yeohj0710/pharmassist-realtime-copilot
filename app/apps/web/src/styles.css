@@ -136,6 +136,75 @@ footer {
 .result {
   margin-top: 18px;
 }
+.consult-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: 16px;
+  align-items: start;
+}
+.patient-summary {
+  position: sticky;
+  top: 16px;
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 1px 2px #0000000a;
+}
+.summary-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eef1f5;
+}
+.summary-heading p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+.summary-heading span,
+.summary-row span {
+  color: #6b7684;
+  font-size: 12px;
+}
+.summary-row {
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+}
+.summary-row strong {
+  color: #333d4b;
+  font-size: 14px;
+}
+.summary-facts {
+  margin: 14px 0;
+  display: grid;
+  gap: 7px;
+}
+.summary-facts p {
+  margin: 0;
+  padding-left: 12px;
+  position: relative;
+  color: #4e5968;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.summary-facts p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #3182f6;
+}
+.summary-risk {
+  color: #c91c2b;
+  font-size: 13px;
+  font-weight: 700;
+}
 .result.critical {
   border: 2px solid #e42939;
 }
@@ -230,5 +299,12 @@ footer {
   .ask,
   .recommendation {
     font-size: 19px;
+  }
+  .consult-layout {
+    grid-template-columns: 1fr;
+  }
+  .patient-summary {
+    position: static;
+    order: -1;
   }
 }

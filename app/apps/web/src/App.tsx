@@ -14,6 +14,11 @@ import {
   requestAiReadiness,
   shouldRequestAiRefinement,
 } from "./ai-fallback.js";
+import {
+  buildPatientSummary,
+  outputText,
+  upsertAssistantTurn,
+} from "./consult-memory.js";
 
 interface EngineMessage {
   output: RuntimeOutput;
@@ -91,7 +96,7 @@ export function App() {
     )
       return;
     sequenceRef.current += 1;
-    const nextHistory = [...historyRef.current, normalized].slice(-6);
+    const nextHistory = [...historyRef.current, `환자: ${normalized}`];
     historyRef.current = nextHistory;
     setHistory(nextHistory);
     setQuery("");
@@ -130,6 +135,13 @@ export function App() {
         !(sessionRef.current.criticalLocked && !sessionRef.current.acknowledged)
       ) {
         setResult(event.data.output);
+        const localHistory = upsertAssistantTurn(
+          historyRef.current,
+          event.data.output.sequence,
+          outputText(event.data.output),
+        );
+        historyRef.current = localHistory;
+        setHistory(localHistory);
         if (
           shouldRequestAiRefinement(navigator.onLine, event.data.output.mode)
         ) {
@@ -142,15 +154,23 @@ export function App() {
             void requestAiFallback(
               input,
               event.data.output,
-              historyRef.current,
+              localHistory,
               controller.signal,
             )
               .then((refined) => {
                 if (
                   refined?.sequence === sequenceRef.current &&
                   refined.session_id === sessionIdRef.current
-                )
+                ) {
                   setResult(refined);
+                  const refinedHistory = upsertAssistantTurn(
+                    historyRef.current,
+                    refined.sequence,
+                    outputText(refined),
+                  );
+                  historyRef.current = refinedHistory;
+                  setHistory(refinedHistory);
+                }
               })
               .catch(() => undefined)
               .finally(() => {
@@ -307,6 +327,7 @@ export function App() {
   };
   const critical =
     result?.mode === "escalate" || Boolean(result?.red_flags.length);
+  const patientSummary = buildPatientSummary(history);
 
   return (
     <main className="shell">
@@ -371,67 +392,98 @@ export function App() {
         </p>
       </section>
       {result ? (
-        <section
-          className={`result ${critical ? "critical" : ""}`}
-          aria-live="polite"
-        >
-          {critical && !confirmedCritical ? (
-            <div className="critical-lock">
-              <h2>먼저 위험 신호를 확인하세요</h2>
-              <p>{result.say_now.join(" ")}</p>
-              <button
-                onClick={() => {
-                  setConfirmedCritical(true);
-                  applySession({ type: "ACKNOWLEDGE_CRITICAL" });
-                }}
-              >
-                확인했습니다 <kbd>F</kbd>
-              </button>
-            </div>
-          ) : (
-            <>
-              <article className="primary-guidance">
-                <p className="result-kicker">지금 말할 내용</p>
-                {result.actions.length > 0
-                  ? result.actions.map((item) => (
-                      <p className="recommendation" key={item.text}>
-                        {item.text}
-                      </p>
-                    ))
-                  : result.say_now.map((line) => (
-                      <p className="say" key={line}>
-                        {line}
-                      </p>
-                    ))}
-                {result.ask_next.map((item) => (
-                  <p className="ask" key={item.slot}>
-                    {item.question}
-                  </p>
-                ))}
-              </article>
-              <details className="supporting-details">
-                <summary>근거·주의사항</summary>
-                <div className="supporting-content">
-                  {result.avoid.map((item) => (
-                    <p key={item}>{item}</p>
+        <div className="consult-layout">
+          <section
+            className={`result ${critical ? "critical" : ""}`}
+            aria-live="polite"
+          >
+            {critical && !confirmedCritical ? (
+              <div className="critical-lock">
+                <h2>먼저 위험 신호를 확인하세요</h2>
+                <p>{result.say_now.join(" ")}</p>
+                <button
+                  onClick={() => {
+                    setConfirmedCritical(true);
+                    applySession({ type: "ACKNOWLEDGE_CRITICAL" });
+                  }}
+                >
+                  확인했습니다 <kbd>F</kbd>
+                </button>
+              </div>
+            ) : (
+              <>
+                <article className="primary-guidance">
+                  <p className="result-kicker">지금 말할 내용</p>
+                  {result.actions.length > 0
+                    ? result.actions.map((item) => (
+                        <p className="recommendation" key={item.text}>
+                          {item.text}
+                        </p>
+                      ))
+                    : result.say_now.map((line) => (
+                        <p className="say" key={line}>
+                          {line}
+                        </p>
+                      ))}
+                  {result.ask_next.map((item) => (
+                    <p className="ask" key={item.slot}>
+                      {item.question}
+                    </p>
                   ))}
-                  <p>
-                    상태 {result.status} · 신뢰도{" "}
-                    {Math.round(result.confidence * 100)}%
-                  </p>
-                  <p>
-                    지식팩 {result.knowledge_version} · 처리{" "}
-                    {result.latency.total_ms.toFixed(1)}ms
-                  </p>
-                  <p>
-                    합성 fixture 기반 데모이며 공식 임상 출처 검토는
-                    미완료입니다.
-                  </p>
-                </div>
-              </details>
-            </>
-          )}
-        </section>
+                </article>
+                <details className="supporting-details">
+                  <summary>근거·주의사항</summary>
+                  <div className="supporting-content">
+                    {result.avoid.map((item) => (
+                      <p key={item}>{item}</p>
+                    ))}
+                    <p>
+                      상태 {result.status} · 신뢰도{" "}
+                      {Math.round(result.confidence * 100)}%
+                    </p>
+                    <p>
+                      지식팩 {result.knowledge_version} · 처리{" "}
+                      {result.latency.total_ms.toFixed(1)}ms
+                    </p>
+                    <p>
+                      합성 fixture 기반 데모이며 공식 임상 출처 검토는
+                      미완료입니다.
+                    </p>
+                  </div>
+                </details>
+              </>
+            )}
+          </section>
+          <aside className="patient-summary" aria-label="누적 환자 정보">
+            <div className="summary-heading">
+              <p>누적 환자 정보</p>
+              <span>{patientSummary.facts.length}개 확인</span>
+            </div>
+            {patientSummary.symptoms.length > 0 && (
+              <div className="summary-row">
+                <span>증상</span>
+                <strong>{patientSummary.symptoms.join(", ")}</strong>
+              </div>
+            )}
+            {patientSummary.duration && (
+              <div className="summary-row">
+                <span>시작</span>
+                <strong>{patientSummary.duration}</strong>
+              </div>
+            )}
+            <div className="summary-facts">
+              {patientSummary.facts.map((fact) => (
+                <p key={fact}>{fact}</p>
+              ))}
+            </div>
+            {patientSummary.risks.length > 0 && (
+              <p className="summary-risk">위험 관련 표현 확인 필요</p>
+            )}
+            <small>
+              현재 상담 중에만 유지되며 새 상담을 누르면 지워집니다.
+            </small>
+          </aside>
+        </div>
       ) : null}
       <footer>
         개인정보를 입력하지 마세요. 진단·처방 변경·확정 용량을 생성하지

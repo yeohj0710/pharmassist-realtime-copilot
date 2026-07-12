@@ -65,7 +65,7 @@ export function buildAiRefinementBody(
     runtime_input: input,
     instant_output: instant,
     candidate_card_ids: [],
-    conversation_history: conversationHistory.slice(-6),
+    conversation_history: conversationHistory.slice(-12),
     knowledge_version: instant.knowledge_version,
   };
 }
