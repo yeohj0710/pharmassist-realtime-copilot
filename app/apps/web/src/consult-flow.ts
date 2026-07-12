@@ -7,21 +7,21 @@ import {
 
 const candidateText: Readonly<Record<string, string>> = {
   cough_general:
-    "마른기침이면 진해제, 가래가 있으면 거담제 성분군을 먼저 비교하세요.",
+    "기침 양상에 따라 맞는 약이 달라질 수 있어요. 마른기침에는 진해제 계열, 가래가 있으면 거담제 계열을 살펴볼 수 있어요.",
   nasal_symptom_general:
-    "콧물·재채기는 항히스타민제, 코막힘은 비충혈제거제 성분군을 먼저 비교하세요.",
+    "콧물이나 재채기에는 항히스타민제 계열, 코막힘에는 비충혈제거제 계열이 도움이 될 수 있어요.",
   sore_throat:
-    "통증 완화제와 목 국소 제형(트로키·스프레이) 성분군을 먼저 비교하세요.",
+    "목 통증에는 통증 완화제나 트로키·스프레이 같은 목 국소 제형을 살펴볼 수 있어요.",
   dyspepsia_general:
-    "속쓰림은 제산제, 더부룩함은 소화효소제 성분군을 먼저 비교하세요.",
+    "속이 쓰리면 제산제 계열, 더부룩하고 소화가 안 되면 소화효소제 계열을 살펴볼 수 있어요.",
   abdominal_pain_general:
-    "쓰린 윗배 통증은 제산제 계열, 쥐어짜는 복부 불편은 진경제 계열을 먼저 비교하세요.",
+    "윗배가 쓰린 느낌이면 제산제 계열, 배가 쥐어짜듯 아프면 진경제 계열을 살펴볼 수 있어요.",
   bowel_urgency_general:
-    "묽은 변이 반복되면 수분·전해질 보충제와 장 흡착제 계열, 변이 안 나오면 변비 완화제 계열을 먼저 비교하세요.",
+    "묽은 변이 반복되면 수분·전해질 보충이 우선이에요. 변이 잘 나오지 않는 불편이라면 변비 완화제 계열을 살펴볼 수 있어요.",
   musculoskeletal_pain:
-    "가벼운 근육·관절 통증은 경구 진통소염제 또는 바르는 소염진통제 계열을 먼저 비교하세요.",
+    "가벼운 근육이나 관절 통증에는 먹는 진통소염제나 바르는 소염진통제 계열을 살펴볼 수 있어요.",
   skin_general:
-    "가려움은 항히스타민제, 건조 자극은 보습·보호제 성분군을 먼저 비교하세요.",
+    "가려움에는 항히스타민제 계열, 건조해서 자극된 피부에는 보습·보호제를 살펴볼 수 있어요.",
 };
 
 interface ConsultMemory {
@@ -116,7 +116,7 @@ export class StatefulConsultFlow {
         ...result.output,
         mode: "instant",
         status: "stable",
-        say_now: ["확인됐어요. 바로 비교할 약 후보입니다."],
+        say_now: ["말씀해 주신 증상에 맞춰 안내해 드릴게요."],
         ask_next: [],
         actions: [
           {
@@ -125,7 +125,9 @@ export class StatefulConsultFlow {
             requires_confirmation: false,
           },
         ],
-        avoid: ["복용약·임신·알레르기가 있으면 선택 전에 다시 확인하세요."],
+        avoid: [
+          "복용 중인 약이 있거나 임신·알레르기가 있다면 꼭 말씀해 주세요.",
+        ],
         missing_slots: [],
       },
       ruleIds: result.ruleIds.filter((rule) => rule !== "ASK_ONE"),

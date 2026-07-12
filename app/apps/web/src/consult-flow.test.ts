@@ -27,6 +27,8 @@ describe("stateful fast consult flow", () => {
     expect(second.output.mode).toBe("instant");
     expect(second.output.ask_next).toEqual([]);
     expect(second.output.actions[0]?.text).toContain("진해제");
+    expect(second.output.actions[0]?.text).not.toContain("비교하세요");
+    expect(second.output.actions[0]?.text).toMatch(/요\.$/u);
   });
 
   it("still escalates when a later turn contains a red flag", () => {
