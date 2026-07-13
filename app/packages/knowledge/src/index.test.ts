@@ -1,15 +1,17 @@
 import { syntheticPack } from "@pharmassist/test-fixtures";
 import { describe, expect, it } from "vitest";
 import {
-  AtomicPackStore,
-  canonicalJson,
   compileDecisionPack,
-  createDevKeys,
   lintDecisionPack,
   lintForPublication,
+} from "./index.js";
+import {
+  AtomicPackStore,
+  canonicalJson,
+  createDevKeys,
   signPayload,
   verifyPayload,
-} from "./index.js";
+} from "./node.js";
 
 describe("knowledge lifecycle", () => {
   it("canonicalizes, signs, detects tampering, activates and rolls back", () => {

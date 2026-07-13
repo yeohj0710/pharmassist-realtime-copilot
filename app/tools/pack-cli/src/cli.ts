@@ -1,12 +1,12 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createPublicKey, generateKeyPairSync } from "node:crypto";
 import { resolve } from "node:path";
+import { lintForPublication } from "@pharmassist/knowledge";
 import {
-  lintForPublication,
   signPayload,
   verifyPayload,
   type Signed,
-} from "@pharmassist/knowledge";
+} from "@pharmassist/knowledge/node";
 import { syntheticPack } from "@pharmassist/test-fixtures";
 
 const root = resolve(import.meta.dirname, "../../..");

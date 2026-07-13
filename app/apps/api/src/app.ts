@@ -16,9 +16,8 @@ import {
   lintDecisionPack,
   lintForPublication,
   type PublicationRecord,
-  type Signed,
-  verifyPayload,
 } from "@pharmassist/knowledge";
+import { type Signed, verifyPayload } from "@pharmassist/knowledge/node";
 import { normalizeKorean } from "@pharmassist/normalizer";
 import {
   type AppProfile,
