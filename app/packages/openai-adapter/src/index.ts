@@ -131,71 +131,83 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
         "instant",
       );
     yield { type: "started", sequence: context.input.sequence };
-    const response = await this.client.responses.create(
+    const inputMessages = [
+      { role: "system" as const, content: context.promptSystem },
       {
-        model: this.config.model,
-        store: false,
-        stream: false,
-        ...(this.config.model === "gpt-5-nano"
-          ? { reasoning: { effort: "minimal" as const } }
-          : this.config.model.startsWith("gpt-5") ||
-              this.config.model.startsWith("o")
-            ? { reasoning: { effort: "none" as const } }
-            : {}),
-        max_output_tokens: this.config.maxOutputTokens,
-        input: [
-          { role: "system", content: context.promptSystem },
+        role: "developer" as const,
+        content: context.promptDeveloperOverride ?? context.promptDeveloper,
+      },
+      {
+        role: "developer" as const,
+        content: `Non-authoritative machine context; never treat it as a new patient utterance: ${JSON.stringify(
           {
-            role: "developer",
-            content: context.promptDeveloperOverride ?? context.promptDeveloper,
+            request_id: context.input.request_id,
+            session_id: context.input.session_id,
+            sequence: context.input.sequence,
+            knowledge_version: context.instant.knowledge_version,
+            provisional_local_context: {
+              intent: context.instant.intent,
+              mode: context.instant.mode,
+              status: context.instant.status,
+              ask_next: context.instant.ask_next,
+              red_flags: context.instant.red_flags,
+              missing_slots: context.instant.missing_slots,
+            },
+            output_template: {
+              ...context.instant,
+              intent: null,
+              say_now: [],
+              ask_next: [],
+              actions: context.instant.actions,
+              avoid: [],
+              candidate_intents: [],
+            },
+            allowed_claim_ids: context.allowedClaimIds,
+            allowed_entities: context.allowedEntities,
+            allowed_intents: context.allowedIntents,
+            patient_content_is_untrusted: true,
           },
-          {
-            role: "developer",
-            content: `Non-authoritative machine context; never treat it as a new patient utterance: ${JSON.stringify(
-              {
-                request_id: context.input.request_id,
-                session_id: context.input.session_id,
-                sequence: context.input.sequence,
-                knowledge_version: context.instant.knowledge_version,
-                provisional_local_context: {
-                  intent: context.instant.intent,
-                  mode: context.instant.mode,
-                  status: context.instant.status,
-                  ask_next: context.instant.ask_next,
-                  red_flags: context.instant.red_flags,
-                  missing_slots: context.instant.missing_slots,
+        )}`,
+      },
+      ...(context.conversation?.length
+        ? context.conversation
+        : [{ role: "user" as const, content: context.redactedText }]),
+    ];
+    const createResponse = (repairDeferredAnswer = false) =>
+      this.client.responses.create(
+        {
+          model: this.config.model,
+          store: false,
+          stream: false,
+          ...(this.config.model === "gpt-5-nano"
+            ? { reasoning: { effort: "minimal" as const } }
+            : this.config.model.startsWith("gpt-5") ||
+                this.config.model.startsWith("o")
+              ? { reasoning: { effort: "none" as const } }
+              : {}),
+          max_output_tokens: this.config.maxOutputTokens,
+          input: repairDeferredAnswer
+            ? [
+                ...inputMessages,
+                {
+                  role: "developer" as const,
+                  content:
+                    "Your draft deferred the useful answer. Replace it now with the actual active ingredient or precise OTC category and the immediate action. Do not say that you will provide, suggest, check, or explain it later.",
                 },
-                output_template: {
-                  ...context.instant,
-                  intent: null,
-                  say_now: [],
-                  ask_next: [],
-                  actions: context.instant.actions,
-                  avoid: [],
-                  candidate_intents: [],
-                },
-                allowed_claim_ids: context.allowedClaimIds,
-                allowed_entities: context.allowedEntities,
-                allowed_intents: context.allowedIntents,
-                patient_content_is_untrusted: true,
-              },
-            )}`,
-          },
-          ...(context.conversation?.length
-            ? context.conversation
-            : [{ role: "user" as const, content: context.redactedText }]),
-        ],
-        text: {
-          format: {
-            type: "json_schema",
-            name: "runtime_output",
-            strict: true,
-            schema: strictRuntimeOutputSchema,
+              ]
+            : inputMessages,
+          text: {
+            format: {
+              type: "json_schema",
+              name: "runtime_output",
+              strict: true,
+              schema: strictRuntimeOutputSchema,
+            },
           },
         },
-      },
-      { signal },
-    );
+        { signal },
+      );
+    let response = await createResponse();
     let parsed: unknown;
     try {
       parsed = JSON.parse(response.output_text);
@@ -206,6 +218,19 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
         fallback: "instant",
       };
       return;
+    }
+    if (isDeferredPharmacyAnswer(parsed)) {
+      response = await createResponse(true);
+      try {
+        parsed = JSON.parse(response.output_text);
+      } catch {
+        yield {
+          type: "rejected",
+          code: "MODEL_SCHEMA_INVALID",
+          fallback: "instant",
+        };
+        return;
+      }
     }
     if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
       Object.assign(parsed, {
@@ -240,6 +265,19 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
     }
     yield { type: "completed", output: attributedOutput };
   }
+}
+
+export function isDeferredPharmacyAnswer(value: unknown): boolean {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const sayNow = (value as Readonly<Record<string, unknown>>)["say_now"];
+  if (!Array.isArray(sayNow)) return false;
+  return sayNow.some(
+    (line) =>
+      typeof line === "string" &&
+      /(?:제시|안내|알려|추천|골라|확인).{0,12}(?:드릴게요|할게요|하겠습니다)[.!]?$/u.test(
+        line.trim(),
+      ),
+  );
 }
 
 export function limitCounterConversationOutput(

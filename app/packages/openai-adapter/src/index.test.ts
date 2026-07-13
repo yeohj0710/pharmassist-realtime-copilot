@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   createRealtimeTranscriptionCall,
   emptyTranscriptState,
+  isDeferredPharmacyAnswer,
   limitCounterConversationOutput,
   MockResponsesRefiner,
   postValidateOutput,
@@ -80,6 +81,20 @@ describe("OpenAI boundaries", () => {
     ).toEqual(["optional"]);
   });
   it("pins store false", () => expect(safeOpenAIConfig.store).toBe(false));
+  it("detects promises that defer the actual pharmacy guidance", () => {
+    expect(
+      isDeferredPharmacyAnswer({
+        say_now: [
+          "속쓰림 완화에 적합한 즉시 효과 약은 일반의약품 중에서 제시할게요.",
+        ],
+      }),
+    ).toBe(true);
+    expect(
+      isDeferredPharmacyAnswer({
+        say_now: ["알긴산 제제를 비교하고 자극적인 음식은 피하세요."],
+      }),
+    ).toBe(false);
+  });
   it("mock falls back deterministically", async () => {
     const events = [];
     for await (const event of new MockResponsesRefiner("timeout").refine(

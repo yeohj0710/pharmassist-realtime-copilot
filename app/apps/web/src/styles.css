@@ -209,6 +209,10 @@ h1 {
   padding: 22px;
   box-shadow: 0 1px 2px #0000000a;
 }
+.query-panel {
+  width: min(100%, 780px);
+  margin-inline: auto;
+}
 label {
   display: block;
   font-weight: 750;
@@ -267,6 +271,14 @@ footer {
 }
 .result {
   margin-top: 18px;
+  overflow: hidden;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.result.refining {
+  border: 1px solid #bcd8ff;
+  box-shadow: 0 8px 24px #3182f617;
 }
 .consult-layout {
   display: grid;
@@ -385,32 +397,44 @@ footer {
 .supporting-content p {
   margin: 5px 0;
 }
-.inline-loading {
+.refinement-status {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 14px 0 0;
+  gap: 12px;
+  margin: -6px -6px 20px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #e8f3ff;
+  color: #1b64da;
+}
+.refinement-status > span:last-child {
+  display: grid;
+  gap: 3px;
+}
+.refinement-status strong {
+  font-size: 14px;
+  font-weight: 750;
+}
+.refinement-status small {
   color: #4e5968;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
 }
-.inline-loading span {
-  width: 8px;
-  height: 8px;
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  border: 3px solid #bcd8ff;
+  border-top-color: #1b64da;
   border-radius: 50%;
-  background: #3182f6;
-  animation: loading-pulse 0.9s ease-in-out infinite alternate;
+  animation: loading-spin 0.8s linear infinite;
 }
-@keyframes loading-pulse {
-  from {
-    opacity: 0.3;
-  }
+@keyframes loading-spin {
   to {
-    opacity: 1;
+    transform: rotate(360deg);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .inline-loading span {
+  .loading-spinner {
     animation: none;
   }
 }

@@ -113,7 +113,9 @@ test("shows the new local answer immediately while AI refines it", async ({
   await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
   await input.fill("어제부터요");
   await input.press("Enter");
-  await expect(page.getByText("다음 답변을 짧게 정리 중")).toBeVisible();
+  await expect(
+    page.getByText("약 후보와 주의사항을 확인하고 있어요"),
+  ).toBeVisible();
   await expect(page.locator(".primary-guidance")).not.toContainText(
     "기침은 언제부터 시작됐나요?",
   );

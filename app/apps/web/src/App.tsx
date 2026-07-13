@@ -601,7 +601,7 @@ export function App() {
       {result ? (
         <div className="consult-layout">
           <section
-            className={`result ${critical ? "critical" : ""}`}
+            className={`result ${critical ? "critical" : ""} ${aiInterpreting ? "refining" : ""}`}
             aria-live="polite"
             aria-busy={aiInterpreting}
           >
@@ -620,6 +620,17 @@ export function App() {
               </div>
             ) : (
               <>
+                {aiInterpreting && (
+                  <div className="refinement-status" role="status">
+                    <span className="loading-spinner" aria-hidden="true" />
+                    <span>
+                      <strong>약 후보와 주의사항을 확인하고 있어요</strong>
+                      <small>
+                        현재 답변을 먼저 보여드리고, 확인되면 바로 갱신해요.
+                      </small>
+                    </span>
+                  </div>
+                )}
                 <article className="primary-guidance">
                   <p className="result-kicker">지금 말할 내용</p>
                   {patientVisibleLines(result).map((line, index) => (
@@ -630,11 +641,6 @@ export function App() {
                       {line}
                     </p>
                   ))}
-                  {aiInterpreting && (
-                    <p className="inline-loading" role="status">
-                      <span aria-hidden="true" /> 다음 답변을 짧게 정리 중
-                    </p>
-                  )}
                 </article>
                 <details className="supporting-details">
                   <summary>근거·주의사항</summary>
