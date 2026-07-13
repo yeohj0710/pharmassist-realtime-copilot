@@ -49,7 +49,7 @@ test("critical result cannot be cleared before acknowledgement", async ({
   await page.getByRole("button", { name: /확인했습니다/ }).click();
   await page.keyboard.press("Escape");
   await expect(
-    page.getByRole("heading", { name: "지금 확인할 상담" }),
+    page.getByRole("heading", { name: "약국 상담 도우미" }),
   ).toBeVisible();
 });
 
@@ -67,7 +67,7 @@ test("short second answer completes a routine consult", async ({ page }) => {
     page.getByLabel("OTC 결정 결과").getByText("상담 분류 완료"),
   ).toBeVisible();
   await expect(
-    page.getByLabel("OTC 결정 결과").getByText("실제 후보 표시 대기"),
+    page.getByLabel("OTC 결정 결과").getByText("상담 결과"),
   ).toBeVisible();
   await expect(
     page.getByRole("article").getByText("기침은 언제부터 시작됐나요?"),
@@ -97,7 +97,7 @@ test("bowel urgency progresses without a prepared exact phrase", async ({
   await input.fill("3분 전부터요");
   await input.press("Enter");
   await expect(
-    page.getByLabel("OTC 결정 결과").getByText("실제 후보 표시 대기"),
+    page.getByLabel("OTC 결정 결과").getByText("상담 결과"),
   ).toBeVisible();
 });
 

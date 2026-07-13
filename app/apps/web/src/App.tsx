@@ -93,6 +93,49 @@ const isSyntheticDecision = (decision: RuntimeOutput["decision"]): boolean =>
     /^(검토용|합성|synthetic)/iu.test(item.display_name),
   );
 
+interface ConsultationPresentation {
+  readonly title: string;
+  readonly direction: string;
+  readonly checks: readonly string[];
+}
+
+const consultationPresentation = (
+  intent: string | null,
+): ConsultationPresentation => {
+  if (intent?.includes("cough"))
+    return {
+      title: "일반 기침 상담 경로",
+      direction: "기침 양상에 맞는 완화 성분군을 우선 검토하세요.",
+      checks: [
+        "호흡곤란·흉통·고열 등 새 위험 신호",
+        "복용 중인 약과 기저질환",
+        "연령·임신 여부와 증상 지속 기간",
+      ],
+    };
+  if (intent?.includes("bowel") || intent?.includes("diarrhea"))
+    return {
+      title: "배변 증상 상담 경로",
+      direction: "설사·변비 양상과 탈수 위험을 구분해 성분군을 검토하세요.",
+      checks: ["혈변·심한 복통·발열", "수분 섭취와 배변 횟수", "최근 복용약"],
+    };
+  if (intent?.includes("musculoskeletal"))
+    return {
+      title: "근골격 통증 상담 경로",
+      direction:
+        "손상 여부와 통증 범위를 확인한 뒤 국소·경구 완화 방안을 검토하세요.",
+      checks: ["외상·부종·열감", "움직임 제한", "진통제 복용 이력"],
+    };
+  return {
+    title: "일반 증상 상담 경로",
+    direction: "확인된 증상과 안전 기준에 맞는 일반의약품 성분군을 검토하세요.",
+    checks: [
+      "새로 생긴 위험 신호",
+      "복용 중인 약과 기저질환",
+      "증상 지속 기간",
+    ],
+  };
+};
+
 export function App() {
   const [accessGranted, setAccessGranted] = useState(
     sessionStorage.getItem("pharmassist_access") === "0903",
@@ -541,11 +584,14 @@ export function App() {
   const syntheticDecision = result
     ? isSyntheticDecision(result.decision)
     : false;
+  const presentation = result
+    ? consultationPresentation(result.decision.intent)
+    : null;
   const visibleLines = result
     ? syntheticDecision && result.decision.status === "recommend"
-      ? [
-          "증상 분류와 안전 확인을 마쳤습니다. 실제 성분·제품 후보는 공식 의약품 데이터와 약국 재고가 연결된 뒤 약사가 확인해 선택하세요.",
-        ]
+      ? presentation
+        ? [`${presentation.title}로 분류했습니다. ${presentation.direction}`]
+        : ["증상 분류와 안전 확인을 마쳤습니다."]
       : patientVisibleLines(result)
     : [];
 
@@ -562,9 +608,9 @@ export function App() {
       <main className="login-shell">
         <section className="login-card" aria-labelledby="login-title">
           <div className="login-logo" aria-hidden="true">
-            P
+            약
           </div>
-          <p className="login-eyebrow">PHARMASSIST</p>
+          <p className="login-eyebrow">약국 상담 도우미</p>
           <h1 id="login-title">상담 도우미에 로그인</h1>
           <p className="login-copy">
             허용된 사용자만 상담 기능을 이용할 수 있어요.
@@ -608,8 +654,8 @@ export function App() {
       </div>
       <header>
         <div>
-          <p className="eyebrow">PHARMACIST LOCAL COPILOT</p>
-          <h1>지금 확인할 상담</h1>
+          <p className="eyebrow">약사를 위한 실시간 상담 지원</p>
+          <h1>약국 상담 도우미</h1>
         </div>
         <div className="header-actions">
           <span className={`badge ${online ? "online" : "offline"}`}>
@@ -759,14 +805,20 @@ export function App() {
                   {syntheticDecision &&
                     result.decision.status === "recommend" && (
                       <div className="decision-block synthetic-decision-notice">
-                        <h2>실제 후보 표시 대기</h2>
-                        <p>
-                          현재 데모의 합성 성분·제품명은 추천 결과로 표시하지
-                          않습니다.
-                        </p>
+                        <h2>상담 결과</h2>
+                        <strong className="consultation-result-title">
+                          {presentation?.title}
+                        </strong>
+                        <p>{presentation?.direction}</p>
+                        <h3>약사 확인사항</h3>
+                        <ul className="consultation-checks">
+                          {presentation?.checks.map((check) => (
+                            <li key={check}>{check}</li>
+                          ))}
+                        </ul>
                         <small>
-                          MFDS 공식 데이터와 해당 약국의 재고·formulary 연결 후
-                          검증된 후보만 표시됩니다.
+                          구체 성분·제품은 MFDS 공식 데이터와 해당 약국의
+                          재고·formulary 연결 후 검증된 후보만 표시됩니다.
                         </small>
                       </div>
                     )}

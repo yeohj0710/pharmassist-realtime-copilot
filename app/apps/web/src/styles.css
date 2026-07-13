@@ -143,7 +143,7 @@ body {
   margin: 0;
 }
 .shell {
-  width: min(100%, 1080px);
+  width: min(100%, 1400px);
   margin: auto;
   padding: 0 28px 48px;
 }
@@ -162,6 +162,8 @@ header {
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 24px;
+  width: min(100%, 1024px);
+  margin-inline: auto;
 }
 .header-actions {
   display: flex;
@@ -281,19 +283,42 @@ footer {
   box-shadow: 0 8px 24px #3182f617;
 }
 .consult-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 290px;
-  gap: 16px;
-  align-items: start;
+  position: relative;
+}
+.consult-layout > .result {
+  width: min(100%, 780px);
+  margin-inline: auto;
 }
 .patient-summary {
-  position: sticky;
+  position: absolute;
   top: 16px;
+  left: calc(50% + 406px);
+  width: 290px;
   margin-top: 18px;
   padding: 20px;
   border-radius: 20px;
   background: #fff;
   box-shadow: 0 1px 2px #0000000a;
+}
+.consultation-result-title {
+  display: block;
+  margin: 14px 0 6px;
+  color: #191f28;
+  font-size: 20px;
+  line-height: 1.4;
+}
+.synthetic-decision-notice h3 {
+  margin: 20px 0 8px;
+  color: #333d4b;
+  font-size: 14px;
+}
+.consultation-checks {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 18px;
+  padding-left: 20px;
+  color: #4e5968;
+  line-height: 1.5;
 }
 .summary-heading {
   display: flex;
@@ -401,7 +426,8 @@ footer {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 18px;
+  width: min(100%, 780px);
+  margin: 18px auto 0;
   padding: 18px 20px;
   border: 1px solid #c9ddff;
   border-radius: 16px;
@@ -487,6 +513,31 @@ footer {
   text-align: center;
   margin-top: 26px;
 }
+@media (max-width: 1220px) {
+  .consult-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 780px) 290px;
+    gap: 16px;
+    justify-content: center;
+  }
+  .consult-layout > .result {
+    width: 100%;
+  }
+  .patient-summary {
+    position: sticky;
+    left: auto;
+    width: auto;
+  }
+}
+@media (max-width: 1100px) {
+  .consult-layout {
+    grid-template-columns: minmax(0, 780px);
+  }
+  .patient-summary {
+    position: static;
+    width: 100%;
+  }
+}
 @media (max-width: 700px) {
   .shell {
     padding: 0 16px 32px;
@@ -521,6 +572,7 @@ footer {
   }
   .patient-summary {
     position: static;
+    width: auto;
     order: -1;
   }
 }
