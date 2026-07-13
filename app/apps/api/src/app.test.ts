@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { buildApp, cardsForAiRefinement } from "./app.js";
+import {
+  buildApp,
+  cardsForAiRefinement,
+  shouldUseContextModel,
+} from "./app.js";
 import { syntheticPack } from "@pharmassist/test-fixtures";
 import { MockResponsesRefiner } from "@pharmassist/openai-adapter";
 import { readFileSync } from "node:fs";
@@ -18,6 +22,24 @@ const input = {
   client_timestamp: "2026-07-10T00:00:00Z",
 };
 describe("API", () => {
+  it("routes only context-dependent short replies to the stronger model", () => {
+    const dialogue = [
+      { role: "user" as const, content: "배가 아파요" },
+      { role: "assistant" as const, content: "설사인가요, 변비인가요?" },
+      { role: "user" as const, content: "그건 아니고 앞에 거요" },
+    ];
+    expect(shouldUseContextModel(dialogue, null)).toBe(true);
+    expect(shouldUseContextModel(dialogue, "abdominal_pain_general")).toBe(
+      false,
+    );
+    expect(shouldUseContextModel([dialogue[0]!], null)).toBe(false);
+    expect(
+      shouldUseContextModel(
+        [...dialogue.slice(0, -1), { role: "user", content: "가".repeat(31) }],
+        null,
+      ),
+    ).toBe(false);
+  });
   it("lets AI compare the full active domain catalog instead of the provisional local intent", () => {
     const cards = cardsForAiRefinement(syntheticPack.cards, "cough_general");
     expect(cards.map((card) => card.intent)).toContain("cough_general");
@@ -167,7 +189,11 @@ describe("API", () => {
     const app = await buildApp({
       responsesRefiner: {
         async *refine(context) {
-          providerPrompt = `${context.promptDeveloper}\n${context.promptDeveloperOverride ?? ""}`;
+          providerPrompt = [
+            context.promptDeveloper,
+            context.promptDeveloperOverride ?? "",
+            ...(context.conversation ?? []).map((turn) => turn.content),
+          ].join("\n");
           yield { type: "started" as const, sequence: 1 };
         },
       },
@@ -206,17 +232,20 @@ describe("API", () => {
       else process.env["FEATURE_LLM_REFINEMENT"] = priorFeature;
     }
   });
-  it("resolves former/latter replies against the last assistant question", async () => {
+  it("passes every dialogue turn to the model with its real role", async () => {
     const priorKey = process.env["OPENAI_API_KEY"];
     const priorFeature = process.env["FEATURE_LLM_REFINEMENT"];
     process.env["OPENAI_API_KEY"] = "test-only";
     process.env["FEATURE_LLM_REFINEMENT"] = "true";
-    let capturedText = "";
+    let capturedConversation: readonly Readonly<{
+      role: "user" | "assistant";
+      content: string;
+    }>[] = [];
     let capturedQuestionBudget = true;
     const app = await buildApp({
       responsesRefiner: {
         async *refine(context) {
-          capturedText = context.redactedText;
+          capturedConversation = context.conversation ?? [];
           capturedQuestionBudget = context.allowFollowUpQuestion ?? true;
           yield { type: "started" as const, sequence: 3 };
         },
@@ -250,9 +279,15 @@ describe("API", () => {
           ],
         },
       });
-      expect(capturedText).toContain("1번 선택");
-      expect(capturedText).toContain("묽은 변인가요");
-      expect(capturedQuestionBudget).toBe(false);
+      expect(capturedConversation).toEqual([
+        { role: "user", content: "배가 아파요" },
+        {
+          role: "assistant",
+          content: "묽은 변인가요, 잘 안 나오는 변인가요?",
+        },
+        { role: "user", content: "아니 전자라고요" },
+      ]);
+      expect(capturedQuestionBudget).toBe(true);
     } finally {
       await app.close();
       if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];

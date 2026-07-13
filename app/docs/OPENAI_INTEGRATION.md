@@ -5,6 +5,7 @@ OpenAI는 선택적 refinement와 음성→텍스트에만 쓴다. safety, claim
 ## Responses
 
 - 기본 model: `gpt-5-nano`; 대화 전체를 해석하는 주 상담 엔진. 로컬 카드와 제공 자료는 참고 문맥으로 사용한다.
+- 문맥 의존 짧은 답변의 선택적 상향 model: `gpt-4.1-mini`; 전체 대화는 Responses API의 실제 `user`/`assistant` 메시지 순서로 전달한다.
 - 로컬 결과는 즉시 표시하고 조건부 AI fallback만 최대 5초, max output 420, `store:false`
 - 기본 비용 guard: refinement 60회/시간, realtime session 20회/시간. 환경변수로 더 낮출 수 있으며 코드상 최대치는 각각 300/100이다.
 - RuntimeOutput JSON Schema strict format
