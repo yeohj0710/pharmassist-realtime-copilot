@@ -60,4 +60,13 @@ describe("consultation memory", () => {
     ]);
     expect(isPatientFacingText("성분군 후보를 검토한다.")).toBe(false);
   });
+
+  it("does not list elliptical choices as standalone patient facts", () => {
+    const summary = buildPatientSummary([
+      "환자: 배가 아파요",
+      "상담 도우미: 설사인가요, 변비인가요?",
+      "환자: 아니 전자라고요",
+    ]);
+    expect(summary.facts).toEqual(["배가 아파요"]);
+  });
 });

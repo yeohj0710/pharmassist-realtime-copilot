@@ -385,6 +385,35 @@ footer {
 .supporting-content p {
   margin: 5px 0;
 }
+.inline-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  color: #4e5968;
+  font-size: 13px;
+  font-weight: 600;
+}
+.inline-loading span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3182f6;
+  animation: loading-pulse 0.9s ease-in-out infinite alternate;
+}
+@keyframes loading-pulse {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inline-loading span {
+    animation: none;
+  }
+}
 .critical-lock {
   padding: 26px 0;
 }

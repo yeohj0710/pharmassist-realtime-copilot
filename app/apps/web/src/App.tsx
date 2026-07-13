@@ -134,7 +134,6 @@ export function App() {
     historyRef.current = nextHistory;
     setHistory(nextHistory);
     setQuery("");
-    setResult(undefined);
     applySession({ type: "INPUT", sequence: sequenceRef.current });
     const input = newInput(
       normalized,
@@ -604,6 +603,7 @@ export function App() {
           <section
             className={`result ${critical ? "critical" : ""}`}
             aria-live="polite"
+            aria-busy={aiInterpreting}
           >
             {critical && !confirmedCritical ? (
               <div className="critical-lock">
@@ -630,6 +630,11 @@ export function App() {
                       {line}
                     </p>
                   ))}
+                  {aiInterpreting && (
+                    <p className="inline-loading" role="status">
+                      <span aria-hidden="true" /> 다음 답변을 짧게 정리 중
+                    </p>
+                  )}
                 </article>
                 <details className="supporting-details">
                   <summary>근거·주의사항</summary>

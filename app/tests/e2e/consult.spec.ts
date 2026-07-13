@@ -92,3 +92,27 @@ test("shoulder pain never routes to abdominal pain", async ({ page }) => {
   await expect(page.getByText(/어깨를 움직일 때/)).toBeVisible();
   await expect(page.getByText(/윗배·아랫배/)).toHaveCount(0);
 });
+
+test("keeps the previous answer visible while the next AI answer loads", async ({
+  page,
+}) => {
+  let refinementCount = 0;
+  await page.route("**/v1/consult/refine", async (route) => {
+    refinementCount += 1;
+    if (refinementCount === 2)
+      await new Promise((resolve) => setTimeout(resolve, 1_500));
+    await route.fulfill({
+      status: 200,
+      contentType: "text/event-stream",
+      body: 'event: refinement.rejected\ndata: {"code":"TEST","fallback":"instant"}\n\n',
+    });
+  });
+  const input = page.getByLabel("증상이나 질문을 입력하세요");
+  await input.fill("기침이 나요");
+  await input.press("Enter");
+  await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
+  await input.fill("어제부터요");
+  await input.press("Enter");
+  await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
+  await expect(page.getByText("다음 답변을 짧게 정리 중")).toBeVisible();
+});

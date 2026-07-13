@@ -56,6 +56,7 @@ export interface RefinementContext {
   readonly promptSystem: string;
   readonly promptDeveloper: string;
   readonly promptDeveloperOverride?: string;
+  readonly allowFollowUpQuestion?: boolean;
 }
 export type RefinementEvent =
   | { readonly type: "started"; readonly sequence: number }
@@ -217,32 +218,13 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
       };
       return;
     }
-    const cleanedSayNow =
-      valid.value.ask_next.length > 0
-        ? valid.value.say_now
-            .map((line) =>
-              line
-                .split(/(?<=[.!?])\s+/u)
-                .filter((sentence) => !sentence.trim().endsWith("?"))
-                .join(" ")
-                .trim(),
-            )
-            .filter(Boolean)
-            .slice(0, 3)
-        : [...valid.value.say_now];
-    const sayNow: RuntimeOutput["say_now"] =
-      cleanedSayNow.length === 0
-        ? []
-        : cleanedSayNow.length === 1
-          ? [cleanedSayNow[0]!]
-          : cleanedSayNow.length === 2
-            ? [cleanedSayNow[0]!, cleanedSayNow[1]!]
-            : [cleanedSayNow[0]!, cleanedSayNow[1]!, cleanedSayNow[2]!];
-    const attributedOutput: RuntimeOutput = {
-      ...valid.value,
-      say_now: sayNow,
-      model: response.model,
-    };
+    const attributedOutput = limitCounterConversationOutput(
+      {
+        ...valid.value,
+        model: response.model,
+      },
+      context.allowFollowUpQuestion ?? true,
+    );
     const checked = postValidateOutput(context, attributedOutput);
     if (!checked.ok) {
       yield { type: "rejected", code: checked.code, fallback: "instant" };
@@ -250,6 +232,29 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
     }
     yield { type: "completed", output: attributedOutput };
   }
+}
+
+export function limitCounterConversationOutput(
+  output: RuntimeOutput,
+  allowFollowUpQuestion = true,
+): RuntimeOutput {
+  const maxSaySentences = output.mode === "escalate" ? 2 : 1;
+  const sentences = output.say_now
+    .flatMap((line) => line.split(/(?<=[.!?])\s+/u))
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0 && !line.endsWith("?"))
+    .slice(0, maxSaySentences);
+  const sayNow: RuntimeOutput["say_now"] =
+    sentences.length === 0
+      ? []
+      : sentences.length === 1
+        ? [sentences[0]!]
+        : [sentences[0]!, sentences[1]!];
+  const firstQuestion = allowFollowUpQuestion ? output.ask_next[0] : undefined;
+  const askNext: RuntimeOutput["ask_next"] = firstQuestion
+    ? [firstQuestion]
+    : [];
+  return { ...output, say_now: sayNow, ask_next: askNext };
 }
 export function postValidateOutput(
   context: RefinementContext,

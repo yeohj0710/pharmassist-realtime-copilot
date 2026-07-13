@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   createRealtimeTranscriptionCall,
   emptyTranscriptState,
+  limitCounterConversationOutput,
   MockResponsesRefiner,
   postValidateOutput,
   reduceRealtime,
@@ -108,6 +109,19 @@ describe("OpenAI boundaries", () => {
         say_now: ["해열진통제 계열을 비교해 볼 수 있어요."],
       }),
     ).toEqual({ ok: true });
+  });
+  it("limits counter speech to one guidance sentence and one question", () => {
+    const limited = limitCounterConversationOutput({
+      ...base,
+      say_now: ["첫 문장입니다. 두 번째 설명입니다.", "세 번째입니다."],
+      ask_next: [
+        { question: "첫 질문?", reason: "r", priority: 1, slot: "a" },
+        { question: "둘째 질문?", reason: "r", priority: 2, slot: "b" },
+      ],
+    });
+    expect(limited.say_now).toEqual(["첫 문장입니다."]);
+    expect(limited.ask_next.map((item) => item.question)).toEqual(["첫 질문?"]);
+    expect(limitCounterConversationOutput(limited, false).ask_next).toEqual([]);
   });
   it("reduces duplicate events and stable prefixes", () => {
     const one = reduceRealtime(emptyTranscriptState, {

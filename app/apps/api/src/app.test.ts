@@ -206,6 +206,62 @@ describe("API", () => {
       else process.env["FEATURE_LLM_REFINEMENT"] = priorFeature;
     }
   });
+  it("resolves former/latter replies against the last assistant question", async () => {
+    const priorKey = process.env["OPENAI_API_KEY"];
+    const priorFeature = process.env["FEATURE_LLM_REFINEMENT"];
+    process.env["OPENAI_API_KEY"] = "test-only";
+    process.env["FEATURE_LLM_REFINEMENT"] = "true";
+    let capturedText = "";
+    let capturedQuestionBudget = true;
+    const app = await buildApp({
+      responsesRefiner: {
+        async *refine(context) {
+          capturedText = context.redactedText;
+          capturedQuestionBudget = context.allowFollowUpQuestion ?? true;
+          yield { type: "started" as const, sequence: 3 };
+        },
+      },
+    });
+    try {
+      const ellipticalInput = {
+        ...input,
+        sequence: 3,
+        text: "아니 전자라고요",
+      };
+      const instant = (
+        await app.inject({
+          method: "POST",
+          url: "/v1/consult/instant",
+          payload: ellipticalInput,
+        })
+      ).json();
+      await app.inject({
+        method: "POST",
+        url: "/v1/consult/refine",
+        payload: {
+          runtime_input: ellipticalInput,
+          instant_output: instant,
+          candidate_card_ids: [],
+          knowledge_version: instant.knowledge_version,
+          conversation_history: [
+            "환자: 배가 아파요",
+            "상담 도우미: 묽은 변인가요, 잘 안 나오는 변인가요?",
+            "환자: 아니 전자라고요",
+          ],
+        },
+      });
+      expect(capturedText).toContain("1번 선택");
+      expect(capturedText).toContain("묽은 변인가요");
+      expect(capturedQuestionBudget).toBe(false);
+    } finally {
+      await app.close();
+      if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];
+      else process.env["OPENAI_API_KEY"] = priorKey;
+      if (priorFeature === undefined)
+        delete process.env["FEATURE_LLM_REFINEMENT"];
+      else process.env["FEATURE_LLM_REFINEMENT"] = priorFeature;
+    }
+  });
   it("rejects oversized JSON bodies", async () => {
     const app = await buildApp();
     const response = await app.inject({

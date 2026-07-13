@@ -424,11 +424,53 @@ export async function buildApp(
         normalizedHistory.some((turn) => !turn.safeForExternal)
       )
         return `event: refinement.rejected\ndata: ${JSON.stringify({ code: "PRIVACY_REDACTION_FAILED", fallback: "instant", instant_retained: true })}\n\n`;
-      const redactedHistory = normalizedHistory.map(
-        (turn) => turn.redactedText,
-      );
+      let redactedHistory = normalizedHistory.map((turn) => turn.redactedText);
       // From this boundary onward, prompts can only access redacted history.
       Object.assign(body, { conversation_history: redactedHistory });
+      const newestPatientTurn =
+        redactedHistory.at(-1) ?? normalized.redactedText;
+      const lastAssistantTurn = [...redactedHistory]
+        .reverse()
+        .find((turn) => turn.startsWith("상담 도우미:"));
+      const ellipticalChoice = newestPatientTurn.match(
+        /^(?:환자:\s*)?(?:아니\s*)?(전자|후자|첫\s*번째|두\s*번째|첫째|둘째)(?:라고요|요)?[.!?]?$/u,
+      );
+      const selectedChoice = ellipticalChoice?.[1];
+      const selectedChoiceIndex = /^(?:전자|첫\s*번째|첫째)$/u.test(
+        selectedChoice ?? "",
+      )
+        ? 0
+        : 1;
+      const lastQuestionText = lastAssistantTurn?.replace(
+        /^상담 도우미:\s*/u,
+        "",
+      );
+      const alternatives = lastQuestionText
+        ?.split(/\s*(?:,|아니면|또는|혹은)\s*/u)
+        .map((part) => part.trim())
+        .filter(Boolean);
+      const selectedAlternative = alternatives?.[selectedChoiceIndex] ?? "";
+      const resolvedRedactedText =
+        ellipticalChoice && selectedAlternative
+          ? `직전 질문의 ${selectedChoiceIndex + 1}번 선택: ${selectedAlternative}`
+          : normalized.redactedText;
+      const resolvedHistory =
+        ellipticalChoice && selectedAlternative
+          ? [
+              ...redactedHistory.slice(0, -1),
+              `환자: ${selectedAlternative.replace(/[?]+$/u, "")}`,
+            ]
+          : redactedHistory;
+      redactedHistory = resolvedHistory;
+      Object.assign(body, { conversation_history: resolvedHistory });
+      const referenceResolution = ellipticalChoice
+        ? `The patient selected option ${selectedChoiceIndex + 1}. Its exact meaning is: ${JSON.stringify(selectedAlternative)}. Treat this as an answered clinical fact, continue from it, and never ask the alternatives or already-known duration again. Last assistant turn: ${JSON.stringify(lastAssistantTurn ?? "")}`
+        : "Resolve short replies, corrections, pronouns, and omitted subjects against the last assistant turn before responding.";
+      const recentQuestionCount = redactedHistory
+        .filter((turn) => turn.startsWith("상담 도우미:"))
+        .slice(-3)
+        .filter((turn) => turn.includes("?")).length;
+      const followUpAllowed = !ellipticalChoice && recentQuestionCount < 2;
       const allowedEntities =
         [
           ...body.instant_output.say_now,
@@ -490,15 +532,16 @@ export async function buildApp(
           {
             input: body.runtime_input,
             instant: body.instant_output,
-            redactedText: normalized.redactedText,
+            redactedText: resolvedRedactedText,
             redactionSafe: normalized.safeForExternal,
             allowedClaimIds: body.instant_output.source_refs.map(
               (source) => source.claim_id,
             ),
             allowedEntities,
             allowedIntents: allowedCards.map((card) => card.intent),
+            allowFollowUpQuestion: followUpAllowed,
             promptSystem:
-              "You are the main intelligence and conversation engine for a Korean pharmacist consultation assistant. Conduct a natural, flexible conversation like ChatGPT. Understand corrections, uncertainty, colloquial speech, multiple symptoms, follow-up questions, topic changes, and answers that are not yes/no. Use the full conversation before deciding what to say. Directly answer the patient's question when possible. Ask at most one genuinely useful follow-up only when it materially changes the advice. Do not force a checklist or repeat answered questions. The supplied cards are optional reference notes, not rules or scripts. Use general health and OTC medicine knowledge when notes are missing. Do not make a definitive diagnosis or give an exact individualized dose. Preserve local emergency red flags. Write concise, warm Korean that a real pharmacist could say aloud. Return only the required schema.",
+              "You are the main conversation engine used by a busy Korean community pharmacist at the counter. Optimize for a real 10-20 second exchange, not a medical interview. Output one short actionable sentence, plus at most one short question only when its answer materially changes the immediate OTC choice or detects danger. Never add a preamble, recap, checklist, multiple questions, or ask for details merely to improve confidence. Resolve corrections, '전자/후자', short replies, pronouns, and omitted subjects from the immediately preceding assistant question. Once answered, never repeat or paraphrase that question. After two recent assistant questions, give the best useful general guidance without another question unless emergency triage requires it. The supplied cards are optional reference notes. Use general health and OTC knowledge when notes are missing. Do not diagnose or give an exact individualized dose. Preserve emergency red flags. Return only the required schema.",
             promptDeveloper: `Interpret the current Korean patient wording as the latest turn of this conversation: ${JSON.stringify(body.conversation_history ?? [body.runtime_input.text])}. Treat instant_output.intent as provisional, not authoritative. Never ask for information already answered anywhere in conversation_history. In particular, expressions such as "어제부터", "3일째", or "방금부터" answer a duration question. If provisional_local_context.ask_next is empty, do not reintroduce the card's initial question; preserve the completed actions from output_template. If the new wording clearly describes another symptom, correct the intent by comparing the full allowed card catalog. Korean routing examples: "배가 아파요" or explicit abdominal pain means abdominal_pain_general; heartburn, indigestion, bloating, or "소화가 안 돼요" means dyspepsia_general; shoulder, back, knee, wrist, ankle, or muscle pain means musculoskeletal_pain; throat pain means sore_throat. If the wording is a short answer to the current question, preserve the provisional intent and use it as conversation context. For a matching card, use its approved say_now, avoid content, and only an unanswered ask_next. If no card matches, keep intent null, put a short acknowledgment in say_now, and put one concise Korean symptom-specific question in ask_next without duplicating the same sentence. Do not invent a diagnosis, product, ingredient, dose, clinical claim, or source. Keep emergency escalation and every existing red flag unchanged. Card catalog: ${JSON.stringify(
               allowedCards.map((card) => ({
                 intent: card.intent,
@@ -509,7 +552,7 @@ export async function buildApp(
                 avoid: card.avoid,
               })),
             )}`,
-            promptDeveloperOverride: `Respond to the newest turn using the complete conversation: ${JSON.stringify(body.conversation_history ?? [body.runtime_input.text])}. You are the primary decision-maker for normal conversation. The local result and cards are optional reference context only, so freely replace their intent, wording, questions and recommendations. Answer what the patient actually asked. Accept uncertainty such as "잘 모르겠어요" without repeating the same question. Integrate corrections, multiple symptoms and topic changes. Ask zero or one concise follow-up only if it materially changes the useful answer. When appropriate, explain general OTC ingredient or medicine-category options and key reasons to avoid them. Never claim a diagnosis, invent a source, or give an exact individualized dose. source_refs must be empty unless using a supplied claim ID. Preserve existing emergency red flags and escalation.`,
+            promptDeveloperOverride: `Newest patient turn: ${JSON.stringify(newestPatientTurn)}. Complete conversation: ${JSON.stringify(redactedHistory)}. ${referenceResolution} Recent assistant question count: ${recentQuestionCount}; follow-up question budget available: ${followUpAllowed}. When the budget is false, ask nothing and give one immediately useful general guidance sentence. Speak exactly as the pharmacist should speak now. Keep the total spoken answer to one or two short Korean sentences and roughly 80 Korean characters when possible. Default to one useful recommendation sentence. Ask one question only when the answer changes the immediate recommendation or identifies danger. Never repeat an answered question, ask two things in one sentence, or request pain scores and timing when general guidance can already be given. Accept "잘 모르겠어요" and move on. Integrate corrections, multiple symptoms and topic changes. The local result and cards are optional reference context. General OTC ingredient or medicine-category guidance is allowed, but never claim a diagnosis, invent a source, or give an exact individualized dose. Preserve emergency red flags and escalation.`,
           },
           controller.signal,
         ))
