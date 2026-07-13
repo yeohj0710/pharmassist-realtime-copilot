@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/source_snapshot.schema.json",
+  "title": "SourceSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_snapshot_id",
+    "source_id",
+    "provider",
+    "official",
+    "source_url",
+    "fetched_at",
+    "usage_rights",
+    "commercial_use",
+    "cache_policy",
+    "redistribution",
+    "ai_context_use",
+    "http_status",
+    "content_sha256",
+    "content_type",
+    "parser_version",
+    "record_count",
+    "status",
+    "raw_retention_policy",
+    "uncertainty"
+  ],
+  "properties": {
+    "source_snapshot_id": {
+      "type": "string",
+      "pattern": "^SNAP-[A-Z0-9_-]+$"
+    },
+    "tenant_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$"
+    },
+    "source_id": {
+      "type": "string",
+      "pattern": "^SRC-[A-Z0-9_-]+$"
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "mfds_easy_drug",
+        "mfds_permit",
+        "mfds_dur_product",
+        "mfds_dur_ingredient",
+        "tenant_pos",
+        "health_kr",
+        "other"
+      ]
+    },
+    "official": {
+      "type": "boolean"
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "effective_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "terms_url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "usage_rights": {
+      "type": "string",
+      "enum": [
+        "unrestricted",
+        "attribution",
+        "contract_required",
+        "unknown"
+      ]
+    },
+    "commercial_use": {
+      "type": "string",
+      "enum": [
+        "allowed",
+        "contract_required",
+        "prohibited",
+        "unknown"
+      ]
+    },
+    "cache_policy": {
+      "type": "string",
+      "enum": [
+        "allowed",
+        "contract_required",
+        "prohibited",
+        "unknown"
+      ]
+    },
+    "redistribution": {
+      "type": "string",
+      "enum": [
+        "allowed",
+        "contract_required",
+        "prohibited",
+        "unknown"
+      ]
+    },
+    "ai_context_use": {
+      "type": "string",
+      "enum": [
+        "allowed",
+        "contract_required",
+        "prohibited",
+        "unknown"
+      ]
+    },
+    "http_status": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 599
+    },
+    "content_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "content_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parser_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "page_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "next_cursor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "fetched",
+        "parsed",
+        "failed",
+        "superseded"
+      ]
+    },
+    "raw_retention_policy": {
+      "type": "string",
+      "enum": [
+        "none",
+        "encrypted_short_term",
+        "provider_contract"
+      ]
+    },
+    "uncertainty": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  }
+}

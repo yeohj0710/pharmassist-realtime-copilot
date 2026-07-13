@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/tenant_sales_aggregate.schema.json",
+  "title": "TenantSalesAggregate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "tenant_id",
+    "pack_id",
+    "product_id",
+    "window_start",
+    "window_end",
+    "units_sold",
+    "sales_rank",
+    "cumulative_coverage",
+    "symptom_category",
+    "source_snapshot_id"
+  ],
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$"
+    },
+    "pack_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "window_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "window_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "units_sold": {
+      "type": "number",
+      "minimum": 0
+    },
+    "sales_rank": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cumulative_coverage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "symptom_category": {
+      "type": "string"
+    },
+    "source_snapshot_id": {
+      "type": "string"
+    }
+  }
+}

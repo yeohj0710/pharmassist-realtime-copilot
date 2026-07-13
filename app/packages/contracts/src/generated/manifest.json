@@ -1,5 +1,5 @@
 {
-  "schemaHash": "db6dc7abfc019a68c67d8fe3c47466c5d8cf68148c1a9fbd0157136ea61581b1",
+  "schemaHash": "cdaa60b7ea5d74680a574aaaee3513f50add40c801c8488baa6dab1d903a5666",
   "generated": [
     {
       "file": "claim.ts",
@@ -7,14 +7,24 @@
       "sha256": "5a8da90a1daf6fa119a28abb94c5b9aae158bd939551408a9135858d89bbcaac"
     },
     {
+      "file": "clinical_claim.ts",
+      "title": "ClinicalClaim",
+      "sha256": "718aa2e699870af78acfb311a31142fe496144cbc6da8f8ecc88e3be8ea79e60"
+    },
+    {
       "file": "consultation_card.ts",
       "title": "ConsultationCard",
       "sha256": "6408ad908e6ab2bb912fd3c8aac2df40f473990200ef6ebe1d9cbca659092491"
     },
     {
+      "file": "consultation_state.ts",
+      "title": "ConsultationState",
+      "sha256": "4be8abb00da4d6aa2f5ba4d056b5e1773df7ca05d35349164bce075c96e350ea"
+    },
+    {
       "file": "drug_product.ts",
       "title": "DrugProduct",
-      "sha256": "a0421d3768452dbe71eaedd2fca0d12c8a3dcf08817676bf02c943a5f67961b9"
+      "sha256": "3000c1c2d1b748909a6ac603ecd3f2a654954e2a8cfd9292d09f6b6f3589ebf8"
     },
     {
       "file": "error_envelope.ts",
@@ -27,14 +37,44 @@
       "sha256": "f47b88cc4941e1291a9190114580b236833e4b5ea5fa7fb82af5cd66db8d20db"
     },
     {
+      "file": "ingredient.ts",
+      "title": "Ingredient",
+      "sha256": "7b1ae7203ae6a7ec4f4365ee1416a77858e81521eb2565e46b6477dac19a0b1d"
+    },
+    {
+      "file": "otc_protocol.ts",
+      "title": "OTCProtocol",
+      "sha256": "4558c61b9213dc2f22138630f2a5c33964e60ecb33d551290a9206fa84028690"
+    },
+    {
       "file": "pack_manifest.ts",
       "title": "PackManifest",
-      "sha256": "81c60d8e41a03bca771ac7bda590f2f7e5e536a84acad7b30939620f35f9a350"
+      "sha256": "71987fd61f0ae6a25c2e92644160698a3d669ea7d3b5187afe1ecfdf3be14113"
+    },
+    {
+      "file": "product_ingredient.ts",
+      "title": "ProductIngredient",
+      "sha256": "34d0590a69c9e3bbc5b94ad2a6be549940cfa759e4a895e9a00e634302452a2a"
+    },
+    {
+      "file": "protocol_option.ts",
+      "title": "ProtocolOption",
+      "sha256": "253ca81de01201044b6d5cfb3e37d9b6a34c50e9036a0535900f530d7027276a"
+    },
+    {
+      "file": "protocol_rule.ts",
+      "title": "ProtocolRule",
+      "sha256": "f8fcb41e2c90df9dd71977f78de4194271b6623454efd63a41ec5b82fd464f85"
+    },
+    {
+      "file": "recommendation_decision.ts",
+      "title": "RecommendationDecision",
+      "sha256": "f19b34d91bf8e76be21dea2831e7b4c6277d505c9a44b0f36455dbd0695a3863"
     },
     {
       "file": "refinement_request.ts",
       "title": "RefinementRequestEnvelope",
-      "sha256": "e60d58fd6c8107ea157363e2275b60124a8150b31e2d9bfaf4053dec3fdaf496"
+      "sha256": "e0c6b56f18dd4a37dfd12897fa644fe49f1f8bd88ef5f05e77395d858a2fc4f1"
     },
     {
       "file": "runtime_input.ts",
@@ -44,12 +84,37 @@
     {
       "file": "runtime_output.ts",
       "title": "RuntimeOutput",
-      "sha256": "3d94080700022080dbf02e70b1749d5eb912da0485f0b7c71b68d0a1f236ad0a"
+      "sha256": "8a8e53fbc020b6c394c7bc3b05feddee7d2d324c61c41ff6528294707f622d7f"
+    },
+    {
+      "file": "runtime_pack.ts",
+      "title": "RuntimePackContract",
+      "sha256": "629cb0d1ddb7bb78c252f82b6b6942553a7112622bc8f8fa8e0420f46ccccd05"
     },
     {
       "file": "source_record.ts",
       "title": "SourceRecord",
       "sha256": "85343f82b6ce5ddfec13bddfe67c6d5f8c29e3ff81ba1be668c2f0a1f426383e"
+    },
+    {
+      "file": "source_snapshot.ts",
+      "title": "SourceSnapshot",
+      "sha256": "6a23c5552492d42c0e9b9c68af276d986ac9989889222ba9e4f5c4e0186fca0c"
+    },
+    {
+      "file": "tenant_formulary.ts",
+      "title": "TenantFormulary",
+      "sha256": "6f75202fd0ba01120274fa7a6b463940f21fc0f582cd4883a6f188bade7084d8"
+    },
+    {
+      "file": "tenant_inventory.ts",
+      "title": "TenantInventory",
+      "sha256": "32a5c89a3e5a1bd0f164b1ba80cdbed41f0aa7a5c8fafc0c14d79b88cd136b04"
+    },
+    {
+      "file": "tenant_sales_aggregate.ts",
+      "title": "TenantSalesAggregate",
+      "sha256": "7d8326011c4a4db673b2d9fad8044250594ae7e9388540c82a349504326dce6a"
     }
   ]
 }

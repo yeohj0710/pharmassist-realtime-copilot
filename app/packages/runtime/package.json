@@ -19,7 +19,9 @@
     "@pharmassist/domain": "workspace:*",
     "@pharmassist/normalizer": "workspace:*",
     "@pharmassist/retrieval": "workspace:*",
-    "@pharmassist/safety": "workspace:*"
+    "@pharmassist/safety": "workspace:*",
+    "@pharmassist/knowledge": "workspace:*",
+    "@pharmassist/recommendation": "workspace:*"
   },
   "devDependencies": {
     "@pharmassist/test-fixtures": "workspace:*",

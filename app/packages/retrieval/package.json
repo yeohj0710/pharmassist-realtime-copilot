@@ -15,7 +15,8 @@
     "test": "vitest run --config ../../vitest.package.config.ts"
   },
   "dependencies": {
-    "@pharmassist/domain": "workspace:*"
+    "@pharmassist/domain": "workspace:*",
+    "@pharmassist/contracts": "workspace:*"
   },
   "devDependencies": {
     "typescript": "7.0.2",

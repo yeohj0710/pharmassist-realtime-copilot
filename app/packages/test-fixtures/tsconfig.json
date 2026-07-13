@@ -7,5 +7,12 @@
     "composite": true
   },
   "include": ["src/**/*.ts"],
-  "references": [{ "path": "../retrieval" }]
+  "references": [
+    {
+      "path": "../contracts"
+    },
+    {
+      "path": "../retrieval"
+    }
+  ]
 }

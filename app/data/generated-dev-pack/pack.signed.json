@@ -1,10 +1,2679 @@
 {
   "payload": {
-    "version": "0.1.0-synthetic-dev",
+    "packId": "PACK-SYNTHETIC-DECISION-DEMO",
+    "version": "0.2.0-synthetic-decision-dev",
     "domain": "human_otc",
     "synthetic": true,
     "clinicalUseProhibited": true,
     "verified": false,
+    "createdAt": "2026-07-13T00:00:00Z",
+    "expiresAt": "2099-12-31T23:59:59Z",
+    "sources": [
+      {
+        "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+        "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+        "provider": "other",
+        "official": false,
+        "source_url": "https://example.invalid/pharmassist-synthetic-fixture",
+        "fetched_at": "2026-07-13T00:00:00Z",
+        "effective_at": "2026-07-13T00:00:00Z",
+        "terms_url": null,
+        "usage_rights": "unrestricted",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "content_type": "application/json",
+        "parser_version": "synthetic-2",
+        "record_count": 10,
+        "page_count": 1,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Synthetic test fixture. It is not an official or clinical source."
+      }
+    ],
+    "ingredients": [
+      {
+        "ingredient_id": "ING-SYN-COUGH",
+        "display_name_ko": "검토용 기침 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용기침성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-COUGH",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-COUGH",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-NASAL",
+        "display_name_ko": "검토용 비강 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용비강성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-NASAL",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-NASAL",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-THROAT",
+        "display_name_ko": "검토용 인후 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용인후성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-THROAT",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-THROAT",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-HEARTBURN",
+        "display_name_ko": "검토용 속쓰림 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용속쓰림성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-HEARTBURN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-HEARTBURN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-DYSPEPSIA",
+        "display_name_ko": "검토용 소화 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용소화성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DYSPEPSIA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DYSPEPSIA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-DIARRHEA",
+        "display_name_ko": "검토용 설사 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용설사성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DIARRHEA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DIARRHEA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-CONSTIPATION",
+        "display_name_ko": "검토용 변비 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용변비성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-CONSTIPATION",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-CONSTIPATION",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-MUSCLE",
+        "display_name_ko": "검토용 근육통 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용근육통성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-MUSCLE",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-MUSCLE",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-SKIN",
+        "display_name_ko": "검토용 피부 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용피부성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-SKIN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-SKIN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "ingredient_id": "ING-SYN-FEVER",
+        "display_name_ko": "검토용 발열 성분 A",
+        "display_name_en": null,
+        "normalized_name": "검토용발열성분A",
+        "mfds_ingredient_code": null,
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-FEVER",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-FEVER",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      }
+    ],
+    "products": [
+      {
+        "product_id": "PRD-SYN-COUGH",
+        "display_name": "검토용 기침 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-COUGH",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-COUGH",
+            "name": "검토용 기침 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-COUGH",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-COUGH",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-NASAL",
+        "display_name": "검토용 콧물 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-NASAL",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-NASAL",
+            "name": "검토용 비강 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-NASAL",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-NASAL",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-THROAT",
+        "display_name": "검토용 인후통 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-THROAT",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-THROAT",
+            "name": "검토용 인후 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-THROAT",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-THROAT",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-HEARTBURN",
+        "display_name": "검토용 속쓰림 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-HEARTBURN",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-HEARTBURN",
+            "name": "검토용 속쓰림 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-HEARTBURN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-HEARTBURN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-DYSPEPSIA",
+        "display_name": "검토용 소화불량 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-DYSPEPSIA",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-DYSPEPSIA",
+            "name": "검토용 소화 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DYSPEPSIA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DYSPEPSIA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-DIARRHEA",
+        "display_name": "검토용 설사 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-DIARRHEA",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-DIARRHEA",
+            "name": "검토용 설사 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DIARRHEA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DIARRHEA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-CONSTIPATION",
+        "display_name": "검토용 변비 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-CONSTIPATION",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-CONSTIPATION",
+            "name": "검토용 변비 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-CONSTIPATION",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-CONSTIPATION",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-MUSCLE",
+        "display_name": "검토용 근육통 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-MUSCLE",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-MUSCLE",
+            "name": "검토용 근육통 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-MUSCLE",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-MUSCLE",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-SKIN",
+        "display_name": "검토용 피부 증상 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-SKIN",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-SKIN",
+            "name": "검토용 피부 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-SKIN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-SKIN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      },
+      {
+        "product_id": "PRD-SYN-FEVER",
+        "display_name": "검토용 발열 제품 A",
+        "manufacturer": "Synthetic Fixture",
+        "jurisdiction": "KR",
+        "item_seq": "SYN-FEVER",
+        "permit_number": null,
+        "product_code": null,
+        "otc_status": "otc",
+        "dosage_form": null,
+        "route": null,
+        "permit_status": "synthetic",
+        "supply_performance": true,
+        "active_ingredients": [
+          {
+            "ingredient_id": "ING-SYN-FEVER",
+            "name": "검토용 발열 성분 A",
+            "strength_text": "synthetic-test-only",
+            "normalized_amount": null,
+            "normalized_unit": null
+          }
+        ],
+        "status": "active",
+        "source_snapshot_ids": [
+          "SNAP-SYNTHETIC-DECISION-DEMO"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-FEVER",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-FEVER",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "dur_flags": []
+      }
+    ],
+    "productIngredients": [
+      {
+        "product_ingredient_id": "PRI-SYN-COUGH",
+        "product_id": "PRD-SYN-COUGH",
+        "ingredient_id": "ING-SYN-COUGH",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-COUGH",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-COUGH",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-NASAL",
+        "product_id": "PRD-SYN-NASAL",
+        "ingredient_id": "ING-SYN-NASAL",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-NASAL",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-NASAL",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-THROAT",
+        "product_id": "PRD-SYN-THROAT",
+        "ingredient_id": "ING-SYN-THROAT",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-THROAT",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-THROAT",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-HEARTBURN",
+        "product_id": "PRD-SYN-HEARTBURN",
+        "ingredient_id": "ING-SYN-HEARTBURN",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-HEARTBURN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-HEARTBURN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-DYSPEPSIA",
+        "product_id": "PRD-SYN-DYSPEPSIA",
+        "ingredient_id": "ING-SYN-DYSPEPSIA",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DYSPEPSIA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DYSPEPSIA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-DIARRHEA",
+        "product_id": "PRD-SYN-DIARRHEA",
+        "ingredient_id": "ING-SYN-DIARRHEA",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DIARRHEA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DIARRHEA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-CONSTIPATION",
+        "product_id": "PRD-SYN-CONSTIPATION",
+        "ingredient_id": "ING-SYN-CONSTIPATION",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-CONSTIPATION",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-CONSTIPATION",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-MUSCLE",
+        "product_id": "PRD-SYN-MUSCLE",
+        "ingredient_id": "ING-SYN-MUSCLE",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-MUSCLE",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-MUSCLE",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-SKIN",
+        "product_id": "PRD-SYN-SKIN",
+        "ingredient_id": "ING-SYN-SKIN",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-SKIN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-SKIN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      },
+      {
+        "product_ingredient_id": "PRI-SYN-FEVER",
+        "product_id": "PRD-SYN-FEVER",
+        "ingredient_id": "ING-SYN-FEVER",
+        "strength_text": "synthetic-test-only",
+        "normalized_amount": null,
+        "normalized_unit": null,
+        "role": "active",
+        "is_active": true,
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-FEVER",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-FEVER",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "claim_id": "CLM-SYN-COUGH",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-COUGH",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "cough",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-COUGH",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-COUGH",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-NASAL",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-NASAL",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "nasal",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-NASAL",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-NASAL",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-THROAT",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-THROAT",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "sore_throat",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-THROAT",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-THROAT",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-HEARTBURN",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-HEARTBURN",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "heartburn",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-HEARTBURN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-HEARTBURN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-DYSPEPSIA",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-DYSPEPSIA",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "dyspepsia",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DYSPEPSIA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DYSPEPSIA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-DIARRHEA",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-DIARRHEA",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "diarrhea",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DIARRHEA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DIARRHEA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-CONSTIPATION",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-CONSTIPATION",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "constipation",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-CONSTIPATION",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-CONSTIPATION",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-MUSCLE",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-MUSCLE",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "musculoskeletal",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-MUSCLE",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-MUSCLE",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-SKIN",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-SKIN",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "skin",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-SKIN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-SKIN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "claim_id": "CLM-SYN-FEVER",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "claim_type": "indication",
+        "subject_type": "ingredient",
+        "subject_id": "ING-SYN-FEVER",
+        "predicate": "synthetic_fixture_candidate_for",
+        "object": "fever",
+        "qualifiers": {
+          "synthetic": true,
+          "clinical_use_prohibited": true
+        },
+        "status": "published",
+        "risk_level": "low",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-FEVER",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-FEVER",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "conflict_claim_ids": [],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      }
+    ],
+    "protocols": [
+      {
+        "protocol_id": "PTC-SYN-COUGH",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "cough_general",
+        "symptom_category": "cough",
+        "display_name": "검토용 기침 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "기침",
+            "가래"
+          ],
+          "aliases": [
+            "기침약",
+            "기침이 나요"
+          ],
+          "keywords": [
+            "기침",
+            "가래",
+            "기간"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-COUGH"
+        ],
+        "rule_ids": [
+          "RUL-SYN-COUGH-ASK",
+          "RUL-SYN-COUGH-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-COUGH",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-COUGH",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-NASAL",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "nasal_symptom_general",
+        "symptom_category": "nasal",
+        "display_name": "검토용 콧물 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "콧물",
+            "코막힘",
+            "재채기"
+          ],
+          "aliases": [
+            "콧물약",
+            "코가 막혀요"
+          ],
+          "keywords": [
+            "콧물",
+            "코막힘",
+            "재채기"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-NASAL"
+        ],
+        "rule_ids": [
+          "RUL-SYN-NASAL-ASK",
+          "RUL-SYN-NASAL-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-NASAL",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-NASAL",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-THROAT",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "sore_throat",
+        "symptom_category": "sore_throat",
+        "display_name": "검토용 인후통 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "목",
+            "인후",
+            "삼키"
+          ],
+          "aliases": [
+            "목이 아파요",
+            "인후통"
+          ],
+          "keywords": [
+            "목",
+            "통증",
+            "삼킴"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-THROAT"
+        ],
+        "rule_ids": [
+          "RUL-SYN-THROAT-ASK",
+          "RUL-SYN-THROAT-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-THROAT",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-THROAT",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-HEARTBURN",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "dyspepsia_general",
+        "symptom_category": "heartburn",
+        "display_name": "검토용 속쓰림 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "속쓰림",
+            "속이 쓰"
+          ],
+          "aliases": [
+            "속이 쓰려요"
+          ],
+          "keywords": [
+            "속쓰림",
+            "명치"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-HEARTBURN"
+        ],
+        "rule_ids": [
+          "RUL-SYN-HEARTBURN-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-HEARTBURN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-HEARTBURN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-DYSPEPSIA",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "dyspepsia_general",
+        "symptom_category": "dyspepsia",
+        "display_name": "검토용 소화불량 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "소화",
+            "더부룩",
+            "체했"
+          ],
+          "aliases": [
+            "소화가 안 돼요",
+            "더부룩해요"
+          ],
+          "keywords": [
+            "소화",
+            "더부룩"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-DYSPEPSIA"
+        ],
+        "rule_ids": [
+          "RUL-SYN-DYSPEPSIA-ASK",
+          "RUL-SYN-DYSPEPSIA-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DYSPEPSIA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DYSPEPSIA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-DIARRHEA",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "bowel_urgency_general",
+        "symptom_category": "diarrhea",
+        "display_name": "검토용 설사 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "설사",
+            "묽은 변"
+          ],
+          "aliases": [
+            "설사해요"
+          ],
+          "keywords": [
+            "설사",
+            "묽은변"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-DIARRHEA"
+        ],
+        "rule_ids": [
+          "RUL-SYN-DIARRHEA-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DIARRHEA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DIARRHEA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-CONSTIPATION",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "bowel_urgency_general",
+        "symptom_category": "constipation",
+        "display_name": "검토용 변비 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "변비",
+            "변이 안"
+          ],
+          "aliases": [
+            "변비예요"
+          ],
+          "keywords": [
+            "변비",
+            "딱딱"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-CONSTIPATION"
+        ],
+        "rule_ids": [
+          "RUL-SYN-CONSTIPATION-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-CONSTIPATION",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-CONSTIPATION",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-MUSCLE",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "musculoskeletal_pain",
+        "symptom_category": "musculoskeletal",
+        "display_name": "검토용 근육통 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "근육통",
+            "어깨",
+            "허리"
+          ],
+          "aliases": [
+            "근육이 아파요"
+          ],
+          "keywords": [
+            "근육",
+            "통증"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-MUSCLE"
+        ],
+        "rule_ids": [
+          "RUL-SYN-MUSCLE-ASK",
+          "RUL-SYN-MUSCLE-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-MUSCLE",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-MUSCLE",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-SKIN",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "skin_general",
+        "symptom_category": "skin",
+        "display_name": "검토용 피부 증상 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "피부",
+            "가려",
+            "건조"
+          ],
+          "aliases": [
+            "피부가 가려워요"
+          ],
+          "keywords": [
+            "피부",
+            "가려움"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-SKIN"
+        ],
+        "rule_ids": [
+          "RUL-SYN-SKIN-ASK",
+          "RUL-SYN-SKIN-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-SKIN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-SKIN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      },
+      {
+        "protocol_id": "PTC-SYN-FEVER",
+        "pack_id": "PACK-SYNTHETIC-DECISION-DEMO",
+        "version": "1.0.0",
+        "domain": "human_otc",
+        "intent": "fever_general",
+        "symptom_category": "fever",
+        "display_name": "검토용 발열 프로토콜",
+        "status": "published",
+        "triggers": {
+          "anchors": [
+            "열",
+            "발열",
+            "체온"
+          ],
+          "aliases": [
+            "열이 나요"
+          ],
+          "keywords": [
+            "발열",
+            "체온"
+          ],
+          "negative": []
+        },
+        "option_ids": [
+          "OPT-SYN-FEVER"
+        ],
+        "rule_ids": [
+          "RUL-SYN-FEVER-SELECT"
+        ],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-FEVER",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-FEVER",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "expires_at": "2099-12-31T23:59:59Z"
+      }
+    ],
+    "protocolOptions": [
+      {
+        "option_id": "OPT-SYN-COUGH",
+        "protocol_id": "PTC-SYN-COUGH",
+        "ingredient_id": "ING-SYN-COUGH",
+        "display_name": "검토용 기침 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-COUGH"
+        ],
+        "eligibility_rule_ids": [
+          "RUL-SYN-COUGH-ASK"
+        ],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-COUGH",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-COUGH",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-NASAL",
+        "protocol_id": "PTC-SYN-NASAL",
+        "ingredient_id": "ING-SYN-NASAL",
+        "display_name": "검토용 비강 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-NASAL"
+        ],
+        "eligibility_rule_ids": [
+          "RUL-SYN-NASAL-ASK"
+        ],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-NASAL",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-NASAL",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-THROAT",
+        "protocol_id": "PTC-SYN-THROAT",
+        "ingredient_id": "ING-SYN-THROAT",
+        "display_name": "검토용 인후 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-THROAT"
+        ],
+        "eligibility_rule_ids": [
+          "RUL-SYN-THROAT-ASK"
+        ],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-THROAT",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-THROAT",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-HEARTBURN",
+        "protocol_id": "PTC-SYN-HEARTBURN",
+        "ingredient_id": "ING-SYN-HEARTBURN",
+        "display_name": "검토용 속쓰림 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-HEARTBURN"
+        ],
+        "eligibility_rule_ids": [],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-HEARTBURN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-HEARTBURN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-DYSPEPSIA",
+        "protocol_id": "PTC-SYN-DYSPEPSIA",
+        "ingredient_id": "ING-SYN-DYSPEPSIA",
+        "display_name": "검토용 소화 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-DYSPEPSIA"
+        ],
+        "eligibility_rule_ids": [
+          "RUL-SYN-DYSPEPSIA-ASK"
+        ],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DYSPEPSIA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DYSPEPSIA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-DIARRHEA",
+        "protocol_id": "PTC-SYN-DIARRHEA",
+        "ingredient_id": "ING-SYN-DIARRHEA",
+        "display_name": "검토용 설사 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-DIARRHEA"
+        ],
+        "eligibility_rule_ids": [],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DIARRHEA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DIARRHEA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-CONSTIPATION",
+        "protocol_id": "PTC-SYN-CONSTIPATION",
+        "ingredient_id": "ING-SYN-CONSTIPATION",
+        "display_name": "검토용 변비 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-CONSTIPATION"
+        ],
+        "eligibility_rule_ids": [],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-CONSTIPATION",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-CONSTIPATION",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-MUSCLE",
+        "protocol_id": "PTC-SYN-MUSCLE",
+        "ingredient_id": "ING-SYN-MUSCLE",
+        "display_name": "검토용 근육통 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-MUSCLE"
+        ],
+        "eligibility_rule_ids": [
+          "RUL-SYN-MUSCLE-ASK"
+        ],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-MUSCLE",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-MUSCLE",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-SKIN",
+        "protocol_id": "PTC-SYN-SKIN",
+        "ingredient_id": "ING-SYN-SKIN",
+        "display_name": "검토용 피부 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-SKIN"
+        ],
+        "eligibility_rule_ids": [
+          "RUL-SYN-SKIN-ASK"
+        ],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-SKIN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-SKIN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      },
+      {
+        "option_id": "OPT-SYN-FEVER",
+        "protocol_id": "PTC-SYN-FEVER",
+        "ingredient_id": "ING-SYN-FEVER",
+        "display_name": "검토용 발열 성분 A",
+        "clinical_priority": 80,
+        "safety_priority": 80,
+        "claim_ids": [
+          "CLM-SYN-FEVER"
+        ],
+        "eligibility_rule_ids": [],
+        "exclusion_rule_ids": [],
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-FEVER",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-FEVER",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        }
+      }
+    ],
+    "protocolRules": [
+      {
+        "protocol_id": "PTC-SYN-COUGH",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-COUGH",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-COUGH",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-COUGH-ASK",
+        "kind": "required_slot",
+        "operator": "present",
+        "field": "slot.duration",
+        "effect": "ask",
+        "question": "기침은 언제부터 시작됐나요?",
+        "reason": "기간에 따라 자가관리와 추가 평가가 달라질 수 있습니다.",
+        "priority": 10,
+        "option_ids": [
+          "OPT-SYN-COUGH"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-COUGH",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-COUGH",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-COUGH",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-COUGH-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "기침|가래",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-COUGH"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-NASAL",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-NASAL",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-NASAL",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-NASAL-ASK",
+        "kind": "required_slot",
+        "operator": "present",
+        "field": "slot.duration",
+        "effect": "ask",
+        "question": "콧물이나 코막힘은 언제부터 시작됐나요?",
+        "reason": "증상 기간은 제품 선택과 추가 평가 여부를 바꿀 수 있습니다.",
+        "priority": 10,
+        "option_ids": [
+          "OPT-SYN-NASAL"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-NASAL",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-NASAL",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-NASAL",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-NASAL-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "콧물|코막힘|재채기",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-NASAL"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-THROAT",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-THROAT",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-THROAT",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-THROAT-ASK",
+        "kind": "required_slot",
+        "operator": "present",
+        "field": "slot.duration",
+        "effect": "ask",
+        "question": "목 통증은 언제부터 시작됐나요?",
+        "reason": "기간은 자가관리와 진료 우선순위를 바꿀 수 있습니다.",
+        "priority": 10,
+        "option_ids": [
+          "OPT-SYN-THROAT"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-THROAT",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-THROAT",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-THROAT",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-THROAT-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "목|인후|삼키",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-THROAT"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-HEARTBURN",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-HEARTBURN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-HEARTBURN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-HEARTBURN-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "속쓰림|속이 쓰",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-HEARTBURN"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-DYSPEPSIA",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DYSPEPSIA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DYSPEPSIA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-DYSPEPSIA-ASK",
+        "kind": "required_slot",
+        "operator": "present",
+        "field": "slot.dyspepsia_pattern",
+        "effect": "ask",
+        "question": "속쓰림과 더부룩함 중 어느 쪽이 더 불편한가요?",
+        "reason": "두 양상은 검토할 성분 후보를 바꿉니다.",
+        "priority": 10,
+        "option_ids": [
+          "OPT-SYN-DYSPEPSIA"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-DYSPEPSIA",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DYSPEPSIA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DYSPEPSIA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-DYSPEPSIA-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "소화|더부룩|체했",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-DYSPEPSIA"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-DIARRHEA",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-DIARRHEA",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-DIARRHEA",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-DIARRHEA-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "설사|묽은 변",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-DIARRHEA"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-CONSTIPATION",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-CONSTIPATION",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-CONSTIPATION",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-CONSTIPATION-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "변비|변이 안",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-CONSTIPATION"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-MUSCLE",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-MUSCLE",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-MUSCLE",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-MUSCLE-ASK",
+        "kind": "required_slot",
+        "operator": "present",
+        "field": "slot.injury_inflammation",
+        "effect": "ask",
+        "question": "다치거나 붓고 뜨거운 증상이 있나요?",
+        "reason": "부상·염증 신호는 제품 추천보다 평가를 우선하게 합니다.",
+        "priority": 10,
+        "option_ids": [
+          "OPT-SYN-MUSCLE"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-MUSCLE",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-MUSCLE",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-MUSCLE",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-MUSCLE-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "근육통|어깨|허리",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-MUSCLE"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-SKIN",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-SKIN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-SKIN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-SKIN-ASK",
+        "kind": "required_slot",
+        "operator": "present",
+        "field": "slot.skin_alarm",
+        "effect": "ask",
+        "question": "진물이나 심한 통증, 눈·입 주변 증상이 있나요?",
+        "reason": "점막·진물·통증은 국소 제품 추천을 중단하게 합니다.",
+        "priority": 10,
+        "option_ids": [
+          "OPT-SYN-SKIN"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-SKIN",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-SKIN",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-SKIN",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-SKIN-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "피부|가려|건조",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-SKIN"
+        ]
+      },
+      {
+        "protocol_id": "PTC-SYN-FEVER",
+        "source_refs": [
+          {
+            "claim_id": "CLM-SYN-FEVER",
+            "source_id": "SRC-SYNTHETIC-DECISION-DEMO",
+            "source_snapshot_id": "SNAP-SYNTHETIC-DECISION-DEMO",
+            "locator": "synthetic://CLM-SYN-FEVER",
+            "verified_at": "2026-07-13T00:00:00Z"
+          }
+        ],
+        "status": "published",
+        "review": {
+          "pharmacist_approved": true,
+          "official_source_verified": true,
+          "reviewer_ids": [
+            "synthetic-fixture"
+          ],
+          "reviewed_at": "2026-07-13T00:00:00Z",
+          "expires_at": "2099-12-31T23:59:59Z",
+          "notes": "TEST ONLY: synthetic fixture; production activation is prohibited."
+        },
+        "rule_id": "RUL-SYN-FEVER-SELECT",
+        "kind": "selection_pattern",
+        "operator": "matches",
+        "field": "normalized_text",
+        "value": "열|발열|체온",
+        "effect": "select",
+        "question": null,
+        "reason": "Synthetic fixture intent branch",
+        "priority": 20,
+        "option_ids": [
+          "OPT-SYN-FEVER"
+        ]
+      }
+    ],
     "cards": [
       {
         "cardId": "CARD-SYN-COUGH",
@@ -113,7 +2782,7 @@
       {
         "cardId": "CARD-SYN-DYSPEPSIA",
         "intent": "dyspepsia_general",
-        "title": "소화 불편 확인",
+        "title": "속쓰림·소화 불편 확인",
         "anchors": [
           "소화",
           "더부룩",
@@ -124,20 +2793,20 @@
         "aliases": [
           "속이 더부룩",
           "소화가 안 돼요",
-          "소화제 주세요",
+          "속이 쓰려요",
           "체했어요"
         ],
         "keywords": [
-          "더부룩 소화 명치 기간 통증"
+          "속쓰림 더부룩 소화 명치 기간 통증"
         ],
         "sayNow": [
           "먼저 통증 위치와 지속 기간, 출혈 같은 위험 신호를 확인하겠습니다."
         ],
         "askNext": {
-          "question": "불편한 위치와 시작 시점을 알려주세요.",
-          "reason": "증상 범위 확인",
+          "question": "속쓰림과 더부룩함 중 어느 쪽이 더 불편한가요?",
+          "reason": "선택을 바꾸는 증상 양상 확인",
           "priority": 1,
-          "slot": "body_site"
+          "slot": "dyspepsia_pattern"
         },
         "avoid": [
           "복통 원인을 임의로 진단하지 않습니다."
@@ -150,34 +2819,31 @@
       {
         "cardId": "CARD-SYN-ABDOMINAL",
         "intent": "abdominal_pain_general",
-        "title": "복통 확인",
+        "title": "복통 위치 확인",
         "anchors": [
           "배",
           "복통",
           "아랫배",
-          "윗배",
-          "배꼽"
+          "윗배"
         ],
         "aliases": [
           "배가 아파요",
-          "복통이 있어요",
-          "아랫배가 아파요",
-          "윗배가 아파요"
+          "복통이 있어요"
         ],
         "keywords": [
-          "배 복통 윗배 아랫배 위치 양상 기간"
+          "배 복통 위치 압통 구토 출혈"
         ],
         "sayNow": [
-          "배의 어느 위치가 어떻게 아픈지 빠르게 확인하겠습니다."
+          "복통은 위치와 위험 신호를 먼저 구분하겠습니다."
         ],
         "askNext": {
-          "question": "윗배·아랫배 중 어디가, 쓰리거나 쥐어짜는 느낌 중 어떻게 아픈가요?",
-          "reason": "통증 위치와 양상 확인",
+          "question": "윗배·아랫배 중 어디가 가장 불편한가요?",
+          "reason": "복통 위치 확인",
           "priority": 1,
           "slot": "body_site"
         },
         "avoid": [
-          "통증 위치와 양상만으로 원인을 확정하지 않습니다."
+          "복통은 합성 fixture에서 성분·제품 추천으로 연결하지 않습니다."
         ],
         "domain": "human_otc",
         "approved": true,
@@ -187,31 +2853,30 @@
       {
         "cardId": "CARD-SYN-BOWEL-URGENCY",
         "intent": "bowel_urgency_general",
-        "title": "배변 급박·장 증상 확인",
+        "title": "설사·변비 확인",
         "anchors": [
-          "똥",
           "대변",
           "배변",
-          "화장실",
           "설사",
-          "변비"
+          "변비",
+          "똥"
         ],
         "aliases": [
-          "똥이 마려워요",
-          "갑자기 화장실 가고 싶어요",
-          "변이 자주 마려워요",
-          "설사할 것 같아요",
-          "변이 안 나와요"
+          "설사해요",
+          "묽은 변",
+          "변이 안 나와요",
+          "변비예요",
+          "똥이 마려워요"
         ],
         "keywords": [
-          "배변 급박 설사 변비 묽은변 횟수 기간"
+          "설사 변비 묽은변 횟수 기간"
         ],
         "sayNow": [
           "장 증상 유형을 한 번만 구분하겠습니다."
         ],
         "askNext": {
-          "question": "묽은 변이 자주 나오는 건가요, 마려운데 변이 안 나오는 건가요?",
-          "reason": "설사와 변비성 불편 구분",
+          "question": "묽은 변이 나오는 쪽인가요, 변이 잘 안 나오는 쪽인가요?",
+          "reason": "설사와 변비 선택 분기",
           "priority": 1,
           "slot": "stool_pattern"
         },
@@ -233,28 +2898,24 @@
           "무릎",
           "관절",
           "근육",
-          "팔",
-          "손목",
-          "발목"
+          "근육통"
         ],
         "aliases": [
-          "어깨가 아파요",
-          "허리가 아파요",
-          "무릎이 아파요",
           "근육통이 있어요",
-          "관절이 아파요"
+          "어깨가 아파요",
+          "허리가 아파요"
         ],
         "keywords": [
-          "어깨 허리 무릎 근육 관절 통증 부상 움직임 부종"
+          "근육 관절 통증 부상 움직임 부종"
         ],
         "sayNow": [
           "근육·관절 통증의 양상을 빠르게 확인하겠습니다."
         ],
         "askNext": {
-          "question": "어깨를 움직일 때 더 아픈가요, 다치거나 붓고 뜨거운 증상이 있나요?",
-          "reason": "움직임·부상·염증 양상 확인",
+          "question": "다치거나 붓고 뜨거운 증상이 있나요?",
+          "reason": "제품 추천보다 평가가 우선인 상황 확인",
           "priority": 1,
-          "slot": "pain_pattern"
+          "slot": "injury_inflammation"
         },
         "avoid": [
           "통증 부위만으로 원인을 확정하지 않습니다."
@@ -272,13 +2933,12 @@
           "피부",
           "가려",
           "습진",
-          "연고",
           "발진"
         ],
         "aliases": [
           "피부가 가려워요",
-          "습진약",
-          "연고"
+          "피부가 건조해요",
+          "발진이 있어요"
         ],
         "keywords": [
           "피부 부위 범위 점막 진물 통증"
@@ -287,10 +2947,10 @@
           "먼저 부위와 범위, 점막·진물·통증 여부를 확인하겠습니다."
         ],
         "askNext": {
-          "question": "어느 부위에 언제부터 증상이 있었나요?",
-          "reason": "부위와 기간 확인",
+          "question": "진물이나 심한 통증, 눈·입 주변 증상이 있나요?",
+          "reason": "국소 제품 추천 제외 상황 확인",
           "priority": 1,
-          "slot": "body_site"
+          "slot": "skin_alarm"
         },
         "avoid": [
           "사진이나 진찰 없이 피부질환을 확정하지 않습니다."
@@ -323,9 +2983,9 @@
         ],
         "askNext": {
           "question": "연령과 실제로 잰 체온은 어떻게 되나요?",
-          "reason": "연령과 측정값 확인",
+          "reason": "발열 상담의 필수 확인",
           "priority": 1,
-          "slot": "age_years"
+          "slot": "age_temperature"
         },
         "avoid": [
           "연령과 제품 확인 없이 용량을 말하지 않습니다."
@@ -335,10 +2995,9 @@
         "synthetic": true,
         "expiresAt": "2099-12-31T23:59:59Z"
       }
-    ],
-    "builtAt": "2026-07-10T12:49:31.377Z"
+    ]
   },
-  "sha256": "7ab6c018d50b57f495c5c08a6e8f6c8b1502a3f768c18cd552551156f362a284",
-  "signature": "pGn1la5ORmaFC4Suxv3gTTs7vNKpPAQGkIAlIG0NwViDlPDlCAp1XrE7dvbr13JK6TRcf/9KEd3U2zwK5CrDAA==",
+  "sha256": "3c5a26678af76edac31f9f6f15f39ee0b44f43b2186e067225ac933ac79781c7",
+  "signature": "r2wTB0S4qkqM4/rus80MSh0rRsy37ikNU/o56iuE6JY2xYHczIvjCQ5YHD3A6AlMQbQrcE+LTp9lZyTl1ojJBw==",
   "keyId": "dev-ephemeral-1"
 }

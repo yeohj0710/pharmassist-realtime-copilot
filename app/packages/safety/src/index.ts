@@ -357,7 +357,7 @@ export function evaluateSafety(
     (typeof ageValue === "number" && ageValue < 18);
   if (
     pediatricContext &&
-    /몇\s*(?:mL|ml)|용량|해열제\s*양|몇\s*cc/u.test(text)
+    /몇\s*(?:mL|ml)|용량|(?:해열제|시럽)\s*양|몇\s*cc/u.test(text)
   ) {
     const missing = [
       "weight_kg",
@@ -481,14 +481,32 @@ export function evaluateSafety(
       "복용 중인 항생제명과 설사 시작 시점, 혈변·열 여부를 알려주세요.",
       "product_name",
     );
-  if (/열(?:이|나요|나)/u.test(text) && !/아이|아기|소아/u.test(text))
-    return clarify(
-      "AGE_GATE",
-      ["age_years", "duration"],
-      "연령과 측정 체온·기간을 먼저 확인하겠습니다.",
-      "연령과 실제로 잰 체온, 시작 시점을 알려주세요.",
-      "age_years",
-    );
+  if (/열(?:이|나요|나)/u.test(text) && !/아이|아기|소아/u.test(text)) {
+    if (!input.slots["age_years"])
+      return clarify(
+        "AGE_GATE",
+        ["age_years"],
+        "해열 성분 선택은 연령에 따라 달라질 수 있습니다.",
+        "상담할 분의 연령은 어떻게 되나요?",
+        "age_years",
+      );
+    if (!input.slots["temperature_c"])
+      return clarify(
+        "TEMPERATURE_GATE",
+        ["temperature_c"],
+        "실제 체온은 자가관리와 진료 우선순위를 바꿀 수 있습니다.",
+        "체온계로 잰 현재 체온은 몇 도인가요?",
+        "temperature_c",
+      );
+    if (!input.slots["duration"])
+      return clarify(
+        "FEVER_DURATION_GATE",
+        ["duration"],
+        "발열 기간은 추가 평가 필요성을 바꿀 수 있습니다.",
+        "열은 언제부터 시작됐나요?",
+        "duration",
+      );
+  }
   if (/sequence|같은\s*요청/u.test(text))
     return clarify(
       "STALE_DROP",

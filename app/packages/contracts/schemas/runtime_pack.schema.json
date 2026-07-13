@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/runtime_pack.schema.json",
+  "title": "RuntimePackContract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "packId",
+    "version",
+    "domain",
+    "synthetic",
+    "clinicalUseProhibited",
+    "verified",
+    "createdAt",
+    "expiresAt",
+    "sources",
+    "ingredients",
+    "products",
+    "productIngredients",
+    "claims",
+    "protocols",
+    "protocolOptions",
+    "protocolRules",
+    "cards"
+  ],
+  "properties": {
+    "packId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain": {
+      "type": "string",
+      "const": "human_otc"
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "clinicalUseProhibited": {
+      "type": "boolean"
+    },
+    "verified": {
+      "type": "boolean"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "source_snapshot.schema.json"
+      }
+    },
+    "ingredients": {
+      "type": "array",
+      "items": {
+        "$ref": "ingredient.schema.json"
+      }
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "$ref": "drug_product.schema.json"
+      }
+    },
+    "productIngredients": {
+      "type": "array",
+      "items": {
+        "$ref": "product_ingredient.schema.json"
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "clinical_claim.schema.json"
+      }
+    },
+    "protocols": {
+      "type": "array",
+      "items": {
+        "$ref": "otc_protocol.schema.json"
+      }
+    },
+    "protocolOptions": {
+      "type": "array",
+      "items": {
+        "$ref": "protocol_option.schema.json"
+      }
+    },
+    "protocolRules": {
+      "type": "array",
+      "items": {
+        "$ref": "protocol_rule.schema.json"
+      }
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cardId",
+          "intent",
+          "domain",
+          "title",
+          "aliases",
+          "keywords",
+          "sayNow",
+          "askNext",
+          "avoid",
+          "approved",
+          "synthetic",
+          "expiresAt"
+        ],
+        "properties": {
+          "cardId": {
+            "type": "string"
+          },
+          "intent": {
+            "type": "string"
+          },
+          "domain": {
+            "const": "human_otc"
+          },
+          "title": {
+            "type": "string"
+          },
+          "anchors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sayNow": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "askNext": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["question", "reason", "priority", "slot"],
+            "properties": {
+              "question": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "integer"
+              },
+              "slot": {
+                "type": "string"
+              }
+            }
+          },
+          "avoid": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "approved": {
+            "type": "boolean"
+          },
+          "synthetic": {
+            "type": "boolean"
+          },
+          "revoked": {
+            "type": "boolean"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "publicationRecords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "domain",
+          "trustTier",
+          "locator",
+          "approved",
+          "medicalSafetyApproved",
+          "expiresAt",
+          "conflicted",
+          "synthetic"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "trustTier": {
+            "enum": ["A", "B", "C", "D", "X"]
+          },
+          "locator": {
+            "type": "string"
+          },
+          "approved": {
+            "type": "boolean"
+          },
+          "medicalSafetyApproved": {
+            "type": "boolean"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "conflicted": {
+            "type": "boolean"
+          },
+          "synthetic": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

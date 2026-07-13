@@ -1,4 +1,9 @@
 import type {
+  DrugProduct,
+  Ingredient,
+  OTCProtocol,
+} from "@pharmassist/contracts";
+import type {
   Candidate,
   Domain,
   MatchFeature,
@@ -257,4 +262,121 @@ export function selectStable(
   )
     return { ...state, current: incoming, sequence };
   return { ...state, sequence };
+}
+
+export interface ProtocolCandidate {
+  readonly protocolId: string;
+  readonly intent: string;
+  readonly score: number;
+  readonly matchedTerms: readonly string[];
+}
+
+export interface DecisionRetrievalIndex {
+  readonly protocols: ReadonlyMap<string, OTCProtocol>;
+  readonly ingredients: ReadonlyMap<string, Ingredient>;
+  readonly products: ReadonlyMap<string, DrugProduct>;
+  readonly protocolTerms: ReadonlyMap<string, ReadonlySet<string>>;
+}
+
+export function buildDecisionIndex(
+  input: Readonly<{
+    protocols: readonly OTCProtocol[];
+    ingredients: readonly Ingredient[];
+    products: readonly DrugProduct[];
+  }>,
+  now = new Date(),
+): DecisionRetrievalIndex {
+  const protocols = input.protocols.filter(
+    (protocol) =>
+      protocol.domain === "human_otc" &&
+      protocol.status === "published" &&
+      protocol.review.pharmacist_approved &&
+      protocol.review.official_source_verified &&
+      (!protocol.review.expires_at ||
+        new Date(protocol.review.expires_at) > now) &&
+      new Date(protocol.expires_at) > now,
+  );
+  const protocolTerms = new Map<string, ReadonlySet<string>>();
+  for (const protocol of protocols) {
+    protocolTerms.set(
+      protocol.protocol_id,
+      new Set(
+        [
+          ...protocol.triggers.anchors,
+          ...protocol.triggers.aliases,
+          ...protocol.triggers.keywords,
+        ]
+          .flatMap((value) => tokenize(value.normalize("NFKC")))
+          .filter(Boolean),
+      ),
+    );
+  }
+  return {
+    protocols: new Map(
+      protocols.map((protocol) => [protocol.protocol_id, protocol] as const),
+    ),
+    ingredients: new Map(
+      input.ingredients
+        .filter((ingredient) => ingredient.status === "active")
+        .map((ingredient) => [ingredient.ingredient_id, ingredient] as const),
+    ),
+    products: new Map(
+      input.products
+        .filter((product) => product.status === "active")
+        .map((product) => [product.product_id, product] as const),
+    ),
+    protocolTerms,
+  };
+}
+
+export function retrieveProtocols(
+  input: NormalizedInput,
+  domain: Domain,
+  index: DecisionRetrievalIndex,
+  limit = 3,
+): readonly ProtocolCandidate[] {
+  if (domain !== "human_otc") return [];
+  const normalized = input.normalizedText.normalize("NFKC").toLowerCase();
+  const inputTerms = new Set([
+    ...input.tokens.map((token) => token.toLowerCase()),
+    ...tokenize(normalized),
+  ]);
+  const candidates: ProtocolCandidate[] = [];
+  for (const protocol of index.protocols.values()) {
+    if (
+      (protocol.triggers.negative ?? []).some((term) =>
+        normalized.includes(term.normalize("NFKC").toLowerCase()),
+      )
+    )
+      continue;
+    const anchors = protocol.triggers.anchors.filter((anchor) =>
+      normalized.includes(anchor.normalize("NFKC").toLowerCase()),
+    );
+    const aliases = protocol.triggers.aliases.filter((alias) =>
+      normalized.includes(alias.normalize("NFKC").toLowerCase()),
+    );
+    const terms = index.protocolTerms.get(protocol.protocol_id) ?? new Set();
+    const overlap = [...terms].filter((term) => inputTerms.has(term));
+    if (anchors.length === 0 && aliases.length === 0) continue;
+    const denominator = Math.max(1, Math.min(8, terms.size));
+    const score = Math.min(
+      1,
+      anchors.length * 0.55 +
+        aliases.length * 0.35 +
+        (overlap.length / denominator) * 0.35,
+    );
+    candidates.push({
+      protocolId: protocol.protocol_id,
+      intent: protocol.intent,
+      score,
+      matchedTerms: [...new Set([...anchors, ...aliases, ...overlap])],
+    });
+  }
+  return candidates
+    .sort(
+      (left, right) =>
+        right.score - left.score ||
+        left.protocolId.localeCompare(right.protocolId),
+    )
+    .slice(0, limit);
 }

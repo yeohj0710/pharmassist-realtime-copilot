@@ -1,0 +1,429 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/recommendation_decision.schema.json",
+  "title": "RecommendationDecision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "decision_id",
+    "status",
+    "pack_id",
+    "protocol_id",
+    "intent",
+    "tenant_inventory_connected",
+    "ingredient_options",
+    "product_candidates",
+    "question",
+    "referral",
+    "source_refs",
+    "reason_codes"
+  ],
+  "properties": {
+    "decision_id": {
+      "type": "string",
+      "pattern": "^DEC-[A-Z0-9_-]+$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["recommend", "ask", "refer", "insufficient"]
+    },
+    "pack_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol_id": {
+      "type": ["string", "null"]
+    },
+    "intent": {
+      "type": ["string", "null"]
+    },
+    "tenant_inventory_connected": {
+      "type": "boolean"
+    },
+    "ingredient_options": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "option_id",
+          "ingredient_id",
+          "ingredient_name",
+          "claim_ids",
+          "source_refs",
+          "clinical_score",
+          "safety_score"
+        ],
+        "properties": {
+          "option_id": {
+            "type": "string"
+          },
+          "ingredient_id": {
+            "type": "string"
+          },
+          "ingredient_name": {
+            "type": "string"
+          },
+          "claim_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "claim_id",
+                "source_id",
+                "source_snapshot_id",
+                "locator",
+                "verified_at"
+              ],
+              "properties": {
+                "claim_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_snapshot_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "locator": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "verified_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "clinical_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "safety_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "product_candidates": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "product_id",
+          "display_name",
+          "ingredient_id",
+          "claim_ids",
+          "source_refs",
+          "formulary_active",
+          "inventory_status",
+          "available_quantity",
+          "sales_rank"
+        ],
+        "properties": {
+          "product_id": {
+            "type": "string"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "ingredient_id": {
+            "type": "string"
+          },
+          "claim_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "claim_id",
+                "source_id",
+                "source_snapshot_id",
+                "locator",
+                "verified_at"
+              ],
+              "properties": {
+                "claim_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_snapshot_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "locator": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "verified_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "formulary_active": {
+            "type": "boolean"
+          },
+          "inventory_status": {
+            "type": "string",
+            "enum": ["in_stock", "out_of_stock", "not_connected", "unknown"]
+          },
+          "available_quantity": {
+            "type": ["number", "null"],
+            "minimum": 0
+          },
+          "sales_rank": {
+            "type": ["integer", "null"],
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "question": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["question", "reason", "slot"],
+      "properties": {
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slot": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "referral": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["urgency", "reason", "action"],
+      "properties": {
+        "urgency": {
+          "type": "string",
+          "enum": ["emergency", "same_day", "doctor", "pharmacist_review"]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        }
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "claim_id",
+          "source_id",
+          "source_snapshot_id",
+          "locator",
+          "verified_at"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_snapshot_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verified_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "reason_codes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "recommend"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "ingredient_options": {
+            "type": "array",
+            "minItems": 1
+          },
+          "source_refs": {
+            "type": "array",
+            "minItems": 1
+          },
+          "question": {
+            "type": "null"
+          },
+          "referral": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "ask"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "question": {
+            "type": "object"
+          },
+          "ingredient_options": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "product_candidates": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "referral": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "refer"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "referral": {
+            "type": "object"
+          },
+          "ingredient_options": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "product_candidates": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "question": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "insufficient"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "ingredient_options": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "product_candidates": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "question": {
+            "type": "null"
+          },
+          "referral": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "recommend"
+          },
+          "tenant_inventory_connected": {
+            "const": true
+          }
+        },
+        "required": ["status", "tenant_inventory_connected"]
+      },
+      "then": {
+        "properties": {
+          "product_candidates": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

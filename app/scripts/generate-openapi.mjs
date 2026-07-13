@@ -17,6 +17,10 @@ const load = async (name) =>
 const components = {
   RuntimeInput: await load("runtime_input.schema.json"),
   RuntimeOutput: await load("runtime_output.schema.json"),
+  RecommendationDecision: await load("recommendation_decision.schema.json"),
+  TenantFormulary: await load("tenant_formulary.schema.json"),
+  TenantInventory: await load("tenant_inventory.schema.json"),
+  TenantSalesAggregate: await load("tenant_sales_aggregate.schema.json"),
   Feedback: await load("feedback.schema.json"),
   ErrorEnvelope: await load("error_envelope.schema.json"),
   PackManifest: await load("pack_manifest.schema.json"),
@@ -26,17 +30,20 @@ for (const value of Object.values(components)) {
   delete value.$schema;
   delete value.$id;
 }
-components.RefinementRequest = JSON.parse(
-  JSON.stringify(components.RefinementRequest)
-    .replaceAll(
-      '"runtime_input.schema.json"',
-      '"#/components/schemas/RuntimeInput"',
-    )
-    .replaceAll(
-      '"runtime_output.schema.json"',
-      '"#/components/schemas/RuntimeOutput"',
-    ),
-);
+const externalRefs = new Map([
+  ["runtime_input.schema.json", "#/components/schemas/RuntimeInput"],
+  ["runtime_output.schema.json", "#/components/schemas/RuntimeOutput"],
+  [
+    "recommendation_decision.schema.json",
+    "#/components/schemas/RecommendationDecision",
+  ],
+]);
+for (const [name, value] of Object.entries(components)) {
+  let serialized = JSON.stringify(value);
+  for (const [external, local] of externalRefs)
+    serialized = serialized.replaceAll(`"${external}"`, `"${local}"`);
+  components[name] = JSON.parse(serialized);
+}
 const jsonBody = (schema) => ({
   required: true,
   content: { "application/json": { schema } },
@@ -158,6 +165,59 @@ for (const path of [
     },
   };
 }
+paths["/v1/admin/formulary/import"] = {
+  post: {
+    operationId: "admin_import_formulary",
+    requestBody: jsonBody({
+      type: "object",
+      additionalProperties: false,
+      required: ["formulary"],
+      properties: { formulary: ref("TenantFormulary") },
+    }),
+    responses: {
+      200: jsonResponse({ type: "object" }),
+      400: jsonResponse(ref("ErrorEnvelope")),
+      403: jsonResponse(ref("ErrorEnvelope")),
+    },
+  },
+};
+paths["/v1/admin/inventory/import"] = {
+  post: {
+    operationId: "admin_import_inventory",
+    requestBody: jsonBody({
+      type: "object",
+      additionalProperties: false,
+      required: ["inventory"],
+      properties: {
+        inventory: { type: "array", items: ref("TenantInventory") },
+      },
+    }),
+    responses: {
+      200: jsonResponse({ type: "object" }),
+      400: jsonResponse(ref("ErrorEnvelope")),
+      403: jsonResponse(ref("ErrorEnvelope")),
+    },
+  },
+};
+paths["/v1/admin/sales/import"] = {
+  post: {
+    operationId: "admin_import_sales",
+    requestBody: jsonBody({
+      type: "object",
+      additionalProperties: false,
+      required: ["sales"],
+      properties: {
+        sales: { type: "array", items: ref("TenantSalesAggregate") },
+      },
+    }),
+    responses: {
+      200: jsonResponse({ type: "object" }),
+      400: jsonResponse(ref("ErrorEnvelope")),
+      403: jsonResponse(ref("ErrorEnvelope")),
+    },
+  },
+};
+
 paths["/v1/admin/claims/{id}"] = {
   patch: {
     operationId: "admin_patch_claim",
@@ -184,7 +244,8 @@ const document = {
   info: {
     title: "Pharmassist API",
     version: "0.1.0",
-    description: "Synthetic-demo contract. Not clinical production approval.",
+    description:
+      "Verified OTC decision-engine contract. Synthetic fixtures remain prohibited from clinical production.",
   },
   servers: [{ url: "http://127.0.0.1:8080" }],
   paths,

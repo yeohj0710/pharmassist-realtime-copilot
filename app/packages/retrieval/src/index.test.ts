@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import type { NormalizedInput } from "@pharmassist/domain";
 import {
+  buildDecisionIndex,
   buildIndex,
   retrieve,
+  retrieveProtocols,
   selectStable,
   type KnowledgeCard,
 } from "./index.js";
@@ -123,5 +125,80 @@ describe("local retrieval", () => {
     expect(result.some((candidate) => candidate.cardId === "CARD-THROAT")).toBe(
       false,
     );
+  });
+
+  it("retrieves only published, reviewed, unexpired OTC protocols", () => {
+    const review = {
+      pharmacist_approved: true,
+      official_source_verified: true,
+      reviewer_ids: ["reviewer"],
+      reviewed_at: "2026-07-13T00:00:00Z",
+      expires_at: "2099-01-01T00:00:00Z",
+      notes: "test",
+    };
+    const sourceRef = {
+      claim_id: "CLM-COUGH",
+      source_id: "SRC-MFDS",
+      source_snapshot_id: "SNAP-MFDS",
+      locator: "official://cough",
+      verified_at: "2026-07-13T00:00:00Z",
+    };
+    const decisionIndex = buildDecisionIndex(
+      {
+        protocols: [
+          {
+            protocol_id: "PTC-COUGH",
+            pack_id: "PACK-1",
+            version: "1.0.0",
+            domain: "human_otc",
+            intent: "cough_general",
+            symptom_category: "cough",
+            display_name: "기침",
+            status: "published",
+            triggers: {
+              anchors: ["기침"],
+              aliases: ["기침약"],
+              keywords: ["기침 기간"],
+              negative: [],
+            },
+            option_ids: ["OPT-COUGH"],
+            rule_ids: [],
+            source_refs: [sourceRef],
+            review,
+            expires_at: "2099-01-01T00:00:00Z",
+          },
+          {
+            protocol_id: "PTC-EXPIRED",
+            pack_id: "PACK-1",
+            version: "1.0.0",
+            domain: "human_otc",
+            intent: "expired",
+            symptom_category: "cough",
+            display_name: "expired",
+            status: "published",
+            triggers: {
+              anchors: ["기침"],
+              aliases: [],
+              keywords: [],
+              negative: [],
+            },
+            option_ids: ["OPT-X"],
+            rule_ids: [],
+            source_refs: [sourceRef],
+            review,
+            expires_at: "2020-01-01T00:00:00Z",
+          },
+        ],
+        ingredients: [],
+        products: [],
+      },
+      new Date("2026-07-13T00:00:00Z"),
+    );
+    const results = retrieveProtocols(
+      input("기침약 주세요"),
+      "human_otc",
+      decisionIndex,
+    );
+    expect(results.map((item) => item.protocolId)).toEqual(["PTC-COUGH"]);
   });
 });

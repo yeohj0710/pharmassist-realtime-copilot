@@ -2,11 +2,11 @@
   "config": {
     "argv": [
       "C:\\Program Files\\nodejs\\node.exe",
-      "C:\\dev\\pharmassist-realtime-copilot\\node_modules\\@playwright\\test\\cli.js",
+      "C:\\dev\\pharmassist-realtime-copilot\\app\\node_modules\\@playwright\\test\\cli.js",
       "test"
     ],
-    "configFile": "C:\\dev\\pharmassist-realtime-copilot\\playwright.config.ts",
-    "rootDir": "C:/dev/pharmassist-realtime-copilot/tests/e2e",
+    "configFile": "C:\\dev\\pharmassist-realtime-copilot\\app\\playwright.config.ts",
+    "rootDir": "C:/dev/pharmassist-realtime-copilot/app/tests/e2e",
     "failOnFlakyTests": false,
     "forbidOnly": true,
     "fullyParallel": false,
@@ -22,7 +22,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "C:/dev/pharmassist-realtime-copilot/test-results",
+        "outputDir": "C:/dev/pharmassist-realtime-copilot/app/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -30,7 +30,7 @@
         },
         "id": "chromium",
         "name": "chromium",
-        "testDir": "C:/dev/pharmassist-realtime-copilot/tests/e2e",
+        "testDir": "C:/dev/pharmassist-realtime-copilot/app/tests/e2e",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -94,12 +94,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 629,
+                  "duration": 813,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:57:39.390Z",
+                  "startTime": "2026-07-13T08:51:23.265Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -109,7 +109,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-783a63cbde399ec2e27b",
           "file": "consult.spec.ts",
-          "line": 3,
+          "line": 11,
           "column": 5
         },
         {
@@ -128,12 +128,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 142,
+                  "duration": 257,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:57:40.123Z",
+                  "startTime": "2026-07-13T08:51:24.160Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -143,7 +143,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-2d933f59e951d7e5adff",
           "file": "consult.spec.ts",
-          "line": 22,
+          "line": 27,
           "column": 5
         },
         {
@@ -162,12 +162,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 295,
+                  "duration": 409,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:57:40.270Z",
+                  "startTime": "2026-07-13T08:51:24.423Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -177,7 +177,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-e1deffd44a3d6e07d83e",
           "file": "consult.spec.ts",
-          "line": 32,
+          "line": 36,
           "column": 5
         },
         {
@@ -196,12 +196,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 300,
+                  "duration": 432,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:57:40.570Z",
+                  "startTime": "2026-07-13T08:51:24.840Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -211,7 +211,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-48b19e2630e6296c30db",
           "file": "consult.spec.ts",
-          "line": 51,
+          "line": 56,
           "column": 5
         },
         {
@@ -230,12 +230,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 256,
+                  "duration": 374,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:57:40.875Z",
+                  "startTime": "2026-07-13T08:51:25.280Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -245,7 +245,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-2e4636864d8df78cff81",
           "file": "consult.spec.ts",
-          "line": 65,
+          "line": 77,
           "column": 5
         },
         {
@@ -264,12 +264,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 283,
+                  "duration": 459,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:57:41.137Z",
+                  "startTime": "2026-07-13T08:51:25.662Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -279,7 +279,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-52b2fc5cf8786a729f47",
           "file": "consult.spec.ts",
-          "line": 75,
+          "line": 88,
           "column": 5
         },
         {
@@ -298,12 +298,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 266,
+                  "duration": 391,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-10T11:57:41.426Z",
+                  "startTime": "2026-07-13T08:51:26.129Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -313,7 +313,41 @@
           ],
           "id": "827050d6aeb1f8bc4895-d056805a67275b2bfd3e",
           "file": "consult.spec.ts",
-          "line": 89,
+          "line": 104,
+          "column": 5
+        },
+        {
+          "title": "shows the new local answer immediately while AI refines it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 380,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T08:51:26.526Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-0dd494789acc19592839",
+          "file": "consult.spec.ts",
+          "line": 112,
           "column": 5
         }
       ]
@@ -321,9 +355,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-10T11:57:38.017Z",
-    "duration": 3960.722,
-    "expected": 7,
+    "startTime": "2026-07-13T08:51:21.987Z",
+    "duration": 5207.24,
+    "expected": 8,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

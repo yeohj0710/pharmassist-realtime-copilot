@@ -1,0 +1,10 @@
+{"case_id": "DG-COUGH", "topic": "기침", "turns": [{"text": "기침이 나요", "status": "ask", "slot": "duration"}, {"text": "어제부터요", "status": "recommend"}]}
+{"case_id": "DG-NASAL", "topic": "콧물", "turns": [{"text": "콧물이 어제부터 나요", "status": "recommend"}]}
+{"case_id": "DG-THROAT", "topic": "인후통", "turns": [{"text": "목이 2일째 아파요", "status": "recommend"}]}
+{"case_id": "DG-HEARTBURN", "topic": "속쓰림", "turns": [{"text": "속이 쓰려요", "status": "recommend"}]}
+{"case_id": "DG-DYSPEPSIA", "topic": "소화불량", "turns": [{"text": "소화가 안 되고 더부룩해요", "status": "ask", "slot": "dyspepsia_pattern"}, {"text": "더부룩함이 더 불편해요", "status": "recommend"}]}
+{"case_id": "DG-DIARRHEA", "topic": "설사", "turns": [{"text": "설사해요", "status": "recommend"}]}
+{"case_id": "DG-CONSTIPATION", "topic": "변비", "turns": [{"text": "변비예요", "status": "recommend"}]}
+{"case_id": "DG-MUSCLE", "topic": "근육통", "turns": [{"text": "근육통이 있어요", "status": "ask", "slot": "injury_inflammation"}, {"text": "다치지 않았고 붓거나 뜨겁지 않아요", "status": "recommend"}]}
+{"case_id": "DG-SKIN", "topic": "피부 증상", "turns": [{"text": "피부가 가려워요", "status": "ask", "slot": "skin_alarm"}, {"text": "진물이나 심한 통증은 없고 눈과 입 주변도 아니에요", "status": "recommend"}]}
+{"case_id": "DG-FEVER", "topic": "발열", "turns": [{"text": "35세이고 38.2도 열이 어제부터 나요", "status": "recommend"}]}

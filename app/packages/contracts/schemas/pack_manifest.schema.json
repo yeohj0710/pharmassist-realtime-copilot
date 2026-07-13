@@ -19,9 +19,19 @@
     "signature"
   ],
   "properties": {
-    "pack_version": { "type": "string", "minLength": 1, "maxLength": 80 },
-    "schema_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-    "min_app_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "pack_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "min_app_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
     "domain": {
       "type": "string",
       "enum": [
@@ -31,20 +41,75 @@
         "animal_medicine"
       ]
     },
-    "synthetic": { "type": "boolean" },
-    "clinical_use_prohibited": { "type": "boolean" },
-    "created_at": { "type": "string", "format": "date-time" },
-    "approved_at": { "type": ["string", "null"], "format": "date-time" },
-    "expires_at": { "type": "string", "format": "date-time" },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "clinical_use_prohibited": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approved_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "counts": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["cards", "claims", "sources", "products"],
+      "required": [
+        "cards",
+        "claims",
+        "sources",
+        "products",
+        "ingredients",
+        "product_ingredients",
+        "protocols",
+        "protocol_options",
+        "protocol_rules"
+      ],
       "properties": {
-        "cards": { "type": "integer", "minimum": 0 },
-        "claims": { "type": "integer", "minimum": 0 },
-        "sources": { "type": "integer", "minimum": 0 },
-        "products": { "type": "integer", "minimum": 0 }
+        "cards": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "claims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sources": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "products": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ingredients": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "product_ingredients": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "protocols": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "protocol_options": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "protocol_rules": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
     "files": {
@@ -54,29 +119,56 @@
         "additionalProperties": false,
         "required": ["path", "sha256", "bytes"],
         "properties": {
-          "path": { "type": "string", "pattern": "^[a-zA-Z0-9._/-]+$" },
-          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
-          "bytes": { "type": "integer", "minimum": 0 }
+          "path": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9._/-]+$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
         }
       }
     },
-    "golden_suite_version": { "type": "string" },
-    "prompt_registry_version": { "type": "string" },
-    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "golden_suite_version": {
+      "type": "string"
+    },
+    "prompt_registry_version": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
     "signature": {
       "type": "object",
       "additionalProperties": false,
       "required": ["algorithm", "key_id", "value"],
       "properties": {
-        "algorithm": { "const": "Ed25519" },
-        "key_id": { "type": "string", "minLength": 1 },
-        "value": { "type": "string", "minLength": 1 }
+        "algorithm": {
+          "const": "Ed25519"
+        },
+        "key_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "revoked_card_ids": {
       "type": "array",
       "uniqueItems": true,
-      "items": { "type": "string", "pattern": "^CARD-[A-Z0-9_-]+$" }
+      "items": {
+        "type": "string",
+        "pattern": "^CARD-[A-Z0-9_-]+$"
+      }
     }
   }
 }

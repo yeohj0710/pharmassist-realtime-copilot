@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/tenant_formulary.schema.json",
+  "title": "TenantFormulary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "formulary_id",
+    "tenant_id",
+    "pack_id",
+    "version",
+    "status",
+    "coverage_target",
+    "entries",
+    "review"
+  ],
+  "properties": {
+    "formulary_id": {
+      "type": "string",
+      "pattern": "^FRM-[A-Z0-9_-]+$"
+    },
+    "tenant_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$"
+    },
+    "pack_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "retired"
+      ]
+    },
+    "coverage_target": {
+      "type": "number",
+      "minimum": 0.85,
+      "maximum": 0.9
+    },
+    "effective_from": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "product_id",
+          "ingredient_id",
+          "symptom_category",
+          "active",
+          "pharmacist_approved"
+        ],
+        "properties": {
+          "product_id": {
+            "type": "string"
+          },
+          "ingredient_id": {
+            "type": "string"
+          },
+          "symptom_category": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "pharmacist_approved": {
+            "type": "boolean"
+          },
+          "preferred": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pharmacist_approved",
+        "official_source_verified"
+      ],
+      "properties": {
+        "pharmacist_approved": {
+          "type": "boolean"
+        },
+        "official_source_verified": {
+          "type": "boolean"
+        },
+        "reviewer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "reviewed_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      }
+    }
+  }
+}

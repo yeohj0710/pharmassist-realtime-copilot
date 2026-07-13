@@ -18,6 +18,7 @@
     "avoid",
     "missing_slots",
     "confidence",
+    "decision",
     "source_refs",
     "latency",
     "knowledge_version",
@@ -56,7 +57,7 @@
     },
     "ask_next": {
       "type": "array",
-      "maxItems": 3,
+      "maxItems": 1,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -165,16 +166,29 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["claim_id", "source_id", "locator", "verified_at"],
+        "required": [
+          "claim_id",
+          "source_id",
+          "source_snapshot_id",
+          "locator",
+          "verified_at"
+        ],
         "properties": {
           "claim_id": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "source_id": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
+          },
+          "source_snapshot_id": {
+            "type": "string",
+            "minLength": 1
           },
           "locator": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "verified_at": {
             "type": "string",
@@ -228,6 +242,9 @@
     },
     "stale_response_dropped": {
       "type": "boolean"
+    },
+    "decision": {
+      "$ref": "recommendation_decision.schema.json"
     }
   }
 }

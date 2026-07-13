@@ -1,4 +1,5 @@
-import type { RuntimeInput } from "@pharmassist/contracts";
+import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
+import { validateContract } from "@pharmassist/contracts";
 import { syntheticPack } from "@pharmassist/test-fixtures";
 import { describe, expect, it } from "vitest";
 import { StatefulConsultFlow } from "./consult-flow.js";
@@ -27,10 +28,14 @@ describe("stateful fast consult flow", () => {
     expect(second.output.intent).toBe("cough_general");
     expect(second.output.mode).toBe("instant");
     expect(second.output.ask_next).toEqual([]);
-    expect(second.output.say_now[0]).toContain("진해제");
+    expect(second.output.say_now[0]).toContain("검토용 기침 성분 A");
     expect(second.output.say_now[0]).not.toContain("비교하세요");
     expect(second.output.say_now[0]).toMatch(/요\.$/u);
-    expect(second.output.actions[0]?.text).toContain("검토한다");
+    expect(second.output.actions[0]?.type).toBe("present_verified_candidate");
+    expect(second.output.decision.status).toBe("recommend");
+    expect(second.output.decision.protocol_id).toBe("PTC-SYN-COUGH");
+    expect(second.output.decision.ingredient_options).not.toHaveLength(0);
+    expect(second.output.decision.source_refs).not.toHaveLength(0);
   });
 
   it("still escalates when a later turn contains a red flag", () => {
@@ -49,10 +54,12 @@ describe("stateful fast consult flow", () => {
       flow.run(input("배가 아파요", 1));
       const result = flow.run(input(answer, 2));
 
-      expect(result.output.mode).toBe("clarify");
-      expect(result.output.actions).toEqual([]);
-      expect(result.output.say_now.join(" ")).toContain("모르셔도");
-      expect(result.output.ask_next[0]?.question).toContain("윗배·아랫배");
+      expect(result.output.status).toBe("final");
+      expect(result.output.decision.status).toBe("insufficient");
+      expect(result.output.actions[0]?.type).toBe(
+        "pharmacist_review_or_restart",
+      );
+      expect(result.output.ask_next).toEqual([]);
     },
   );
 
@@ -61,9 +68,8 @@ describe("stateful fast consult flow", () => {
     flow.run(input("기침이 나요", 1));
     const result = flow.run(input("그런데 약이 졸린가요?", 2));
 
-    expect(result.output.mode).toBe("clarify");
-    expect(result.output.actions).toEqual([]);
-    expect(result.output.ask_next).not.toEqual([]);
+    expect(result.output.decision.status).toBe("insufficient");
+    expect(result.output.source_refs).toEqual([]);
   });
 
   it("switches to a clear new symptom before the previous topic completes", () => {
@@ -72,7 +78,8 @@ describe("stateful fast consult flow", () => {
     const result = flow.run(input("아, 그리고 어깨도 아파요", 2));
 
     expect(result.output.intent).toBe("musculoskeletal_pain");
-    expect(result.output.ask_next[0]?.question).toContain("어깨");
+    expect(result.output.decision.status).toBe("ask");
+    expect(result.output.decision.protocol_id).toBe("PTC-SYN-MUSCLE");
   });
 
   it("routes abdominal pain to the abdominal card instead of throat pain", () => {
@@ -80,6 +87,9 @@ describe("stateful fast consult flow", () => {
     const result = flow.run(input("배가 아파요", 1));
 
     expect(result.output.intent).toBe("abdominal_pain_general");
+    expect(
+      validateContract<RuntimeOutput>("runtimeOutput", result.output).errors,
+    ).toEqual([]);
     expect(result.output.say_now.join(" ")).not.toContain("삼키기");
     expect(result.output.ask_next[0]?.question).toContain("배");
   });
@@ -90,10 +100,15 @@ describe("stateful fast consult flow", () => {
     const second = flow.run(input("3분 전부터요", 2));
 
     expect(first.output.intent).toBe("bowel_urgency_general");
+    expect(
+      validateContract<RuntimeOutput>("runtimeOutput", first.output).errors,
+    ).toEqual([]);
     expect(first.output.ask_next[0]?.question).toContain("묽은 변");
     expect(second.output.mode).toBe("instant");
     expect(second.output.ask_next).toEqual([]);
-    expect(second.output.say_now[0]).toContain("수분");
+    expect(second.output.decision.status).toBe("recommend");
+    expect(second.output.decision.ingredient_options).not.toHaveLength(0);
+    expect(second.output.decision.source_refs).not.toHaveLength(0);
   });
 
   it("ends unsupported loops instead of repeating the generic question", () => {
@@ -103,7 +118,8 @@ describe("stateful fast consult flow", () => {
 
     expect(second.output.status).toBe("final");
     expect(second.output.ask_next).toEqual([]);
-    expect(second.output.say_now.join(" ")).toContain("다시 말씀해 주세요");
+    expect(second.output.decision.status).toBe("insufficient");
+    expect(second.output.source_refs).toEqual([]);
   });
 
   it("routes shoulder pain to musculoskeletal instead of abdominal pain", () => {
@@ -111,7 +127,8 @@ describe("stateful fast consult flow", () => {
     const result = flow.run(input("어깨가 아파요", 1));
 
     expect(result.output.intent).toBe("musculoskeletal_pain");
-    expect(result.output.ask_next[0]?.question).toContain("어깨");
+    expect(result.output.decision.status).toBe("ask");
+    expect(result.output.decision.protocol_id).toBe("PTC-SYN-MUSCLE");
     expect(result.output.say_now.join(" ")).not.toContain("배의");
   });
 

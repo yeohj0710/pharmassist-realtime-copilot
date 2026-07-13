@@ -8,11 +8,26 @@
   },
   "include": ["src/**/*.ts"],
   "references": [
-    { "path": "../contracts" },
-    { "path": "../domain" },
-    { "path": "../normalizer" },
-    { "path": "../retrieval" },
-    { "path": "../safety" },
-    { "path": "../test-fixtures" }
+    {
+      "path": "../contracts"
+    },
+    {
+      "path": "../domain"
+    },
+    {
+      "path": "../normalizer"
+    },
+    {
+      "path": "../retrieval"
+    },
+    {
+      "path": "../safety"
+    },
+    {
+      "path": "../knowledge"
+    },
+    {
+      "path": "../recommendation"
+    }
   ]
 }

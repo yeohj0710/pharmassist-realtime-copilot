@@ -15,6 +15,11 @@ export interface PackManifest {
     claims: number;
     sources: number;
     products: number;
+    ingredients: number;
+    product_ingredients: number;
+    protocols: number;
+    protocol_options: number;
+    protocol_rules: number;
   };
   files: {
     path: string;

@@ -14,7 +14,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@pharmassist/retrieval": "workspace:*"
+    "@pharmassist/retrieval": "workspace:*",
+    "@pharmassist/contracts": "workspace:*"
   },
   "devDependencies": {
     "typescript": "7.0.2"

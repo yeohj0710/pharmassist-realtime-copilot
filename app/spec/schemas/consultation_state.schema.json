@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/consultation_state.schema.json",
+  "title": "ConsultationState",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "session_id",
+    "tenant_id",
+    "sequence",
+    "pack_id",
+    "answered_slots",
+    "asked_slots",
+    "pending_question_slot",
+    "active_protocol_id",
+    "active_intent",
+    "last_decision_status",
+    "updated_at"
+  ],
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "tenant_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "pack_id": {
+      "type": "string"
+    },
+    "answered_slots": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "asked_slots": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "active_protocol_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "active_intent": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_decision_status": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "recommend",
+        "ask",
+        "refer",
+        "insufficient",
+        null
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "pending_question_slot": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

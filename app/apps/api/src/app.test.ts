@@ -40,12 +40,10 @@ describe("API", () => {
       ),
     ).toBe(false);
   });
-  it("lets AI compare the full active domain catalog instead of the provisional local intent", () => {
+  it("never expands AI context beyond the retrieved intent", () => {
     const cards = cardsForAiRefinement(syntheticPack.cards, "cough_general");
-    expect(cards.map((card) => card.intent)).toContain("cough_general");
-    expect(cards.map((card) => card.intent)).toContain(
-      "abdominal_pain_general",
-    );
+    expect(cards.map((card) => card.intent)).toEqual(["cough_general"]);
+    expect(cardsForAiRefinement(syntheticPack.cards, null)).toEqual([]);
   });
   it("serves deterministic no-store output", async () => {
     const app = await buildApp();
@@ -95,12 +93,14 @@ describe("API", () => {
   });
   it("serves immutable packs with ETag and typed realtime fallback", async () => {
     const app = await buildApp();
-    const pack = await app.inject("/v1/knowledge/packs/0.1.0-synthetic-dev");
+    const pack = await app.inject(
+      `/v1/knowledge/packs/${syntheticPack.version}`,
+    );
     expect(pack.statusCode).toBe(200);
     expect(pack.headers["cache-control"]).toContain("immutable");
     const cached = await app.inject({
       method: "GET",
-      url: "/v1/knowledge/packs/0.1.0-synthetic-dev",
+      url: `/v1/knowledge/packs/${syntheticPack.version}`,
       headers: { "if-none-match": String(pack.headers["etag"]) },
     });
     expect(cached.statusCode).toBe(304);
@@ -290,10 +290,12 @@ describe("API", () => {
         { role: "user", content: "아니 전자라고요" },
       ]);
       expect(capturedQuestionBudget).toBe(true);
-      expect(capturedCounterPolicy).toContain("active ingredient");
-      expect(capturedCounterPolicy).toContain("what to do now");
       expect(capturedCounterPolicy).toContain(
-        "Never output a speculative cause by itself",
+        "RecommendationDecision is immutable",
+      );
+      expect(capturedCounterPolicy).toContain("Decision status:");
+      expect(capturedCounterPolicy).toContain(
+        "Do not generate a new question or recommendation",
       );
     } finally {
       await app.close();
@@ -441,7 +443,7 @@ describe("API", () => {
       method: "POST",
       url: "/v1/admin/revocations",
       headers: { "x-role": "publisher" },
-      payload: { reason_code: "PACK_KILL", version: "0.1.0-synthetic-dev" },
+      payload: { reason_code: "PACK_KILL", version: syntheticPack.version },
     });
     expect(revoked.statusCode).toBe(200);
     const consult = await app.inject({

@@ -179,10 +179,16 @@ importers:
 
   packages/knowledge:
     dependencies:
+      '@pharmassist/contracts':
+        specifier: workspace:*
+        version: link:../contracts
       '@pharmassist/domain':
         specifier: workspace:*
         version: link:../domain
     devDependencies:
+      '@pharmassist/test-fixtures':
+        specifier: workspace:*
+        version: link:../test-fixtures
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -224,6 +230,9 @@ importers:
       '@pharmassist/domain':
         specifier: workspace:*
         version: link:../domain
+      '@pharmassist/recommendation':
+        specifier: workspace:*
+        version: link:../recommendation
       openai:
         specifier: 6.46.0
         version: 6.46.0
@@ -235,8 +244,30 @@ importers:
         specifier: 4.1.10
         version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(terser@5.49.0)(tsx@4.23.0))
 
+  packages/recommendation:
+    dependencies:
+      '@pharmassist/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@pharmassist/domain':
+        specifier: workspace:*
+        version: link:../domain
+    devDependencies:
+      '@pharmassist/test-fixtures':
+        specifier: workspace:*
+        version: link:../test-fixtures
+      typescript:
+        specifier: 7.0.2
+        version: 7.0.2
+      vitest:
+        specifier: 4.1.10
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(terser@5.49.0)(tsx@4.23.0))
+
   packages/retrieval:
     dependencies:
+      '@pharmassist/contracts':
+        specifier: workspace:*
+        version: link:../contracts
       '@pharmassist/domain':
         specifier: workspace:*
         version: link:../domain
@@ -265,6 +296,12 @@ importers:
       '@pharmassist/safety':
         specifier: workspace:*
         version: link:../safety
+      '@pharmassist/knowledge':
+        specifier: workspace:*
+        version: link:../knowledge
+      '@pharmassist/recommendation':
+        specifier: workspace:*
+        version: link:../recommendation
     devDependencies:
       '@pharmassist/test-fixtures':
         specifier: workspace:*
@@ -294,6 +331,9 @@ importers:
 
   packages/test-fixtures:
     dependencies:
+      '@pharmassist/contracts':
+        specifier: workspace:*
+        version: link:../contracts
       '@pharmassist/retrieval':
         specifier: workspace:*
         version: link:../retrieval
@@ -322,6 +362,10 @@ importers:
         version: 7.0.2
 
   tools/ingest:
+    dependencies:
+      '@pharmassist/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
     devDependencies:
       typescript:
         specifier: 7.0.2

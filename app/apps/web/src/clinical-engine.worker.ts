@@ -1,6 +1,11 @@
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 import { validateContract } from "@pharmassist/contracts";
-import { syntheticPack } from "@pharmassist/test-fixtures";
+import {
+  syntheticFormulary,
+  syntheticInventory,
+  syntheticPack,
+  syntheticSales,
+} from "@pharmassist/test-fixtures";
 import { StatefulConsultFlow } from "./consult-flow.js";
 
 const profile = import.meta.env["VITE_APP_PROFILE"] ?? "local-demo";
@@ -8,7 +13,12 @@ if (profile === "production")
   throw new Error(
     "Production web build requires a verified remote pack loader; synthetic worker startup blocked.",
   );
-const flow = new StatefulConsultFlow(syntheticPack);
+const flow = new StatefulConsultFlow(syntheticPack, {
+  tenantId: "demo",
+  formulary: syntheticFormulary,
+  inventory: syntheticInventory,
+  sales: syntheticSales,
+});
 
 self.addEventListener(
   "message",

@@ -32,7 +32,6 @@ async function buildDev(): Promise<void> {
   const { privateKey, publicKey } = generateKeyPairSync("ed25519");
   const payload = {
     ...syntheticPack,
-    builtAt: new Date().toISOString(),
     clinicalUseProhibited: true as const,
   };
   const signed = signPayload(payload, privateKey, "dev-ephemeral-1");
@@ -51,7 +50,7 @@ async function buildDev(): Promise<void> {
 
 async function verifyDev(): Promise<void> {
   const signed = JSON.parse(await readFile(signedPath, "utf8")) as Signed<
-    typeof syntheticPack & { builtAt: string }
+    typeof syntheticPack
   >;
   const key = createPublicKey(await readFile(publicKeyPath));
   if (

@@ -26,6 +26,7 @@ describe("topic transitions", () => {
     expect(completed.output.actions).not.toHaveLength(0);
     expect(next.output.intent).toBe("musculoskeletal_pain");
     expect(next.output.actions).toEqual([]);
-    expect(next.output.ask_next[0]?.question).toContain("어깨");
+    expect(next.output.decision.status).toBe("ask");
+    expect(next.output.decision.protocol_id).toBe("PTC-SYN-MUSCLE");
   });
 });

@@ -10,6 +10,7 @@
       "@pharmassist/normalizer": ["./packages/normalizer/src/index.ts"],
       "@pharmassist/safety": ["./packages/safety/src/index.ts"],
       "@pharmassist/retrieval": ["./packages/retrieval/src/index.ts"],
+      "@pharmassist/recommendation": ["./packages/recommendation/src/index.ts"],
       "@pharmassist/runtime": ["./packages/runtime/src/index.ts"],
       "@pharmassist/knowledge": ["./packages/knowledge/src/index.ts"],
       "@pharmassist/openai-adapter": ["./packages/openai-adapter/src/index.ts"],

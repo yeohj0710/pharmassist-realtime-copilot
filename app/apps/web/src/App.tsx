@@ -65,6 +65,26 @@ const newInput = (
   client_timestamp: new Date().toISOString(),
 });
 
+const decisionLabel: Readonly<
+  Record<RuntimeOutput["decision"]["status"], string>
+> = {
+  recommend: "검증된 후보",
+  ask: "한 가지 확인",
+  refer: "직접 평가 우선",
+  insufficient: "근거 부족",
+};
+
+const inventoryLabel = (
+  value: RuntimeOutput["decision"]["product_candidates"][number]["inventory_status"],
+): string =>
+  value === "in_stock"
+    ? "재고 있음"
+    : value === "out_of_stock"
+      ? "재고 없음"
+      : value === "not_connected"
+        ? "재고 미연결"
+        : "재고 확인 필요";
+
 export function App() {
   const [accessGranted, setAccessGranted] = useState(
     sessionStorage.getItem("pharmassist_access") === "0903",
@@ -82,10 +102,14 @@ export function App() {
   );
   const [microphoneId, setMicrophoneId] = useState("");
   const [confirmedCritical, setConfirmedCritical] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [engineError, setEngineError] = useState("");
   const [aiInterpreting, setAiInterpreting] = useState(false);
   const [aiReady, setAiReady] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
+  const pendingWorkerInputsRef = useRef<RuntimeInput[]>([]);
+  const processingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sequenceRef = useRef(0);
   const inputsRef = useRef(new Map<number, RuntimeInput>());
   const historyRef = useRef<readonly string[]>([]);
@@ -134,6 +158,15 @@ export function App() {
     historyRef.current = nextHistory;
     setHistory(nextHistory);
     setQuery("");
+    setEngineError("");
+    setProcessing(true);
+    if (processingTimerRef.current) clearTimeout(processingTimerRef.current);
+    processingTimerRef.current = setTimeout(() => {
+      setProcessing(false);
+      setEngineError(
+        "상담 엔진 응답이 지연되고 있어요. 잠시 후 다시 입력해 주세요.",
+      );
+    }, 8_000);
     applySession({ type: "INPUT", sequence: sequenceRef.current });
     const input = newInput(
       normalized,
@@ -142,7 +175,8 @@ export function App() {
       inputType,
     );
     inputsRef.current.set(input.sequence, input);
-    workerRef.current?.postMessage(input);
+    if (workerRef.current) workerRef.current.postMessage(input);
+    else pendingWorkerInputsRef.current.push(input);
   };
 
   useEffect(() => {
@@ -163,11 +197,27 @@ export function App() {
       { type: "module" },
     );
     worker.onmessage = (event: MessageEvent<WorkerMessage>) => {
-      if (!("output" in event.data)) return;
+      if (!("output" in event.data)) {
+        if (processingTimerRef.current)
+          clearTimeout(processingTimerRef.current);
+        processingTimerRef.current = null;
+        setProcessing(false);
+        setEngineError(
+          "입력을 안전하게 처리하지 못했어요. 표현을 바꿔 다시 입력해 주세요.",
+        );
+        return;
+      }
       if (
         event.data.output.sequence === sequenceRef.current &&
         !(sessionRef.current.criticalLocked && !sessionRef.current.acknowledged)
       ) {
+        if (processingTimerRef.current)
+          clearTimeout(processingTimerRef.current);
+        processingTimerRef.current = setTimeout(() => {
+          setProcessing(false);
+          processingTimerRef.current = null;
+        }, 350);
+        setEngineError("");
         const localOutput = event.data.output;
         const commitOutput = (output: RuntimeOutput) => {
           setResult(output);
@@ -225,7 +275,18 @@ export function App() {
         setConfirmedCritical(false);
       }
     };
+    worker.onerror = () => {
+      if (processingTimerRef.current) clearTimeout(processingTimerRef.current);
+      processingTimerRef.current = null;
+      setProcessing(false);
+      setEngineError(
+        "상담 엔진을 시작하지 못했어요. 페이지를 새로고침한 뒤 다시 시도해 주세요.",
+      );
+    };
     workerRef.current = worker;
+    for (const pendingInput of pendingWorkerInputsRef.current)
+      worker.postMessage(pendingInput);
+    pendingWorkerInputsRef.current = [];
     const updateOnline = () => setOnline(navigator.onLine);
     addEventListener("online", updateOnline);
     addEventListener("offline", updateOnline);
@@ -245,6 +306,8 @@ export function App() {
     addEventListener("keydown", keyboard);
     return () => {
       worker.terminate();
+      if (workerRef.current === worker) workerRef.current = null;
+      if (processingTimerRef.current) clearTimeout(processingTimerRef.current);
       aiAbortRef.current?.abort();
       realtimeAbortRef.current?.abort();
       transcriptionPeerRef.current?.close();
@@ -273,6 +336,7 @@ export function App() {
     const sessionId = crypto.randomUUID();
     sessionIdRef.current = sessionId;
     sequenceRef.current = 0;
+    pendingWorkerInputsRef.current = [];
     const next: SessionState = {
       sessionId,
       sequence: 0,
@@ -286,6 +350,8 @@ export function App() {
     historyRef.current = [];
     setQuery("");
     setResult(undefined);
+    setProcessing(false);
+    setEngineError("");
     setConfirmedCritical(false);
     aiAbortRef.current?.abort();
     aiAbortRef.current = null;
@@ -598,6 +664,20 @@ export function App() {
           입력을 사용하세요.
         </p>
       </section>
+      {processing && (
+        <section className="engine-status" role="status" aria-live="polite">
+          <span className="loading-spinner" aria-hidden="true" />
+          <span>
+            <strong>입력을 확인하고 있어요</strong>
+            <small>안전 기준과 상담 프로토콜을 로컬에서 적용하고 있어요.</small>
+          </span>
+        </section>
+      )}
+      {engineError && (
+        <p className="engine-error" role="alert">
+          {engineError}
+        </p>
+      )}
       {result ? (
         <div className="consult-layout">
           <section
@@ -624,9 +704,9 @@ export function App() {
                   <div className="refinement-status" role="status">
                     <span className="loading-spinner" aria-hidden="true" />
                     <span>
-                      <strong>약 후보와 주의사항을 확인하고 있어요</strong>
+                      <strong>결정은 유지하고 문장만 다듬고 있어요</strong>
                       <small>
-                        현재 답변을 먼저 보여드리고, 확인되면 바로 갱신해요.
+                        성분·제품·근거는 로컬 결정엔진에서 이미 고정됐어요.
                       </small>
                     </span>
                   </div>
@@ -642,12 +722,92 @@ export function App() {
                     </p>
                   ))}
                 </article>
+                <section
+                  className={`decision-summary decision-${result.decision.status}`}
+                  aria-label="OTC 결정 결과"
+                >
+                  <div className="decision-heading">
+                    <div>
+                      <p>결정 상태</p>
+                      <strong>{decisionLabel[result.decision.status]}</strong>
+                    </div>
+                    <code>{result.decision.decision_id}</code>
+                  </div>
+                  {result.decision.ingredient_options.length > 0 && (
+                    <div className="decision-block">
+                      <h2>검증된 성분 선택지</h2>
+                      <ul className="ingredient-options">
+                        {result.decision.ingredient_options.map((option) => (
+                          <li key={option.option_id}>
+                            <strong>{option.ingredient_name}</strong>
+                            <span>
+                              임상 {Math.round(option.clinical_score * 100)} ·
+                              안전 {Math.round(option.safety_score * 100)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {result.decision.product_candidates.length > 0 && (
+                    <div className="decision-block">
+                      <h2>약국 제품 후보</h2>
+                      <div className="product-candidates">
+                        {result.decision.product_candidates.map((product) => (
+                          <article key={product.product_id}>
+                            <strong>{product.display_name}</strong>
+                            <span>
+                              {inventoryLabel(product.inventory_status)}
+                            </span>
+                            <small>
+                              {product.available_quantity === null
+                                ? "수량 미연결"
+                                : `가용 ${product.available_quantity}`}
+                              {product.sales_rank === null
+                                ? ""
+                                : ` · 90일 판매순위 ${product.sales_rank}`}
+                            </small>
+                          </article>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {result.decision.status === "ask" &&
+                    result.decision.question && (
+                      <div className="decision-block decision-question">
+                        <h2>선택을 바꾸는 질문</h2>
+                        <p>{result.decision.question.question}</p>
+                        <small>{result.decision.question.reason}</small>
+                      </div>
+                    )}
+                  {result.decision.status === "refer" &&
+                    result.decision.referral && (
+                      <div className="decision-block decision-referral">
+                        <h2>제품 없이 전환</h2>
+                        <p>{result.decision.referral.reason}</p>
+                        <small>{result.decision.referral.action}</small>
+                      </div>
+                    )}
+                </section>
                 <details className="supporting-details">
                   <summary>근거·주의사항</summary>
                   <div className="supporting-content">
                     {result.avoid.map((item) => (
                       <p key={item}>{item}</p>
                     ))}
+                    {result.decision.source_refs.length > 0 && (
+                      <div className="evidence-refs">
+                        <strong>검증 근거</strong>
+                        {result.decision.source_refs.slice(0, 8).map((ref) => (
+                          <code
+                            key={`${ref.claim_id}:${ref.source_snapshot_id}:${ref.locator}`}
+                          >
+                            {ref.claim_id} · {ref.source_snapshot_id} ·{" "}
+                            {ref.locator}
+                          </code>
+                        ))}
+                      </div>
+                    )}
                     <p>
                       상태 {result.status} · 신뢰도{" "}
                       {Math.round(result.confidence * 100)}%

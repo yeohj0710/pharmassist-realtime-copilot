@@ -7,5 +7,12 @@
     "composite": true
   },
   "include": ["src/**/*.ts"],
-  "references": [{ "path": "../domain" }]
+  "references": [
+    {
+      "path": "../contracts"
+    },
+    {
+      "path": "../domain"
+    }
+  ]
 }

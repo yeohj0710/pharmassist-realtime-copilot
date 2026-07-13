@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/tenant_inventory.schema.json",
+  "title": "TenantInventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "inventory_id",
+    "tenant_id",
+    "pack_id",
+    "product_id",
+    "available_quantity",
+    "status",
+    "active",
+    "discontinued",
+    "observed_at",
+    "source_snapshot_id"
+  ],
+  "properties": {
+    "inventory_id": {
+      "type": "string",
+      "pattern": "^INV-[A-Z0-9_-]+$"
+    },
+    "tenant_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$"
+    },
+    "pack_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "available_quantity": {
+      "type": "number",
+      "minimum": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": ["in_stock", "out_of_stock", "unknown"]
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "discontinued": {
+      "type": "boolean"
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_snapshot_id": {
+      "type": "string"
+    }
+  }
+}

@@ -57,18 +57,30 @@ test("short second answer completes a routine consult", async ({ page }) => {
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("기침이 나요");
   await input.press("Enter");
-  await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
-  await input.fill("아침이요");
+  await expect(page.getByText("입력을 확인하고 있어요")).toBeVisible();
+  await expect(
+    page.getByRole("article").getByText("기침은 언제부터 시작됐나요?"),
+  ).toBeVisible();
+  await input.fill("어제부터요");
   await input.press("Enter");
-  await expect(page.getByText(/진해제.*거담제/)).toBeVisible();
-  await expect(page.getByText("기침은 언제부터 시작됐나요?")).toHaveCount(0);
+  await expect(
+    page.getByLabel("OTC 결정 결과").getByText("검증된 후보"),
+  ).toBeVisible();
+  await expect(
+    page.getByLabel("OTC 결정 결과").getByText(/검토용 기침 성분 A/),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("article").getByText("기침은 언제부터 시작됐나요?"),
+  ).toHaveCount(0);
 });
 
 test("abdominal pain never routes to the throat card", async ({ page }) => {
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("배가 아파요");
   await input.press("Enter");
-  await expect(page.getByText(/윗배·아랫배 중 어디가/)).toBeVisible();
+  await expect(
+    page.getByRole("article").getByText(/윗배·아랫배 중 어디가/),
+  ).toBeVisible();
   await expect(page.getByText(/목 통증은 언제부터/)).toHaveCount(0);
   await expect(page.getByText(/삼키기 어렵거나/)).toHaveCount(0);
 });
@@ -79,17 +91,21 @@ test("bowel urgency progresses without a prepared exact phrase", async ({
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("똥이 마려워요");
   await input.press("Enter");
-  await expect(page.getByText(/묽은 변.*변이 안 나오는/)).toBeVisible();
+  await expect(
+    page.getByRole("article").getByText(/묽은 변.*변이 .*안 나오는/),
+  ).toBeVisible();
   await input.fill("3분 전부터요");
   await input.press("Enter");
-  await expect(page.getByText(/수분·전해질/)).toBeVisible();
+  await expect(
+    page.getByLabel("OTC 결정 결과").getByText(/검토용 설사 성분 A/),
+  ).toBeVisible();
 });
 
 test("shoulder pain never routes to abdominal pain", async ({ page }) => {
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("어깨가 아파요");
   await input.press("Enter");
-  await expect(page.getByText(/어깨를 움직일 때/)).toBeVisible();
+  await expect(page.getByText(/다치거나 붓고 뜨거운/).first()).toBeVisible();
   await expect(page.getByText(/윗배·아랫배/)).toHaveCount(0);
 });
 
@@ -110,11 +126,13 @@ test("shows the new local answer immediately while AI refines it", async ({
   const input = page.getByLabel("증상이나 질문을 입력하세요");
   await input.fill("기침이 나요");
   await input.press("Enter");
-  await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
+  await expect(
+    page.getByRole("article").getByText("기침은 언제부터 시작됐나요?"),
+  ).toBeVisible();
   await input.fill("어제부터요");
   await input.press("Enter");
   await expect(
-    page.getByText("약 후보와 주의사항을 확인하고 있어요"),
+    page.getByLabel("OTC 결정 결과").getByText("검증된 후보"),
   ).toBeVisible();
   await expect(page.locator(".primary-guidance")).not.toContainText(
     "기침은 언제부터 시작됐나요?",

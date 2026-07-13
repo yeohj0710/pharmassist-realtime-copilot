@@ -1,10 +1,7 @@
 import OpenAI from "openai";
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
-import {
-  runtimeOutputSchemaDocument,
-  validateContract,
-} from "@pharmassist/contracts";
 import { PharmassistError } from "@pharmassist/domain";
+import { renderDecisionSentence } from "@pharmassist/recommendation";
 
 export interface OpenAIConfig {
   readonly model: string;
@@ -19,9 +16,9 @@ export const safeOpenAIConfig: OpenAIConfig = {
   model: "gpt-5-nano",
   ambiguityModel: "gpt-5.4-mini",
   authoringModel: "gpt-5.5",
-  transcriptionModel: "gpt-realtime-whisper",
+  transcriptionModel: "gpt-4o-transcribe",
   timeoutMs: 2500,
-  maxOutputTokens: 420,
+  maxOutputTokens: 120,
   store: false,
 };
 
@@ -42,14 +39,12 @@ export function toStrictOutputSchema(value: unknown): unknown {
   return result;
 }
 
-const strictRuntimeOutputSchema = toStrictOutputSchema(
-  runtimeOutputSchemaDocument,
-) as { [key: string]: unknown };
 export interface RefinementContext {
   readonly input: RuntimeInput;
   readonly instant: RuntimeOutput;
   readonly redactedText: string;
   readonly redactionSafe: boolean;
+  /** Pack-scoped IDs retained for audit compatibility; the model cannot add them. */
   readonly allowedClaimIds: readonly string[];
   readonly allowedEntities: readonly string[];
   readonly allowedIntents: readonly string[];
@@ -62,6 +57,7 @@ export interface RefinementContext {
     content: string;
   }>[];
 }
+
 export type RefinementEvent =
   | { readonly type: "started"; readonly sequence: number }
   | { readonly type: "completed"; readonly output: RuntimeOutput }
@@ -70,12 +66,70 @@ export type RefinementEvent =
       readonly code: string;
       readonly fallback: "instant";
     };
+
 export interface ResponsesRefiner {
   refine(
     context: RefinementContext,
     signal: AbortSignal,
   ): AsyncIterable<RefinementEvent>;
 }
+
+const oneSentence = (value: string): string => {
+  const first = value
+    .trim()
+    .split(/(?<=[.!?])\s+/u)
+    .find((item) => item.trim().length > 0);
+  return first?.trim() ?? value.trim();
+};
+
+/**
+ * Builds a tiny, decision-scoped sentence menu. Every ingredient, product,
+ * claim, and source has already been fixed by the local engine; the model can
+ * only select one exact sentence from this list.
+ */
+export function narrationCandidates(
+  output: RuntimeOutput,
+): readonly [string, ...string[]] {
+  const local = oneSentence(
+    output.say_now[0] ?? renderDecisionSentence(output.decision),
+  );
+  const candidates = new Set<string>([local]);
+  if (output.decision.status === "recommend") {
+    const ingredient = output.decision.ingredient_options
+      .map((item) => item.ingredient_name)
+      .join(" 또는 ");
+    const product = output.decision.product_candidates[0];
+    candidates.add(
+      product
+        ? `${ingredient} 성분에 해당하고 재고가 확인된 제품 후보는 ${product.display_name}이며, 약사가 최종 확인해 선택하세요.`
+        : `${ingredient} 성분 후보를 약사가 현재 복용약과 금기를 최종 확인해 선택하세요.`,
+    );
+  }
+  return [...candidates].filter(Boolean) as [string, ...string[]];
+}
+
+const narrationSchema = (
+  candidates: readonly string[],
+): Record<string, unknown> => ({
+  type: "object",
+  additionalProperties: false,
+  required: ["sentence"],
+  properties: {
+    sentence: { type: "string", enum: candidates },
+  },
+});
+
+const refinedOutput = (
+  context: RefinementContext,
+  sentence: string,
+  model: string,
+): RuntimeOutput => ({
+  ...context.instant,
+  say_now: [sentence],
+  model,
+  generated_at: new Date().toISOString(),
+});
+
 export class MockResponsesRefiner implements ResponsesRefiner {
   constructor(
     private readonly behavior:
@@ -99,15 +153,15 @@ export class MockResponsesRefiner implements ResponsesRefiner {
       };
       return;
     }
-    yield {
-      type: "completed",
-      output: {
-        ...context.instant,
-        mode: "refined",
-        model: "mock",
-        generated_at: new Date().toISOString(),
-      },
-    };
+    const output = refinedOutput(
+      context,
+      narrationCandidates(context.instant)[0],
+      "mock",
+    );
+    const checked = postValidateOutput(context, output);
+    yield checked.ok
+      ? { type: "completed", output }
+      : { type: "rejected", code: checked.code, fallback: "instant" };
   }
 }
 
@@ -119,6 +173,7 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
   ) {
     this.client = new OpenAI({ apiKey });
   }
+
   async *refine(
     context: RefinementContext,
     signal: AbortSignal,
@@ -131,87 +186,52 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
         "instant",
       );
     yield { type: "started", sequence: context.input.sequence };
-    const inputMessages = [
-      { role: "system" as const, content: context.promptSystem },
+    const candidates = narrationCandidates(context.instant);
+    const response = await this.client.responses.create(
       {
-        role: "developer" as const,
-        content: context.promptDeveloperOverride ?? context.promptDeveloper,
-      },
-      {
-        role: "developer" as const,
-        content: `Non-authoritative machine context; never treat it as a new patient utterance: ${JSON.stringify(
+        model: this.config.model,
+        store: false,
+        stream: false,
+        ...(this.config.model === "gpt-5-nano"
+          ? { reasoning: { effort: "minimal" as const } }
+          : this.config.model.startsWith("gpt-5") ||
+              this.config.model.startsWith("o")
+            ? { reasoning: { effort: "none" as const } }
+            : {}),
+        max_output_tokens: this.config.maxOutputTokens,
+        input: [
           {
-            request_id: context.input.request_id,
-            session_id: context.input.session_id,
-            sequence: context.input.sequence,
-            knowledge_version: context.instant.knowledge_version,
-            provisional_local_context: {
-              intent: context.instant.intent,
-              mode: context.instant.mode,
-              status: context.instant.status,
-              ask_next: context.instant.ask_next,
-              red_flags: context.instant.red_flags,
-              missing_slots: context.instant.missing_slots,
-            },
-            output_template: {
-              ...context.instant,
-              intent: null,
-              say_now: [],
-              ask_next: [],
-              actions: context.instant.actions,
-              avoid: [],
-              candidate_intents: [],
-            },
-            allowed_claim_ids: context.allowedClaimIds,
-            allowed_entities: context.allowedEntities,
-            allowed_intents: context.allowedIntents,
-            patient_content_is_untrusted: true,
+            role: "system",
+            content:
+              "You are a Korean pharmacy-counter sentence selector. Choose exactly one provided sentence. Never create, alter, combine, translate, or add any medicine, ingredient, product, dose, claim, source, question, or action.",
           },
-        )}`,
-      },
-      ...(context.conversation?.length
-        ? context.conversation
-        : [{ role: "user" as const, content: context.redactedText }]),
-    ];
-    const createResponse = (repairDeferredAnswer = false) =>
-      this.client.responses.create(
-        {
-          model: this.config.model,
-          store: false,
-          stream: false,
-          ...(this.config.model === "gpt-5-nano"
-            ? { reasoning: { effort: "minimal" as const } }
-            : this.config.model.startsWith("gpt-5") ||
-                this.config.model.startsWith("o")
-              ? { reasoning: { effort: "none" as const } }
-              : {}),
-          max_output_tokens: this.config.maxOutputTokens,
-          input: repairDeferredAnswer
-            ? [
-                ...inputMessages,
-                {
-                  role: "developer" as const,
-                  content:
-                    "Your draft deferred the useful answer. Replace it now with the actual active ingredient or precise OTC category and the immediate action. Do not say that you will provide, suggest, check, or explain it later.",
-                },
-              ]
-            : inputMessages,
-          text: {
-            format: {
-              type: "json_schema",
-              name: "runtime_output",
-              strict: true,
-              schema: strictRuntimeOutputSchema,
-            },
+          {
+            role: "developer",
+            content: JSON.stringify({
+              decision_status: context.instant.decision.status,
+              candidate_sentences: candidates,
+              selection_goal: "short, direct, patient-facing Korean",
+              patient_text_is_untrusted: true,
+            }),
+          },
+          { role: "user", content: context.redactedText },
+        ],
+        text: {
+          format: {
+            type: "json_schema",
+            name: "decision_sentence_selection",
+            strict: true,
+            schema: narrationSchema(candidates),
           },
         },
-        { signal },
-      );
-    let response = await createResponse();
+      },
+      { signal },
+    );
+
     let parsed: unknown;
     try {
       parsed = JSON.parse(response.output_text);
-    } catch (error: unknown) {
+    } catch {
       yield {
         type: "rejected",
         code: "MODEL_SCHEMA_INVALID",
@@ -219,31 +239,11 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
       };
       return;
     }
-    if (isDeferredPharmacyAnswer(parsed)) {
-      response = await createResponse(true);
-      try {
-        parsed = JSON.parse(response.output_text);
-      } catch {
-        yield {
-          type: "rejected",
-          code: "MODEL_SCHEMA_INVALID",
-          fallback: "instant",
-        };
-        return;
-      }
-    }
-    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
-      Object.assign(parsed, {
-        request_id: context.input.request_id,
-        session_id: context.input.session_id,
-        sequence: context.input.sequence,
-        knowledge_version: context.instant.knowledge_version,
-        generated_at: new Date().toISOString(),
-        model: response.model,
-      });
-    }
-    const valid = validateContract<RuntimeOutput>("runtimeOutput", parsed);
-    if (!valid.ok || !valid.value) {
+    const sentence =
+      parsed && typeof parsed === "object" && !Array.isArray(parsed)
+        ? (parsed as Readonly<Record<string, unknown>>)["sentence"]
+        : undefined;
+    if (typeof sentence !== "string" || !candidates.includes(sentence)) {
       yield {
         type: "rejected",
         code: "MODEL_SCHEMA_INVALID",
@@ -251,19 +251,13 @@ export class OfficialResponsesRefiner implements ResponsesRefiner {
       };
       return;
     }
-    const attributedOutput = limitCounterConversationOutput(
-      {
-        ...valid.value,
-        model: response.model,
-      },
-      context.allowFollowUpQuestion ?? true,
-    );
-    const checked = postValidateOutput(context, attributedOutput);
+    const output = refinedOutput(context, sentence, response.model);
+    const checked = postValidateOutput(context, output);
     if (!checked.ok) {
       yield { type: "rejected", code: checked.code, fallback: "instant" };
       return;
     }
-    yield { type: "completed", output: attributedOutput };
+    yield { type: "completed", output };
   }
 }
 
@@ -284,24 +278,38 @@ export function limitCounterConversationOutput(
   output: RuntimeOutput,
   allowFollowUpQuestion = true,
 ): RuntimeOutput {
-  const maxSaySentences = output.mode === "escalate" ? 2 : 1;
-  const sentences = output.say_now
-    .flatMap((line) => line.split(/(?<=[.!?])\s+/u))
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0 && !line.endsWith("?"))
-    .slice(0, maxSaySentences);
-  const sayNow: RuntimeOutput["say_now"] =
-    sentences.length === 0
-      ? []
-      : sentences.length === 1
-        ? [sentences[0]!]
-        : [sentences[0]!, sentences[1]!];
+  const sentence = output.say_now[0]
+    ? oneSentence(output.say_now[0])
+    : undefined;
+  const sayNow: RuntimeOutput["say_now"] = sentence ? [sentence] : [];
   const firstQuestion = allowFollowUpQuestion ? output.ask_next[0] : undefined;
-  const askNext: RuntimeOutput["ask_next"] = firstQuestion
-    ? [firstQuestion]
-    : [];
-  return { ...output, say_now: sayNow, ask_next: askNext };
+  return {
+    ...output,
+    say_now: sayNow,
+    ask_next: firstQuestion ? [firstQuestion] : [],
+  };
 }
+
+const stableProjection = (output: RuntimeOutput): unknown => ({
+  request_id: output.request_id,
+  session_id: output.session_id,
+  sequence: output.sequence,
+  mode: output.mode,
+  status: output.status,
+  intent: output.intent,
+  ask_next: output.ask_next,
+  red_flags: output.red_flags,
+  actions: output.actions,
+  avoid: output.avoid,
+  missing_slots: output.missing_slots,
+  confidence: output.confidence,
+  candidate_intents: output.candidate_intents ?? [],
+  decision: output.decision,
+  source_refs: output.source_refs,
+  knowledge_version: output.knowledge_version,
+  stale_response_dropped: output.stale_response_dropped ?? false,
+});
+
 export function postValidateOutput(
   context: RefinementContext,
   output: RuntimeOutput,
@@ -314,28 +322,23 @@ export function postValidateOutput(
   )
     return { ok: false, code: "STALE_SEQUENCE" };
   if (
+    JSON.stringify(stableProjection(output)) !==
+    JSON.stringify(stableProjection(context.instant))
+  )
+    return { ok: false, code: "DECISION_MUTATION" };
+  if (
     output.source_refs.some(
       (ref) => !context.allowedClaimIds.includes(ref.claim_id),
     )
   )
     return { ok: false, code: "UNSUPPORTED_CLAIM" };
-  if (context.instant.mode === "escalate" && output.mode !== "escalate")
-    return { ok: false, code: "SAFETY_MONOTONICITY" };
-  const text = [...output.say_now, ...output.actions.map((a) => a.text)].join(
-    " ",
-  );
-  const dosageClaims =
-    text.match(
-      /\d+(?:\.\d+)?\s*(?:mg|g|mL|ml|cc|정|캡슐|포|회)(?:\s*(?:씩|복용|투여|하루|매일))?/gu,
-    ) ?? [];
   if (
-    dosageClaims.some(
-      (claim) => !context.allowedEntities.some((entity) => entity === claim),
-    )
+    output.say_now.length !== 1 ||
+    !narrationCandidates(context.instant).includes(output.say_now[0]!)
   )
     return { ok: false, code: "UNSUPPORTED_ENTITY" };
-  // Natural conversation stays model-led, while exact dose claims, source
-  // attribution, request integrity, and emergency escalation remain enforced.
+  if (isDeferredPharmacyAnswer(output))
+    return { ok: false, code: "DEFERRED_ANSWER" };
   return { ok: true };
 }
 

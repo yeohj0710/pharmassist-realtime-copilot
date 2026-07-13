@@ -102,6 +102,12 @@ function extractSlots(text: string): Readonly<Record<string, SlotEvidence>> {
   if (weight?.[1]) slots["weight_kg"] = slot(Number(weight[1]));
   const volume = text.match(/(\d+(?:\.\d+)?)\s*(?:mL|ml|미리|밀리|cc|씨씨)/iu);
   if (volume?.[1]) slots["volume_ml"] = slot(Number(volume[1]));
+  const temperature = text.match(/(\d{2}(?:\.\d+)?)\s*(?:도|℃)/u);
+  if (temperature?.[1]) slots["temperature_c"] = slot(Number(temperature[1]));
+  const duration = text.match(
+    /(?:(?:\d+(?:\.\d+)?|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|십)\s*(?:시간|일|주|개월)(?:째|간|전|부터)?|오늘|어제|그제|며칠|방금|아까|아침|저녁|밤(?:부터)?)/u,
+  )?.[0];
+  if (duration) slots["duration"] = slot(duration, "derived", 0.85, false);
   const concentration = text.match(
     /\d+(?:\.\d+)?\s*(?:mg|g)\s*\/\s*\d+(?:\.\d+)?\s*(?:mL|ml)/iu,
   )?.[0];

@@ -4,27 +4,56 @@ import {
   type ValidateFunction,
 } from "ajv/dist/2020.js";
 import claimSchema from "../schemas/claim.schema.json" with { type: "json" };
+import clinicalClaimSchema from "../schemas/clinical_claim.schema.json" with { type: "json" };
 import consultationCardSchema from "../schemas/consultation_card.schema.json" with { type: "json" };
+import consultationStateSchema from "../schemas/consultation_state.schema.json" with { type: "json" };
 import drugProductSchema from "../schemas/drug_product.schema.json" with { type: "json" };
 import errorEnvelopeSchema from "../schemas/error_envelope.schema.json" with { type: "json" };
 import feedbackSchema from "../schemas/feedback.schema.json" with { type: "json" };
+import ingredientSchema from "../schemas/ingredient.schema.json" with { type: "json" };
+import otcProtocolSchema from "../schemas/otc_protocol.schema.json" with { type: "json" };
 import packManifestSchema from "../schemas/pack_manifest.schema.json" with { type: "json" };
+import productIngredientSchema from "../schemas/product_ingredient.schema.json" with { type: "json" };
+import protocolOptionSchema from "../schemas/protocol_option.schema.json" with { type: "json" };
+import protocolRuleSchema from "../schemas/protocol_rule.schema.json" with { type: "json" };
+import recommendationDecisionSchema from "../schemas/recommendation_decision.schema.json" with { type: "json" };
 import refinementRequestSchema from "../schemas/refinement_request.schema.json" with { type: "json" };
 import runtimeInputSchema from "../schemas/runtime_input.schema.json" with { type: "json" };
 import runtimeOutputSchema from "../schemas/runtime_output.schema.json" with { type: "json" };
+import runtimePackSchema from "../schemas/runtime_pack.schema.json" with { type: "json" };
 import sourceRecordSchema from "../schemas/source_record.schema.json" with { type: "json" };
+import sourceSnapshotSchema from "../schemas/source_snapshot.schema.json" with { type: "json" };
+import tenantFormularySchema from "../schemas/tenant_formulary.schema.json" with { type: "json" };
+import tenantInventorySchema from "../schemas/tenant_inventory.schema.json" with { type: "json" };
+import tenantSalesAggregateSchema from "../schemas/tenant_sales_aggregate.schema.json" with { type: "json" };
 
-export type ContractName =
-  | "claim"
-  | "consultationCard"
-  | "drugProduct"
-  | "errorEnvelope"
-  | "feedback"
-  | "packManifest"
-  | "refinementRequest"
-  | "runtimeInput"
-  | "runtimeOutput"
-  | "sourceRecord";
+const schemaDocuments = {
+  claim: claimSchema,
+  clinicalClaim: clinicalClaimSchema,
+  consultationCard: consultationCardSchema,
+  consultationState: consultationStateSchema,
+  drugProduct: drugProductSchema,
+  errorEnvelope: errorEnvelopeSchema,
+  feedback: feedbackSchema,
+  ingredient: ingredientSchema,
+  otcProtocol: otcProtocolSchema,
+  packManifest: packManifestSchema,
+  productIngredient: productIngredientSchema,
+  protocolOption: protocolOptionSchema,
+  protocolRule: protocolRuleSchema,
+  recommendationDecision: recommendationDecisionSchema,
+  refinementRequest: refinementRequestSchema,
+  runtimeInput: runtimeInputSchema,
+  runtimeOutput: runtimeOutputSchema,
+  runtimePack: runtimePackSchema,
+  sourceRecord: sourceRecordSchema,
+  sourceSnapshot: sourceSnapshotSchema,
+  tenantFormulary: tenantFormularySchema,
+  tenantInventory: tenantInventorySchema,
+  tenantSalesAggregate: tenantSalesAggregateSchema,
+} as const;
+
+export type ContractName = keyof typeof schemaDocuments;
 
 export interface ValidationResult<T> {
   readonly ok: boolean;
@@ -49,21 +78,27 @@ ajv.addFormat("date-time", {
       value,
     ) && Number.isFinite(Date.parse(value)),
 });
-for (const schema of [runtimeInputSchema, runtimeOutputSchema])
-  ajv.addSchema(schema);
+ajv.addFormat("uri", {
+  type: "string",
+  validate: (value: string) => {
+    try {
+      const parsed = new URL(value);
+      return Boolean(parsed.protocol && parsed.hostname);
+    } catch {
+      return false;
+    }
+  },
+});
 
-const validators: Readonly<Record<ContractName, ValidateFunction>> = {
-  claim: ajv.compile(claimSchema),
-  consultationCard: ajv.compile(consultationCardSchema),
-  drugProduct: ajv.compile(drugProductSchema),
-  errorEnvelope: ajv.compile(errorEnvelopeSchema),
-  feedback: ajv.compile(feedbackSchema),
-  packManifest: ajv.compile(packManifestSchema),
-  refinementRequest: ajv.compile(refinementRequestSchema),
-  runtimeInput: ajv.getSchema(runtimeInputSchema.$id)!,
-  runtimeOutput: ajv.getSchema(runtimeOutputSchema.$id)!,
-  sourceRecord: ajv.compile(sourceRecordSchema),
-};
+for (const schema of Object.values(schemaDocuments)) ajv.addSchema(schema);
+
+const validators = Object.fromEntries(
+  Object.entries(schemaDocuments).map(([name, schema]) => {
+    const validator = ajv.getSchema(schema.$id);
+    if (!validator) throw new Error(`Contract schema not registered: ${name}`);
+    return [name, validator];
+  }),
+) as Readonly<Record<ContractName, ValidateFunction>>;
 
 export function validateContract<T>(
   name: ContractName,
@@ -78,3 +113,6 @@ export const runtimeInputSchemaDocument: Readonly<Record<string, unknown>> =
   runtimeInputSchema;
 export const runtimeOutputSchemaDocument: Readonly<Record<string, unknown>> =
   runtimeOutputSchema;
+export const recommendationDecisionSchemaDocument: Readonly<
+  Record<string, unknown>
+> = recommendationDecisionSchema;

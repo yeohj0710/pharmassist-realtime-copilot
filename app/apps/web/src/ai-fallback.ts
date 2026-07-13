@@ -5,6 +5,13 @@ const apiBaseUrl = () =>
   (import.meta.env["VITE_API_BASE_URL"] as string | undefined) ??
   "http://127.0.0.1:8080";
 
+const authHeaders = (): Readonly<Record<string, string>> => ({
+  "content-type": "application/json",
+  "x-role": "pharmacist",
+  "x-tenant-id": "demo",
+  "x-app-passcode": sessionStorage.getItem("pharmassist_access") ?? "",
+});
+
 export function shouldRequestAiRefinement(
   online: boolean,
   mode: RuntimeOutput["mode"],
@@ -23,23 +30,38 @@ export async function requestAiReadiness(
   return body.components?.openai_responses === "ready";
 }
 
+/**
+ * The browser worker remains the offline source of the immediate decision.
+ * Before optional narration, the API independently executes and stores the
+ * same turn. Only that server-issued RuntimeOutput can cross the LLM boundary.
+ */
 export async function requestAiFallback(
   input: RuntimeInput,
-  instant: RuntimeOutput,
+  localInstant: RuntimeOutput,
   conversationHistory: readonly string[],
   signal: AbortSignal,
 ): Promise<RuntimeOutput | undefined> {
+  const instantResponse = await fetch(`${apiBaseUrl()}/v1/consult/instant`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(input),
+    signal,
+  });
+  if (!instantResponse.ok) return undefined;
+  const serverInstant = (await instantResponse.json()) as RuntimeOutput;
+  if (
+    serverInstant.request_id !== input.request_id ||
+    serverInstant.session_id !== input.session_id ||
+    serverInstant.sequence !== input.sequence ||
+    serverInstant.decision.pack_id !== localInstant.decision.pack_id
+  )
+    return undefined;
+
   const response = await fetch(`${apiBaseUrl()}/v1/consult/refine`, {
     method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-role": "pharmacist",
-      "x-tenant": "local-demo",
-      "x-user": "local-user",
-      "x-app-passcode": sessionStorage.getItem("pharmassist_access") ?? "",
-    },
+    headers: authHeaders(),
     body: JSON.stringify(
-      buildAiRefinementBody(input, instant, conversationHistory),
+      buildAiRefinementBody(input, serverInstant, conversationHistory),
     ),
     signal,
   });

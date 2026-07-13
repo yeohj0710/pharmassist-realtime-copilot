@@ -1,12 +1,16 @@
+import { syntheticPack } from "@pharmassist/test-fixtures";
 import { describe, expect, it } from "vitest";
 import {
   AtomicPackStore,
   canonicalJson,
+  compileDecisionPack,
   createDevKeys,
+  lintDecisionPack,
   lintForPublication,
   signPayload,
   verifyPayload,
 } from "./index.js";
+
 describe("knowledge lifecycle", () => {
   it("canonicalizes, signs, detects tampering, activates and rolls back", () => {
     const keys = createDevKeys();
@@ -19,7 +23,7 @@ describe("knowledge lifecycle", () => {
     expect(verifyPayload(one, keys.publicKey)).toBe(true);
     const store = new AtomicPackStore<{ version: string; cards: number[] }>(
       keys.publicKey,
-      (p) => p.version,
+      (payload) => payload.version,
     );
     store.activate(one, () => true);
     store.activate(
@@ -28,7 +32,8 @@ describe("knowledge lifecycle", () => {
     );
     expect(store.rollback().payload.version).toBe("1");
   });
-  it("fails production synthetic/tier/conflict gates", () => {
+
+  it("fails production synthetic, trust, conflict, review and expiry gates", () => {
     const errors = lintForPublication(
       [
         {
@@ -47,6 +52,50 @@ describe("knowledge lifecycle", () => {
     );
     expect(errors.length).toBeGreaterThanOrEqual(6);
   });
+
+  it("blocks synthetic or unresolved-rights decision packs in production", () => {
+    const syntheticErrors = lintDecisionPack(
+      syntheticPack,
+      "production",
+      new Date("2026-07-13T00:00:00Z"),
+    );
+    expect(syntheticErrors).toContain("PACK_SYNTHETIC");
+    expect(syntheticErrors).toContain("PACK_CLINICAL_USE_PROHIBITED");
+    expect(syntheticErrors).toContain("PACK_NOT_VERIFIED");
+
+    const unresolved = {
+      ...syntheticPack,
+      synthetic: false,
+      clinicalUseProhibited: false,
+      verified: true,
+      sources: syntheticPack.sources.map((source) => ({
+        ...source,
+        official: true,
+        usage_rights: "unknown" as const,
+      })),
+    };
+    expect(
+      lintDecisionPack(
+        unresolved,
+        "production",
+        new Date("2026-07-13T00:00:00Z"),
+      ).some((error) => error.includes("USAGE_RIGHTS_UNRESOLVED")),
+    ).toBe(true);
+  });
+
+  it("compiles deterministic entity ordering only after all gates pass", () => {
+    const compiled = compileDecisionPack(
+      syntheticPack,
+      "local-demo",
+      new Date("2026-07-13T00:00:00Z"),
+    );
+    expect(compiled.protocols.map((item) => item.protocol_id)).toEqual(
+      [...compiled.protocols]
+        .map((item) => item.protocol_id)
+        .sort((left, right) => left.localeCompare(right)),
+    );
+  });
+
   it("never rolls back to a revoked pack and clears an unsafe active pack", () => {
     const keys = createDevKeys();
     const store = new AtomicPackStore<{ version: string; cards: number[] }>(

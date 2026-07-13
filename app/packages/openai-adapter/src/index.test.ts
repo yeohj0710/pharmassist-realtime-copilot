@@ -20,13 +20,38 @@ const base: RuntimeOutput = {
   mode: "clarify",
   status: "blocked",
   intent: null,
-  say_now: [],
-  ask_next: [],
+  say_now: ["선택에 필요한 증상 정보를 한 가지만 알려주세요?"],
+  ask_next: [
+    {
+      question: "선택에 필요한 증상 정보를 한 가지만 알려주세요?",
+      reason: "선택을 바꾸는 정보 확인",
+      priority: 1,
+      slot: "symptom",
+    },
+  ],
   red_flags: [],
   actions: [],
   avoid: [],
   missing_slots: ["product"],
   confidence: 1,
+  decision: {
+    decision_id: "DEC-C5BEED71ACDE4A338C5AA33FFDD81F6D-2",
+    status: "ask",
+    pack_id: "PACK-TEST",
+    protocol_id: null,
+    intent: null,
+    tenant_inventory_connected: false,
+    ingredient_options: [],
+    product_candidates: [],
+    question: {
+      question: "선택에 필요한 증상 정보를 한 가지만 알려주세요?",
+      reason: "선택을 바꾸는 정보 확인",
+      slot: "symptom",
+    },
+    referral: null,
+    source_refs: [],
+    reason_codes: ["TEST_ASK"],
+  },
   source_refs: [],
   latency: {
     total_ms: 1,
@@ -111,31 +136,22 @@ describe("OpenAI boundaries", () => {
         { ...base, mode: "refined" },
       ).ok,
     ).toBe(false));
-  it("rejects an unverified exact dosage while allowing ordinary guidance", () => {
+  it("accepts only an exact decision-scoped sentence", () => {
     expect(
       postValidateOutput(context, {
         ...base,
         say_now: ["이 약을 500mg씩 복용하세요."],
       }),
     ).toEqual({ ok: false, code: "UNSUPPORTED_ENTITY" });
-    expect(
-      postValidateOutput(context, {
-        ...base,
-        say_now: ["해열진통제 계열을 비교해 볼 수 있어요."],
-      }),
-    ).toEqual({ ok: true });
+    expect(postValidateOutput(context, base)).toEqual({ ok: true });
   });
-  it("limits counter speech to one guidance sentence and one question", () => {
+  it("limits counter speech to one sentence and can suppress the one allowed question", () => {
     const limited = limitCounterConversationOutput({
       ...base,
       say_now: ["첫 문장입니다. 두 번째 설명입니다.", "세 번째입니다."],
-      ask_next: [
-        { question: "첫 질문?", reason: "r", priority: 1, slot: "a" },
-        { question: "둘째 질문?", reason: "r", priority: 2, slot: "b" },
-      ],
     });
     expect(limited.say_now).toEqual(["첫 문장입니다."]);
-    expect(limited.ask_next.map((item) => item.question)).toEqual(["첫 질문?"]);
+    expect(limited.ask_next).toHaveLength(1);
     expect(limitCounterConversationOutput(limited, false).ask_next).toEqual([]);
   });
   it("reduces duplicate events and stable prefixes", () => {
