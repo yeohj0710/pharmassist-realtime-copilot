@@ -194,7 +194,7 @@ describe("deterministic local runtime", () => {
     }
   });
 
-  it("asks a slot once and does not repeat it after an uncertain answer", () => {
+  it("switches to an easier question after an uncertain answer", () => {
     const first = engine.run(makeInput("기침이 나요"), tenantContext());
     expect(first.output.decision.status).toBe("ask");
     expect(first.output.ask_next[0]?.slot).toBe("duration");
@@ -202,10 +202,10 @@ describe("deterministic local runtime", () => {
       makeInput("모르겠어요", "typed", "human_otc", 2),
       tenantContext(first.consultationState),
     );
-    expect(second.output.decision.status).toBe("insufficient");
-    expect(second.output.ask_next).toEqual([]);
+    expect(second.output.decision.status).toBe("ask");
+    expect(second.output.ask_next[0]?.slot).toBe("symptom_pattern");
     expect(second.output.decision.reason_codes).toContain(
-      "QUESTION_ALREADY_ASKED",
+      "UNCERTAIN_ANSWER_ALTERNATIVE_ASK",
     );
   });
 

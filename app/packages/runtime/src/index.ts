@@ -70,6 +70,35 @@ export type AppProfile = "local-demo" | "local-live" | "staging" | "production";
 
 const uncertainAnswer = /모르|몰라|애매|기억(?:이)?\s*안|확실하지|글쎄/u;
 
+const alternativeQuestion = (
+  intent: string,
+): Readonly<{ question: string; reason: string; slot: string }> | undefined => {
+  if (intent.includes("abdominal"))
+    return {
+      question: "쥐어짜듯 아픈가요, 쓰리거나 더부룩한 느낌인가요?",
+      reason: "복통 양상에 따른 완화 방향 확인",
+      slot: "symptom_pattern",
+    };
+  if (intent.includes("cough"))
+    return {
+      question: "마른기침인가요, 가래가 있는 기침인가요?",
+      reason: "기침 양상에 따른 성분군 선택",
+      slot: "symptom_pattern",
+    };
+  if (intent.includes("bowel"))
+    return {
+      question: "변이 묽은 쪽인가요, 잘 나오지 않는 쪽인가요?",
+      reason: "배변 증상에 따른 성분군 선택",
+      slot: "symptom_pattern",
+    };
+  return {
+    question:
+      "가장 불편한 느낌을 한 단어로 고르면 통증·가려움·열감 중 무엇인가요?",
+    reason: "답하기 쉬운 표현으로 증상 양상 확인",
+    slot: "symptom_pattern",
+  };
+};
+
 const plausibleSlotAnswer = (
   slot: string,
   text: string,
@@ -559,6 +588,36 @@ export class LocalClinicalEngine {
         context.inventory !== undefined,
         card.askNext,
         "LEGACY_CARD_COMPATIBILITY_ASK",
+        card.intent,
+      );
+
+    if (
+      uncertainReply &&
+      decision.status === "insufficient" &&
+      safety.mode !== "escalate" &&
+      card
+    ) {
+      const alternative = alternativeQuestion(card.intent);
+      if (
+        alternative &&
+        !(prior?.asked_slots.includes(alternative.slot) ?? false)
+      )
+        decision = askDecision(
+          this.pack.packId,
+          input,
+          context.inventory !== undefined,
+          alternative,
+          "UNCERTAIN_ANSWER_ALTERNATIVE_ASK",
+          card.intent,
+        );
+    }
+
+    if (decision.status === "insufficient" && decision.intent === null && card)
+      decision = noDecision(
+        this.pack.packId,
+        input,
+        context.inventory !== undefined,
+        decision.reason_codes,
         card.intent,
       );
 

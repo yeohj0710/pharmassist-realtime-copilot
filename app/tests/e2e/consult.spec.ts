@@ -64,7 +64,7 @@ test("short second answer completes a routine consult", async ({ page }) => {
   await input.fill("어제부터요");
   await input.press("Enter");
   await expect(
-    page.getByLabel("OTC 결정 결과").getByText("상담 분류 완료"),
+    page.getByLabel("OTC 결정 결과").getByText("참고 추천", { exact: true }),
   ).toBeVisible();
   await expect(
     page.getByLabel("OTC 결정 결과").getByText("상담 결과"),
@@ -83,6 +83,24 @@ test("abdominal pain never routes to the throat card", async ({ page }) => {
   ).toBeVisible();
   await expect(page.getByText(/목 통증은 언제부터/)).toHaveCount(0);
   await expect(page.getByText(/삼키기 어렵거나/)).toHaveCount(0);
+});
+
+test("an uncertain answer switches questions and still reaches guidance", async ({
+  page,
+}) => {
+  const input = page.getByLabel("증상이나 질문을 입력하세요");
+  await input.fill("배아파요");
+  await input.press("Enter");
+  await expect(page.getByText(/윗배·아랫배/).first()).toBeVisible();
+  await input.fill("잘 모르겠어요");
+  await input.press("Enter");
+  await expect(page.getByText(/쥐어짜듯/).first()).toBeVisible();
+  await input.fill("쓰리고 더부룩해요");
+  await input.press("Enter");
+  await expect(page.getByText(/속쓰림과 더부룩함/).first()).toBeVisible();
+  await input.fill("속쓰림이 더 불편해요");
+  await input.press("Enter");
+  await expect(page.getByText("참고 추천", { exact: true })).toBeVisible();
 });
 
 test("bowel urgency progresses without a prepared exact phrase", async ({
@@ -132,7 +150,7 @@ test("shows the new local answer immediately while AI refines it", async ({
   await input.fill("어제부터요");
   await input.press("Enter");
   await expect(
-    page.getByLabel("OTC 결정 결과").getByText("상담 분류 완료"),
+    page.getByLabel("OTC 결정 결과").getByText("참고 추천", { exact: true }),
   ).toBeVisible();
   await expect(page.locator(".primary-guidance")).not.toContainText(
     "기침은 언제부터 시작됐나요?",

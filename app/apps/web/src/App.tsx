@@ -112,6 +112,17 @@ const consultationPresentation = (
         "연령·임신 여부와 증상 지속 기간",
       ],
     };
+  if (intent?.includes("abdominal"))
+    return {
+      title: "복통 완화 상담 경로",
+      direction:
+        "위험 신호가 없다면 통증 위치와 양상에 맞춰 위장 증상 완화 성분군을 우선 검토하세요.",
+      checks: [
+        "갑자기 심해지는 통증·오른쪽 아랫배 통증",
+        "발열·구토·혈변 또는 검은 변",
+        "임신 가능성·복용 중인 약과 기저질환",
+      ],
+    };
   if (intent?.includes("bowel") || intent?.includes("diarrhea"))
     return {
       title: "배변 증상 상담 경로",
@@ -587,8 +598,14 @@ export function App() {
   const presentation = result
     ? consultationPresentation(result.decision.intent)
     : null;
+  const guidedDecision = Boolean(
+    result &&
+    !critical &&
+    ((syntheticDecision && result.decision.status === "recommend") ||
+      (result.decision.status === "insufficient" && result.decision.intent)),
+  );
   const visibleLines = result
-    ? syntheticDecision && result.decision.status === "recommend"
+    ? guidedDecision
       ? presentation
         ? [`${presentation.title}로 분류했습니다. ${presentation.direction}`]
         : ["증상 분류와 안전 확인을 마쳤습니다."]
@@ -794,34 +811,33 @@ export function App() {
                     <div>
                       <p>결정 상태</p>
                       <strong>
-                        {syntheticDecision &&
-                        result.decision.status === "recommend"
-                          ? "상담 분류 완료"
+                        {guidedDecision
+                          ? "참고 추천"
                           : decisionLabel[result.decision.status]}
                       </strong>
                     </div>
                     <code>{result.decision.decision_id}</code>
                   </div>
-                  {syntheticDecision &&
-                    result.decision.status === "recommend" && (
-                      <div className="decision-block synthetic-decision-notice">
-                        <h2>상담 결과</h2>
-                        <strong className="consultation-result-title">
-                          {presentation?.title}
-                        </strong>
-                        <p>{presentation?.direction}</p>
-                        <h3>약사 확인사항</h3>
-                        <ul className="consultation-checks">
-                          {presentation?.checks.map((check) => (
-                            <li key={check}>{check}</li>
-                          ))}
-                        </ul>
-                        <small>
-                          구체 성분·제품은 MFDS 공식 데이터와 해당 약국의
-                          재고·formulary 연결 후 검증된 후보만 표시됩니다.
-                        </small>
-                      </div>
-                    )}
+                  {guidedDecision && (
+                    <div className="decision-block synthetic-decision-notice">
+                      <h2>상담 결과</h2>
+                      <strong className="consultation-result-title">
+                        {presentation?.title}
+                      </strong>
+                      <p>{presentation?.direction}</p>
+                      <h3>약사 확인사항</h3>
+                      <ul className="consultation-checks">
+                        {presentation?.checks.map((check) => (
+                          <li key={check}>{check}</li>
+                        ))}
+                      </ul>
+                      <small>
+                        현재 근거의 신뢰도가 낮거나 합성 데이터인 경우 참고
+                        추천으로 표시됩니다. 구체 제품은 약사가 환자 상태와
+                        재고를 확인해 선택하세요.
+                      </small>
+                    </div>
+                  )}
                   {!syntheticDecision &&
                     result.decision.ingredient_options.length > 0 && (
                       <div className="decision-block">

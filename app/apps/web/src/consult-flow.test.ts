@@ -54,12 +54,10 @@ describe("stateful fast consult flow", () => {
       flow.run(input("배가 아파요", 1));
       const result = flow.run(input(answer, 2));
 
-      expect(result.output.status).toBe("final");
-      expect(result.output.decision.status).toBe("insufficient");
-      expect(result.output.actions[0]?.type).toBe(
-        "pharmacist_review_or_restart",
-      );
-      expect(result.output.ask_next).toEqual([]);
+      expect(result.output.status).toBe("blocked");
+      expect(result.output.decision.status).toBe("ask");
+      expect(result.output.ask_next[0]?.slot).toBe("symptom_pattern");
+      expect(result.output.ask_next[0]?.question).toContain("쥐어짜듯");
     },
   );
 

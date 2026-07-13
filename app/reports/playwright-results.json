@@ -94,12 +94,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 661,
+                  "duration": 665,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:04:42.241Z",
+                  "startTime": "2026-07-13T11:13:25.072Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -128,12 +128,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 208,
+                  "duration": 209,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:04:42.985Z",
+                  "startTime": "2026-07-13T11:13:25.814Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -162,12 +162,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 294,
+                  "duration": 308,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:04:43.197Z",
+                  "startTime": "2026-07-13T11:13:26.030Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -196,12 +196,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 298,
+                  "duration": 333,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:04:43.497Z",
+                  "startTime": "2026-07-13T11:13:26.345Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -230,12 +230,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 280,
+                  "duration": 256,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:04:43.800Z",
+                  "startTime": "2026-07-13T11:13:26.684Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -246,6 +246,40 @@
           "id": "827050d6aeb1f8bc4895-2e4636864d8df78cff81",
           "file": "consult.spec.ts",
           "line": 77,
+          "column": 5
+        },
+        {
+          "title": "an uncertain answer switches questions and still reaches guidance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 329,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T11:13:26.945Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-16c13b6a9d947360fab6",
+          "file": "consult.spec.ts",
+          "line": 88,
           "column": 5
         },
         {
@@ -264,12 +298,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 276,
+                  "duration": 279,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:04:44.085Z",
+                  "startTime": "2026-07-13T11:13:27.279Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -279,7 +313,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-52b2fc5cf8786a729f47",
           "file": "consult.spec.ts",
-          "line": 88,
+          "line": 106,
           "column": 5
         },
         {
@@ -298,12 +332,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 246,
+                  "duration": 260,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:04:44.366Z",
+                  "startTime": "2026-07-13T11:13:27.563Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -313,7 +347,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-d056805a67275b2bfd3e",
           "file": "consult.spec.ts",
-          "line": 104,
+          "line": 122,
           "column": 5
         },
         {
@@ -332,12 +366,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 328,
+                  "duration": 296,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:04:44.617Z",
+                  "startTime": "2026-07-13T11:13:27.828Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -347,7 +381,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-0dd494789acc19592839",
           "file": "consult.spec.ts",
-          "line": 112,
+          "line": 130,
           "column": 5
         }
       ]
@@ -355,9 +389,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-13T11:04:40.952Z",
-    "duration": 4200.095,
-    "expected": 8,
+    "startTime": "2026-07-13T11:13:23.782Z",
+    "duration": 4556.225,
+    "expected": 9,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
