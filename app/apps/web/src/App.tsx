@@ -85,6 +85,14 @@ const inventoryLabel = (
         ? "재고 미연결"
         : "재고 확인 필요";
 
+const isSyntheticDecision = (decision: RuntimeOutput["decision"]): boolean =>
+  decision.ingredient_options.some((item) =>
+    /^(검토용|합성|synthetic)/iu.test(item.ingredient_name),
+  ) ||
+  decision.product_candidates.some((item) =>
+    /^(검토용|합성|synthetic)/iu.test(item.display_name),
+  );
+
 export function App() {
   const [accessGranted, setAccessGranted] = useState(
     sessionStorage.getItem("pharmassist_access") === "0903",
@@ -530,6 +538,16 @@ export function App() {
   const critical =
     result?.mode === "escalate" || Boolean(result?.red_flags.length);
   const patientSummary = buildPatientSummary(history);
+  const syntheticDecision = result
+    ? isSyntheticDecision(result.decision)
+    : false;
+  const visibleLines = result
+    ? syntheticDecision && result.decision.status === "recommend"
+      ? [
+          "증상 분류와 안전 확인을 마쳤습니다. 실제 성분·제품 후보는 공식 의약품 데이터와 약국 재고가 연결된 뒤 약사가 확인해 선택하세요.",
+        ]
+      : patientVisibleLines(result)
+    : [];
 
   if (!accessGranted) {
     const unlock = () => {
@@ -713,7 +731,7 @@ export function App() {
                 )}
                 <article className="primary-guidance">
                   <p className="result-kicker">지금 말할 내용</p>
-                  {patientVisibleLines(result).map((line, index) => (
+                  {visibleLines.map((line, index) => (
                     <p
                       className={index < result.say_now.length ? "say" : "ask"}
                       key={line}
@@ -729,49 +747,70 @@ export function App() {
                   <div className="decision-heading">
                     <div>
                       <p>결정 상태</p>
-                      <strong>{decisionLabel[result.decision.status]}</strong>
+                      <strong>
+                        {syntheticDecision &&
+                        result.decision.status === "recommend"
+                          ? "상담 분류 완료"
+                          : decisionLabel[result.decision.status]}
+                      </strong>
                     </div>
                     <code>{result.decision.decision_id}</code>
                   </div>
-                  {result.decision.ingredient_options.length > 0 && (
-                    <div className="decision-block">
-                      <h2>검증된 성분 선택지</h2>
-                      <ul className="ingredient-options">
-                        {result.decision.ingredient_options.map((option) => (
-                          <li key={option.option_id}>
-                            <strong>{option.ingredient_name}</strong>
-                            <span>
-                              임상 {Math.round(option.clinical_score * 100)} ·
-                              안전 {Math.round(option.safety_score * 100)}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {result.decision.product_candidates.length > 0 && (
-                    <div className="decision-block">
-                      <h2>약국 제품 후보</h2>
-                      <div className="product-candidates">
-                        {result.decision.product_candidates.map((product) => (
-                          <article key={product.product_id}>
-                            <strong>{product.display_name}</strong>
-                            <span>
-                              {inventoryLabel(product.inventory_status)}
-                            </span>
-                            <small>
-                              {product.available_quantity === null
-                                ? "수량 미연결"
-                                : `가용 ${product.available_quantity}`}
-                              {product.sales_rank === null
-                                ? ""
-                                : ` · 90일 판매순위 ${product.sales_rank}`}
-                            </small>
-                          </article>
-                        ))}
+                  {syntheticDecision &&
+                    result.decision.status === "recommend" && (
+                      <div className="decision-block synthetic-decision-notice">
+                        <h2>실제 후보 표시 대기</h2>
+                        <p>
+                          현재 데모의 합성 성분·제품명은 추천 결과로 표시하지
+                          않습니다.
+                        </p>
+                        <small>
+                          MFDS 공식 데이터와 해당 약국의 재고·formulary 연결 후
+                          검증된 후보만 표시됩니다.
+                        </small>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  {!syntheticDecision &&
+                    result.decision.ingredient_options.length > 0 && (
+                      <div className="decision-block">
+                        <h2>검증된 성분 선택지</h2>
+                        <ul className="ingredient-options">
+                          {result.decision.ingredient_options.map((option) => (
+                            <li key={option.option_id}>
+                              <strong>{option.ingredient_name}</strong>
+                              <span>
+                                임상 {Math.round(option.clinical_score * 100)} ·
+                                안전 {Math.round(option.safety_score * 100)}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  {!syntheticDecision &&
+                    result.decision.product_candidates.length > 0 && (
+                      <div className="decision-block">
+                        <h2>약국 제품 후보</h2>
+                        <div className="product-candidates">
+                          {result.decision.product_candidates.map((product) => (
+                            <article key={product.product_id}>
+                              <strong>{product.display_name}</strong>
+                              <span>
+                                {inventoryLabel(product.inventory_status)}
+                              </span>
+                              <small>
+                                {product.available_quantity === null
+                                  ? "수량 미연결"
+                                  : `가용 ${product.available_quantity}`}
+                                {product.sales_rank === null
+                                  ? ""
+                                  : ` · 90일 판매순위 ${product.sales_rank}`}
+                              </small>
+                            </article>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   {result.decision.status === "ask" &&
                     result.decision.question && (
                       <div className="decision-block decision-question">

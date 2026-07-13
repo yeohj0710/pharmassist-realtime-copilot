@@ -64,10 +64,10 @@ test("short second answer completes a routine consult", async ({ page }) => {
   await input.fill("어제부터요");
   await input.press("Enter");
   await expect(
-    page.getByLabel("OTC 결정 결과").getByText("검증된 후보"),
+    page.getByLabel("OTC 결정 결과").getByText("상담 분류 완료"),
   ).toBeVisible();
   await expect(
-    page.getByLabel("OTC 결정 결과").getByText(/검토용 기침 성분 A/),
+    page.getByLabel("OTC 결정 결과").getByText("실제 후보 표시 대기"),
   ).toBeVisible();
   await expect(
     page.getByRole("article").getByText("기침은 언제부터 시작됐나요?"),
@@ -97,7 +97,7 @@ test("bowel urgency progresses without a prepared exact phrase", async ({
   await input.fill("3분 전부터요");
   await input.press("Enter");
   await expect(
-    page.getByLabel("OTC 결정 결과").getByText(/검토용 설사 성분 A/),
+    page.getByLabel("OTC 결정 결과").getByText("실제 후보 표시 대기"),
   ).toBeVisible();
 });
 
@@ -132,7 +132,7 @@ test("shows the new local answer immediately while AI refines it", async ({
   await input.fill("어제부터요");
   await input.press("Enter");
   await expect(
-    page.getByLabel("OTC 결정 결과").getByText("검증된 후보"),
+    page.getByLabel("OTC 결정 결과").getByText("상담 분류 완료"),
   ).toBeVisible();
   await expect(page.locator(".primary-guidance")).not.toContainText(
     "기침은 언제부터 시작됐나요?",
