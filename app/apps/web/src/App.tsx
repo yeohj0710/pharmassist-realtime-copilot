@@ -182,6 +182,10 @@ export function App() {
         if (shouldRequestAiRefinement(navigator.onLine, localOutput.mode)) {
           const input = inputsRef.current.get(event.data.output.sequence);
           if (input) {
+            const refinementHistory = historyRef.current;
+            // Optimistic UI: render the deterministic local answer immediately.
+            // The AI result replaces this same sequence when it arrives.
+            commitOutput(localOutput);
             aiAbortRef.current?.abort();
             const controller = new AbortController();
             aiAbortRef.current = controller;
@@ -189,7 +193,7 @@ export function App() {
             void requestAiFallback(
               input,
               localOutput,
-              historyRef.current,
+              refinementHistory,
               controller.signal,
             )
               .then((refined) => {
@@ -198,13 +202,9 @@ export function App() {
                   refined.session_id === sessionIdRef.current
                 ) {
                   commitOutput(refined);
-                } else if (localOutput.sequence === sequenceRef.current)
-                  commitOutput(localOutput);
+                }
               })
-              .catch(() => {
-                if (localOutput.sequence === sequenceRef.current)
-                  commitOutput(localOutput);
-              })
+              .catch(() => undefined)
               .finally(() => {
                 if (aiAbortRef.current === controller) {
                   aiAbortRef.current = null;

@@ -93,7 +93,7 @@ test("shoulder pain never routes to abdominal pain", async ({ page }) => {
   await expect(page.getByText(/윗배·아랫배/)).toHaveCount(0);
 });
 
-test("keeps the previous answer visible while the next AI answer loads", async ({
+test("shows the new local answer immediately while AI refines it", async ({
   page,
 }) => {
   let refinementCount = 0;
@@ -113,6 +113,8 @@ test("keeps the previous answer visible while the next AI answer loads", async (
   await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
   await input.fill("어제부터요");
   await input.press("Enter");
-  await expect(page.getByText("기침은 언제부터 시작됐나요?")).toBeVisible();
   await expect(page.getByText("다음 답변을 짧게 정리 중")).toBeVisible();
+  await expect(page.locator(".primary-guidance")).not.toContainText(
+    "기침은 언제부터 시작됐나요?",
+  );
 });

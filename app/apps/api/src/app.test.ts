@@ -242,11 +242,13 @@ describe("API", () => {
       content: string;
     }>[] = [];
     let capturedQuestionBudget = true;
+    let capturedCounterPolicy = "";
     const app = await buildApp({
       responsesRefiner: {
         async *refine(context) {
           capturedConversation = context.conversation ?? [];
           capturedQuestionBudget = context.allowFollowUpQuestion ?? true;
+          capturedCounterPolicy = `${context.promptSystem}\n${context.promptDeveloperOverride ?? ""}`;
           yield { type: "started" as const, sequence: 3 };
         },
       },
@@ -288,6 +290,11 @@ describe("API", () => {
         { role: "user", content: "아니 전자라고요" },
       ]);
       expect(capturedQuestionBudget).toBe(true);
+      expect(capturedCounterPolicy).toContain("active ingredient");
+      expect(capturedCounterPolicy).toContain("what to do now");
+      expect(capturedCounterPolicy).toContain(
+        "Never output a speculative cause by itself",
+      );
     } finally {
       await app.close();
       if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];
