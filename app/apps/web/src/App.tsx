@@ -103,13 +103,29 @@ interface ConsultationPresentation {
 const consultationPresentation = (
   intent: string | null,
 ): ConsultationPresentation => {
+  if (intent?.includes("dyspepsia"))
+    return {
+      title: "속쓰림·소화불량 상담 경로",
+      direction:
+        "위험 신호가 없다면 가장 가까운 증상에 맞춰 아래 성분부터 검토하세요.",
+      fallbackOptions: [
+        "속쓰림·신물: 알마게이트 또는 탄산칼슘 계열",
+        "더부룩함·가스: 시메티콘",
+        "식후 소화불량: 판크레아틴 등 소화효소 성분",
+      ],
+      checks: [
+        "지속되거나 반복되는 구토·물도 못 마시는 상태",
+        "심한 복통·혈변·검은 변·토혈",
+        "임신 가능성·복용 중인 약과 기저질환",
+      ],
+    };
   if (intent?.includes("cough"))
     return {
       title: "일반 기침 상담 경로",
       direction: "기침 양상에 맞는 완화 성분군을 우선 검토하세요.",
       fallbackOptions: [
-        "마른기침: 진해 성분군",
-        "가래기침: 거담·점액용해 성분군",
+        "마른기침: 덱스트로메토르판 성분",
+        "가래기침: 구아이페네신·아세틸시스테인 계열",
         "양상이 불분명하면 단일 성분·짧은 기간 우선",
       ],
       checks: [
@@ -124,8 +140,9 @@ const consultationPresentation = (
       direction:
         "위험 신호가 없다면 통증 위치와 양상에 맞춰 위장 증상 완화 성분군을 우선 검토하세요.",
       fallbackOptions: [
-        "쓰림·신물: 제산·위산 관련 완화 성분군",
-        "더부룩함·가스: 가스 완화·소화 보조 성분군",
+        "쓰림·신물: 알마게이트 또는 탄산칼슘 계열",
+        "더부룩함·가스: 시메티콘",
+        "식후 소화불량: 판크레아틴 등 소화효소 성분",
         "양상이 불분명하면 복합제보다 단일 성분·짧은 기간 우선",
       ],
       checks: [
@@ -929,9 +946,11 @@ export function App() {
                 <details className="supporting-details">
                   <summary>근거·주의사항</summary>
                   <div className="supporting-content">
-                    {result.avoid.map((item) => (
-                      <p key={item}>{item}</p>
-                    ))}
+                    {result.avoid
+                      .filter((item) => !/임의로 진단하지 않습니다/u.test(item))
+                      .map((item) => (
+                        <p key={item}>{item}</p>
+                      ))}
                     {result.decision.source_refs.length > 0 && (
                       <div className="evidence-refs">
                         <strong>검증 근거</strong>

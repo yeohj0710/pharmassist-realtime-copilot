@@ -94,12 +94,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 680,
+                  "duration": 874,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:12.758Z",
+                  "startTime": "2026-07-13T11:42:32.579Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -128,12 +128,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 209,
+                  "duration": 269,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:13.523Z",
+                  "startTime": "2026-07-13T11:42:33.554Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -162,12 +162,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 310,
+                  "duration": 386,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:13.737Z",
+                  "startTime": "2026-07-13T11:42:33.832Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -196,12 +196,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 315,
+                  "duration": 297,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:14.052Z",
+                  "startTime": "2026-07-13T11:42:34.224Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -230,12 +230,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 262,
+                  "duration": 314,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:14.373Z",
+                  "startTime": "2026-07-13T11:42:34.527Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -264,12 +264,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 411,
+                  "duration": 497,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:14.640Z",
+                  "startTime": "2026-07-13T11:42:34.848Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -298,12 +298,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 300,
+                  "duration": 372,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:15.055Z",
+                  "startTime": "2026-07-13T11:42:35.353Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -314,6 +314,40 @@
           "id": "827050d6aeb1f8bc4895-7b163032bbe55f915da8",
           "file": "consult.spec.ts",
           "line": 107,
+          "column": 5
+        },
+        {
+          "title": "dyspepsia answers connect to named ingredients",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 322,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T11:42:35.733Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-431bf91300a47b8990a4",
+          "file": "consult.spec.ts",
+          "line": 123,
           "column": 5
         },
         {
@@ -332,12 +366,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 275,
+                  "duration": 344,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:15.360Z",
+                  "startTime": "2026-07-13T11:42:36.064Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -347,7 +381,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-52b2fc5cf8786a729f47",
           "file": "consult.spec.ts",
-          "line": 123,
+          "line": 140,
           "column": 5
         },
         {
@@ -366,12 +400,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 293,
+                  "duration": 326,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:15.640Z",
+                  "startTime": "2026-07-13T11:42:36.414Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -381,7 +415,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-d056805a67275b2bfd3e",
           "file": "consult.spec.ts",
-          "line": 139,
+          "line": 156,
           "column": 5
         },
         {
@@ -400,12 +434,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 300,
+                  "duration": 310,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:37:15.938Z",
+                  "startTime": "2026-07-13T11:42:36.747Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -415,7 +449,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-0dd494789acc19592839",
           "file": "consult.spec.ts",
-          "line": 147,
+          "line": 164,
           "column": 5
         }
       ]
@@ -423,9 +457,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-13T11:37:11.429Z",
-    "duration": 5027.2519999999995,
-    "expected": 10,
+    "startTime": "2026-07-13T11:42:31.209Z",
+    "duration": 6133.807,
+    "expected": 11,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

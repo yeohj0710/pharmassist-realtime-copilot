@@ -116,8 +116,25 @@ test("two uncertain answers still show practical symptom relief options", async 
   await input.press("Enter");
 
   await expect(page.getByText("참고 추천", { exact: true })).toBeVisible();
-  await expect(page.getByText(/제산·위산 관련 완화 성분군/)).toBeVisible();
-  await expect(page.getByText(/가스 완화·소화 보조 성분군/)).toBeVisible();
+  await expect(page.getByText(/알마게이트 또는 탄산칼슘/)).toBeVisible();
+  await expect(page.getByText(/시메티콘/)).toBeVisible();
+});
+
+test("dyspepsia answers connect to named ingredients", async ({ page }) => {
+  const input = page.getByLabel("증상이나 질문을 입력하세요");
+  await input.fill("배아파요");
+  await input.press("Enter");
+  await input.fill("속이 안 좋아요 그냥");
+  await input.press("Enter");
+  await input.fill("토할 것 같아요 살짝");
+  await input.press("Enter");
+
+  await expect(
+    page.getByText("속쓰림·소화불량 상담 경로", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText(/알마게이트 또는 탄산칼슘/)).toBeVisible();
+  await expect(page.getByText(/시메티콘/)).toBeVisible();
+  await expect(page.getByText(/판크레아틴/)).toBeVisible();
 });
 
 test("bowel urgency progresses without a prepared exact phrase", async ({
