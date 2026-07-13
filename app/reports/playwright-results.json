@@ -94,12 +94,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 665,
+                  "duration": 680,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:25.072Z",
+                  "startTime": "2026-07-13T11:37:12.758Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -133,7 +133,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:25.814Z",
+                  "startTime": "2026-07-13T11:37:13.523Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -162,12 +162,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 308,
+                  "duration": 310,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:26.030Z",
+                  "startTime": "2026-07-13T11:37:13.737Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -196,12 +196,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 333,
+                  "duration": 315,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:26.345Z",
+                  "startTime": "2026-07-13T11:37:14.052Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -230,12 +230,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 256,
+                  "duration": 262,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:26.684Z",
+                  "startTime": "2026-07-13T11:37:14.373Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -264,12 +264,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 329,
+                  "duration": 411,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:26.945Z",
+                  "startTime": "2026-07-13T11:37:14.640Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -280,6 +280,40 @@
           "id": "827050d6aeb1f8bc4895-16c13b6a9d947360fab6",
           "file": "consult.spec.ts",
           "line": 88,
+          "column": 5
+        },
+        {
+          "title": "two uncertain answers still show practical symptom relief options",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 300,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-13T11:37:15.055Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-7b163032bbe55f915da8",
+          "file": "consult.spec.ts",
+          "line": 107,
           "column": 5
         },
         {
@@ -298,12 +332,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 279,
+                  "duration": 275,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:27.279Z",
+                  "startTime": "2026-07-13T11:37:15.360Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -313,7 +347,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-52b2fc5cf8786a729f47",
           "file": "consult.spec.ts",
-          "line": 106,
+          "line": 123,
           "column": 5
         },
         {
@@ -332,12 +366,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 260,
+                  "duration": 293,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:27.563Z",
+                  "startTime": "2026-07-13T11:37:15.640Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -347,7 +381,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-d056805a67275b2bfd3e",
           "file": "consult.spec.ts",
-          "line": 122,
+          "line": 139,
           "column": 5
         },
         {
@@ -366,12 +400,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 296,
+                  "duration": 300,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:13:27.828Z",
+                  "startTime": "2026-07-13T11:37:15.938Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -381,7 +415,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-0dd494789acc19592839",
           "file": "consult.spec.ts",
-          "line": 130,
+          "line": 147,
           "column": 5
         }
       ]
@@ -389,9 +423,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-13T11:13:23.782Z",
-    "duration": 4556.225,
-    "expected": 9,
+    "startTime": "2026-07-13T11:37:11.429Z",
+    "duration": 5027.2519999999995,
+    "expected": 10,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

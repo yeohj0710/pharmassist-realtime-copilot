@@ -96,6 +96,7 @@ const isSyntheticDecision = (decision: RuntimeOutput["decision"]): boolean =>
 interface ConsultationPresentation {
   readonly title: string;
   readonly direction: string;
+  readonly fallbackOptions: readonly string[];
   readonly checks: readonly string[];
 }
 
@@ -106,6 +107,11 @@ const consultationPresentation = (
     return {
       title: "일반 기침 상담 경로",
       direction: "기침 양상에 맞는 완화 성분군을 우선 검토하세요.",
+      fallbackOptions: [
+        "마른기침: 진해 성분군",
+        "가래기침: 거담·점액용해 성분군",
+        "양상이 불분명하면 단일 성분·짧은 기간 우선",
+      ],
       checks: [
         "호흡곤란·흉통·고열 등 새 위험 신호",
         "복용 중인 약과 기저질환",
@@ -117,6 +123,11 @@ const consultationPresentation = (
       title: "복통 완화 상담 경로",
       direction:
         "위험 신호가 없다면 통증 위치와 양상에 맞춰 위장 증상 완화 성분군을 우선 검토하세요.",
+      fallbackOptions: [
+        "쓰림·신물: 제산·위산 관련 완화 성분군",
+        "더부룩함·가스: 가스 완화·소화 보조 성분군",
+        "양상이 불분명하면 복합제보다 단일 성분·짧은 기간 우선",
+      ],
       checks: [
         "갑자기 심해지는 통증·오른쪽 아랫배 통증",
         "발열·구토·혈변 또는 검은 변",
@@ -127,6 +138,11 @@ const consultationPresentation = (
     return {
       title: "배변 증상 상담 경로",
       direction: "설사·변비 양상과 탈수 위험을 구분해 성분군을 검토하세요.",
+      fallbackOptions: [
+        "묽은 변: 수분·전해질 보충 우선, 필요 시 지사 성분군 검토",
+        "변비: 삼투성·팽창성 완화 성분군 검토",
+        "양상이 불분명하면 수분 보충과 짧은 경과 관찰 우선",
+      ],
       checks: ["혈변·심한 복통·발열", "수분 섭취와 배변 횟수", "최근 복용약"],
     };
   if (intent?.includes("musculoskeletal"))
@@ -134,11 +150,19 @@ const consultationPresentation = (
       title: "근골격 통증 상담 경로",
       direction:
         "손상 여부와 통증 범위를 확인한 뒤 국소·경구 완화 방안을 검토하세요.",
+      fallbackOptions: [
+        "국소 통증: 외용 진통·소염 성분군 우선 검토",
+        "넓거나 지속되는 통증: 병력·병용약 확인 후 경구 성분 검토",
+      ],
       checks: ["외상·부종·열감", "움직임 제한", "진통제 복용 이력"],
     };
   return {
     title: "일반 증상 상담 경로",
     direction: "확인된 증상과 안전 기준에 맞는 일반의약품 성분군을 검토하세요.",
+    fallbackOptions: [
+      "가장 불편한 증상 하나를 기준으로 단일 성분 우선",
+      "최소 용량·짧은 사용 기간으로 시작",
+    ],
     checks: [
       "새로 생긴 위험 신호",
       "복용 중인 약과 기저질환",
@@ -825,6 +849,12 @@ export function App() {
                         {presentation?.title}
                       </strong>
                       <p>{presentation?.direction}</p>
+                      <h3>우선 검토할 성분군</h3>
+                      <ul className="consultation-checks">
+                        {presentation?.fallbackOptions.map((option) => (
+                          <li key={option}>{option}</li>
+                        ))}
+                      </ul>
                       <h3>약사 확인사항</h3>
                       <ul className="consultation-checks">
                         {presentation?.checks.map((check) => (

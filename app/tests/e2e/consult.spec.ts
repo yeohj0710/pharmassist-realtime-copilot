@@ -94,13 +94,30 @@ test("an uncertain answer switches questions and still reaches guidance", async 
   await expect(page.getByText(/윗배·아랫배/).first()).toBeVisible();
   await input.fill("잘 모르겠어요");
   await input.press("Enter");
-  await expect(page.getByText(/쥐어짜듯/).first()).toBeVisible();
+  await expect(page.getByText(/쥐어짜는 통증/).first()).toBeVisible();
   await input.fill("쓰리고 더부룩해요");
   await input.press("Enter");
   await expect(page.getByText(/속쓰림과 더부룩함/).first()).toBeVisible();
   await input.fill("속쓰림이 더 불편해요");
   await input.press("Enter");
   await expect(page.getByText("참고 추천", { exact: true })).toBeVisible();
+  await expect(page.getByText("우선 검토할 성분군")).toBeVisible();
+});
+
+test("two uncertain answers still show practical symptom relief options", async ({
+  page,
+}) => {
+  const input = page.getByLabel("증상이나 질문을 입력하세요");
+  await input.fill("배아파요");
+  await input.press("Enter");
+  await input.fill("잘 모르겠어요");
+  await input.press("Enter");
+  await input.fill("잘 모르겠어요");
+  await input.press("Enter");
+
+  await expect(page.getByText("참고 추천", { exact: true })).toBeVisible();
+  await expect(page.getByText(/제산·위산 관련 완화 성분군/)).toBeVisible();
+  await expect(page.getByText(/가스 완화·소화 보조 성분군/)).toBeVisible();
 });
 
 test("bowel urgency progresses without a prepared exact phrase", async ({

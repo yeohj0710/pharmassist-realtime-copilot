@@ -75,13 +75,15 @@ const alternativeQuestion = (
 ): Readonly<{ question: string; reason: string; slot: string }> | undefined => {
   if (intent.includes("abdominal"))
     return {
-      question: "쥐어짜듯 아픈가요, 쓰리거나 더부룩한 느낌인가요?",
+      question:
+        "쥐어짜는 통증·쓰림·더부룩함 중 가장 가까운 것은 무엇인가요? 잘 모르겠으면 그대로 말씀해 주세요.",
       reason: "복통 양상에 따른 완화 방향 확인",
       slot: "symptom_pattern",
     };
   if (intent.includes("cough"))
     return {
-      question: "마른기침인가요, 가래가 있는 기침인가요?",
+      question:
+        "마른기침·가래기침 중 더 가까운 쪽은 무엇인가요? 잘 모르겠으면 그대로 말씀해 주세요.",
       reason: "기침 양상에 따른 성분군 선택",
       slot: "symptom_pattern",
     };
