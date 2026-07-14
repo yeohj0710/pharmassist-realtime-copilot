@@ -1,0 +1,32 @@
+name: PharmAssist product enrichment fast research
+
+on:
+  push:
+    branches:
+      - pharmassist-enrichment-tmp-20260714
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research-fast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bound network retries and fetch candidates
+        run: |
+          sed -i "s/timeout=35/timeout=10/" scripts/pharmassist_research.py
+          sed -i "s/for n in range(3):/for n in range(1):/" scripts/pharmassist_research.py
+          python3 scripts/pharmassist_research.py
+      - name: Upload research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pharmassist-enrichment-research-fast
+          path: pharmassist-output/
+          if-no-files-found: error
+          retention-days: 1
