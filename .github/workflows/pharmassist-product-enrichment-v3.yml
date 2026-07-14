@@ -1,0 +1,29 @@
+name: PharmAssist product enrichment v3 research
+
+on:
+  push:
+    branches:
+      - pharmassist-enrichment-tmp-20260714
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research-v3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch cross-verified product metadata and images
+        run: python3 scripts/pharmassist_research_v3.py
+      - name: Upload final research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pharmassist-enrichment-research-v3
+          path: pharmassist-output-v3/
+          if-no-files-found: error
+          retention-days: 1
