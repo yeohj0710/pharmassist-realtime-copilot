@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - automation/kpic-enrichment-v3-20260716
+    paths-ignore:
+      - 'automation/kpic-enrichment/output-v2/**'
   pull_request:
     branches: [main]
     paths:
@@ -12,11 +14,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: kpic-enrichment-20260716-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   enrich:
@@ -24,6 +26,8 @@ jobs:
     timeout-minutes: 55
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -178,3 +182,27 @@ jobs:
           if-no-files-found: error
           retention-days: 7
           compression-level: 0
+
+      - name: Persist verified result on execution branch
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          out='automation/kpic-enrichment/output'
+          dst='automation/kpic-enrichment/output-v2'
+          rm -rf "$dst"
+          mkdir -p "$dst"
+          base64 -w0 "$out/enrichment-queue.json.gz" > "$dst/enrichment-queue.json.gz.b64"
+          split -b 120000 -d -a 3 "$dst/enrichment-queue.json.gz.b64" "$dst/enrichment-queue.json.gz.b64.part."
+          rm "$dst/enrichment-queue.json.gz.b64"
+          cp "$out/enrichment-report.json" "$dst/enrichment-report.json"
+          cp "$out/manifest.json" "$dst/manifest.json"
+          cp "$out/review-required.json" "$dst/review-required.json"
+          cp "$out/unmatched.json" "$dst/unmatched.json"
+          sha256sum "$out/enrichment-queue.json.gz" > "$dst/enrichment-queue.json.gz.sha256"
+          printf 'completed_at=%s\nsource_run=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_RUN_ID" > "$dst/COMPLETED"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$dst"
+          git commit -m 'chore: persist verified KPIC second-pass result'
+          git push origin "HEAD:${GITHUB_REF_NAME}"
