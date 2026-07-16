@@ -1,6 +1,9 @@
 name: KPIC Enrichment 2026-07-16
 
 on:
+  push:
+    branches:
+      - automation/kpic-enrichment-v3-20260716
   pull_request:
     branches: [main]
     paths:
@@ -12,7 +15,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: kpic-enrichment-20260716-${{ github.event.pull_request.number || github.ref }}
+  group: kpic-enrichment-20260716-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -170,7 +173,7 @@ jobs:
       - name: Upload result artifact
         uses: actions/upload-artifact@v4
         with:
-          name: kpic-enrichment-result
+          name: kpic-enrichment-result-v2
           path: automation/kpic-enrichment/output/
           if-no-files-found: error
           retention-days: 7
