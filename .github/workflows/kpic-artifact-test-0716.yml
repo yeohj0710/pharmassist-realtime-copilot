@@ -1,0 +1,19 @@
+name: KPIC artifact transfer test
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  transfer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download probe artifact
+        run: |
+          curl -fL --retry 4 --retry-delay 2 'https://kpic-detail-probe-0716.vercel.app/out.json' -o out.json
+          test -s out.json
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kpic-transfer-test
+          path: out.json
+          if-no-files-found: error
