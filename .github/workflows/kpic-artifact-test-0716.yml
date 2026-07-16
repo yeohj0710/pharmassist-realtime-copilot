@@ -7,13 +7,22 @@ jobs:
   transfer:
     runs-on: ubuntu-latest
     steps:
-      - name: Download probe artifact
+      - name: Download health.kr probe pages
         run: |
-          curl -fL --retry 4 --retry-delay 2 'https://kpic-detail-probe-0716.vercel.app/out.json' -o out.json
-          test -s out.json
+          mkdir -p probe
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126 Safari/537.36'
+          for CODE in A11A0570A0226 2012091000002 2014103100002 2012052500003; do
+            curl -fL --retry 4 -A "$UA" "https://health.kr/searchDrug/result_drug.asp?drug_cd=$CODE" -o "probe/${CODE}-detail.html"
+            curl -fL --retry 4 -A "$UA" "https://health.kr/searchDrug/ajax/ajax_result_drug2.asp?drug_cd=$CODE" -o "probe/${CODE}-detail2.json"
+            curl -fL --retry 4 -A "$UA" "https://health.kr/searchDrug/result_take.asp?drug_cd=$CODE" -o "probe/${CODE}-take.html"
+            curl -fL --retry 4 -A "$UA" "https://health.kr/searchDrug/result_sunb.asp?drug_cd=$CODE" -o "probe/${CODE}-same.html"
+            curl -fL --retry 4 -A "$UA" "https://health.kr/searchDrug/result_interaction.asp?drug_cd=$CODE" -o "probe/${CODE}-interaction.html"
+            curl -fL --retry 4 -A "$UA" "https://health.kr/searchDrug/ajax/ajax_result_interaction_food.asp?drug_cd=$CODE" -o "probe/${CODE}-food.json" || true
+            curl -fL --retry 4 -A "$UA" "https://health.kr/searchDrug/ajax/ajax_boh_history2.asp?drug_cd=$CODE" -o "probe/${CODE}-insurance.txt" || true
+          done
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: kpic-transfer-test
-          path: out.json
+          name: kpic-page-probe
+          path: probe
           if-no-files-found: error
