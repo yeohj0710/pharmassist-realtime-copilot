@@ -1,0 +1,98 @@
+name: KPIC Enrichment 2026-07-16
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'automation/kpic-enrichment/**'
+      - '.github/workflows/kpic-enrichment-20260716.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kpic-enrichment-20260716-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Reconstruct and verify batch input
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64
+          import gzip
+          import hashlib
+          import json
+          import lzma
+
+          root = Path('automation/kpic-enrichment')
+
+          script_parts = sorted(root.glob('enrich.mjs.part.*'))
+          assert len(script_parts) == 3, f'unexpected script part count: {len(script_parts)}'
+          script = b''.join(p.read_bytes() for p in script_parts)
+          assert hashlib.sha256(script).hexdigest() == 'd3bc3366ff83ab8c4dc4214fc93da47a6374992ae6b48b3de96f24cfcc788e51'
+          (root / 'enrich.mjs').write_bytes(script)
+
+          input_parts = sorted(root.glob('input2.xz.hex.part.*'))
+          assert len(input_parts) == 6, f'unexpected input part count: {len(input_parts)}'
+          hex_text = ''.join(p.read_text(encoding='utf-8') for p in input_parts).strip()
+          assert len(hex_text) == 47008, f'unexpected hex length: {len(hex_text)}'
+          assert hashlib.sha256(hex_text.encode()).hexdigest() == '1427bad5611b166978c44c4ace0434e1290636e54be3828324a6cf6621bd9df0'
+
+          packed = bytes.fromhex(hex_text)
+          assert hashlib.sha256(packed).hexdigest() == 'ff8bfa6dd89b225768ff78ed8a25c3901cd81d53d45b51b05cd4d69479a1d51d'
+          raw = lzma.decompress(packed)
+          assert hashlib.sha256(raw).hexdigest() == '39025dc31ddc000e7e65e24bad6d647937e389d8894fbbb758514cab0641091b'
+          records = json.loads(raw)
+          assert isinstance(records, list) and len(records) == 776, f'unexpected record count: {len(records)}'
+          assert sorted(int(x['source_order']) for x in records) == list(range(1, 777))
+
+          encoded = base64.b64encode(gzip.compress(raw, compresslevel=9, mtime=0))
+          (root / 'input.json.gz.b64').write_bytes(encoded)
+          print(f'VERIFIED records={len(records)} script_bytes={len(script)} input_bytes={len(raw)}')
+          PY
+          node --check automation/kpic-enrichment/enrich.mjs
+
+      - name: Run health.kr enrichment
+        env:
+          KPIC_WORKERS: '6'
+          KPIC_SEARCH_VARIANTS: '5'
+          KPIC_REQUEST_DELAY_MS: '80'
+        run: node automation/kpic-enrichment/enrich.mjs
+
+      - name: Verify output files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          out = Path('automation/kpic-enrichment/output')
+          result = json.loads((out / 'enrichment-queue.json').read_text())
+          report = json.loads((out / 'enrichment-report.json').read_text())
+          assert len(result) == 776
+          assert report['total_records'] == 776
+          assert report['core_fields_preserved'] is True
+          assert report['source_order_contiguous_1_to_n'] is True
+          print('OUTPUT_VERIFIED', json.dumps(report, ensure_ascii=False))
+          PY
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kpic-enrichment-result
+          path: automation/kpic-enrichment/output/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
