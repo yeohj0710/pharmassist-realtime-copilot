@@ -1,0 +1,18 @@
+name: KPIC Artifact Test
+on:
+  push:
+    paths:
+      - '.github/workflows/kpic-artifact-test.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create sample
+        run: |
+          mkdir -p out
+          printf '[{"ok":true}]\n' > out/enrichment-queue.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kpic-test
+          path: out/enrichment-queue.json
+          if-no-files-found: error
