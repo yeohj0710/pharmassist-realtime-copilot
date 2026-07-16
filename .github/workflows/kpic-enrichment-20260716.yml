@@ -94,13 +94,13 @@ jobs:
           text = p.read_text(encoding='utf-8')
           old = text
           text = text.replace(
-              "let s = String(value ?? '').normalize('NFKC');",
-              "let s = decodeEntities(String(value ?? '').normalize('NFKC'));",
+              ".replace(/<[^>]+>/g, '')",
+              ".replace(/<\\/?[A-Za-z][^>\\n]*>/g, '')",
               1,
           )
           text = text.replace(
               "s = decodeEntities(s)\n    .replace(/[ \\t]+\\n/g, '\\n')",
-              "s = decodeEntities(s)\n    .replace(/<[^>]+>/g, '')\n    .replace(/[ \\t]+\\n/g, '\\n')",
+              "s = decodeEntities(s)\n    .replace(/<\\/?[A-Za-z][^>\\n]*>/g, '')\n    .replace(/[ \\t]+\\n/g, '\\n')",
               1,
           )
           text = text.replace(
@@ -145,6 +145,7 @@ jobs:
           assert text != old
           assert text.count('curated_force_map') == 1
           assert text.count("efficacy: efficacy.length > 0,") == 1
+          assert text.count('A-Za-z') >= 2
           p.write_text(text, encoding='utf-8')
           print(f'VERIFIED records={len(records)} script_bytes={len(script)} input_bytes={len(raw)} patched_sha256={hashlib.sha256(text.encode()).hexdigest()} forced={len(force_matches)}')
           PY
@@ -177,7 +178,7 @@ jobs:
       - name: Upload result artifact
         uses: actions/upload-artifact@v4
         with:
-          name: kpic-enrichment-result-v2
+          name: kpic-enrichment-result-v3
           path: automation/kpic-enrichment/output/
           if-no-files-found: error
           retention-days: 7
