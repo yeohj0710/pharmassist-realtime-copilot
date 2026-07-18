@@ -68,7 +68,7 @@ jobs:
         shell: pwsh
         run: |
           $required = @(
-            "app/release/PharmAssist/PharmAssist.exe",
+            "app/release/PharmAssist/약국 상담 도우미.exe",
             "app/release/PharmAssist/README.md",
             "app/release/PharmAssist/사용설명서.html",
             "app/release/PharmAssist-Windows.zip"

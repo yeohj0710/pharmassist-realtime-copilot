@@ -26,7 +26,7 @@ jobs:
 
             1. PharmAssist-Windows.zip을 다운로드합니다.
             2. 압축을 완전히 풉니다.
-            3. PharmAssist.exe를 더블클릭합니다.
+            3. 약국 상담 도우미.exe를 더블클릭합니다.
 
             API 키는 포함되어 있지 않습니다. 임상 사용용 제품이 아닙니다.
           files: app/release/PharmAssist-Windows.zip
