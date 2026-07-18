@@ -8,8 +8,21 @@
 
 ZIP 압축을 푼 뒤 `PharmAssist.exe`를 실행합니다. 브라우저가 열리면 화면은 누구나 볼 수 있지만 상담·음성 기능은 비밀번호 `0903` 입력 후 사용할 수 있습니다.
 
+## 웹 데모
+
+**https://pharmassist-realtime-copilot.vercel.app**
+
+Windows 프로그램과 같은 소스에서 빌드되는 정적 웹 데모입니다. 상담 판단 엔진과 후보 데이터 팩이 브라우저 안에서 그대로 동작합니다. AI 문장 보정·음성 인식은 로컬 API가 필요하므로 Windows 프로그램에서만 활성화됩니다.
+
+웹 데모 배포는 `app` 디렉터리에서 실행합니다.
+
+```powershell
+corepack pnpm deploy:web
+```
+
 ## 접속 주소
 
+- 웹 데모: https://pharmassist-realtime-copilot.vercel.app
 - 로컬 상담 화면: `http://127.0.0.1:4173`
 - GitHub 저장소: https://github.com/yeohj0710/pharmassist-realtime-copilot
 - 최신 배포판: https://github.com/yeohj0710/pharmassist-realtime-copilot/releases/latest

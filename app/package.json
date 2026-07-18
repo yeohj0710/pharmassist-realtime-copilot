@@ -10,6 +10,7 @@
     "dev": "turbo dev",
     "dev:demo": "turbo dev --filter=@pharmassist/web --filter=@pharmassist/api --filter=@pharmassist/reviewer",
     "build": "turbo build",
+    "deploy:web": "turbo build --filter=@pharmassist/web... && node scripts/deploy-web.mjs",
     "lint": "node scripts/static-check.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
