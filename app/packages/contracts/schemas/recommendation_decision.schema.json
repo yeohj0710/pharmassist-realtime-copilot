@@ -209,7 +209,42 @@
           "sales_rank": {
             "type": ["integer", "null"],
             "minimum": 1
-          }
+          },
+          "manufacturer": { "type": ["string", "null"] },
+          "specification": { "type": "string" },
+          "displayed_price_krw": { "type": ["integer", "null"], "minimum": 0 },
+          "price_recorded_at": { "type": ["string", "null"], "format": "date" },
+          "image_url": { "type": ["string", "null"], "format": "uri" },
+          "image_source_url": {
+            "type": ["string", "null"],
+            "format": "uri"
+          },
+          "image_rights_status": { "type": ["string", "null"] },
+          "image_kind": { "type": ["string", "null"] },
+          "image_checked_at": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "official_match_status": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "review_required",
+              "not_found",
+              "not_applicable"
+            ]
+          },
+          "official_source_url": {
+            "type": ["string", "null"],
+            "format": "uri"
+          },
+          "indication_summary": { "type": "string" },
+          "dosage_summary": { "type": "string" },
+          "precaution_summary": { "type": "string" },
+          "dosage_form": { "type": ["string", "null"] },
+          "route": { "type": ["string", "null"] },
+          "clinical_group_key": { "type": "string" },
+          "same_group_product_count": { "type": "integer", "minimum": 1 }
         }
       }
     },

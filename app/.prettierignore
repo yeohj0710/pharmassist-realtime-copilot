@@ -1,5 +1,9 @@
 spec/
 data/generated-dev-pack/
+data/actual-candidate-source/
+data/actual-candidate-pack/
+data/healthkr-product-registry/
+data/mfds-otc-candidate/
 reports/
 playwright-report/
 coverage/

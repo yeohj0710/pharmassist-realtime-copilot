@@ -1,5 +1,13 @@
 :root {
-  font-family: Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  font-family:
+    "Toss Product Sans",
+    Tossface,
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans KR",
+    "Segoe UI",
+    sans-serif;
   color: #191f28;
   background: #f2f4f6;
   font-synthesis: none;
@@ -212,8 +220,7 @@ h1 {
   box-shadow: 0 1px 2px #0000000a;
 }
 .query-panel {
-  width: min(100%, 780px);
-  margin-inline: auto;
+  width: 100%;
 }
 label {
   display: block;
@@ -282,42 +289,106 @@ footer {
   border: 1px solid #bcd8ff;
   box-shadow: 0 8px 24px #3182f617;
 }
-.consult-layout {
-  position: relative;
-}
-.consult-layout > .result {
+.consult-main {
   width: min(100%, 780px);
   margin-inline: auto;
 }
-.patient-summary {
-  position: absolute;
-  top: 16px;
-  left: calc(50% + 406px);
+.consult-workspace {
+  position: relative;
+}
+.consult-sidebar {
   width: 290px;
-  margin-top: 18px;
+  display: grid;
+  align-self: start;
+  gap: 12px;
+}
+.patient-summary,
+.candidate-sidebar {
   padding: 20px;
   border-radius: 20px;
   background: #fff;
   box-shadow: 0 1px 2px #0000000a;
 }
-.consultation-result-title {
-  display: block;
-  margin: 14px 0 6px;
+.sidebar-candidate-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.sidebar-candidate-heading h2 {
+  margin: 0;
   color: #191f28;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1.4;
 }
-.synthetic-decision-notice h3 {
-  margin: 20px 0 8px;
-  color: #333d4b;
-  font-size: 14px;
+.sidebar-candidate-heading span {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #e8f3ff;
+  color: #1b64da;
+  font-size: 11px;
+  font-weight: 800;
 }
-.consultation-checks {
+.sidebar-candidate-copy {
+  margin: 7px 0 14px;
+  color: #6b7684;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.sidebar-candidate-list {
   display: grid;
-  gap: 7px;
-  margin: 0 0 18px;
-  padding-left: 20px;
-  color: #4e5968;
+  gap: 12px;
+}
+.sidebar-candidate-topic > p {
+  margin: 0 0 6px;
+  color: #1b64da;
+  font-size: 12px;
+  font-weight: 800;
+}
+.sidebar-product {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 9px;
+  border: 1px solid #e5e8eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+.sidebar-product img,
+.sidebar-product-placeholder {
+  width: 62px;
+  height: 62px;
+  border-radius: 9px;
+  background: #fff;
+  object-fit: contain;
+}
+.sidebar-product-placeholder {
+  display: grid;
+  place-items: center;
+  color: #3182f6;
+  font-size: 12px;
+  font-weight: 800;
+}
+.sidebar-product-body {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+.sidebar-product strong {
+  overflow-wrap: anywhere;
+  color: #191f28;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.sidebar-product .product-detail {
+  grid-column: 1 / -1;
+}
+.candidate-sidebar > small {
+  display: block;
+  margin-top: 12px;
+  color: #6b7684;
+  font-size: 11px;
   line-height: 1.5;
 }
 .summary-heading {
@@ -380,6 +451,25 @@ footer {
 .primary-guidance {
   padding: 4px 0 8px;
 }
+.latest-customer-message {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 18px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  background: #f2f4f6;
+}
+.latest-customer-message span {
+  color: #4e5968;
+  font-size: 12px;
+  font-weight: 700;
+}
+.latest-customer-message p {
+  margin: 0;
+  color: #333d4b;
+  font-size: 15px;
+  line-height: 1.5;
+}
 .result-kicker {
   font-size: 15px;
   color: #4e5968;
@@ -396,6 +486,12 @@ footer {
 }
 .ask {
   color: #1b64da;
+}
+.supporting-suggestion {
+  color: #6b7684;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 .recommendation {
   color: #087443;
@@ -426,13 +522,19 @@ footer {
   display: flex;
   align-items: center;
   gap: 12px;
-  width: min(100%, 780px);
-  margin: 18px auto 0;
-  padding: 18px 20px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  z-index: 100;
+  width: min(calc(100% - 32px), 520px);
+  margin: 0;
+  padding: 14px 18px;
+  transform: translateX(-50%);
   border: 1px solid #c9ddff;
   border-radius: 16px;
   background: #f2f7ff;
   color: #1b64da;
+  box-shadow: 0 10px 30px rgba(25, 31, 40, 0.12);
 }
 .engine-status > span:last-child {
   display: grid;
@@ -457,11 +559,18 @@ footer {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: -6px -6px 20px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  z-index: 100;
+  width: min(calc(100% - 32px), 520px);
+  margin: 0;
   padding: 14px 16px;
+  transform: translateX(-50%);
   border-radius: 14px;
   background: #e8f3ff;
   color: #1b64da;
+  box-shadow: 0 10px 30px rgba(25, 31, 40, 0.12);
 }
 .refinement-status > span:last-child {
   display: grid;
@@ -513,27 +622,41 @@ footer {
   text-align: center;
   margin-top: 26px;
 }
-@media (max-width: 1220px) {
-  .consult-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 780px) 290px;
-    gap: 16px;
-    justify-content: center;
-  }
-  .consult-layout > .result {
-    width: 100%;
-  }
-  .patient-summary {
-    position: sticky;
-    left: auto;
-    width: auto;
+@media (min-width: 1241px) {
+  .consult-sidebar {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 406px);
+    width: min(290px, calc(50vw - 422px));
   }
 }
-@media (max-width: 1100px) {
-  .consult-layout {
-    grid-template-columns: minmax(0, 780px);
+@media (min-width: 1241px) and (max-width: 1430px) {
+  .patient-summary,
+  .candidate-sidebar {
+    padding: 16px;
   }
-  .patient-summary {
+  .sidebar-candidate-heading h2 {
+    font-size: 15px;
+  }
+  .sidebar-product {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 8px;
+    padding: 8px;
+  }
+  .sidebar-product img,
+  .sidebar-product-placeholder {
+    width: 48px;
+    height: 48px;
+  }
+}
+@media (max-width: 1240px) {
+  .consult-workspace.has-sidebar {
+    display: grid;
+    grid-template-columns: minmax(0, 780px);
+    justify-content: center;
+    gap: 16px;
+  }
+  .consult-sidebar {
     position: static;
     width: 100%;
   }
@@ -567,27 +690,38 @@ footer {
   .recommendation {
     font-size: 19px;
   }
-  .consult-layout {
+  .consult-workspace.has-sidebar {
     grid-template-columns: 1fr;
   }
-  .patient-summary {
+  .consult-sidebar {
     position: static;
     width: auto;
-    order: -1;
   }
 }
 
 .decision-summary {
-  margin-top: 14px;
-  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  padding: 0;
   border: 1px solid #dfe4ea;
-  border-radius: 16px;
-  background: #fbfcfd;
+  border-radius: 18px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.decision-heading {
+  order: 0;
+}
+
+.decision-question,
+.decision-referral {
+  order: 3;
 }
 
 .decision-summary.decision-recommend {
-  border-color: #b8dfcc;
-  background: #f3fbf7;
+  border-color: #dfe4ea;
+  background: #fff;
 }
 
 .decision-summary.decision-ask {
@@ -605,6 +739,8 @@ footer {
   align-items: start;
   justify-content: space-between;
   gap: 12px;
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid #eef1f5;
 }
 
 .decision-heading p,
@@ -613,7 +749,7 @@ footer {
   color: #59636e;
   font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0;
 }
 
 .decision-heading strong {
@@ -623,76 +759,536 @@ footer {
   font-size: 18px;
 }
 
-.decision-heading code,
-.evidence-refs code {
+.decision-heading code {
   overflow-wrap: anywhere;
   color: #59636e;
   font-size: 11px;
 }
 
 .decision-block {
+  margin-top: 0;
+  padding-top: 18px;
+}
+
+.multi-topic-overview {
   margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid #e5e8eb;
+  padding: 14px;
+  border-radius: 12px;
+  background: #eaf4ff;
+}
+
+.multi-topic-overview h2,
+.topic-decision-heading h2 {
+  margin: 0;
+  color: #191f28;
+  font-size: 16px;
+}
+
+.multi-topic-overview p {
+  margin: 7px 0 3px;
+  color: #1769d2;
+  font-weight: 800;
+}
+
+.multi-topic-overview small {
+  color: #59636e;
+  line-height: 1.5;
+}
+
+.topic-decision {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0 20px 20px;
+  min-width: 0;
+}
+
+.topic-decision + .topic-decision {
+  border-top: 1px solid #eef1f5;
+}
+
+.topic-decision-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 18px;
+}
+
+.topic-decision-heading span {
+  color: #087443;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .ingredient-options {
-  display: grid;
-  gap: 8px;
-  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .ingredient-options li {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 11px 12px;
-  border-radius: 10px;
-  background: #fff;
+  gap: 7px;
+  min-width: 0;
+  padding: 7px 10px 7px 8px;
+  border-radius: 999px;
+  background: #f2f4f6;
 }
 
 .ingredient-options strong {
-  color: #087443;
-  font-size: 15px;
+  overflow-wrap: anywhere;
+  color: #333d4b;
+  font-size: 13px;
 }
 
 .ingredient-options span {
-  color: #6b7684;
-  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #fff;
+  color: #1b64da;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.decision-candidates {
+  display: grid;
+  gap: 14px;
+}
+
+.candidate-group-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.candidate-group-heading h2 {
+  color: #191f28;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.candidate-count {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #e8f3ff;
+  color: #1b64da;
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .product-candidates {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 9px;
-  margin-top: 10px;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  min-width: 0;
 }
 
-.product-candidates article {
+.product-ranking-note {
+  margin: 5px 0 0;
+  color: #6b7684;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.product-card {
   display: grid;
-  gap: 4px;
-  padding: 12px;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+  padding: 14px;
   border: 1px solid #e5e8eb;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.product-card-primary {
+  border-color: #c9ddff;
+  background: #f8fbff;
+}
+
+.product-media {
+  display: grid;
+  width: 104px;
+  height: 104px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f2f4f6;
+}
+
+.product-image-placeholder {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  background: #eef4ff;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+}
+
+.product-image-placeholder span {
+  display: grid;
+  width: 42px;
+  height: 54px;
+  place-items: center;
+  border: 1px solid #bcd8ff;
+  border-radius: 7px;
+  background: #fff;
+  color: #3182f6;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.product-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.product-links a,
+.related-products a {
+  color: #3182f6;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.product-links a:hover,
+.related-products a:hover {
+  text-decoration: underline;
+}
+
+.product-links a:focus-visible,
+.related-products a:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid #bcd8ff;
+  outline-offset: 3px;
+}
+
+.related-products {
+  margin-top: 12px;
+  padding: 12px;
   border-radius: 11px;
   background: #fff;
 }
 
-.product-candidates article > strong {
+.related-products > strong {
   color: #191f28;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-.product-candidates article > span {
+.related-products > p {
+  margin: 3px 0 9px;
+  color: #6b7684;
+  font-size: 11px;
+}
+
+.related-products > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.related-products a {
+  display: grid;
+  gap: 2px;
+  padding: 10px;
+  border: 1px solid #e5e8eb;
+  border-radius: 9px;
+}
+
+.related-products a b {
+  color: #191f28;
+  font-size: 13px;
+}
+
+.related-products a span {
+  color: #6b7684;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.product-card-body {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: start;
+  gap: 6px;
+}
+
+.product-card-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+
+.product-card-labels span {
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.product-priority {
+  background: #e8f3ff;
+  color: #1b64da;
+}
+
+.product-ingredient {
+  background: #f2f4f6;
+  color: #4e5968;
+}
+
+.product-name {
+  overflow-wrap: anywhere;
+  color: #191f28;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.product-detail {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.product-match-row,
+.product-metadata {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+
+.official-match,
+.same-product-group {
   width: fit-content;
   padding: 3px 7px;
   border-radius: 999px;
-  background: #e7f7ef;
-  color: #087443;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
+  line-height: 1.4;
+}
+
+.official-match-confirmed {
+  color: #067647;
+  background: #e8f8f0;
+}
+
+.official-match-review_required {
+  color: #8a5b00;
+  background: #fff4d6;
+}
+
+.official-match-not_found,
+.official-match-not_applicable,
+.same-product-group {
+  color: #59636e;
+  background: #f2f4f6;
+}
+
+.product-metadata {
+  color: #59636e;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.product-metadata span {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+}
+
+.product-metadata span:not(:last-child)::after {
+  width: 2px;
+  height: 2px;
+  margin-left: 5px;
+  border-radius: 50%;
+  background: #b0b8c1;
+  content: "";
+}
+
+.product-price-snapshot {
+  display: flex;
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #f9fafb;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.product-price-snapshot > span {
+  color: #59636e;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.product-price-snapshot strong {
+  color: #191f28;
+  font-size: 15px;
+}
+
+.product-price-snapshot small {
+  margin-left: auto;
+  color: #59636e;
+  font-size: 10px;
+}
+
+.product-clinical-details {
+  display: grid;
+  margin: 0;
+  border-top: 1px solid #eef1f5;
+}
+
+.product-clinical-details > div {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.product-clinical-details dt {
+  color: #59636e;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.product-clinical-details dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #333d4b;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.product-source-link {
+  width: fit-content;
+  color: #1b64da;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.product-source-link:hover {
+  text-decoration: underline;
+}
+
+.product-source-link:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid #bcd8ff;
+  outline-offset: 3px;
+}
+
+.product-image-source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 0;
+  font-size: 11px;
+}
+
+.product-image-source a {
+  color: #1b64da;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.product-image-source a:hover {
+  text-decoration: underline;
+}
+
+.product-image-source small {
+  color: #59636e;
+}
+
+.product-detail.compact {
+  gap: 7px;
+  margin-top: 3px;
+  padding-top: 9px;
+  border-top: 1px solid #e5e8eb;
+}
+
+.product-detail.compact .official-match,
+.product-detail.compact .same-product-group {
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+.product-detail.compact .product-metadata {
+  font-size: 10.5px;
+}
+
+.product-detail.compact .product-price-snapshot {
+  flex-wrap: wrap;
+  padding: 7px 8px;
+  gap: 4px 6px;
+}
+
+.product-detail.compact .product-price-snapshot strong {
+  font-size: 13px;
+}
+
+.product-detail.compact .product-price-snapshot small {
+  width: 100%;
+  margin-left: 0;
+}
+
+.product-detail.compact .product-clinical-details > div {
+  grid-template-columns: 1fr;
+  gap: 2px;
+  padding: 7px 0;
+}
+
+.product-detail.compact .product-clinical-details dt,
+.product-detail.compact .product-source-link {
+  font-size: 10.5px;
+}
+
+.product-detail.compact .product-clinical-details dd {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 11.5px;
+}
+
+.ingredient-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid #eef1f5;
+}
+
+.ingredient-summary > p {
+  margin: 6px 0 0;
+  color: #6b7684;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .decision-question p,
@@ -703,24 +1299,58 @@ footer {
   font-weight: 700;
 }
 
-.evidence-refs {
-  display: grid;
-  gap: 5px;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 9px;
-  background: #fff;
-}
-
-.evidence-refs strong {
-  color: #333d4b;
-  font-size: 12px;
+.evidence-note {
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: #4e5968;
+  background: #f9fafb;
 }
 
 @media (max-width: 700px) {
-  .decision-heading,
-  .ingredient-options li {
+  .decision-heading {
     align-items: start;
     flex-direction: column;
+  }
+
+  .topic-decision {
+    padding-inline: 16px;
+  }
+
+  .product-candidates {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .product-media {
+    width: 88px;
+    height: 88px;
+  }
+
+  .product-clinical-details > div {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .product-price-snapshot {
+    flex-wrap: wrap;
+  }
+
+  .product-price-snapshot small {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .ingredient-summary {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .ingredient-summary > p {
+    margin-top: 0;
   }
 }

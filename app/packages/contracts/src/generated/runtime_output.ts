@@ -237,6 +237,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         }
       ]
     | [
@@ -271,6 +289,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -303,6 +339,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         }
       ]
     | [
@@ -337,6 +391,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -369,6 +441,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -401,6 +491,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         }
       ]
     | [
@@ -435,6 +543,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -467,6 +593,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -499,6 +643,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -531,6 +693,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         }
       ]
     | [
@@ -565,6 +745,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -597,6 +795,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -629,6 +845,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -661,6 +895,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         },
         {
           product_id: string;
@@ -693,6 +945,24 @@ export type RecommendationDecision = {
           inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
           available_quantity: number | null;
           sales_rank: number | null;
+          manufacturer?: string | null;
+          specification?: string;
+          displayed_price_krw?: number | null;
+          price_recorded_at?: string | null;
+          image_url?: string | null;
+          image_source_url?: string | null;
+          image_rights_status?: string | null;
+          image_kind?: string | null;
+          image_checked_at?: string | null;
+          official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+          official_source_url?: string | null;
+          indication_summary?: string;
+          dosage_summary?: string;
+          precaution_summary?: string;
+          dosage_form?: string | null;
+          route?: string | null;
+          clinical_group_key?: string;
+          same_group_product_count?: number;
         }
       ];
   question: {
@@ -811,4 +1081,709 @@ export interface RuntimeOutput {
   generated_at: string;
   stale_response_dropped?: boolean;
   decision: RecommendationDecision;
+  /**
+   * @maxItems 8
+   */
+  topic_results:
+    | []
+    | [
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        }
+      ]
+    | [
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        }
+      ]
+    | [
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        }
+      ]
+    | [
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        }
+      ]
+    | [
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        }
+      ]
+    | [
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        }
+      ]
+    | [
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        }
+      ]
+    | [
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        },
+        {
+          protocol_id: string;
+          intent: string;
+          symptom_category: string;
+          decision: RecommendationDecision;
+          /**
+           * @maxItems 1
+           */
+          ask_next:
+            | []
+            | [
+                {
+                  question: string;
+                  reason: string;
+                  priority: number;
+                  slot: string;
+                }
+              ];
+        }
+      ];
 }

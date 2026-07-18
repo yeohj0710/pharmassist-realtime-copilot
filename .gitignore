@@ -20,4 +20,5 @@ transcripts/
 !app/config/dev-pack-public-key.pem
 reports/*.tmp
 release/
+etc/pharmacy-product-catalog-candidate/
 .DS_Store

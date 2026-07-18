@@ -65,8 +65,8 @@
     "version": "1.61.1",
     "workers": 8,
     "webServer": {
-      "command": "pnpm --filter @pharmassist/web preview --host 127.0.0.1 --port 4173",
-      "url": "http://127.0.0.1:4173",
+      "command": "pnpm --filter @pharmassist/web preview --host 127.0.0.1 --port 14373",
+      "url": "http://127.0.0.1:14373",
       "reuseExistingServer": false,
       "timeout": 120000
     }
@@ -94,12 +94,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 874,
+                  "duration": 663,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:32.579Z",
+                  "startTime": "2026-07-16T14:32:07.270Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -109,7 +109,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-783a63cbde399ec2e27b",
           "file": "consult.spec.ts",
-          "line": 11,
+          "line": 13,
           "column": 5
         },
         {
@@ -128,12 +128,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 269,
+                  "duration": 191,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:33.554Z",
+                  "startTime": "2026-07-16T14:32:08.016Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -143,7 +143,75 @@
           ],
           "id": "827050d6aeb1f8bc4895-2d933f59e951d7e5adff",
           "file": "consult.spec.ts",
-          "line": 27,
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "a greeting gets a conversational reply without becoming a patient fact",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 315,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-16T14:32:08.212Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-ea7f31c8fe2c6927f9f0",
+          "file": "consult.spec.ts",
+          "line": 41,
+          "column": 5
+        },
+        {
+          "title": "escape does not clear an active consultation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 330,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-16T14:32:08.532Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-fc9472d802df0d840c2a",
+          "file": "consult.spec.ts",
+          "line": 55,
           "column": 5
         },
         {
@@ -162,12 +230,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 386,
+                  "duration": 370,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:33.832Z",
+                  "startTime": "2026-07-16T14:32:08.867Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -177,11 +245,11 @@
           ],
           "id": "827050d6aeb1f8bc4895-e1deffd44a3d6e07d83e",
           "file": "consult.spec.ts",
-          "line": 36,
+          "line": 80,
           "column": 5
         },
         {
-          "title": "short second answer completes a routine consult",
+          "title": "generic abdominal pain shows a current product and keeps phenotype open",
           "ok": true,
           "tags": [],
           "tests": [
@@ -196,12 +264,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 297,
+                  "duration": 334,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:34.224Z",
+                  "startTime": "2026-07-16T14:32:09.248Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -209,13 +277,13 @@
               "status": "expected"
             }
           ],
-          "id": "827050d6aeb1f8bc4895-48b19e2630e6296c30db",
+          "id": "827050d6aeb1f8bc4895-2bab847688aae803d1b9",
           "file": "consult.spec.ts",
-          "line": 56,
+          "line": 103,
           "column": 5
         },
         {
-          "title": "abdominal pain never routes to the throat card",
+          "title": "actual dry-cough protocol is selected without abdominal leakage",
           "ok": true,
           "tags": [],
           "tests": [
@@ -230,12 +298,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 314,
+                  "duration": 461,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:34.527Z",
+                  "startTime": "2026-07-16T14:32:09.587Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -243,13 +311,13 @@
               "status": "expected"
             }
           ],
-          "id": "827050d6aeb1f8bc4895-2e4636864d8df78cff81",
+          "id": "827050d6aeb1f8bc4895-c2bd2e1a28cf948562b7",
           "file": "consult.spec.ts",
-          "line": 77,
+          "line": 128,
           "column": 5
         },
         {
-          "title": "an uncertain answer switches questions and still reaches guidance",
+          "title": "generic cough asks one pattern question and loading does not shift layout",
           "ok": true,
           "tags": [],
           "tests": [
@@ -264,12 +332,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 497,
+                  "duration": 376,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:34.848Z",
+                  "startTime": "2026-07-16T14:32:10.054Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -277,13 +345,13 @@
               "status": "expected"
             }
           ],
-          "id": "827050d6aeb1f8bc4895-16c13b6a9d947360fab6",
+          "id": "827050d6aeb1f8bc4895-381fada0afb40e0247a3",
           "file": "consult.spec.ts",
-          "line": 88,
+          "line": 224,
           "column": 5
         },
         {
-          "title": "two uncertain answers still show practical symptom relief options",
+          "title": "a new symptom keeps earlier topic candidates in the same patient consultation",
           "ok": true,
           "tags": [],
           "tests": [
@@ -298,12 +366,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 372,
+                  "duration": 460,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:35.353Z",
+                  "startTime": "2026-07-16T14:32:10.436Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -311,13 +379,13 @@
               "status": "expected"
             }
           ],
-          "id": "827050d6aeb1f8bc4895-7b163032bbe55f915da8",
+          "id": "827050d6aeb1f8bc4895-4c4e3028e4a039fa21e9",
           "file": "consult.spec.ts",
-          "line": 107,
+          "line": 279,
           "column": 5
         },
         {
-          "title": "dyspepsia answers connect to named ingredients",
+          "title": "sore throat and heartburn remain separate while one useful question leads",
           "ok": true,
           "tags": [],
           "tests": [
@@ -332,12 +400,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 322,
+                  "duration": 384,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:35.733Z",
+                  "startTime": "2026-07-16T14:32:10.903Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -345,77 +413,9 @@
               "status": "expected"
             }
           ],
-          "id": "827050d6aeb1f8bc4895-431bf91300a47b8990a4",
+          "id": "827050d6aeb1f8bc4895-3c027113d22b5630a2e2",
           "file": "consult.spec.ts",
-          "line": 123,
-          "column": 5
-        },
-        {
-          "title": "bowel urgency progresses without a prepared exact phrase",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 344,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-07-13T11:42:36.064Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "827050d6aeb1f8bc4895-52b2fc5cf8786a729f47",
-          "file": "consult.spec.ts",
-          "line": 140,
-          "column": 5
-        },
-        {
-          "title": "shoulder pain never routes to abdominal pain",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 326,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-07-13T11:42:36.414Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "827050d6aeb1f8bc4895-d056805a67275b2bfd3e",
-          "file": "consult.spec.ts",
-          "line": 156,
+          "line": 322,
           "column": 5
         },
         {
@@ -434,12 +434,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 310,
+                  "duration": 342,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-13T11:42:36.747Z",
+                  "startTime": "2026-07-16T14:32:11.293Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -449,7 +449,41 @@
           ],
           "id": "827050d6aeb1f8bc4895-0dd494789acc19592839",
           "file": "consult.spec.ts",
-          "line": 164,
+          "line": 357,
+          "column": 5
+        },
+        {
+          "title": "keeps the customer's joint site while AI supplies only an intent hint",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-16T14:32:11.641Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "827050d6aeb1f8bc4895-52ede7416e64a45ae9aa",
+          "file": "consult.spec.ts",
+          "line": 393,
           "column": 5
         }
       ]
@@ -457,9 +491,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-13T11:42:31.209Z",
-    "duration": 6133.807,
-    "expected": 11,
+    "startTime": "2026-07-16T14:32:06.041Z",
+    "duration": 6304.353,
+    "expected": 12,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

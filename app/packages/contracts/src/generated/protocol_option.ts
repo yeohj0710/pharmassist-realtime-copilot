@@ -7,6 +7,9 @@ export interface ProtocolOption {
   display_name: string;
   clinical_priority: number;
   safety_priority: number;
+  therapeutic_role?: "preferred" | "alternative" | "conditional";
+  evidence_scope?: "direct" | "supportive" | "phenotype_specific";
+  fit_rationale?: string;
   /**
    * @minItems 1
    */

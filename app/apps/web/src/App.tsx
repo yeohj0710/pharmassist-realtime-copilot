@@ -1,5 +1,11 @@
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 import {
+  buildCustomerSummary,
+  customerTurn,
+  upsertCounselorTurn,
+  type DialogueTurn,
+} from "@pharmassist/dialogue";
+import {
   reduceSession,
   type SessionEvent,
   type SessionState,
@@ -11,15 +17,13 @@ import {
 } from "./realtime.js";
 import {
   requestAiFallback,
+  requestAiInterpretation,
   requestAiReadiness,
+  shouldInterpretWithAi,
   shouldRequestAiRefinement,
 } from "./ai-fallback.js";
-import {
-  buildPatientSummary,
-  outputText,
-  patientVisibleLines,
-  upsertAssistantTurn,
-} from "./consult-memory.js";
+import { outputText, patientVisibleLines } from "./consult-memory.js";
+import productEnrichmentJson from "../../../data/actual-candidate-pack/product-enrichment.json" with { type: "json" };
 
 interface EngineMessage {
   output: RuntimeOutput;
@@ -52,12 +56,14 @@ const newInput = (
   sequence: number,
   sessionId: string,
   inputType: RuntimeInput["input_type"] = "typed",
+  intentHint?: string,
 ): RuntimeInput => ({
   request_id: crypto.randomUUID(),
   session_id: sessionId,
   sequence,
   input_type: inputType,
   text,
+  ...(intentHint ? { intent_hint: intentHint } : {}),
   is_partial: inputType === "voice_partial",
   locale: "ko-KR",
   domain: "human_otc",
@@ -68,22 +74,11 @@ const newInput = (
 const decisionLabel: Readonly<
   Record<RuntimeOutput["decision"]["status"], string>
 > = {
-  recommend: "검증된 후보",
+  recommend: "현재 후보",
   ask: "한 가지 확인",
   refer: "직접 평가 우선",
   insufficient: "근거 부족",
 };
-
-const inventoryLabel = (
-  value: RuntimeOutput["decision"]["product_candidates"][number]["inventory_status"],
-): string =>
-  value === "in_stock"
-    ? "재고 있음"
-    : value === "out_of_stock"
-      ? "재고 없음"
-      : value === "not_connected"
-        ? "재고 미연결"
-        : "재고 확인 필요";
 
 const isSyntheticDecision = (decision: RuntimeOutput["decision"]): boolean =>
   decision.ingredient_options.some((item) =>
@@ -93,100 +88,422 @@ const isSyntheticDecision = (decision: RuntimeOutput["decision"]): boolean =>
     /^(검토용|합성|synthetic)/iu.test(item.display_name),
   );
 
-interface ConsultationPresentation {
-  readonly title: string;
-  readonly direction: string;
-  readonly fallbackOptions: readonly string[];
-  readonly checks: readonly string[];
+interface ProductEnrichment {
+  readonly product_id: string;
+  readonly item_seq: string;
+  readonly display_name: string;
+  readonly manufacturer: string;
+  readonly mfds_url: string;
+  readonly healthkr_url: string;
+  readonly image_url: string | null;
+  readonly image_rights: "unknown" | string;
+  readonly retail_sales_rank_90d: number | null;
+  readonly popularity_source: string;
 }
 
-const consultationPresentation = (
-  intent: string | null,
-): ConsultationPresentation => {
-  if (intent?.includes("dyspepsia"))
-    return {
-      title: "속쓰림·소화불량 상담 경로",
-      direction:
-        "위험 신호가 없다면 가장 가까운 증상에 맞춰 아래 성분부터 검토하세요.",
-      fallbackOptions: [
-        "속쓰림·신물: 알마게이트 또는 탄산칼슘 계열",
-        "더부룩함·가스: 시메티콘",
-        "식후 소화불량: 판크레아틴 등 소화효소 성분",
-      ],
-      checks: [
-        "지속되거나 반복되는 구토·물도 못 마시는 상태",
-        "심한 복통·혈변·검은 변·토혈",
-        "임신 가능성·복용 중인 약과 기저질환",
-      ],
-    };
-  if (intent?.includes("cough"))
-    return {
-      title: "일반 기침 상담 경로",
-      direction: "기침 양상에 맞는 완화 성분군을 우선 검토하세요.",
-      fallbackOptions: [
-        "마른기침: 덱스트로메토르판 성분",
-        "가래기침: 구아이페네신·아세틸시스테인 계열",
-        "양상이 불분명하면 단일 성분·짧은 기간 우선",
-      ],
-      checks: [
-        "호흡곤란·흉통·고열 등 새 위험 신호",
-        "복용 중인 약과 기저질환",
-        "연령·임신 여부와 증상 지속 기간",
-      ],
-    };
-  if (intent?.includes("abdominal"))
-    return {
-      title: "복통 완화 상담 경로",
-      direction:
-        "위험 신호가 없다면 통증 위치와 양상에 맞춰 위장 증상 완화 성분군을 우선 검토하세요.",
-      fallbackOptions: [
-        "쓰림·신물: 알마게이트 또는 탄산칼슘 계열",
-        "더부룩함·가스: 시메티콘",
-        "식후 소화불량: 판크레아틴 등 소화효소 성분",
-        "양상이 불분명하면 복합제보다 단일 성분·짧은 기간 우선",
-      ],
-      checks: [
-        "갑자기 심해지는 통증·오른쪽 아랫배 통증",
-        "발열·구토·혈변 또는 검은 변",
-        "임신 가능성·복용 중인 약과 기저질환",
-      ],
-    };
-  if (intent?.includes("bowel") || intent?.includes("diarrhea"))
-    return {
-      title: "배변 증상 상담 경로",
-      direction: "설사·변비 양상과 탈수 위험을 구분해 성분군을 검토하세요.",
-      fallbackOptions: [
-        "묽은 변: 수분·전해질 보충 우선, 필요 시 지사 성분군 검토",
-        "변비: 삼투성·팽창성 완화 성분군 검토",
-        "양상이 불분명하면 수분 보충과 짧은 경과 관찰 우선",
-      ],
-      checks: ["혈변·심한 복통·발열", "수분 섭취와 배변 횟수", "최근 복용약"],
-    };
-  if (intent?.includes("musculoskeletal"))
-    return {
-      title: "근골격 통증 상담 경로",
-      direction:
-        "손상 여부와 통증 범위를 확인한 뒤 국소·경구 완화 방안을 검토하세요.",
-      fallbackOptions: [
-        "국소 통증: 외용 진통·소염 성분군 우선 검토",
-        "넓거나 지속되는 통증: 병력·병용약 확인 후 경구 성분 검토",
-      ],
-      checks: ["외상·부종·열감", "움직임 제한", "진통제 복용 이력"],
-    };
-  return {
-    title: "일반 증상 상담 경로",
-    direction: "확인된 증상과 안전 기준에 맞는 일반의약품 성분군을 검토하세요.",
-    fallbackOptions: [
-      "가장 불편한 증상 하나를 기준으로 단일 성분 우선",
-      "최소 용량·짧은 사용 기간으로 시작",
-    ],
-    checks: [
-      "새로 생긴 위험 신호",
-      "복용 중인 약과 기저질환",
-      "증상 지속 기간",
-    ],
-  };
+type ProductCandidate = RuntimeOutput["decision"]["product_candidates"][number];
+type OfficialMatchStatus =
+  "confirmed" | "review_required" | "not_found" | "not_applicable";
+type ProductCandidateDetails = ProductCandidate &
+  Readonly<{
+    manufacturer?: string | null;
+    specification?: string;
+    displayed_price_krw?: number | null;
+    price_recorded_at?: string | null;
+    image_url?: string | null;
+    image_source_url?: string | null;
+    image_rights_status?: string | null;
+    image_kind?: string | null;
+    image_checked_at?: string | null;
+    official_match_status?: OfficialMatchStatus;
+    official_source_url?: string | null;
+    indication_summary?: string;
+    dosage_summary?: string;
+    precaution_summary?: string;
+    dosage_form?: string | null;
+    route?: string | null;
+    clinical_group_key?: string;
+    same_group_product_count?: number;
+  }>;
+
+const officialMatchCopy: Readonly<
+  Record<
+    OfficialMatchStatus,
+    Readonly<{
+      label: string;
+      sourceLabel: string;
+    }>
+  >
+> = {
+  confirmed: {
+    label: "약학정보원 공식 연결",
+    sourceLabel: "약학정보원 공식 정보",
+  },
+  review_required: {
+    label: "약학정보원 연결 검토 중",
+    sourceLabel: "약학정보원에서 확인",
+  },
+  not_found: {
+    label: "약학정보원 연결 없음",
+    sourceLabel: "약학정보원에서 검색",
+  },
+  not_applicable: {
+    label: "의약품 정보 연결 대상 아님",
+    sourceLabel: "",
+  },
 };
+
+const imageKindCopy = (value: string | null | undefined): string | null => {
+  if (!value) return null;
+  if (value === "package") return "제품 포장";
+  if (value === "pill") return "제형 이미지";
+  return value;
+};
+
+const imageRightsCopy = (value: string | null | undefined): string | null => {
+  if (!value) return null;
+  if (value === "verified") return "출처 확인";
+  if (value === "unknown") return "사용 권리 미확인";
+  return value;
+};
+
+const productEnrichment = new Map(
+  (productEnrichmentJson as ProductEnrichment[]).map((item) => [
+    item.product_id,
+    item,
+  ]),
+);
+
+const fallbackHealthKrUrl = (productId: string, displayName: string): string =>
+  productEnrichment.get(productId)?.healthkr_url ??
+  `https://www.health.kr/searchDrug/search_total_result.asp?search_word=${encodeURIComponent(displayName)}`;
+
+const inferredOfficialMatchStatus = (
+  product: ProductCandidateDetails,
+  enriched: ProductEnrichment | undefined,
+): OfficialMatchStatus => {
+  if (product.official_match_status) return product.official_match_status;
+  if (enriched?.healthkr_url.includes("/result_drug.asp")) return "confirmed";
+  return enriched ? "review_required" : "not_found";
+};
+
+const formatPrice = (value: number | null | undefined): string | null =>
+  value === null || value === undefined
+    ? null
+    : `${new Intl.NumberFormat("ko-KR").format(value)}원`;
+
+const formatRecordedDate = (
+  value: string | null | undefined,
+): string | null => {
+  if (!value) return null;
+  const [year, month, day] = value.split("-").map(Number);
+  return year && month && day ? `${year}. ${month}. ${day}. 기록` : value;
+};
+
+const cleanSummary = (value: string | undefined): string | null => {
+  const cleaned = value
+    ?.replace(/<br\s*\/?>/giu, " ")
+    .replace(/br(?=\s|$)/giu, " ")
+    .replace(/(?:\r?\n)+/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim();
+  return cleaned || null;
+};
+
+const routeAndForm = (product: ProductCandidateDetails): string | null => {
+  const values = [product.dosage_form, product.route].filter(
+    (value): value is string => Boolean(value),
+  );
+  return values.length > 0 ? [...new Set(values)].join(" · ") : null;
+};
+
+function ProductSnapshotDetails({
+  product: rawProduct,
+  compact = false,
+}: Readonly<{
+  product: ProductCandidate;
+  compact?: boolean;
+}>) {
+  const product = rawProduct as ProductCandidateDetails;
+  const enriched = productEnrichment.get(product.product_id);
+  const matchStatus = inferredOfficialMatchStatus(product, enriched);
+  const statusCopy = officialMatchCopy[matchStatus];
+  const sourceUrl =
+    matchStatus === "not_applicable"
+      ? null
+      : (product.official_source_url ??
+        fallbackHealthKrUrl(product.product_id, product.display_name));
+  const price = formatPrice(product.displayed_price_krw);
+  const recordedAt = formatRecordedDate(product.price_recorded_at);
+  const formAndRoute = routeAndForm(product);
+  const manufacturer = product.manufacturer?.trim() || enriched?.manufacturer;
+  const clinicalDetails = [
+    ["주요 적응증", cleanSummary(product.indication_summary)],
+    ["용법", cleanSummary(product.dosage_summary)],
+    ["핵심 주의", cleanSummary(product.precaution_summary)],
+  ].filter((item): item is [string, string] => Boolean(item[1]));
+
+  return (
+    <div className={compact ? "product-detail compact" : "product-detail"}>
+      <div className="product-match-row">
+        <span
+          className={`official-match official-match-${matchStatus}`}
+          data-official-match-status={matchStatus}
+        >
+          {statusCopy.label}
+        </span>
+        {product.same_group_product_count &&
+          product.same_group_product_count > 1 && (
+            <span className="same-product-group">
+              같은 성분·제형 {product.same_group_product_count}개
+            </span>
+          )}
+      </div>
+      {(manufacturer || product.specification || formAndRoute) && (
+        <div className="product-metadata">
+          {manufacturer && <span>{manufacturer}</span>}
+          {product.specification && <span>{product.specification}</span>}
+          {formAndRoute && <span>{formAndRoute}</span>}
+        </div>
+      )}
+      {price && (
+        <p className="product-price-snapshot">
+          <span>가격 스냅샷</span>
+          <strong>{price}</strong>
+          <small>{recordedAt ?? "표시 가격 기록"}</small>
+        </p>
+      )}
+      {clinicalDetails.length > 0 && (
+        <dl className="product-clinical-details">
+          {clinicalDetails.map(([label, value]) => (
+            <div key={label}>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      {sourceUrl && (
+        <a
+          className="product-source-link"
+          href={sourceUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {statusCopy.sourceLabel} <span aria-hidden="true">→</span>
+        </a>
+      )}
+      {product.image_source_url && (
+        <p className="product-image-source">
+          <a href={product.image_source_url} target="_blank" rel="noreferrer">
+            제품 이미지 출처 <span aria-hidden="true">→</span>
+          </a>
+          {(product.image_kind || product.image_rights_status) && (
+            <small>
+              {[
+                imageKindCopy(product.image_kind),
+                imageRightsCopy(product.image_rights_status),
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </small>
+          )}
+        </p>
+      )}
+    </div>
+  );
+}
+
+const topicLabel = (symptomCategory: string): string =>
+  symptomCategory.split("/").at(-1) ?? symptomCategory;
+
+function TopicDecisionBlock({
+  topic,
+  multiple,
+}: Readonly<{
+  topic: RuntimeOutput["topic_results"][number];
+  multiple: boolean;
+}>) {
+  const synthetic = isSyntheticDecision(topic.decision);
+  const ingredients = topic.decision.ingredient_options;
+  const products = topic.decision.product_candidates;
+  const hasCandidateDetails =
+    !synthetic && (ingredients.length > 0 || products.length > 0);
+  return (
+    <section className="topic-decision">
+      {multiple && (
+        <div className="topic-decision-heading">
+          <h2>{topicLabel(topic.symptom_category)}</h2>
+          <span>{decisionLabel[topic.decision.status]}</span>
+        </div>
+      )}
+      {hasCandidateDetails && (
+        <div className="decision-block decision-candidates">
+          <div className="candidate-group-heading">
+            <div>
+              <h2>
+                {products.length > 0 ? "현재 제품 후보" : "현재 검토 성분"}
+              </h2>
+              <p className="product-ranking-note">
+                {products.length === 0
+                  ? "지금 말씀해 주신 증상에 맞춰 살펴볼 성분이에요."
+                  : products.every((product) => product.sales_rank === null)
+                    ? "지금 말씀해 주신 증상에 맞춰 살펴볼 제품이에요."
+                    : "임상·안전 조건이 같은 경우에만 약국 판매 정보를 참고했어요."}
+              </p>
+            </div>
+            {products.length > 0 && (
+              <span className="candidate-count">{products.length}개</span>
+            )}
+          </div>
+          {products.length > 0 && (
+            <div className="product-candidates">
+              {products.map((product, index) => {
+                const productDetails = product as ProductCandidateDetails;
+                const enriched = productEnrichment.get(product.product_id);
+                const imageUrl =
+                  productDetails.image_url ?? enriched?.image_url;
+                const ingredient = ingredients.find(
+                  (option) => option.ingredient_id === product.ingredient_id,
+                );
+                return (
+                  <article
+                    className={`product-card${index === 0 ? " product-card-primary" : ""}`}
+                    key={product.product_id}
+                  >
+                    <div className="product-media">
+                      {imageUrl ? (
+                        <img
+                          className="product-image"
+                          src={imageUrl}
+                          alt={`${product.display_name} 제품 이미지`}
+                          width={112}
+                          height={112}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <div
+                          className="product-image-placeholder"
+                          aria-hidden="true"
+                        >
+                          <span>약</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="product-card-body">
+                      <div className="product-card-labels">
+                        <span className="product-priority">
+                          {index === 0 ? "우선 후보" : "대안 후보"}
+                        </span>
+                        {ingredient && (
+                          <span className="product-ingredient">
+                            {ingredient.ingredient_name}
+                          </span>
+                        )}
+                      </div>
+                      <strong className="product-name">
+                        {product.display_name}
+                      </strong>
+                      <ProductSnapshotDetails product={product} />
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+          {ingredients.length > 0 && (
+            <div className="ingredient-summary">
+              <p>연결 성분</p>
+              <ul className="ingredient-options">
+                {ingredients.map((option, index) => (
+                  <li key={option.option_id}>
+                    <span>{index === 0 ? "우선" : "대안"}</span>
+                    <strong>{option.ingredient_name}</strong>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+      {topic.decision.status === "refer" && topic.decision.referral && (
+        <div className="decision-block decision-referral">
+          <h2>제품 없이 전환</h2>
+          <p>{topic.decision.referral.reason}</p>
+          <small>{topic.decision.referral.action}</small>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ProvisionalCandidateSidebar({
+  topics,
+}: Readonly<{
+  topics: readonly RuntimeOutput["topic_results"][number][];
+}>) {
+  return (
+    <aside className="candidate-sidebar" aria-label="현재 제품 후보">
+      <div className="sidebar-candidate-heading">
+        <h2>현재 무난한 후보</h2>
+        <span>임시</span>
+      </div>
+      <p className="sidebar-candidate-copy">
+        지금까지 확인한 내용으로 먼저 볼 수 있는 제품이에요.
+      </p>
+      <div className="sidebar-candidate-list">
+        {topics.map((topic) => {
+          const product = topic.decision.product_candidates[0];
+          if (!product) return null;
+          const productDetails = product as ProductCandidateDetails;
+          const enriched = productEnrichment.get(product.product_id);
+          const imageUrl = productDetails.image_url ?? enriched?.image_url;
+          const label =
+            topic.ask_next.some(
+              (question) => question.slot === "symptom_pattern",
+            ) && topic.symptom_category.includes("기침")
+              ? "기침"
+              : topicLabel(topic.symptom_category);
+          return (
+            <section
+              key={topic.protocol_id}
+              className="sidebar-candidate-topic"
+            >
+              <p>{label}</p>
+              <article className="sidebar-product">
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt={`${product.display_name} 제품 이미지`}
+                    width={62}
+                    height={62}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div
+                    className="sidebar-product-placeholder"
+                    aria-hidden="true"
+                  >
+                    약
+                  </div>
+                )}
+                <div className="sidebar-product-body">
+                  <strong>{product.display_name}</strong>
+                </div>
+                <ProductSnapshotDetails product={product} compact />
+              </article>
+            </section>
+          );
+        })}
+      </div>
+      <small>
+        판매순위가 아니며, 대답에 따라 더 맞는 제품으로 바뀔 수 있어요.
+      </small>
+    </aside>
+  );
+}
 
 export function App() {
   const [accessGranted, setAccessGranted] = useState(
@@ -195,7 +512,7 @@ export function App() {
   const [passcode, setPasscode] = useState("");
   const [passcodeError, setPasscodeError] = useState(false);
   const [query, setQuery] = useState("");
-  const [history, setHistory] = useState<readonly string[]>([]);
+  const [history, setHistory] = useState<readonly DialogueTurn[]>([]);
   const [result, setResult] = useState<RuntimeOutput>();
   const [online, setOnline] = useState(navigator.onLine);
   const [listening, setListening] = useState(false);
@@ -215,7 +532,7 @@ export function App() {
   const processingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sequenceRef = useRef(0);
   const inputsRef = useRef(new Map<number, RuntimeInput>());
-  const historyRef = useRef<readonly string[]>([]);
+  const historyRef = useRef<readonly DialogueTurn[]>([]);
   const aiAbortRef = useRef<AbortController | null>(null);
   const mediaRef = useRef<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -246,10 +563,10 @@ export function App() {
     setSession(next);
   };
 
-  const submitText = (
+  const submitText = async (
     text: string,
     inputType: RuntimeInput["input_type"] = "typed",
-  ) => {
+  ): Promise<void> => {
     const normalized = text.trim();
     if (
       !normalized ||
@@ -257,7 +574,13 @@ export function App() {
     )
       return;
     sequenceRef.current += 1;
-    const nextHistory = [...historyRef.current, `환자: ${normalized}`];
+    const submittedSequence = sequenceRef.current;
+    const submittedSession = sessionIdRef.current;
+    const priorHistory = historyRef.current;
+    const nextHistory = [
+      ...priorHistory,
+      customerTurn(normalized, submittedSequence),
+    ];
     historyRef.current = nextHistory;
     setHistory(nextHistory);
     setQuery("");
@@ -270,16 +593,57 @@ export function App() {
         "상담 엔진 응답이 지연되고 있어요. 잠시 후 다시 입력해 주세요.",
       );
     }, 8_000);
-    applySession({ type: "INPUT", sequence: sequenceRef.current });
-    const input = newInput(
+    applySession({ type: "INPUT", sequence: submittedSequence });
+    const immediateInput = newInput(
       normalized,
-      sequenceRef.current,
-      sessionIdRef.current,
+      submittedSequence,
+      submittedSession,
       inputType,
     );
-    inputsRef.current.set(input.sequence, input);
-    if (workerRef.current) workerRef.current.postMessage(input);
-    else pendingWorkerInputsRef.current.push(input);
+    inputsRef.current.set(immediateInput.sequence, immediateInput);
+    if (workerRef.current) workerRef.current.postMessage(immediateInput);
+    else pendingWorkerInputsRef.current.push(immediateInput);
+
+    if (shouldInterpretWithAi(aiReady, navigator.onLine, normalized)) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3_500);
+      try {
+        const interpretation = await requestAiInterpretation(
+          normalized,
+          priorHistory,
+          result?.intent ?? null,
+          controller.signal,
+        );
+        if (
+          interpretation &&
+          interpretation.disposition === "clinical_intent" &&
+          interpretation.intent &&
+          interpretation.confidence >= 0.45 &&
+          submittedSequence === sequenceRef.current &&
+          submittedSession === sessionIdRef.current &&
+          !(
+            sessionRef.current.criticalLocked &&
+            !sessionRef.current.acknowledged
+          )
+        ) {
+          const interpretedInput = newInput(
+            normalized,
+            submittedSequence,
+            submittedSession,
+            inputType,
+            interpretation.intent,
+          );
+          inputsRef.current.set(interpretedInput.sequence, interpretedInput);
+          if (workerRef.current)
+            workerRef.current.postMessage(interpretedInput);
+          else pendingWorkerInputsRef.current.push(interpretedInput);
+        }
+      } catch {
+        // The original text remains the deterministic offline fallback.
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
   };
 
   useEffect(() => {
@@ -324,7 +688,7 @@ export function App() {
         const localOutput = event.data.output;
         const commitOutput = (output: RuntimeOutput) => {
           setResult(output);
-          const nextHistory = upsertAssistantTurn(
+          const nextHistory = upsertCounselorTurn(
             historyRef.current,
             output.sequence,
             outputText(output),
@@ -332,7 +696,13 @@ export function App() {
           historyRef.current = nextHistory;
           setHistory(nextHistory);
         };
-        if (shouldRequestAiRefinement(navigator.onLine, localOutput.mode)) {
+        if (
+          shouldRequestAiRefinement(
+            navigator.onLine,
+            localOutput.mode,
+            localOutput.decision.status,
+          )
+        ) {
           const input = inputsRef.current.get(event.data.output.sequence);
           if (input) {
             const refinementHistory = historyRef.current;
@@ -397,9 +767,6 @@ export function App() {
       if (event.key === "/" && document.activeElement !== inputRef.current) {
         event.preventDefault();
         inputRef.current?.focus();
-      }
-      if (event.key === "Escape" && !sessionRef.current.criticalLocked) {
-        resetConsult();
       }
       if (event.key.toLowerCase() === "f" && statusRef.current === "blocked") {
         setConfirmedCritical(true);
@@ -632,24 +999,28 @@ export function App() {
   };
   const critical =
     result?.mode === "escalate" || Boolean(result?.red_flags.length);
-  const patientSummary = buildPatientSummary(history);
-  const syntheticDecision = result
-    ? isSyntheticDecision(result.decision)
-    : false;
-  const presentation = result
-    ? consultationPresentation(result.decision.intent)
-    : null;
-  const guidedDecision = Boolean(
-    result &&
-    !critical &&
-    ((syntheticDecision && result.decision.status === "recommend") ||
-      (result.decision.status === "insufficient" && result.decision.intent)),
+  const latestCustomerMessage = [...history]
+    .reverse()
+    .find((turn) => turn.speaker === "customer")?.text;
+  const customerSummary = buildCustomerSummary(history);
+  const conversationTurn = Boolean(
+    result?.decision.reason_codes.includes("CONVERSATION_TURN"),
   );
+  const topicLabels = result
+    ? result.topic_results.map((topic) => topicLabel(topic.symptom_category))
+    : [];
+  const provisionalCandidateTopics = result
+    ? result.ask_next.length > 0
+      ? result.topic_results.filter(
+          (topic) =>
+            !isSyntheticDecision(topic.decision) &&
+            topic.decision.product_candidates.length > 0,
+        )
+      : []
+    : [];
   const visibleLines = result
-    ? guidedDecision
-      ? presentation
-        ? [`${presentation.title}로 분류했습니다. ${presentation.direction}`]
-        : ["증상 분류와 안전 확인을 마쳤습니다."]
+    ? provisionalCandidateTopics.length > 0
+      ? result.ask_next.map((question) => question.question)
       : patientVisibleLines(result)
     : [];
 
@@ -699,7 +1070,7 @@ export function App() {
           <button className="login-button" onClick={unlock}>
             로그인
           </button>
-          <small>합성 데이터 데모 · 임상 사용 금지</small>
+          <small>공식 조사 후보 데이터 · 약사 검토 전</small>
         </section>
       </main>
     );
@@ -708,7 +1079,7 @@ export function App() {
   return (
     <main className="shell">
       <div className="demo-banner" role="note">
-        합성 데이터 데모 · 임상 사용 금지
+        공식 조사 후보 데이터 · 약사 검토 전
       </div>
       <header>
         <div>
@@ -732,286 +1103,251 @@ export function App() {
           )}
         </div>
       </header>
-      <section className="query-panel" aria-label="상담 입력">
-        <label htmlFor="consult-query">증상이나 질문을 입력하세요</label>
-        <div className="query-row">
-          <input
-            ref={inputRef}
-            id="consult-query"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onCompositionEnd={(e) => setQuery(e.currentTarget.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.nativeEvent.isComposing) consult();
-            }}
-            placeholder="예: 기침이 3일째예요"
-            autoFocus
-            maxLength={2000}
-          />
-          <button onClick={consult} aria-disabled={session.criticalLocked}>
-            확인
-          </button>
-        </div>
-        <button
-          className={`ptt ${listening ? "active" : ""}`}
-          onClick={() => (listening ? stopPtt() : void startPtt())}
-          aria-pressed={listening}
-          aria-label="누르는 동안 음성 입력"
-        >
-          {listening ? "● 듣는 중 · 눌러서 종료" : "🎙 말하기"}
-        </button>
-        {voiceMessage && (
-          <p className="voice-message" role="status">
-            {voiceMessage}
-          </p>
-        )}
-        {microphones.length > 1 && (
-          <label className="microphone-picker">
-            마이크
-            <select
-              value={microphoneId}
-              onChange={(event) => setMicrophoneId(event.target.value)}
+      <div className={`consult-workspace${result ? " has-sidebar" : ""}`}>
+        <div className="consult-main">
+          <section className="query-panel" aria-label="상담 입력">
+            <label htmlFor="consult-query">
+              손님이 말한 증상이나 질문을 입력하세요
+            </label>
+            <div className="query-row">
+              <input
+                ref={inputRef}
+                id="consult-query"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onCompositionEnd={(e) => setQuery(e.currentTarget.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.nativeEvent.isComposing)
+                    consult();
+                }}
+                placeholder="예: 기침이 3일째예요"
+                autoFocus
+                maxLength={2000}
+              />
+              <button onClick={consult} aria-disabled={session.criticalLocked}>
+                확인
+              </button>
+            </div>
+            <button
+              className={`ptt ${listening ? "active" : ""}`}
+              onClick={() => (listening ? stopPtt() : void startPtt())}
+              aria-pressed={listening}
+              aria-label="누르는 동안 음성 입력"
             >
-              <option value="">기본 마이크</option>
-              {microphones.map((device, index) => (
-                <option key={device.deviceId} value={device.deviceId}>
-                  {device.label || `마이크 ${index + 1}`}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
-        <p className="privacy">
-          음성은 이 데모에서 저장되지 않습니다. 음성 인식 연결 전에는 직접
-          입력을 사용하세요.
-        </p>
-      </section>
-      {processing && (
-        <section className="engine-status" role="status" aria-live="polite">
-          <span className="loading-spinner" aria-hidden="true" />
-          <span>
-            <strong>입력을 확인하고 있어요</strong>
-            <small>안전 기준과 상담 프로토콜을 로컬에서 적용하고 있어요.</small>
-          </span>
-        </section>
-      )}
-      {engineError && (
-        <p className="engine-error" role="alert">
-          {engineError}
-        </p>
-      )}
-      {result ? (
-        <div className="consult-layout">
-          <section
-            className={`result ${critical ? "critical" : ""} ${aiInterpreting ? "refining" : ""}`}
-            aria-live="polite"
-            aria-busy={aiInterpreting}
-          >
-            {critical && !confirmedCritical ? (
-              <div className="critical-lock">
-                <h2>먼저 위험 신호를 확인하세요</h2>
-                <p>{result.say_now.join(" ")}</p>
-                <button
-                  onClick={() => {
-                    setConfirmedCritical(true);
-                    applySession({ type: "ACKNOWLEDGE_CRITICAL" });
-                  }}
+              {listening ? "● 듣는 중 · 눌러서 종료" : "🎙 말하기"}
+            </button>
+            {voiceMessage && (
+              <p className="voice-message" role="status">
+                {voiceMessage}
+              </p>
+            )}
+            {microphones.length > 1 && (
+              <label className="microphone-picker">
+                마이크
+                <select
+                  value={microphoneId}
+                  onChange={(event) => setMicrophoneId(event.target.value)}
                 >
-                  확인했습니다 <kbd>F</kbd>
-                </button>
-              </div>
-            ) : (
-              <>
-                {aiInterpreting && (
-                  <div className="refinement-status" role="status">
-                    <span className="loading-spinner" aria-hidden="true" />
-                    <span>
-                      <strong>결정은 유지하고 문장만 다듬고 있어요</strong>
-                      <small>
-                        성분·제품·근거는 로컬 결정엔진에서 이미 고정됐어요.
-                      </small>
-                    </span>
-                  </div>
-                )}
-                <article className="primary-guidance">
-                  <p className="result-kicker">지금 말할 내용</p>
-                  {visibleLines.map((line, index) => (
-                    <p
-                      className={index < result.say_now.length ? "say" : "ask"}
-                      key={line}
-                    >
-                      {line}
-                    </p>
+                  <option value="">기본 마이크</option>
+                  {microphones.map((device, index) => (
+                    <option key={device.deviceId} value={device.deviceId}>
+                      {device.label || `마이크 ${index + 1}`}
+                    </option>
                   ))}
-                </article>
-                <section
-                  className={`decision-summary decision-${result.decision.status}`}
-                  aria-label="OTC 결정 결과"
-                >
-                  <div className="decision-heading">
-                    <div>
-                      <p>결정 상태</p>
-                      <strong>
-                        {guidedDecision
-                          ? "참고 추천"
-                          : decisionLabel[result.decision.status]}
-                      </strong>
-                    </div>
-                    <code>{result.decision.decision_id}</code>
-                  </div>
-                  {guidedDecision && (
-                    <div className="decision-block synthetic-decision-notice">
-                      <h2>상담 결과</h2>
-                      <strong className="consultation-result-title">
-                        {presentation?.title}
-                      </strong>
-                      <p>{presentation?.direction}</p>
-                      <h3>우선 검토할 성분군</h3>
-                      <ul className="consultation-checks">
-                        {presentation?.fallbackOptions.map((option) => (
-                          <li key={option}>{option}</li>
-                        ))}
-                      </ul>
-                      <h3>약사 확인사항</h3>
-                      <ul className="consultation-checks">
-                        {presentation?.checks.map((check) => (
-                          <li key={check}>{check}</li>
-                        ))}
-                      </ul>
-                      <small>
-                        현재 근거의 신뢰도가 낮거나 합성 데이터인 경우 참고
-                        추천으로 표시됩니다. 구체 제품은 약사가 환자 상태와
-                        재고를 확인해 선택하세요.
-                      </small>
+                </select>
+              </label>
+            )}
+            <p className="privacy">
+              음성은 이 데모에서 저장되지 않습니다. 음성 인식 연결 전에는 직접
+              입력을 사용하세요.
+            </p>
+          </section>
+          {processing && (
+            <section className="engine-status" role="status" aria-live="polite">
+              <span className="loading-spinner" aria-hidden="true" />
+              <span>
+                <strong>입력을 확인하고 있어요</strong>
+                <small>
+                  안전 기준과 상담 프로토콜을 로컬에서 적용하고 있어요.
+                </small>
+              </span>
+            </section>
+          )}
+          {engineError && (
+            <p className="engine-error" role="alert">
+              {engineError}
+            </p>
+          )}
+          {result ? (
+            <section
+              className={`result ${critical ? "critical" : ""} ${aiInterpreting ? "refining" : ""}`}
+              aria-live="polite"
+              aria-busy={aiInterpreting}
+            >
+              {critical && !confirmedCritical ? (
+                <div className="critical-lock">
+                  <h2>먼저 위험 신호를 확인하세요</h2>
+                  <p>{result.say_now.join(" ")}</p>
+                  <button
+                    onClick={() => {
+                      setConfirmedCritical(true);
+                      applySession({ type: "ACKNOWLEDGE_CRITICAL" });
+                    }}
+                  >
+                    확인했습니다 <kbd>F</kbd>
+                  </button>
+                </div>
+              ) : (
+                <>
+                  {aiInterpreting && (
+                    <div className="refinement-status" role="status">
+                      <span className="loading-spinner" aria-hidden="true" />
+                      <span>
+                        <strong>결정은 유지하고 문장만 다듬고 있어요</strong>
+                        <small>
+                          성분·제품·근거는 로컬 결정엔진에서 이미 고정됐어요.
+                        </small>
+                      </span>
                     </div>
                   )}
-                  {!syntheticDecision &&
-                    result.decision.ingredient_options.length > 0 && (
-                      <div className="decision-block">
-                        <h2>검증된 성분 선택지</h2>
-                        <ul className="ingredient-options">
-                          {result.decision.ingredient_options.map((option) => (
-                            <li key={option.option_id}>
-                              <strong>{option.ingredient_name}</strong>
-                              <span>
-                                임상 {Math.round(option.clinical_score * 100)} ·
-                                안전 {Math.round(option.safety_score * 100)}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  {!syntheticDecision &&
-                    result.decision.product_candidates.length > 0 && (
-                      <div className="decision-block">
-                        <h2>약국 제품 후보</h2>
-                        <div className="product-candidates">
-                          {result.decision.product_candidates.map((product) => (
-                            <article key={product.product_id}>
-                              <strong>{product.display_name}</strong>
-                              <span>
-                                {inventoryLabel(product.inventory_status)}
-                              </span>
-                              <small>
-                                {product.available_quantity === null
-                                  ? "수량 미연결"
-                                  : `가용 ${product.available_quantity}`}
-                                {product.sales_rank === null
-                                  ? ""
-                                  : ` · 90일 판매순위 ${product.sales_rank}`}
-                              </small>
-                            </article>
-                          ))}
+                  {latestCustomerMessage && (
+                    <div className="latest-customer-message">
+                      <span>손님이 한 말</span>
+                      <p>{latestCustomerMessage}</p>
+                    </div>
+                  )}
+                  <article className="primary-guidance">
+                    <p className="result-kicker">
+                      {result.ask_next.length > 0
+                        ? "손님에게 이렇게 물어보세요"
+                        : "손님에게 이렇게 말해보세요"}
+                    </p>
+                    {visibleLines.map((line) => (
+                      <p
+                        className={
+                          result.ask_next.some((item) => item.question === line)
+                            ? "ask"
+                            : result.ask_next.length > 0
+                              ? "say supporting-suggestion"
+                              : "say"
+                        }
+                        key={line}
+                      >
+                        {line}
+                      </p>
+                    ))}
+                  </article>
+                  {!conversationTurn && result.ask_next.length === 0 && (
+                    <section
+                      className={`decision-summary decision-${result.decision.status}${result.ask_next.length > 0 ? " decision-open-question" : ""}`}
+                      aria-label="OTC 결정 결과"
+                    >
+                      <div className="decision-heading">
+                        <div>
+                          <p>결정 상태</p>
+                          <strong>
+                            {result.decision.status === "recommend" &&
+                            result.ask_next.length > 0
+                              ? "현재 후보"
+                              : decisionLabel[result.decision.status]}
+                          </strong>
                         </div>
                       </div>
-                    )}
-                  {result.decision.status === "ask" &&
-                    result.decision.question && (
-                      <div className="decision-block decision-question">
-                        <h2>선택을 바꾸는 질문</h2>
-                        <p>{result.decision.question.question}</p>
-                        <small>{result.decision.question.reason}</small>
-                      </div>
-                    )}
-                  {result.decision.status === "refer" &&
-                    result.decision.referral && (
-                      <div className="decision-block decision-referral">
-                        <h2>제품 없이 전환</h2>
-                        <p>{result.decision.referral.reason}</p>
-                        <small>{result.decision.referral.action}</small>
-                      </div>
-                    )}
-                </section>
-                <details className="supporting-details">
-                  <summary>근거·주의사항</summary>
-                  <div className="supporting-content">
-                    {result.avoid
-                      .filter((item) => !/임의로 진단하지 않습니다/u.test(item))
-                      .map((item) => (
-                        <p key={item}>{item}</p>
+                      {result.topic_results.length > 1 && (
+                        <div className="multi-topic-overview">
+                          <h2>함께 확인 중인 증상</h2>
+                          <p>{topicLabels.join(" · ")}</p>
+                          <small>
+                            각 증상의 후보를 따로 유지하며 질문은 한 번에 하나씩
+                            이어갑니다.
+                          </small>
+                        </div>
+                      )}
+                      {result.topic_results.map((topic) => (
+                        <TopicDecisionBlock
+                          key={topic.protocol_id}
+                          topic={topic}
+                          multiple={result.topic_results.length > 1}
+                        />
                       ))}
-                    {result.decision.source_refs.length > 0 && (
-                      <div className="evidence-refs">
-                        <strong>검증 근거</strong>
-                        {result.decision.source_refs.slice(0, 8).map((ref) => (
-                          <code
-                            key={`${ref.claim_id}:${ref.source_snapshot_id}:${ref.locator}`}
-                          >
-                            {ref.claim_id} · {ref.source_snapshot_id} ·{" "}
-                            {ref.locator}
-                          </code>
-                        ))}
+                    </section>
+                  )}
+                  {!conversationTurn && (
+                    <details className="supporting-details">
+                      <summary>근거·주의사항</summary>
+                      <div className="supporting-content">
+                        {result.avoid
+                          .filter(
+                            (item) => !/임의로 진단하지 않습니다/u.test(item),
+                          )
+                          .map((item) => (
+                            <p key={item}>{item}</p>
+                          ))}
+                        {result.decision.source_refs.length > 0 && (
+                          <p className="evidence-note">
+                            제품별 출처와 공식 연결 여부는 제품 카드에서 확인할
+                            수 있습니다.
+                          </p>
+                        )}
+                        <p>
+                          상태 {result.status} · 신뢰도{" "}
+                          {Math.round(result.confidence * 100)}%
+                        </p>
+                        <p>
+                          지식팩 {result.knowledge_version} · 처리{" "}
+                          {result.latency.total_ms.toFixed(1)}ms
+                        </p>
+                        <p>
+                          공식 출처 조사 후보 기반 미리보기이며 약사 검토와 운영
+                          승격은 미완료입니다.
+                        </p>
                       </div>
-                    )}
-                    <p>
-                      상태 {result.status} · 신뢰도{" "}
-                      {Math.round(result.confidence * 100)}%
-                    </p>
-                    <p>
-                      지식팩 {result.knowledge_version} · 처리{" "}
-                      {result.latency.total_ms.toFixed(1)}ms
-                    </p>
-                    <p>
-                      합성 fixture 기반 데모이며 공식 임상 출처 검토는
-                      미완료입니다.
-                    </p>
-                  </div>
-                </details>
-              </>
-            )}
-          </section>
-          <aside className="patient-summary" aria-label="누적 환자 정보">
-            <div className="summary-heading">
-              <p>누적 환자 정보</p>
-              <span>{patientSummary.facts.length}개 확인</span>
-            </div>
-            {patientSummary.symptoms.length > 0 && (
-              <div className="summary-row">
-                <span>증상</span>
-                <strong>{patientSummary.symptoms.join(", ")}</strong>
-              </div>
-            )}
-            {patientSummary.duration && (
-              <div className="summary-row">
-                <span>시작</span>
-                <strong>{patientSummary.duration}</strong>
-              </div>
-            )}
-            <div className="summary-facts">
-              {patientSummary.facts.map((fact) => (
-                <p key={fact}>{fact}</p>
-              ))}
-            </div>
-            {patientSummary.risks.length > 0 && (
-              <p className="summary-risk">위험 관련 표현 확인 필요</p>
-            )}
-            <small>
-              현재 상담 중에만 유지되며 새 상담을 누르면 지워집니다.
-            </small>
-          </aside>
+                    </details>
+                  )}
+                </>
+              )}
+            </section>
+          ) : null}
         </div>
-      ) : null}
+        {result ? (
+          <div className="consult-sidebar">
+            {provisionalCandidateTopics.length > 0 && (
+              <ProvisionalCandidateSidebar
+                topics={provisionalCandidateTopics}
+              />
+            )}
+            <aside className="patient-summary" aria-label="이번 손님 정보">
+              <div className="summary-heading">
+                <p>이번 손님 정보</p>
+                <span>{customerSummary.facts.length}개 확인</span>
+              </div>
+              {customerSummary.symptoms.length > 0 && (
+                <div className="summary-row">
+                  <span>증상</span>
+                  <strong>{customerSummary.symptoms.join(", ")}</strong>
+                </div>
+              )}
+              {customerSummary.duration && (
+                <div className="summary-row">
+                  <span>시작</span>
+                  <strong>{customerSummary.duration}</strong>
+                </div>
+              )}
+              <div className="summary-facts">
+                {customerSummary.facts.map((fact) => (
+                  <p key={fact}>{fact}</p>
+                ))}
+              </div>
+              {customerSummary.risks.length > 0 && (
+                <p className="summary-risk">위험 관련 표현 확인 필요</p>
+              )}
+              <small>
+                현재 상담 중에만 유지되며 새 상담을 누르면 지워집니다.
+              </small>
+            </aside>
+          </div>
+        ) : null}
+      </div>
       <footer>
         개인정보를 입력하지 마세요. 진단·처방 변경·확정 용량을 생성하지
         않습니다.

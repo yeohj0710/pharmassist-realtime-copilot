@@ -6,6 +6,11 @@ using System.Windows.Forms;
 
 internal static class PharmAssistLauncher
 {
+    private const int FirstWebPort = 14273;
+    private const int LastWebPort = 14282;
+    private const string AppId = "pharmassist-realtime-copilot:v1";
+    private const string AppIdPath = "/pharmassist-app-id.txt";
+
     [STAThread]
     private static void Main()
     {
@@ -14,36 +19,70 @@ internal static class PharmAssistLauncher
         var script = Path.Combine(workingDirectory, "scripts", "run-pharmassist.ps1");
         if (!File.Exists(script))
         {
-            MessageBox.Show("Cannot find PharmAssist program files.", "PharmAssist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(
+                "프로그램 실행 파일을 찾을 수 없습니다.",
+                "약국 상담 도우미",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            return;
+        }
+
+        for (var port = FirstWebPort; port <= LastWebPort; port++)
+        {
+            if (!IsPharmAssist(port)) continue;
+            OpenBrowser(port);
             return;
         }
 
         try
         {
-            using (var client = new WebClient())
+            Process.Start(new ProcessStartInfo
             {
-                var page = client.DownloadString("http://127.0.0.1:4173");
-                if (!page.Contains("<title>PharmAssist 데모</title>"))
-                {
-                    throw new WebException("Port 4173 is occupied by another application.");
-                }
-            }
-            Process.Start(new ProcessStartInfo("http://127.0.0.1:4173") { UseShellExecute = true });
-            return;
+                FileName = "powershell.exe",
+                Arguments = "-NoProfile -ExecutionPolicy Bypass -File \"" + script + "\"",
+                WorkingDirectory = workingDirectory,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            });
         }
-        catch (WebException)
+        catch (Exception error)
         {
-            // No running instance; start one below.
+            MessageBox.Show(
+                "프로그램을 시작하지 못했습니다.\n" + error.Message,
+                "약국 상담 도우미",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
         }
+    }
 
-        Process.Start(new ProcessStartInfo
+    private static bool IsPharmAssist(int port)
+    {
+        try
         {
-            FileName = "powershell.exe",
-            Arguments = "-NoProfile -ExecutionPolicy Bypass -File \"" + script + "\"",
-            WorkingDirectory = workingDirectory,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-            WindowStyle = ProcessWindowStyle.Hidden
+            var url = "http://127.0.0.1:" + port + AppIdPath;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Timeout = 500;
+            request.ReadWriteTimeout = 500;
+            request.Headers[HttpRequestHeader.CacheControl] = "no-cache";
+            using (var response = (HttpWebResponse)request.GetResponse())
+            using (var reader = new StreamReader(response.GetResponseStream()))
+            {
+                return response.StatusCode == HttpStatusCode.OK &&
+                    string.Equals(reader.ReadToEnd().Trim(), AppId, StringComparison.Ordinal);
+            }
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    private static void OpenBrowser(int port)
+    {
+        Process.Start(new ProcessStartInfo("http://127.0.0.1:" + port)
+        {
+            UseShellExecute = true
         });
     }
 }

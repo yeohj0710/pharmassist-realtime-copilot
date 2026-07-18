@@ -285,12 +285,13 @@ export function buildDecisionIndex(
     products: readonly DrugProduct[];
   }>,
   now = new Date(),
+  allowUnapprovedResearch = false,
 ): DecisionRetrievalIndex {
   const protocols = input.protocols.filter(
     (protocol) =>
       protocol.domain === "human_otc" &&
       protocol.status === "published" &&
-      protocol.review.pharmacist_approved &&
+      (protocol.review.pharmacist_approved || allowUnapprovedResearch) &&
       protocol.review.official_source_verified &&
       (!protocol.review.expires_at ||
         new Date(protocol.review.expires_at) > now) &&
@@ -334,6 +335,7 @@ export function retrieveProtocols(
   domain: Domain,
   index: DecisionRetrievalIndex,
   limit = 3,
+  allowKeywordFallback = true,
 ): readonly ProtocolCandidate[] {
   if (domain !== "human_otc") return [];
   const normalized = input.normalizedText.normalize("NFKC").toLowerCase();
@@ -341,7 +343,7 @@ export function retrieveProtocols(
     ...input.tokens.map((token) => token.toLowerCase()),
     ...tokenize(normalized),
   ]);
-  const candidates: ProtocolCandidate[] = [];
+  const candidates: (ProtocolCandidate & { readonly anchored: boolean })[] = [];
   for (const protocol of index.protocols.values()) {
     if (
       (protocol.triggers.negative ?? []).some((term) =>
@@ -355,28 +357,49 @@ export function retrieveProtocols(
     const aliases = protocol.triggers.aliases.filter((alias) =>
       normalized.includes(alias.normalize("NFKC").toLowerCase()),
     );
+    const keywords = protocol.triggers.keywords.filter((keyword) => {
+      const value = keyword.normalize("NFKC").toLowerCase().trim();
+      return (
+        value.length >= 2 && !/\s/u.test(value) && normalized.includes(value)
+      );
+    });
     const terms = index.protocolTerms.get(protocol.protocol_id) ?? new Set();
     const overlap = [...terms].filter((term) => inputTerms.has(term));
-    if (anchors.length === 0 && aliases.length === 0) continue;
+    if (anchors.length === 0 && aliases.length === 0 && keywords.length === 0)
+      continue;
     const denominator = Math.max(1, Math.min(8, terms.size));
     const score = Math.min(
       1,
       anchors.length * 0.55 +
         aliases.length * 0.35 +
+        keywords.length * 0.18 +
         (overlap.length / denominator) * 0.35,
     );
     candidates.push({
       protocolId: protocol.protocol_id,
       intent: protocol.intent,
       score,
-      matchedTerms: [...new Set([...anchors, ...aliases, ...overlap])],
+      matchedTerms: [
+        ...new Set([...anchors, ...aliases, ...keywords, ...overlap]),
+      ],
+      anchored: anchors.length > 0 || aliases.length > 0,
     });
   }
-  return candidates
+  const anchoredCandidates = candidates.filter(
+    (candidate) => candidate.anchored,
+  );
+  const eligibleCandidates =
+    anchoredCandidates.length > 0
+      ? anchoredCandidates
+      : allowKeywordFallback
+        ? candidates
+        : [];
+  return eligibleCandidates
     .sort(
       (left, right) =>
         right.score - left.score ||
         left.protocolId.localeCompare(right.protocolId),
     )
-    .slice(0, limit);
+    .slice(0, limit)
+    .map(({ anchored: _anchored, ...candidate }) => candidate);
 }

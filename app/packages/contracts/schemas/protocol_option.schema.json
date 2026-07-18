@@ -41,6 +41,19 @@
       "minimum": 0,
       "maximum": 100
     },
+    "therapeutic_role": {
+      "type": "string",
+      "enum": ["preferred", "alternative", "conditional"]
+    },
+    "evidence_scope": {
+      "type": "string",
+      "enum": ["direct", "supportive", "phenotype_specific"]
+    },
+    "fit_rationale": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
     "claim_ids": {
       "type": "array",
       "minItems": 1,

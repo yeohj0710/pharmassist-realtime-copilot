@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-07-16T14:24:29.553Z",
+  "source": {
+    "logicalName": "pharmacy-product-catalog-portable-v1",
+    "contentSha256": "e272ecafaae5546da4f142291f10065df3307d36391ef27e2128365e2279694e",
+    "byteLength": 12293476,
+    "recordCount": 776
+  },
+  "pack": {
+    "packId": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+    "version": "1.0.0-research-preview",
+    "mappingContentSha256": "580edfd1431da5680705da9f22785cee9e41176a3b50829a656ba1393a37ff51",
+    "ingredientCount": 31,
+    "protocolOptionCount": 47
+  },
+  "sourceRecordCount": 776,
+  "importedRecordCount": 776,
+  "droppedRecordCount": 0,
+  "officialProductCount": 458,
+  "uniqueOfficialProductCount": 413,
+  "confirmedWithOfficialContentCount": 458,
+  "confirmedMissingItemSeqCount": 0,
+  "confirmedMissingSourceUrlCount": 0,
+  "confirmedMissingOfficialContentCount": 0,
+  "imageCount": 665,
+  "correctedRetailTextCount": 252,
+  "multiSkuOfficialProductCount": 38,
+  "multiSkuRetailSkuCount": 83,
+  "matchStatusCounts": {
+    "confirmed": 458,
+    "review_required": 10,
+    "not_found": 11,
+    "not_applicable": 297
+  },
+  "eligibleRetailSkuCount": 27,
+  "eligibleOfficialProductCount": 23,
+  "exclusionReasonCounts": {
+    "official_match_not_confirmed": 318,
+    "official_identity_invalid": 0,
+    "not_otc": 0,
+    "permit_cancelled": 10,
+    "source_match_conflict": 6,
+    "active_ingredient_missing": 0,
+    "active_ingredient_unmapped": 417,
+    "protocol_indication_mismatch": 13
+  },
+  "mappingFailureReasonCounts": {
+    "active_ingredient_missing": 0,
+    "active_ingredient_unmapped": 417,
+    "official_identity_invalid": 0,
+    "protocol_indication_mismatch": 13
+  },
+  "ignoredPseudoIdentityFieldCounts": {
+    "officialReportNumber": 100,
+    "officialStandardCodes": 100
+  }
+}

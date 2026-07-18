@@ -19,6 +19,7 @@
     "missing_slots",
     "confidence",
     "decision",
+    "topic_results",
     "source_refs",
     "latency",
     "knowledge_version",
@@ -245,6 +246,48 @@
     },
     "decision": {
       "$ref": "recommendation_decision.schema.json"
+    },
+    "topic_results": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "protocol_id",
+          "intent",
+          "symptom_category",
+          "decision",
+          "ask_next"
+        ],
+        "properties": {
+          "protocol_id": { "type": "string" },
+          "intent": { "type": "string" },
+          "symptom_category": { "type": "string" },
+          "decision": {
+            "$ref": "recommendation_decision.schema.json"
+          },
+          "ask_next": {
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["question", "reason", "priority", "slot"],
+              "properties": {
+                "question": { "type": "string" },
+                "reason": { "type": "string" },
+                "priority": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                },
+                "slot": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

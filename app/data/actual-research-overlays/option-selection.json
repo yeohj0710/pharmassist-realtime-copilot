@@ -1,0 +1,97 @@
+[
+  {
+    "protocol_id": "PTC-ABDOMINAL_PAIN_VOMITING",
+    "field": "symptom.phenotype",
+    "question": "배가 어떻게 불편한가요? 속쓰림·신물, 멀미 뒤 메스꺼움, 설사 중 가까운 증상을 말씀해 주세요.",
+    "reason": "복통 원인에 따라 검토할 성분과 제품이 달라집니다.",
+    "options": [
+      {
+        "option_id": "OPT-ABDOMINAL_PAIN_VOMITING-ALUMINUM_PHOSPHATE_GEL",
+        "patterns": ["속쓰림", "신물", "명치", "위산", "신트림"]
+      },
+      {
+        "option_id": "OPT-ABDOMINAL_PAIN_VOMITING-DIMENHYDRINATE",
+        "patterns": ["멀미", "차를 타", "배를 타", "비행기", "이동 중"]
+      },
+      {
+        "option_id": "OPT-ABDOMINAL_PAIN_VOMITING-DIOSMECTITE",
+        "patterns": ["설사", "묽은 변", "물변"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-DRY_COUGH",
+    "field": "symptom.cough_pattern",
+    "question": "기침은 마른기침에 가깝나요, 가래가 나오는 기침에 가깝나요?",
+    "reason": "기침 양상에 따라 현재 후보를 유지할지 다시 고릅니다.",
+    "progressive_only": true,
+    "answer_patterns": [
+      "마른기침",
+      "가래",
+      "젖은 기침",
+      "목이 간질",
+      "가래가 나"
+    ],
+    "options": []
+  },
+  {
+    "protocol_id": "PTC-MUSCLE_PAIN",
+    "field": "symptom.musculoskeletal_pattern",
+    "question": "{{body_site|아픈 부위|topic}} 움직일 때 더 아픈가요, 가만히 있어도 계속 아픈가요?",
+    "reason": "통증 양상에 따라 현재 후보를 유지할지 다시 고릅니다.",
+    "progressive_only": true,
+    "answer_patterns": [
+      "움직일 때",
+      "움직이면",
+      "가만히 있어도",
+      "움직이지 않아도",
+      "계속 아파",
+      "둘 다"
+    ],
+    "options": []
+  },
+  {
+    "protocol_id": "PTC-JOINT_PAIN",
+    "field": "symptom.musculoskeletal_pattern",
+    "question": "{{body_site|아픈 관절|topic}} 움직일 때 더 아픈가요, 가만히 있어도 계속 아픈가요?",
+    "reason": "통증 양상과 움직임의 관계를 확인해 현재 후보를 유지할지 다시 고릅니다.",
+    "progressive_only": true,
+    "answer_patterns": [
+      "움직일 때",
+      "움직이면",
+      "가만히 있어도",
+      "움직이지 않아도",
+      "계속 아파",
+      "둘 다"
+    ],
+    "options": []
+  },
+  {
+    "rule_id": "RUL-OVERLAY-PTC-SORE_THROAT-ASK-SWALLOWING",
+    "protocol_id": "PTC-SORE_THROAT",
+    "field": "symptom.swallowing_severity",
+    "question": "침이나 물을 삼키기 힘들 정도인가요, 아니면 따갑고 아픈 정도인가요?",
+    "reason": "삼키기 어려운 정도에 따라 직접 평가가 필요한지와 현재 후보를 유지할지가 달라집니다.",
+    "progressive_only": true,
+    "answer_patterns": [
+      "삼키기 힘",
+      "삼키기 어렵",
+      "삼킬 때",
+      "침",
+      "물",
+      "따갑",
+      "아픈 정도"
+    ],
+    "options": []
+  },
+  {
+    "rule_id": "RUL-OVERLAY-PTC-SORE_THROAT-ASK-DURATION",
+    "protocol_id": "PTC-SORE_THROAT",
+    "field": "symptom.duration",
+    "question": "목 통증은 언제부터 시작됐나요?",
+    "reason": "증상 기간에 따라 단기 완화 후보를 유지할지 직접 평가로 전환할지가 달라집니다.",
+    "progressive_only": true,
+    "answer_patterns": ["오늘", "어제", "그제", "방금", "부터"],
+    "options": []
+  }
+]

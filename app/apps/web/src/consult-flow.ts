@@ -27,6 +27,10 @@ export interface ConsultTenantContext {
 export class StatefulConsultFlow {
   private readonly engine: LocalClinicalEngine;
   private readonly sessions = new Map<string, ConsultationState>();
+  private readonly turnBases = new Map<
+    string,
+    { readonly sequence: number; readonly state?: ConsultationState }
+  >();
 
   constructor(
     pack: RuntimePack,
@@ -37,10 +41,21 @@ export class StatefulConsultFlow {
 
   reset(sessionId: string): void {
     this.sessions.delete(sessionId);
+    this.turnBases.delete(sessionId);
   }
 
   run(input: RuntimeInput): EngineResult {
-    const prior = this.sessions.get(input.session_id);
+    const current = this.sessions.get(input.session_id);
+    const savedBase = this.turnBases.get(input.session_id);
+    const revisesCurrentTurn =
+      current?.sequence === input.sequence &&
+      savedBase?.sequence === input.sequence;
+    const prior = revisesCurrentTurn ? savedBase.state : current;
+    if (!revisesCurrentTurn)
+      this.turnBases.set(input.session_id, {
+        sequence: input.sequence,
+        ...(current ? { state: current } : {}),
+      });
     const result = this.engine.run(input, {
       tenantId: this.tenant.tenantId,
       ...(this.tenant.formulary ? { formulary: this.tenant.formulary } : {}),

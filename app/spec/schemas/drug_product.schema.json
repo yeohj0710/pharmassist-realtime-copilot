@@ -113,6 +113,77 @@
         }
       }
     },
+    "official_match_status": {
+      "type": "string",
+      "enum": ["confirmed", "review_required", "not_found", "not_applicable"]
+    },
+    "official_product_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "official_source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "retail_offer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sku_id",
+        "display_name",
+        "specification",
+        "displayed_price_krw",
+        "recorded_at",
+        "price_status"
+      ],
+      "properties": {
+        "sku_id": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string", "minLength": 1 },
+        "specification": { "type": "string", "minLength": 1 },
+        "displayed_price_krw": { "type": "integer", "minimum": 0 },
+        "recorded_at": { "type": "string", "format": "date" },
+        "price_status": { "type": "string", "minLength": 1 },
+        "image_url": { "type": ["string", "null"], "format": "uri" },
+        "image_source_url": {
+          "type": ["string", "null"],
+          "format": "uri"
+        },
+        "image_rights_status": { "type": ["string", "null"] },
+        "image_kind": { "type": ["string", "null"] },
+        "image_checked_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        }
+      }
+    },
+    "protocol_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "clinical_group_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "indication_summary": { "type": "string" },
+    "dosage_summary": { "type": "string" },
+    "precaution_summary": { "type": "string" },
+    "medication_guide": { "type": "string" },
+    "classification_code": { "type": "string" },
+    "atc_code": { "type": "string" },
+    "kpic_atc": { "type": "string" },
+    "storage": { "type": "string" },
+    "valid_term": { "type": "string" },
+    "insurance": { "type": "string" },
+    "interactions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "same_ingredient_products": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "permit_cancelled": { "type": "boolean" },
     "status": {
       "type": "string",
       "enum": [

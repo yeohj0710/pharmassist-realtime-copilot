@@ -142,6 +142,37 @@ export interface DrugProduct {
     normalized_amount?: number | null;
     normalized_unit?: string | null;
   }[];
+  official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+  official_product_key?: string;
+  official_source_url?: string;
+  retail_offer?: {
+    sku_id: string;
+    display_name: string;
+    specification: string;
+    displayed_price_krw: number;
+    recorded_at: string;
+    price_status: string;
+    image_url?: string | null;
+    image_source_url?: string | null;
+    image_rights_status?: string | null;
+    image_kind?: string | null;
+    image_checked_at?: string | null;
+  };
+  protocol_ids?: string[];
+  clinical_group_key?: string;
+  indication_summary?: string;
+  dosage_summary?: string;
+  precaution_summary?: string;
+  medication_guide?: string;
+  classification_code?: string;
+  atc_code?: string;
+  kpic_atc?: string;
+  storage?: string;
+  valid_term?: string;
+  insurance?: string;
+  interactions?: string[];
+  same_ingredient_products?: string[];
+  permit_cancelled?: boolean;
   status: "active" | "discontinued" | "withdrawn" | "blocked" | "unknown";
   /**
    * @minItems 1
@@ -311,6 +342,9 @@ export interface ProtocolOption {
   display_name: string;
   clinical_priority: number;
   safety_priority: number;
+  therapeutic_role?: "preferred" | "alternative" | "conditional";
+  evidence_scope?: "direct" | "supportive" | "phenotype_specific";
+  fit_rationale?: string;
   /**
    * @minItems 1
    */

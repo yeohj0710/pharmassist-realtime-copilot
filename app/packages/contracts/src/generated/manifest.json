@@ -1,5 +1,5 @@
 {
-  "schemaHash": "cdaa60b7ea5d74680a574aaaee3513f50add40c801c8488baa6dab1d903a5666",
+  "schemaHash": "0a07f9d46c41d22786beee2827f5e5fe14c0c7f5e78ead8ab9e61b7f6fb4e1d4",
   "generated": [
     {
       "file": "claim.ts",
@@ -19,12 +19,12 @@
     {
       "file": "consultation_state.ts",
       "title": "ConsultationState",
-      "sha256": "4be8abb00da4d6aa2f5ba4d056b5e1773df7ca05d35349164bce075c96e350ea"
+      "sha256": "c056d6c15fab4c6500e39a53fff36b07da033ba3ce31c2b6a1dec4e839ad9219"
     },
     {
       "file": "drug_product.ts",
       "title": "DrugProduct",
-      "sha256": "3000c1c2d1b748909a6ac603ecd3f2a654954e2a8cfd9292d09f6b6f3589ebf8"
+      "sha256": "df880d2257c4abe73bfed173645fbf6e3bb44992e77c0228598de69e86b70d0d"
     },
     {
       "file": "error_envelope.ts",
@@ -52,6 +52,11 @@
       "sha256": "71987fd61f0ae6a25c2e92644160698a3d669ea7d3b5187afe1ecfdf3be14113"
     },
     {
+      "file": "pharmacy_product_registry.ts",
+      "title": "PharmacyProductRegistry",
+      "sha256": "1a7062e1f08d8151d9ef23c9543fd2738ade666880cc81b65888822a24d06715"
+    },
+    {
       "file": "product_ingredient.ts",
       "title": "ProductIngredient",
       "sha256": "34d0590a69c9e3bbc5b94ad2a6be549940cfa759e4a895e9a00e634302452a2a"
@@ -59,7 +64,7 @@
     {
       "file": "protocol_option.ts",
       "title": "ProtocolOption",
-      "sha256": "253ca81de01201044b6d5cfb3e37d9b6a34c50e9036a0535900f530d7027276a"
+      "sha256": "8c97b509c78795d5b4191ec155dae96a7411b734507908a5247489b3eaac0d22"
     },
     {
       "file": "protocol_rule.ts",
@@ -69,27 +74,27 @@
     {
       "file": "recommendation_decision.ts",
       "title": "RecommendationDecision",
-      "sha256": "f19b34d91bf8e76be21dea2831e7b4c6277d505c9a44b0f36455dbd0695a3863"
+      "sha256": "fdb5de07e463158e117dbb5d53a0cefe25ac101fa036a9a37980ed704273469d"
     },
     {
       "file": "refinement_request.ts",
       "title": "RefinementRequestEnvelope",
-      "sha256": "e0c6b56f18dd4a37dfd12897fa644fe49f1f8bd88ef5f05e77395d858a2fc4f1"
+      "sha256": "3d55d0761a605f509de9e3637d89e8d92bfba7e05e8411bcf4b50288002adfa5"
     },
     {
       "file": "runtime_input.ts",
       "title": "RuntimeInput",
-      "sha256": "0555b9a07adae176e938b3eb22bc9d32417a2c6e1c7d1f817166dd742fb4e510"
+      "sha256": "a1ab7507068ca6fc36afec507c06abe805adacb745d4373d5d7bdab802065533"
     },
     {
       "file": "runtime_output.ts",
       "title": "RuntimeOutput",
-      "sha256": "8a8e53fbc020b6c394c7bc3b05feddee7d2d324c61c41ff6528294707f622d7f"
+      "sha256": "00936dc4dedde69e9d4e12b7e27d65013eb094bf6185914dd619d2eeafbb04b5"
     },
     {
       "file": "runtime_pack.ts",
       "title": "RuntimePackContract",
-      "sha256": "629cb0d1ddb7bb78c252f82b6b6942553a7112622bc8f8fa8e0420f46ccccd05"
+      "sha256": "91bd7814b85653787810bdb3ce6c8ae58eaadeb254cdb6e92da0b695a1a337fb"
     },
     {
       "file": "source_record.ts",

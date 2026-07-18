@@ -38,6 +38,13 @@ const redFlagRules: readonly RedFlagRule[] = [
     say: "일반약보다 즉시 응급평가가 우선입니다.",
   },
   {
+    id: "RF-CHEST-PAIN",
+    pattern: /흉통|가슴(?:이|을)?\s*(?:아프|통증)/u,
+    action: "same_day",
+    label: "흉통 확인 필요",
+    say: "기침과 함께 흉통이 있으면 일반약 선택보다 당일 의료평가가 우선입니다.",
+  },
+  {
     id: "RF-NEURO",
     pattern:
       /말이\s*(?:갑자기\s*)?어눌[^.!?]{0,18}(?:한쪽|팔|다리)|한쪽\s*(?:팔|다리)[^.!?]{0,10}힘이\s*없|갑자기\s*의식이\s*이상/u,
@@ -377,7 +384,9 @@ export function evaluateSafety(
       input.slots["weight_kg"] ? "product_name" : "weight_kg",
     );
   }
-  if (/임신/u.test(text)) {
+  const pregnancyNegated =
+    /임신(?:은|이)?\s*(?:아니|아님|가능성\s*(?:없|낮))/u.test(text);
+  if (/임신/u.test(text) && !pregnancyNegated) {
     const decision = clarify(
       "PREGNANCY_GATE",
       ["product_name", "pregnancy_status"],
@@ -405,7 +414,12 @@ export function evaluateSafety(
       "복용 중인 제품명과 놓친 정수·포장 위치를 확인해 주세요.",
       "product_name",
     );
-  if (/알레르기|두드러기/u.test(text))
+  const allergyNegated =
+    /알레르기(?:는|가)?\s*(?:없|아니)|알레르기\s*반응(?:은|이)?\s*(?:없|아니)/u.test(
+      text,
+    );
+  const allergySymptom = /알레르기\s*비염/u.test(text);
+  if (/(?:알레르기|두드러기)/u.test(text) && !allergyNegated && !allergySymptom)
     return clarify(
       "ALLERGY_GATE",
       ["allergies", "product_name"],

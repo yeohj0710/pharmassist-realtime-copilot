@@ -1,23 +1,26 @@
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 import { validateContract } from "@pharmassist/contracts";
-import {
-  syntheticFormulary,
-  syntheticInventory,
-  syntheticPack,
-  syntheticSales,
-} from "@pharmassist/test-fixtures";
+import type { RuntimePack } from "@pharmassist/runtime";
+import actualPackJson from "../../../data/actual-candidate-pack/pack.json" with { type: "json" };
 import { StatefulConsultFlow } from "./consult-flow.js";
+import { buildResearchPreviewFormulary } from "./preview-formulary.js";
 
 const profile = import.meta.env["VITE_APP_PROFILE"] ?? "local-demo";
 if (profile === "production")
   throw new Error(
-    "Production web build requires a verified remote pack loader; synthetic worker startup blocked.",
+    "Production web build requires a pharmacist-approved remote pack; research preview startup blocked.",
   );
-const flow = new StatefulConsultFlow(syntheticPack, {
-  tenantId: "demo",
-  formulary: syntheticFormulary,
-  inventory: syntheticInventory,
-  sales: syntheticSales,
+const validatedPack = validateContract<RuntimePack>(
+  "runtimePack",
+  actualPackJson,
+);
+if (!validatedPack.ok || !validatedPack.value)
+  throw new Error("Actual research preview pack failed runtime validation");
+const previewPack = validatedPack.value;
+const previewFormulary = buildResearchPreviewFormulary(previewPack);
+const flow = new StatefulConsultFlow(previewPack, {
+  tenantId: "local-research-preview",
+  formulary: previewFormulary,
 });
 
 self.addEventListener(

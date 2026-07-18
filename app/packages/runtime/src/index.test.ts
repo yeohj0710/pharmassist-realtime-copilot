@@ -203,7 +203,10 @@ describe("deterministic local runtime", () => {
       tenantContext(first.consultationState),
     );
     expect(second.output.decision.status).toBe("ask");
-    expect(second.output.ask_next[0]?.slot).toBe("symptom_pattern");
+    expect(second.output.ask_next[0]?.slot).toBe("patient.detail");
+    expect(second.output.ask_next[0]?.question).toContain(
+      "평소 말씀하시는 표현",
+    );
     expect(second.output.decision.reason_codes).toContain(
       "UNCERTAIN_ANSWER_ALTERNATIVE_ASK",
     );

@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "1.0.0",
+  "total": 27,
+  "matched": 6,
+  "failed": 21,
+  "ambiguous": 0,
+  "records": [
+    {
+      "productId": "PRD-ACTIFED_197000053",
+      "displayName": "액티피드정",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-BONALING_A_197000076",
+      "displayName": "보나링에이정",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-CLARITIN_200905692",
+      "displayName": "클라리틴정",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-DR_BEARSE_200300406",
+      "displayName": "닥터베아제정",
+      "officialProductKey": "A11AOOOOO0816",
+      "status": "matched",
+      "retailSkuCount": 1,
+      "reason": "audited crosswalk, exact name, manufacturer, and complete active composition"
+    },
+    {
+      "productId": "PRD-DULCOLAX_S_200906478",
+      "displayName": "둘코락스에스장용정",
+      "officialProductKey": "2009092300055",
+      "status": "matched",
+      "retailSkuCount": 1,
+      "reason": "audited crosswalk, exact name, manufacturer, and complete active composition"
+    },
+    {
+      "productId": "PRD-EZ6_ANI_200400463",
+      "displayName": "이지엔6애니연질캡슐",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-GELFOS_M_199400883",
+      "displayName": "겔포스엠현탁액",
+      "officialProductKey": "A11A0930A0424",
+      "status": "matched",
+      "retailSkuCount": 1,
+      "reason": "audited crosswalk, exact name, manufacturer, and complete active composition"
+    },
+    {
+      "productId": "PRD-GEVORIN_V_202107495",
+      "displayName": "게보린브이정(아세트아미노펜)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-HAESOCOPU_S_201900312",
+      "displayName": "해소코푸에스시럽",
+      "officialProductKey": "2019012500051",
+      "status": "matched",
+      "retailSkuCount": 1,
+      "reason": "audited crosswalk, exact name, manufacturer, and complete active composition"
+    },
+    {
+      "productId": "PRD-HATISONE_1_200402651",
+      "displayName": "하티손로션1%(히드로코르티손)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-I2O_MINI_201105482",
+      "displayName": "아이투오미니점안액(카르복시메틸셀룰로오스나트륨)(1회용)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-MUTERAN_200_198701129",
+      "displayName": "뮤테란과립200밀리그램",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ORAMED_198500023",
+      "displayName": "오라메디연고",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-PORTAGEL_200201403",
+      "displayName": "포타겔현탁액",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-SEONGGWANG_POVIDONE_199900422",
+      "displayName": "성광포비딘(포비돈요오드액10%)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-STREPSILS_HONEY_LEMON_200906877",
+      "displayName": "스트렙실허니앤레몬트로키(플루르비프로펜)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ZYRTEC_200610765",
+      "displayName": "지르텍정",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ENRICHED_201109334",
+      "displayName": "그날엔콜드연질캡슐",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ENRICHED_202302949",
+      "displayName": "그날엔콜드에이연질캡슐",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ENRICHED_199200475",
+      "displayName": "누코미트캡슐200밀리그램(아세틸시스테인)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ENRICHED_199902656",
+      "displayName": "목틴캡슐200밀리그램(아세틸시스테인)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ENRICHED_201600779",
+      "displayName": "보나링츄어블정",
+      "officialProductKey": "2016021200001",
+      "status": "matched",
+      "retailSkuCount": 1,
+      "reason": "audited crosswalk, exact name, manufacturer, and complete active composition"
+    },
+    {
+      "productId": "PRD-ENRICHED_201708580",
+      "displayName": "겔포스엘현탁액",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ENRICHED_199801026",
+      "displayName": "훼스탈플러스정",
+      "officialProductKey": "A11A0740B0009",
+      "status": "matched",
+      "retailSkuCount": 2,
+      "reason": "audited crosswalk, exact name, manufacturer, and complete active composition"
+    },
+    {
+      "productId": "PRD-ENRICHED_201200854",
+      "displayName": "비코그린에스정",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ENRICHED_201504877",
+      "displayName": "타세놀정500밀리그램(아세트아미노펜)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    },
+    {
+      "productId": "PRD-ENRICHED_201600490",
+      "displayName": "플로라딘연질캡슐(로라타딘)",
+      "officialProductKey": null,
+      "status": "failed",
+      "retailSkuCount": 0,
+      "reason": "no audited official product crosswalk"
+    }
+  ]
+}

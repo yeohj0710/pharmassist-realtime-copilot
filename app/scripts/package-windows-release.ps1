@@ -22,7 +22,8 @@ foreach ($file in $trackedFiles) {
   Copy-Item -LiteralPath (Join-Path $repoRoot $normalized) -Destination $destination
 }
 
-Copy-Item -LiteralPath (Join-Path $repoRoot "PharmAssist.exe") -Destination $bundleRoot
+$launcherName = -join @([char]0xC57D,[char]0xAD6D,' ',[char]0xC0C1,[char]0xB2F4,' ',[char]0xB3C4,[char]0xC6B0,[char]0xBBF8,'.exe')
+Copy-Item -LiteralPath (Join-Path $repoRoot $launcherName) -Destination $bundleRoot
 Copy-Item -LiteralPath (Join-Path $repoRoot "README.md") -Destination $bundleRoot
 $guidePath = Get-ChildItem -LiteralPath $repoRoot -File -Filter "*.html" | Select-Object -First 1 -ExpandProperty FullName
 if (-not $guidePath) { throw "Root user guide HTML was not found." }

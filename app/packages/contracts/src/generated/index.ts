@@ -8,6 +8,7 @@ export type { Feedback } from "./feedback.js";
 export type { Ingredient } from "./ingredient.js";
 export type { OTCProtocol } from "./otc_protocol.js";
 export type { PackManifest } from "./pack_manifest.js";
+export type { PharmacyProductRegistry } from "./pharmacy_product_registry.js";
 export type { ProductIngredient } from "./product_ingredient.js";
 export type { ProtocolOption } from "./protocol_option.js";
 export type { ProtocolRule } from "./protocol_rule.js";

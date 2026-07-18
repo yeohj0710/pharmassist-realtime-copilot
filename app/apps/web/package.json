@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 4173",
+    "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@pharmassist/contracts": "workspace:*",
+    "@pharmassist/dialogue": "workspace:*",
     "@pharmassist/domain": "workspace:*",
     "@pharmassist/runtime": "workspace:*",
     "@pharmassist/test-fixtures": "workspace:*",

@@ -1,0 +1,7 @@
+{
+  "bowel_urgency_context": {
+    "say_now": "화장실이 급한 느낌이 있으시군요.",
+    "question": "배도 아프신가요, 아니면 변이 마려운 느낌만 있으신가요?",
+    "slot": "symptom.bowel_urgency_pattern"
+  }
+}

@@ -1,56 +1,3 @@
-export interface PatientSummary {
-  readonly facts: readonly string[];
-  readonly symptoms: readonly string[];
-  readonly duration: string | undefined;
-  readonly risks: readonly string[];
-}
-
-const symptomLabels: ReadonlyArray<readonly [RegExp, string]> = [
-  [/기침|가래/u, "기침·가래"],
-  [/배|복부|속쓰림|소화/u, "복부·소화"],
-  [/어깨|허리|무릎|손목|발목|근육|관절/u, "근육·관절"],
-  [/목|인후/u, "목 통증"],
-  [/코|콧물|코막힘/u, "코 증상"],
-  [/피부|가려|발진/u, "피부 증상"],
-];
-
-const riskPattern = /숨|호흡|의식|실신|피가|혈변|토혈|마비|경련/u;
-const durationPattern =
-  /(?:오늘|어제|그제|방금|아까|며칠|일주일|한달|\d+\s*(?:시간|일|주|개월))(?:부터|째)?/u;
-const nonFactPattern =
-  /모르|몰라|애매|기억 안|글쎄|확실하지|그냥 그래|무슨 말|왜요|뭔가요|^(?:아니\s*)?(?:그거|그쪽|앞(?:에|쪽)?|뒤(?:에|쪽)?|처음|마지막|전자|후자|\d+\s*번|[첫둘셋넷]째|[첫두세네]\s*번째)(?:라고요|요)?[.!?]?$/u;
-
-export function upsertAssistantTurn(
-  turns: readonly string[],
-  _sequence: number,
-  text: string,
-): readonly string[] {
-  const entry = `상담 도우미: ${text}`;
-  if (turns.at(-1)?.startsWith("상담 도우미:"))
-    return [...turns.slice(0, -1), entry];
-  return [...turns, entry];
-}
-
-export function buildPatientSummary(turns: readonly string[]): PatientSummary {
-  const facts = [
-    ...new Set(
-      turns
-        .filter((turn) => turn.startsWith("환자:"))
-        .map((turn) => turn.slice("환자:".length).trim())
-        .filter((fact) => fact.length > 0 && !nonFactPattern.test(fact)),
-    ),
-  ];
-  const joined = facts.join(" ");
-  const symptoms = symptomLabels
-    .filter(([pattern]) => pattern.test(joined))
-    .map(([, label]) => label);
-  const duration = [...facts]
-    .reverse()
-    .find((fact) => durationPattern.test(fact));
-  const risks = facts.filter((fact) => riskPattern.test(fact));
-  return { facts, symptoms, duration, risks };
-}
-
 export function outputText(output: {
   readonly say_now: readonly string[];
   readonly ask_next: ReadonlyArray<Readonly<{ question: string }>>;
@@ -77,7 +24,7 @@ export function patientVisibleLines(output: {
   readonly actions?: ReadonlyArray<Readonly<{ text: string }>>;
 }): readonly string[] {
   return [
-    ...output.say_now.filter(isPatientFacingText),
     ...output.ask_next.map((item) => item.question).filter(isPatientFacingText),
+    ...output.say_now.filter(isPatientFacingText),
   ];
 }

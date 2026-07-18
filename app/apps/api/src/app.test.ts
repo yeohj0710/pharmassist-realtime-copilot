@@ -45,6 +45,51 @@ describe("API", () => {
     expect(cards.map((card) => card.intent)).toEqual(["cough_general"]);
     expect(cardsForAiRefinement(syntheticPack.cards, null)).toEqual([]);
   });
+  it("uses the complete dialogue catalog for native AI interpretation", async () => {
+    const priorKey = process.env["OPENAI_API_KEY"];
+    process.env["OPENAI_API_KEY"] = "test-only";
+    let catalogSize = 0;
+    let latestTurn = "";
+    const app = await buildApp({
+      conversationInterpreter: {
+        async interpret(context) {
+          catalogSize = context.catalog.length;
+          latestTurn = context.conversation.at(-1)?.content ?? "";
+          return {
+            disposition: "clinical_intent",
+            intent: "cough_general",
+            confidence: 0.91,
+            topicChanged: true,
+          };
+        },
+      },
+    });
+    try {
+      const response = await app.inject({
+        method: "POST",
+        url: "/v1/consult/interpret",
+        headers: { "x-role": "pharmacist", "x-tenant-id": "demo" },
+        payload: {
+          text: "계속 콜록대서 잠을 설쳤어요",
+          conversation_history: ["환자: 배가 아파요"],
+          previous_intent: "abdominal_pain_unknown",
+        },
+      });
+      expect(response.statusCode).toBe(200);
+      expect(response.json()).toEqual({
+        disposition: "clinical_intent",
+        intent: "cough_general",
+        confidence: 0.91,
+        topic_changed: true,
+      });
+      expect(catalogSize).toBe(74);
+      expect(latestTurn).toContain("콜록대서");
+    } finally {
+      await app.close();
+      if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];
+      else process.env["OPENAI_API_KEY"] = priorKey;
+    }
+  });
   it("serves deterministic no-store output", async () => {
     const app = await buildApp();
     const res = await app.inject({
@@ -72,6 +117,37 @@ describe("API", () => {
     expect((await app.inject("/v1/health/ready")).json().status).toBe(
       "degraded",
     );
+    await app.close();
+  });
+  it("allows the local desktop web origin", async () => {
+    const app = await buildApp();
+    const response = await app.inject({
+      method: "GET",
+      url: "/v1/health/ready",
+      headers: { origin: "http://127.0.0.1:14273" },
+    });
+    expect(response.headers["access-control-allow-origin"]).toBe(
+      "http://127.0.0.1:14273",
+    );
+    await app.close();
+  });
+  it("limits local desktop CORS to the reserved launcher port range", async () => {
+    const app = await buildApp();
+    const lastReserved = await app.inject({
+      method: "GET",
+      url: "/v1/health/ready",
+      headers: { origin: "http://127.0.0.1:14282" },
+    });
+    const outsideRange = await app.inject({
+      method: "GET",
+      url: "/v1/health/ready",
+      headers: { origin: "http://127.0.0.1:14283" },
+    });
+
+    expect(lastReserved.headers["access-control-allow-origin"]).toBe(
+      "http://127.0.0.1:14282",
+    );
+    expect(outsideRange.headers["access-control-allow-origin"]).toBeUndefined();
     await app.close();
   });
   it("rejects free-text feedback and missing publisher reason", async () => {
@@ -140,6 +216,37 @@ describe("API", () => {
     expect(response.body).toContain('"fallback":"instant"');
     await app.close();
   });
+  it("accepts a valid structured refinement body above the general JSON limit", async () => {
+    const app = await buildApp();
+    const instant = (
+      await app.inject({
+        method: "POST",
+        url: "/v1/consult/instant",
+        payload: input,
+      })
+    ).json();
+    const payload = {
+      runtime_input: input,
+      instant_output: instant,
+      candidate_card_ids: [],
+      conversation_history: Array.from(
+        { length: 12 },
+        (_, index) => `${index}${"가".repeat(1_998)}`,
+      ),
+      knowledge_version: instant.knowledge_version,
+    };
+    expect(Buffer.byteLength(JSON.stringify(payload))).toBeGreaterThan(32_768);
+
+    const response = await app.inject({
+      method: "POST",
+      url: "/v1/consult/refine",
+      payload,
+    });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toContain("MOCK_LOCAL_ONLY");
+    await app.close();
+  });
   it("returns AI refinement events with CORS headers to the browser", async () => {
     const priorKey = process.env["OPENAI_API_KEY"];
     const priorFeature = process.env["FEATURE_LLM_REFINEMENT"];
@@ -159,7 +266,7 @@ describe("API", () => {
       const response = await app.inject({
         method: "POST",
         url: "/v1/consult/refine",
-        headers: { origin: "http://127.0.0.1:4173" },
+        headers: { origin: "http://127.0.0.1:14373" },
         payload: {
           runtime_input: input,
           instant_output: instant,
@@ -168,7 +275,7 @@ describe("API", () => {
         },
       });
       expect(response.headers["access-control-allow-origin"]).toBe(
-        "http://127.0.0.1:4173",
+        "http://127.0.0.1:14373",
       );
       expect(response.body).toContain("refinement.completed");
     } finally {

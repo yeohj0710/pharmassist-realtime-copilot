@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "entries": [
+    {
+      "productId": "PRD-DR_BEARSE_200300406",
+      "officialProductKey": "A11AOOOOO0816"
+    },
+    {
+      "productId": "PRD-DULCOLAX_S_200906478",
+      "officialProductKey": "2009092300055"
+    },
+    {
+      "productId": "PRD-GELFOS_M_199400883",
+      "officialProductKey": "A11A0930A0424"
+    },
+    {
+      "productId": "PRD-HAESOCOPU_S_201900312",
+      "officialProductKey": "2019012500051"
+    },
+    {
+      "productId": "PRD-ENRICHED_201600779",
+      "officialProductKey": "2016021200001"
+    },
+    {
+      "productId": "PRD-ENRICHED_199801026",
+      "officialProductKey": "A11A0740B0009"
+    }
+  ]
+}

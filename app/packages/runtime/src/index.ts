@@ -26,8 +26,10 @@ import {
   assertDecisionInvariants,
   buildRecommendationDecision,
   nextConsultationState,
+  nextProtocolQuestion,
   renderDecisionSentence,
   type TenantRecommendationContext,
+  withKoreanObjectParticle,
 } from "@pharmassist/recommendation";
 import {
   buildDecisionIndex,
@@ -36,6 +38,7 @@ import {
   retrieveProtocols,
   type DecisionRetrievalIndex,
   type KnowledgeCard,
+  type ProtocolCandidate,
   type RetrievalIndex,
 } from "@pharmassist/retrieval";
 import { evaluateSafety } from "@pharmassist/safety";
@@ -68,46 +71,86 @@ export interface EngineResult {
 
 export type AppProfile = "local-demo" | "local-live" | "staging" | "production";
 
-const uncertainAnswer = /모르|몰라|애매|기억(?:이)?\s*안|확실하지|글쎄/u;
+type ConsultationTopic = ConsultationState["topics"][number];
+type TopicResult = RuntimeOutput["topic_results"][number];
 
-const alternativeQuestion = (
-  intent: string,
-): Readonly<{ question: string; reason: string; slot: string }> | undefined => {
-  if (intent.includes("abdominal"))
-    return {
-      question:
-        "쥐어짜는 통증·쓰림·더부룩함 중 가장 가까운 것은 무엇인가요? 잘 모르겠으면 그대로 말씀해 주세요.",
-      reason: "복통 양상에 따른 완화 방향 확인",
-      slot: "symptom_pattern",
-    };
-  if (intent.includes("cough"))
-    return {
-      question:
-        "마른기침·가래기침 중 더 가까운 쪽은 무엇인가요? 잘 모르겠으면 그대로 말씀해 주세요.",
-      reason: "기침 양상에 따른 성분군 선택",
-      slot: "symptom_pattern",
-    };
-  if (intent.includes("bowel"))
-    return {
-      question: "변이 묽은 쪽인가요, 잘 나오지 않는 쪽인가요?",
-      reason: "배변 증상에 따른 성분군 선택",
-      slot: "symptom_pattern",
-    };
-  return {
-    question:
-      "가장 불편한 느낌을 한 단어로 고르면 통증·가려움·열감 중 무엇인가요?",
-    reason: "답하기 쉬운 표현으로 증상 양상 확인",
-    slot: "symptom_pattern",
-  };
+const uncertainAnswer = /모르|몰라|애매|기억(?:이)?\s*안|확실하지|글쎄/u;
+const uncertainClarificationQuestion = {
+  question:
+    "괜찮아요. 지금 가장 불편한 느낌을 평소 말씀하시는 표현으로 알려주세요.",
+  reason: "답하기 쉬운 표현으로 상담 주제 확인",
+  slot: "patient.detail",
+} as const;
+
+const conversationalReply = (text: string): string | undefined => {
+  const compact = text
+    .trim()
+    .replace(/[.!?~]+$/gu, "")
+    .trim();
+  if (
+    /^(?:어이|저기(?:요)?|여보세요|안녕(?:하세요)?|하이|헬로)$/u.test(compact)
+  )
+    return "네, 말씀하세요. 증상이나 찾는 약을 편하게 말씀해 주세요.";
+  if (/^(?:고마워(?:요)?|감사(?:합니다|해요)?|땡큐)$/u.test(compact))
+    return "천만에요. 더 궁금한 점이 있으면 이어서 말씀해 주세요.";
+  if (
+    /(?:뭐|무엇).*(?:할 수|해줄)|(?:어떻게|방법).*(?:써|사용)|사용법/u.test(
+      compact,
+    )
+  )
+    return "증상을 편하게 말씀해 주시면 확인할 제품과 성분을 정리해 드려요. 복용 중인 약이나 알레르기도 함께 말씀하실 수 있어요.";
+  if (
+    /^(?:너|당신)?\s*(?:누구|뭐 하는|뭐하는)(?:데|거야|거예요)?$/u.test(compact)
+  )
+    return "약국 상담을 돕는 도우미예요. 증상에 맞는 일반의약품 후보와 관련 성분을 정리해 드려요.";
+  return undefined;
+};
+
+const protocolCandidateForIntent = (
+  intent: string | undefined,
+  cards: readonly KnowledgeCard[],
+  index: DecisionRetrievalIndex,
+): ProtocolCandidate | undefined => {
+  if (!intent) return undefined;
+  const card = cards.find((item) => item.intent === intent);
+  if (!card) return undefined;
+  const aliases = new Set(card.aliases.map((value) => value.normalize("NFKC")));
+  return [...index.protocols.values()]
+    .map((protocol) => {
+      const matchedTerms = protocol.triggers.aliases.filter((alias) =>
+        aliases.has(alias.normalize("NFKC")),
+      );
+      return {
+        protocolId: protocol.protocol_id,
+        intent: protocol.intent,
+        score: Math.min(1, 0.7 + matchedTerms.length * 0.05),
+        matchedTerms,
+      };
+    })
+    .filter((candidate) => candidate.matchedTerms.length > 0)
+    .sort(
+      (left, right) =>
+        right.score - left.score ||
+        left.protocolId.localeCompare(right.protocolId),
+    )[0];
 };
 
 const plausibleSlotAnswer = (
   slot: string,
   text: string,
   extracted: SlotEvidence | undefined,
+  acceptedPatterns: readonly string[],
 ): boolean => {
   if (extracted) return true;
-  switch (slot) {
+  const normalizedText = text.normalize("NFKC").toLowerCase();
+  if (
+    acceptedPatterns.some((pattern) =>
+      normalizedText.includes(pattern.normalize("NFKC").toLowerCase()),
+    )
+  )
+    return true;
+  const semanticSlot = slot.split(".").at(-1) ?? slot;
+  switch (semanticSlot) {
     case "duration":
       return /오늘|어제|그제|부터|\d+\s*(?:분|시간|일|주|개월|달|년)/u.test(
         text,
@@ -124,10 +167,44 @@ const plausibleSlotAnswer = (
       return /진물|통증|눈|입|얼굴|물집|없|아니/u.test(text);
     case "injury_inflammation":
     case "pain_pattern":
+    case "musculoskeletal_pattern":
       return /다치|부딪|붓|뜨겁|열감|움직|가만|예|네|아니|없/u.test(text);
+    case "swallowing_severity":
+      return /삼키|삼킬|침|물|따갑|아픈\s*정도|못\s*넘|힘들|어렵/u.test(text);
     default:
       return false;
   }
+};
+
+const pendingSlotPatterns = (
+  pack: RuntimePack,
+  protocolId: string | null | undefined,
+  slot: string,
+): readonly string[] => {
+  const protocol = protocolId
+    ? pack.protocols.find((item) => item.protocol_id === protocolId)
+    : undefined;
+  if (!protocol) return [];
+  return pack.protocolRules
+    .filter(
+      (rule) =>
+        protocol.rule_ids.includes(rule.rule_id) &&
+        rule.protocol_id === protocol.protocol_id &&
+        rule.effect === "ask" &&
+        (rule.field.startsWith("slot.")
+          ? rule.field.slice("slot.".length)
+          : rule.field) === slot,
+    )
+    .flatMap((rule) =>
+      (typeof rule.value === "string"
+        ? [rule.value]
+        : Array.isArray(rule.value)
+          ? rule.value.filter(
+              (value): value is string => typeof value === "string",
+            )
+          : []
+      ).filter((value) => !/^__.*__$/u.test(value)),
+    );
 };
 
 const evidence = (
@@ -192,7 +269,13 @@ const withSlotsAndState = (
   normalized: NormalizedInput,
   input: RuntimeInput,
   prior: ConsultationState | undefined,
-  pendingAnswerSlot: string | undefined,
+  pendingAnswer:
+    | Readonly<{
+        readonly slot: string;
+        readonly accepted: boolean;
+        readonly resolved: boolean;
+      }>
+    | undefined,
   activeIntentSeed: string | undefined,
 ): NormalizedInput => {
   const slots: Record<string, SlotEvidence> = {};
@@ -202,16 +285,11 @@ const withSlotsAndState = (
   Object.assign(slots, normalized.slots);
 
   if (
-    pendingAnswerSlot &&
-    !uncertainAnswer.test(normalized.normalizedText) &&
-    plausibleSlotAnswer(
-      pendingAnswerSlot,
-      normalized.normalizedText,
-      normalized.slots[pendingAnswerSlot],
-    )
+    pendingAnswer?.accepted &&
+    !uncertainAnswer.test(normalized.normalizedText)
   ) {
-    const extracted = normalized.slots[pendingAnswerSlot];
-    slots[pendingAnswerSlot] = extracted
+    const extracted = normalized.slots[pendingAnswer.slot];
+    slots[pendingAnswer.slot] = extracted
       ? {
           ...extracted,
           verified: true,
@@ -239,14 +317,76 @@ const withSlotsAndState = (
   };
 };
 
+const sharedPatientSlotNames = new Set([
+  "age_years",
+  "weight_kg",
+  "sex_at_birth",
+  "pregnancy_status",
+  "gestational_weeks",
+  "lactation_status",
+  "allergies",
+  "current_products",
+  "conditions",
+]);
+
 const answeredSlotValues = (
   normalized: NormalizedInput,
 ): Readonly<Record<string, unknown>> =>
   Object.fromEntries(
     Object.entries(normalized.slots)
-      .filter(([, item]) => item.verified)
+      .filter(
+        ([key, item]) =>
+          item.verified ||
+          (sharedPatientSlotNames.has(key) && item.confidence >= 0.9),
+      )
       .map(([key, item]) => [key, item.value]),
   );
+
+const topicConsultationState = (
+  prior: ConsultationState,
+  topic: ConsultationTopic,
+): ConsultationState => ({
+  ...prior,
+  answered_slots: topic.answered_slots,
+  asked_slots: topic.asked_slots,
+  pending_question_slot: topic.pending_question_slot,
+  active_protocol_id: topic.protocol_id,
+  active_intent: topic.intent,
+  last_decision_status: topic.last_decision_status,
+});
+
+const sharedPatientConsultationState = (
+  prior: ConsultationState,
+): ConsultationState => ({
+  ...prior,
+  answered_slots: Object.fromEntries(
+    Object.entries(prior.answered_slots).filter(([key]) =>
+      sharedPatientSlotNames.has(key),
+    ),
+  ),
+  asked_slots: [],
+  pending_question_slot: null,
+  active_protocol_id: null,
+  active_intent: null,
+  last_decision_status: null,
+});
+
+const outputQuestion = (
+  question:
+    | Readonly<{ question: string; reason: string; slot: string }>
+    | null
+    | undefined,
+): TopicResult["ask_next"] =>
+  question
+    ? [
+        {
+          question: question.question,
+          reason: question.reason,
+          priority: 1,
+          slot: question.slot,
+        },
+      ]
+    : [];
 
 const noDecision = (
   packId: string,
@@ -362,7 +502,7 @@ const outputShape = (
       return {
         mode: "clarify",
         status: "blocked",
-        say_now: ["추천 선택을 실제로 바꾸는 정보 한 가지만 확인해야 합니다."],
+        say_now: ["증상에 맞는 약을 고르려면 한 가지만 더 여쭤볼게요."],
         ask_next: decision.question
           ? [
               {
@@ -445,7 +585,13 @@ export class LocalClinicalEngine {
         "previous_pack",
       );
     this.index = buildIndex(pack.cards, clock.now());
-    this.decisionIndex = buildDecisionIndex(pack, clock.now());
+    this.decisionIndex = buildDecisionIndex(
+      pack,
+      clock.now(),
+      profile !== "production" &&
+        pack.clinicalUseProhibited === true &&
+        pack.synthetic === false,
+    );
   }
 
   run(
@@ -468,35 +614,114 @@ export class LocalClinicalEngine {
       input.text,
       input.asr?.alternatives ?? [],
     );
+    const conversationReply = conversationalReply(rawNormalized.normalizedText);
     const uncertainReply = Boolean(
       prior?.pending_question_slot &&
       uncertainAnswer.test(rawNormalized.normalizedText),
     );
-    const preliminaryProtocols = uncertainReply
+    const retrievedProtocols = uncertainReply
       ? []
-      : retrieveProtocols(rawNormalized, input.domain, this.decisionIndex);
+      : retrieveProtocols(
+          rawNormalized,
+          input.domain,
+          this.decisionIndex,
+          3,
+          !prior?.pending_question_slot,
+        );
+    const answersPriorPendingQuestion = Boolean(
+      prior?.pending_question_slot &&
+      plausibleSlotAnswer(
+        prior.pending_question_slot,
+        rawNormalized.normalizedText,
+        rawNormalized.slots[prior.pending_question_slot],
+        pendingSlotPatterns(
+          this.pack,
+          prior.active_protocol_id,
+          prior.pending_question_slot,
+        ),
+      ),
+    );
+    const hintedProtocol = protocolCandidateForIntent(
+      input.intent_hint,
+      this.pack.cards,
+      this.decisionIndex,
+    );
+    const preliminaryProtocols =
+      retrievedProtocols.length > 0
+        ? retrievedProtocols
+        : hintedProtocol && !answersPriorPendingQuestion
+          ? [hintedProtocol]
+          : [];
+    const preliminaryCards = uncertainReply
+      ? []
+      : retrieve(rawNormalized, input.domain, this.index);
+    const strongPreliminaryCard = preliminaryCards.find(
+      (candidate) => candidate.score >= 0.8,
+    );
+    const incomingIntent =
+      preliminaryProtocols[0]?.intent ??
+      (answersPriorPendingQuestion
+        ? prior?.active_intent
+        : input.intent_hint) ??
+      strongPreliminaryCard?.intent;
+    const incomingProtocolId = preliminaryProtocols[0]?.protocolId;
+    const focusTopic = prior?.topics.find((item) =>
+      incomingProtocolId
+        ? item.protocol_id === incomingProtocolId
+        : item.protocol_id === prior.active_protocol_id,
+    );
+    const focusPrior =
+      prior && prior.topics.length > 0
+        ? focusTopic
+          ? topicConsultationState(prior, focusTopic)
+          : sharedPatientConsultationState(prior)
+        : prior;
     const startsNewIntent = Boolean(
-      preliminaryProtocols[0] &&
+      incomingIntent &&
       prior?.active_intent &&
-      preliminaryProtocols[0].intent !== prior.active_intent,
+      incomingIntent !== prior.active_intent,
     );
     const pendingAnswerSlot =
-      prior?.pending_question_slot && !startsNewIntent
-        ? prior.pending_question_slot
+      focusPrior?.pending_question_slot && !startsNewIntent
+        ? focusPrior.pending_question_slot
         : undefined;
+    const pendingAnswer = pendingAnswerSlot
+      ? (() => {
+          const accepted = plausibleSlotAnswer(
+            pendingAnswerSlot,
+            rawNormalized.normalizedText,
+            rawNormalized.slots[pendingAnswerSlot],
+            pendingSlotPatterns(
+              this.pack,
+              focusPrior?.active_protocol_id,
+              pendingAnswerSlot,
+            ),
+          );
+          return {
+            slot: pendingAnswerSlot,
+            accepted,
+            resolved:
+              accepted ||
+              preliminaryProtocols.some(
+                (candidate) =>
+                  candidate.protocolId === focusPrior?.active_protocol_id,
+              ),
+          };
+        })()
+      : undefined;
     const activeSeed =
       preliminaryProtocols.length === 0 && !startsNewIntent
         ? protocolSeed(
-            prior?.active_protocol_id,
-            prior?.active_intent,
+            focusPrior?.active_protocol_id,
+            focusPrior?.active_intent,
             this.decisionIndex,
           )
         : undefined;
     const normalized = withSlotsAndState(
       rawNormalized,
       input,
-      prior,
-      pendingAnswerSlot,
+      focusPrior,
+      pendingAnswer,
       activeSeed,
     );
     const normalizeMs = this.clock.monotonicMs() - normalizeStart;
@@ -512,7 +737,7 @@ export class LocalClinicalEngine {
     const safety = resolveRepeatedSafetyQuestion(
       initialSafety,
       normalized,
-      prior,
+      focusPrior,
     );
     const safetyMs = this.clock.monotonicMs() - safetyStart;
 
@@ -524,24 +749,43 @@ export class LocalClinicalEngine {
     const protocol = protocolCandidate
       ? this.decisionIndex.protocols.get(protocolCandidate.protocolId)
       : !startsNewIntent
-        ? ((prior?.active_protocol_id
-            ? this.decisionIndex.protocols.get(prior.active_protocol_id)
+        ? ((focusPrior?.active_protocol_id
+            ? this.decisionIndex.protocols.get(focusPrior.active_protocol_id)
             : undefined) ??
-          (prior?.active_intent
+          (focusPrior?.active_intent
             ? [...this.decisionIndex.protocols.values()].find(
-                (item) => item.intent === prior.active_intent,
+                (item) => item.intent === focusPrior.active_intent,
               )
             : undefined))
         : undefined;
+    const currentProtocolIds = new Set(
+      protocolCandidates.map((candidate) => candidate.protocolId),
+    );
+    const orderedTopicProtocols = [
+      ...(protocol ? [protocol] : []),
+      ...protocolCandidates
+        .map((candidate) =>
+          this.decisionIndex.protocols.get(candidate.protocolId),
+        )
+        .filter((item): item is NonNullable<typeof item> => Boolean(item)),
+      ...(prior?.topics ?? [])
+        .map((topic) => this.decisionIndex.protocols.get(topic.protocol_id))
+        .filter((item): item is NonNullable<typeof item> => Boolean(item)),
+    ].filter(
+      (item, index, all) =>
+        all.findIndex(
+          (candidate) => candidate.protocol_id === item.protocol_id,
+        ) === index,
+    );
     const cardCandidates = uncertainReply
       ? []
       : retrieve(normalized, input.domain, this.index);
     const cardCandidate = cardCandidates[0];
     const card = cardCandidate
       ? this.index.cards.get(cardCandidate.cardId)
-      : prior?.active_intent && !startsNewIntent
+      : focusPrior?.active_intent && !startsNewIntent
         ? [...this.index.cards.values()].find(
-            (item) => item.intent === prior.active_intent,
+            (item) => item.intent === focusPrior.active_intent,
           )
         : undefined;
     const retrieveMs = this.clock.monotonicMs() - retrievalStart;
@@ -554,6 +798,18 @@ export class LocalClinicalEngine {
         : {}),
       ...(context.sales ? { sales: context.sales } : {}),
     };
+    const knowledge = {
+      packId: this.pack.packId,
+      sourceSnapshotIds: new Set(
+        this.pack.sources.map((item) => item.source_snapshot_id),
+      ),
+      ingredients: this.pack.ingredients,
+      products: this.pack.products,
+      productIngredients: this.pack.productIngredients,
+      claims: this.pack.claims,
+      protocolOptions: this.pack.protocolOptions,
+      protocolRules: this.pack.protocolRules,
+    };
     let decision = buildRecommendationDecision({
       sequence: input.sequence,
       sessionId: input.session_id,
@@ -561,21 +817,97 @@ export class LocalClinicalEngine {
       normalized,
       safety,
       ...(protocol ? { protocol } : {}),
-      knowledge: {
-        packId: this.pack.packId,
-        sourceSnapshotIds: new Set(
-          this.pack.sources.map((item) => item.source_snapshot_id),
-        ),
-        ingredients: this.pack.ingredients,
-        products: this.pack.products,
-        productIngredients: this.pack.productIngredients,
-        claims: this.pack.claims,
-        protocolOptions: this.pack.protocolOptions,
-        protocolRules: this.pack.protocolRules,
-      },
+      knowledge,
       tenant,
-      ...(prior ? { consultationState: prior } : {}),
+      allowProgressiveCandidates:
+        this.pack.clinicalUseProhibited && !this.pack.synthetic,
+      ...(focusPrior ? { consultationState: focusPrior } : {}),
     });
+    const progressiveQuestion =
+      decision.status === "recommend"
+        ? nextProtocolQuestion({
+            sequence: input.sequence,
+            sessionId: input.session_id,
+            now,
+            normalized,
+            safety,
+            ...(protocol ? { protocol } : {}),
+            knowledge,
+            tenant,
+            allowProgressiveCandidates: true,
+            ...(focusPrior ? { consultationState: focusPrior } : {}),
+          })
+        : null;
+    const additionalTopicEvaluations = orderedTopicProtocols
+      .filter(
+        (topicProtocol) => topicProtocol.protocol_id !== protocol?.protocol_id,
+      )
+      .map((topicProtocol) => {
+        const priorTopic = prior?.topics.find(
+          (item) => item.protocol_id === topicProtocol.protocol_id,
+        );
+        const priorTopicState =
+          prior && priorTopic
+            ? topicConsultationState(prior, priorTopic)
+            : undefined;
+        const mentionedNow = currentProtocolIds.has(topicProtocol.protocol_id);
+        const topicRaw = mentionedNow
+          ? rawNormalized
+          : normalizeKorean(
+              protocolSeed(
+                topicProtocol.protocol_id,
+                topicProtocol.intent,
+                this.decisionIndex,
+              ) ??
+                topicProtocol.triggers.anchors[0] ??
+                "",
+            );
+        const topicNormalized = withSlotsAndState(
+          topicRaw,
+          input,
+          priorTopicState,
+          undefined,
+          undefined,
+        );
+        const topicDecision = buildRecommendationDecision({
+          sequence: input.sequence,
+          sessionId: input.session_id,
+          now,
+          normalized: topicNormalized,
+          safety,
+          protocol: topicProtocol,
+          knowledge,
+          tenant,
+          allowProgressiveCandidates:
+            this.pack.clinicalUseProhibited && !this.pack.synthetic,
+          ...(priorTopicState ? { consultationState: priorTopicState } : {}),
+        });
+        const nextQuestion =
+          mentionedNow && topicDecision.status === "recommend"
+            ? nextProtocolQuestion({
+                sequence: input.sequence,
+                sessionId: input.session_id,
+                now,
+                normalized: topicNormalized,
+                safety,
+                protocol: topicProtocol,
+                knowledge,
+                tenant,
+                allowProgressiveCandidates: true,
+                ...(priorTopicState
+                  ? { consultationState: priorTopicState }
+                  : {}),
+              })
+            : priorTopic?.pending_question;
+        return {
+          protocol: topicProtocol,
+          normalized: topicNormalized,
+          decision: topicDecision,
+          question: nextQuestion,
+          priorTopic,
+          mentionedNow,
+        };
+      });
 
     if (
       decision.status === "insufficient" &&
@@ -599,16 +931,15 @@ export class LocalClinicalEngine {
       safety.mode !== "escalate" &&
       card
     ) {
-      const alternative = alternativeQuestion(card.intent);
-      if (
-        alternative &&
-        !(prior?.asked_slots.includes(alternative.slot) ?? false)
-      )
+      if (!(
+        prior?.asked_slots.includes(uncertainClarificationQuestion.slot) ??
+        false
+      ))
         decision = askDecision(
           this.pack.packId,
           input,
           context.inventory !== undefined,
-          alternative,
+          uncertainClarificationQuestion,
           "UNCERTAIN_ANSWER_ALTERNATIVE_ASK",
           card.intent,
         );
@@ -633,14 +964,128 @@ export class LocalClinicalEngine {
         protocol?.intent ?? card?.intent ?? null,
       );
 
-    const shape = outputShape(decision, safety);
+    if (conversationReply)
+      decision = noDecision(
+        this.pack.packId,
+        input,
+        context.inventory !== undefined,
+        ["CONVERSATION_TURN"],
+        null,
+      );
+    const baseShape: Pick<
+      RuntimeOutput,
+      "mode" | "status" | "say_now" | "ask_next" | "actions" | "missing_slots"
+    > = conversationReply
+      ? {
+          mode: "instant" as const,
+          status: "stable" as const,
+          say_now: [conversationReply],
+          ask_next: [],
+          actions: [],
+          missing_slots: [],
+        }
+      : outputShape(decision, safety);
+    const unansweredPriorQuestion =
+      pendingAnswer &&
+      !pendingAnswer.resolved &&
+      !conversationReply &&
+      safety.mode === "continue"
+        ? (focusPrior?.topics.find(
+            (item) => item.protocol_id === focusPrior.active_protocol_id,
+          )?.pending_question ?? null)
+        : null;
+    const primaryTopicQuestion =
+      unansweredPriorQuestion ?? progressiveQuestion ?? null;
+    const selectedTopicQuestion =
+      primaryTopicQuestion ??
+      additionalTopicEvaluations.find((item) => item.question)?.question ??
+      null;
+    const progressiveShape =
+      selectedTopicQuestion && baseShape.mode === "instant"
+        ? {
+            ...baseShape,
+            status: "provisional" as const,
+            ask_next: [
+              {
+                question: selectedTopicQuestion.question,
+                reason: selectedTopicQuestion.reason,
+                priority: 1,
+                slot: selectedTopicQuestion.slot,
+              },
+            ] as [
+              {
+                question: string;
+                reason: string;
+                priority: number;
+                slot: string;
+              },
+            ],
+            missing_slots: [selectedTopicQuestion.slot],
+          }
+        : baseShape;
+    const shape =
+      !conversationReply &&
+      card?.cardId.startsWith("CARD-SEED-") &&
+      !protocol &&
+      decision.status === "ask"
+        ? { ...baseShape, say_now: [card.sayNow[0] ?? card.title] as [string] }
+        : progressiveShape;
     const partial = input.is_partial || input.input_type === "voice_partial";
     const topScore = protocolCandidate?.score ?? cardCandidate?.score ?? 0;
+    const topicResults: TopicResult[] = [
+      ...(protocol
+        ? [
+            {
+              protocol_id: protocol.protocol_id,
+              intent: protocol.intent,
+              symptom_category: protocol.symptom_category,
+              decision,
+              ask_next: outputQuestion(
+                primaryTopicQuestion ??
+                  (decision.status === "ask" ? decision.question : null),
+              ),
+            } satisfies TopicResult,
+          ]
+        : []),
+      ...additionalTopicEvaluations.map((item): TopicResult => ({
+        protocol_id: item.protocol.protocol_id,
+        intent: item.protocol.intent,
+        symptom_category: item.protocol.symptom_category,
+        decision: item.decision,
+        ask_next: outputQuestion(
+          item.question ??
+            (item.decision.status === "ask" ? item.decision.question : null),
+        ),
+      })),
+    ];
+    const combinedTopicCandidates = topicResults.flatMap((item) => {
+      const label =
+        item.symptom_category.split("/").at(-1) ?? item.symptom_category;
+      const product = item.decision.product_candidates[0];
+      const ingredient = item.decision.ingredient_options[0];
+      const candidate =
+        product?.display_name ??
+        (ingredient
+          ? `${ingredient.ingredient_name}${ingredient.ingredient_name.endsWith("성분") ? "" : " 성분"}`
+          : null);
+      return candidate
+        ? [`${label}에는 ${withKoreanObjectParticle(candidate)}`]
+        : [];
+    });
+    const combinedTopicNarration =
+      topicResults.length > 1
+        ? combinedTopicCandidates.length > 0
+          ? `말씀하신 증상들을 같이 볼게요. 지금은 ${combinedTopicCandidates.join(", ")} 후보로 볼게요.`
+          : "말씀하신 증상들을 같이 볼게요."
+        : null;
     const output: RuntimeOutput = {
       request_id: input.request_id,
       session_id: input.session_id,
       sequence: input.sequence,
       ...shape,
+      say_now: combinedTopicNarration
+        ? [combinedTopicNarration]
+        : shape.say_now,
       status:
         partial && decision.status !== "refer" ? "provisional" : shape.status,
       intent:
@@ -667,7 +1112,17 @@ export class LocalClinicalEngine {
         score: candidate.score,
       })) as NonNullable<RuntimeOutput["candidate_intents"]>,
       decision,
-      source_refs: [...decision.source_refs],
+      topic_results: topicResults as RuntimeOutput["topic_results"],
+      source_refs: [
+        ...new Map(
+          topicResults
+            .flatMap((item) => item.decision.source_refs)
+            .map((ref) => [
+              `${ref.claim_id}|${ref.source_snapshot_id}|${ref.locator}`,
+              ref,
+            ]),
+        ).values(),
+      ],
       latency: {
         total_ms: this.clock.monotonicMs() - started,
         normalize_ms: normalizeMs,
@@ -680,14 +1135,92 @@ export class LocalClinicalEngine {
       generated_at: now.toISOString(),
       stale_response_dropped: false,
     };
+    const topicStateUpdates = new Map<string, ConsultationTopic>();
+    for (const topicResult of topicResults) {
+      const previous = prior?.topics.find(
+        (item) => item.protocol_id === topicResult.protocol_id,
+      );
+      const additional = additionalTopicEvaluations.find(
+        (item) => item.protocol.protocol_id === topicResult.protocol_id,
+      );
+      const touchedNow =
+        topicResult.protocol_id === protocol?.protocol_id ||
+        Boolean(additional?.mentionedNow);
+      if (previous && !touchedNow) {
+        topicStateUpdates.set(topicResult.protocol_id, previous);
+        continue;
+      }
+      const topicNormalized =
+        topicResult.protocol_id === protocol?.protocol_id
+          ? normalized
+          : additional?.normalized;
+      const pending = topicResult.ask_next[0] ?? null;
+      topicStateUpdates.set(topicResult.protocol_id, {
+        protocol_id: topicResult.protocol_id,
+        intent: topicResult.intent,
+        symptom_category: topicResult.symptom_category,
+        answered_slots: {
+          ...(previous?.answered_slots ?? {}),
+          ...(topicNormalized ? answeredSlotValues(topicNormalized) : {}),
+        },
+        asked_slots: [
+          ...new Set([
+            ...(previous?.asked_slots ?? []),
+            ...(pending ? [pending.slot] : []),
+          ]),
+        ],
+        pending_question_slot: pending?.slot ?? null,
+        pending_question: pending
+          ? {
+              question: pending.question,
+              reason: pending.reason,
+              slot: pending.slot,
+            }
+          : null,
+        last_decision_status: topicResult.decision.status,
+        updated_at: now.toISOString(),
+      });
+    }
+    const topicStates = [
+      ...(prior?.topics ?? []).map(
+        (item) => topicStateUpdates.get(item.protocol_id) ?? item,
+      ),
+      ...topicResults
+        .filter(
+          (item) =>
+            !(prior?.topics ?? []).some(
+              (priorTopic) => priorTopic.protocol_id === item.protocol_id,
+            ),
+        )
+        .map((item) => topicStateUpdates.get(item.protocol_id)!),
+    ].filter(Boolean);
+    const questionOwner = selectedTopicQuestion
+      ? topicResults.find((item) =>
+          item.ask_next.some(
+            (question) => question.question === selectedTopicQuestion.question,
+          ),
+        )
+      : undefined;
+    const activeTopic =
+      questionOwner ??
+      (protocol
+        ? topicResults.find((item) => item.protocol_id === protocol.protocol_id)
+        : undefined);
     const consultationState = nextConsultationState(prior, {
       sessionId: input.session_id,
       tenantId,
       sequence: input.sequence,
       packId: this.pack.packId,
-      protocolId: decision.protocol_id ?? protocol?.protocol_id ?? null,
-      intent: output.intent,
+      protocolId:
+        activeTopic?.protocol_id ??
+        decision.protocol_id ??
+        protocol?.protocol_id ??
+        null,
+      intent: activeTopic?.intent ?? output.intent,
+      symptomCategory: activeTopic?.symptom_category ?? null,
       decision,
+      pendingQuestion: selectedTopicQuestion,
+      topicStates,
       answeredSlots: answeredSlotValues(normalized),
       now,
     });
@@ -696,6 +1229,7 @@ export class LocalClinicalEngine {
       output,
       ruleIds: [...new Set([...safety.ruleIds, ...decision.reason_codes])],
       externalRefinementAllowed:
+        !conversationReply &&
         rawNormalized.safeForExternal &&
         !partial &&
         decision.status !== "refer",

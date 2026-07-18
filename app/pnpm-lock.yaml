@@ -23,6 +23,9 @@ importers:
       '@types/react-dom':
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.17)
+      ajv:
+        specifier: 8.20.0
+        version: 8.20.0
       fake-indexeddb:
         specifier: 6.2.5
         version: 6.2.5
@@ -65,6 +68,9 @@ importers:
       '@pharmassist/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@pharmassist/dialogue':
+        specifier: workspace:*
+        version: link:../../packages/dialogue
       '@pharmassist/knowledge':
         specifier: workspace:*
         version: link:../../packages/knowledge
@@ -126,6 +132,9 @@ importers:
       '@pharmassist/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@pharmassist/dialogue':
+        specifier: workspace:*
+        version: link:../../packages/dialogue
       '@pharmassist/domain':
         specifier: workspace:*
         version: link:../../packages/domain
@@ -159,6 +168,15 @@ importers:
       ajv:
         specifier: 8.20.0
         version: 8.20.0
+    devDependencies:
+      typescript:
+        specifier: 7.0.2
+        version: 7.0.2
+      vitest:
+        specifier: 4.1.10
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(terser@5.49.0)(tsx@4.23.0))
+
+  packages/dialogue:
     devDependencies:
       typescript:
         specifier: 7.0.2
@@ -249,6 +267,9 @@ importers:
       '@pharmassist/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@pharmassist/dialogue':
+        specifier: workspace:*
+        version: link:../dialogue
       '@pharmassist/domain':
         specifier: workspace:*
         version: link:../domain
@@ -287,21 +308,21 @@ importers:
       '@pharmassist/domain':
         specifier: workspace:*
         version: link:../domain
+      '@pharmassist/knowledge':
+        specifier: workspace:*
+        version: link:../knowledge
       '@pharmassist/normalizer':
         specifier: workspace:*
         version: link:../normalizer
+      '@pharmassist/recommendation':
+        specifier: workspace:*
+        version: link:../recommendation
       '@pharmassist/retrieval':
         specifier: workspace:*
         version: link:../retrieval
       '@pharmassist/safety':
         specifier: workspace:*
         version: link:../safety
-      '@pharmassist/knowledge':
-        specifier: workspace:*
-        version: link:../knowledge
-      '@pharmassist/recommendation':
-        specifier: workspace:*
-        version: link:../recommendation
     devDependencies:
       '@pharmassist/test-fixtures':
         specifier: workspace:*
@@ -366,6 +387,9 @@ importers:
       '@pharmassist/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@pharmassist/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
     devDependencies:
       typescript:
         specifier: 7.0.2

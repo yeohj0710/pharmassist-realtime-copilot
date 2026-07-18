@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0.0",
+  "generationId": "GEN-HEALTHKR-CF9F2C7CB66FF9DB",
+  "generatedAt": "2026-07-16T14:24:29.553Z",
+  "source": {
+    "logicalName": "pharmacy-product-catalog-portable-v1",
+    "contentSha256": "e272ecafaae5546da4f142291f10065df3307d36391ef27e2128365e2279694e",
+    "byteLength": 12293476,
+    "recordCount": 776
+  },
+  "enrichmentSource": {
+    "logicalName": "pharmacy-product-catalog-enrichment-queue",
+    "contentSha256": "318493aa2f71db8804748a09fa2915a13a8d6fc32b9a5e7939786845b5f3a41f",
+    "byteLength": 41654592,
+    "recordCount": 776
+  },
+  "portableSchema": {
+    "logicalName": "portable/v1/schema.json",
+    "contentSha256": "cb38edfd101f503620573358f2b6a823767197c310cade6febae4a5c6ba08c67"
+  },
+  "portableManifest": {
+    "logicalName": "portable/v1/manifest.json",
+    "contentSha256": "10a8061dd7fb42acc15ab34f9f9d5ebea25aba8170fc276bf94ea1b9a0f11ed4"
+  },
+  "reuseContract": {
+    "logicalName": "docs/catalog-data-contract.md",
+    "contentSha256": "8bbdb91255ab098f50ae8903a0c6ee6afa21c7e376bbabcdd7337a30ccb4238c"
+  },
+  "textCorrections": {
+    "logicalName": "data/catalog-text-corrections.json",
+    "contentSha256": "37b0d46c18a3c048134555193d7707cd0ce42c08a5f45a763dedd5a9304ffbba"
+  },
+  "pack": {
+    "packId": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+    "version": "1.0.0-research-preview",
+    "mappingContentSha256": "580edfd1431da5680705da9f22785cee9e41176a3b50829a656ba1393a37ff51",
+    "ingredientCount": 31,
+    "protocolOptionCount": 47
+  },
+  "outputs": {
+    "registry": {
+      "logicalName": "registry.json",
+      "contentSha256": "21fb053c276e7d60829e1aa5f74a7b6026d3cb0cac1cc67ac9b4aa54e8fad70d",
+      "recordCount": 776
+    },
+    "report": {
+      "logicalName": "report.json",
+      "contentSha256": "e936b4f5c6b931eedf3e1670c8cc4468602d132b6fdfe1191acdc400b8783c2f"
+    }
+  },
+  "counts": {
+    "importedRecordCount": 776,
+    "confirmed": 458,
+    "reviewRequired": 10,
+    "notFound": 11,
+    "notApplicable": 297,
+    "eligibleRetailSkuCount": 27,
+    "eligibleOfficialProductCount": 23,
+    "confirmedWithOfficialContentCount": 458,
+    "imageCount": 665,
+    "correctedRetailTextCount": 252,
+    "multiSkuOfficialProductCount": 38,
+    "multiSkuRetailSkuCount": 83
+  }
+}

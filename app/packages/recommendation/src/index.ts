@@ -12,7 +12,12 @@ import type {
   TenantInventory,
   TenantSalesAggregate,
 } from "@pharmassist/contracts";
-import type { NormalizedInput, SafetyDecision } from "@pharmassist/domain";
+import { renderQuestionTemplate } from "@pharmassist/dialogue";
+import {
+  matchesProductProtocolProfile,
+  type NormalizedInput,
+  type SafetyDecision,
+} from "@pharmassist/domain";
 
 export interface RecommendationKnowledge {
   readonly packId: string;
@@ -43,6 +48,8 @@ export interface RecommendationRequest {
   readonly knowledge: RecommendationKnowledge;
   readonly tenant: TenantRecommendationContext;
   readonly consultationState?: ConsultationState;
+  /** Local research-preview UI may retain candidates while asking one question. */
+  readonly allowProgressiveCandidates?: boolean;
 }
 
 type SourceRef = RecommendationDecision["source_refs"][number];
@@ -72,6 +79,20 @@ const activeReview = (
   review.official_source_verified &&
   (!review.expires_at || new Date(review.expires_at) > now);
 
+const usableReview = (
+  review: Readonly<{
+    pharmacist_approved: boolean;
+    official_source_verified: boolean;
+    expires_at?: string | null;
+  }>,
+  request: RecommendationRequest,
+): boolean =>
+  activeReview(review, request.now) ||
+  (request.allowProgressiveCandidates === true &&
+    request.knowledge.packId.startsWith("PACK-PHARMASSIST-KR-OTC-ACTUAL-") &&
+    review.official_source_verified &&
+    (!review.expires_at || new Date(review.expires_at) > request.now));
+
 const activeSourceRefs = (
   refs: readonly SourceRef[],
   sourceSnapshotIds: ReadonlySet<string>,
@@ -83,15 +104,23 @@ const activeSourceRefs = (
       sourceSnapshotIds.has(ref.source_snapshot_id),
   );
 
-const decisionId = (sessionId: string, sequence: number): string =>
-  `DEC-${sessionId.replaceAll("-", "").toUpperCase()}-${sequence}`;
+const decisionId = (
+  sessionId: string,
+  sequence: number,
+  protocolId?: string,
+): string =>
+  `DEC-${sessionId.replaceAll("-", "").toUpperCase()}-${sequence}${protocolId ? `-${protocolId}` : ""}`;
 
 const noDecision = (
   request: RecommendationRequest,
   reasonCodes: readonly string[],
   protocol: OTCProtocol | undefined = request.protocol,
 ): RecommendationDecision => ({
-  decision_id: decisionId(request.sessionId, request.sequence),
+  decision_id: decisionId(
+    request.sessionId,
+    request.sequence,
+    protocol?.protocol_id,
+  ),
   status: "insufficient",
   pack_id: request.knowledge.packId,
   protocol_id: protocol?.protocol_id ?? null,
@@ -150,6 +179,17 @@ const referDecision = (
 const slotName = (field: string): string =>
   field.startsWith("slot.") ? field.slice("slot.".length) : field;
 
+const renderedQuestion = (
+  question: string,
+  request: RecommendationRequest,
+): string =>
+  renderQuestionTemplate(question, {
+    slots: request.normalized.slots,
+    ...(request.consultationState
+      ? { answeredSlots: request.consultationState.answered_slots }
+      : {}),
+  });
+
 const fieldValue = (
   rule: ProtocolRule,
   request: RecommendationRequest,
@@ -159,7 +199,14 @@ const fieldValue = (
   const name = slotName(rule.field);
   const persisted = request.consultationState?.answered_slots[name];
   if (persisted !== undefined) return persisted;
-  return request.normalized.slots[name]?.value;
+  const current = request.normalized.slots[name]?.value;
+  if (current !== undefined) return current;
+  if (
+    rule.operator === "matches" &&
+    (rule.kind === "required_slot" || rule.kind === "selection_pattern")
+  )
+    return request.normalized.normalizedText;
+  return undefined;
 };
 
 const ruleMatches = (
@@ -182,13 +229,21 @@ const ruleMatches = (
       return Array.isArray(rule.value) && rule.value.includes(actual);
     case "matches":
     case "not_matches": {
-      const pattern = typeof rule.value === "string" ? rule.value : "(?!)";
-      let matched = false;
-      try {
-        matched = new RegExp(pattern, "iu").test(String(actual ?? ""));
-      } catch {
-        matched = false;
-      }
+      const patterns =
+        typeof rule.value === "string"
+          ? [rule.value]
+          : Array.isArray(rule.value)
+            ? rule.value
+                .filter((value): value is string => typeof value === "string")
+                .map((value) => value.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&"))
+            : [];
+      const matched = patterns.some((pattern) => {
+        try {
+          return new RegExp(pattern, "iu").test(String(actual ?? ""));
+        } catch {
+          return false;
+        }
+      });
       return rule.operator === "matches" ? matched : !matched;
     }
   }
@@ -202,7 +257,7 @@ const verifiedProtocol = (
   protocol.domain === "human_otc" &&
   protocol.status === "published" &&
   new Date(protocol.expires_at) > request.now &&
-  activeReview(protocol.review, request.now) &&
+  usableReview(protocol.review, request) &&
   activeSourceRefs(protocol.source_refs, request.knowledge.sourceSnapshotIds);
 
 const verifiedClaimsForOption = (
@@ -221,7 +276,7 @@ const verifiedClaimsForOption = (
       (claim) =>
         claim.pack_id !== request.knowledge.packId ||
         claim.status !== "published" ||
-        !activeReview(claim.review, request.now) ||
+        !usableReview(claim.review, request) ||
         !activeSourceRefs(
           claim.source_refs,
           request.knowledge.sourceSnapshotIds,
@@ -253,7 +308,7 @@ const verifiedOptions = (
         protocol.option_ids.includes(option.option_id) &&
         option.protocol_id === protocol.protocol_id &&
         option.status === "published" &&
-        activeReview(option.review, request.now) &&
+        usableReview(option.review, request) &&
         activeSourceRefs(
           option.source_refs,
           request.knowledge.sourceSnapshotIds,
@@ -265,7 +320,7 @@ const verifiedOptions = (
       if (
         !ingredient ||
         ingredient.status !== "active" ||
-        !activeReview(ingredient.review, request.now) ||
+        !usableReview(ingredient.review, request) ||
         !activeSourceRefs(
           ingredient.source_refs,
           request.knowledge.sourceSnapshotIds,
@@ -288,10 +343,37 @@ const rulesFor = (
         protocol.rule_ids.includes(rule.rule_id) &&
         rule.protocol_id === protocol.protocol_id &&
         rule.status === "published" &&
-        activeReview(rule.review, request.now) &&
+        usableReview(rule.review, request) &&
         activeSourceRefs(rule.source_refs, request.knowledge.sourceSnapshotIds),
     )
     .sort((left, right) => left.priority - right.priority);
+
+export interface ProgressiveQuestion {
+  readonly question: string;
+  readonly reason: string;
+  readonly slot: string;
+  readonly ruleId: string;
+}
+
+export function nextProtocolQuestion(
+  request: RecommendationRequest,
+): ProgressiveQuestion | null {
+  const protocol = request.protocol;
+  if (!protocol || !verifiedProtocol(protocol, request)) return null;
+  const asked = new Set(request.consultationState?.asked_slots ?? []);
+  const rule = rulesFor(protocol, request)
+    .filter((item) => item.effect === "ask" && item.question)
+    .filter((item) => !ruleMatches(item, request))
+    .find((item) => !asked.has(slotName(item.field)));
+  return rule?.question
+    ? {
+        question: renderedQuestion(rule.question, request),
+        reason: rule.reason,
+        slot: slotName(rule.field),
+        ruleId: rule.rule_id,
+      }
+    : null;
+}
 
 const sourceRefsFor = (verified: VerifiedOption): readonly SourceRef[] =>
   uniqueSourceRefs([
@@ -300,25 +382,367 @@ const sourceRefsFor = (verified: VerifiedOption): readonly SourceRef[] =>
     ...verified.claims.flatMap((claim) => claim.source_refs),
   ]);
 
+type RecommendationDrugProduct = DrugProduct &
+  Readonly<{
+    official_match_status?:
+      "confirmed" | "review_required" | "not_found" | "not_applicable";
+    official_product_key?: string;
+    official_source_url?: string;
+    retail_offer?: Readonly<{
+      sku_id: string;
+      display_name: string;
+      specification: string;
+      displayed_price_krw: number;
+      recorded_at: string;
+      price_status: string;
+      image_url?: string | null;
+      image_source_url?: string | null;
+      image_rights_status?: string | null;
+      image_kind?: string | null;
+      image_checked_at?: string | null;
+    }>;
+    protocol_ids?: readonly string[];
+    clinical_group_key?: string;
+    indication_summary?: string;
+    dosage_summary?: string;
+    precaution_summary?: string;
+    interactions?: readonly string[];
+    permit_cancelled?: boolean;
+  }>;
+
 interface RankedProduct {
-  readonly product: DrugProduct;
+  readonly product: RecommendationDrugProduct;
   readonly ingredientId: string;
   readonly option: ProtocolOption;
   readonly sourceRefs: readonly SourceRef[];
+  readonly clinicalGroupKey: string;
+  readonly sameGroupProductCount?: number;
   readonly inventory?: TenantInventory;
   readonly sales?: TenantSalesAggregate;
 }
+
+const therapeuticRolePriority = {
+  preferred: 3,
+  alternative: 2,
+  conditional: 1,
+} as const;
+
+const evidenceScopePriority = {
+  direct: 3,
+  phenotype_specific: 2,
+  supportive: 1,
+} as const;
+
+const compareProtocolOptions = (
+  left: ProtocolOption,
+  right: ProtocolOption,
+): number => {
+  const structuredFit =
+    left.therapeutic_role !== undefined ||
+    right.therapeutic_role !== undefined ||
+    left.evidence_scope !== undefined ||
+    right.evidence_scope !== undefined;
+  if (structuredFit) {
+    const therapeuticRole =
+      (therapeuticRolePriority[right.therapeutic_role ?? "conditional"] ?? 0) -
+      (therapeuticRolePriority[left.therapeutic_role ?? "conditional"] ?? 0);
+    if (therapeuticRole) return therapeuticRole;
+    const evidenceScope =
+      (evidenceScopePriority[right.evidence_scope ?? "supportive"] ?? 0) -
+      (evidenceScopePriority[left.evidence_scope ?? "supportive"] ?? 0);
+    if (evidenceScope) return evidenceScope;
+  }
+  return (
+    right.safety_priority - left.safety_priority ||
+    right.clinical_priority - left.clinical_priority ||
+    left.option_id.localeCompare(right.option_id)
+  );
+};
+
+const explicitlySupportedProductIds = (
+  verified: VerifiedOption,
+): ReadonlySet<string> =>
+  new Set(
+    verified.claims.flatMap((claim) => {
+      if (
+        claim.claim_type !== "indication" ||
+        typeof claim.object !== "object" ||
+        claim.object === null ||
+        Array.isArray(claim.object)
+      )
+        return [];
+      const candidateIds = (claim.object as Record<string, unknown>)[
+        "candidate_product_ids"
+      ];
+      return Array.isArray(candidateIds)
+        ? candidateIds.filter(
+            (candidate): candidate is string => typeof candidate === "string",
+          )
+        : [];
+    }),
+  );
+
+const asRecommendationProduct = (
+  product: DrugProduct,
+): RecommendationDrugProduct => product as RecommendationDrugProduct;
+
+const isHealthKrImported = (product: RecommendationDrugProduct): boolean =>
+  product.product_id.startsWith("PRD-HEALTHKR-");
+
+const confirmedImportedProduct = (
+  product: RecommendationDrugProduct,
+  protocol: OTCProtocol,
+): boolean =>
+  isHealthKrImported(product) &&
+  product.official_match_status === "confirmed" &&
+  Boolean(product.official_product_key) &&
+  product.permit_cancelled !== true &&
+  product.protocol_ids?.includes(protocol.protocol_id) === true &&
+  matchesProductProtocolProfile(
+    protocol.protocol_id,
+    product.indication_summary,
+    product.route,
+    product.dosage_form,
+  );
+
+const normalizedTerm = (value: string): string =>
+  value
+    .normalize("NFKC")
+    .toLocaleLowerCase("ko-KR")
+    .replace(/[^\p{L}\p{N}]+/gu, "");
+
+const stringValues = (value: unknown): readonly string[] =>
+  Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === "string")
+    : typeof value === "string"
+      ? [value]
+      : [];
+
+const termsOverlap = (
+  leftValues: readonly string[],
+  rightValues: readonly string[],
+): boolean =>
+  leftValues.some((leftValue) => {
+    const left = normalizedTerm(leftValue);
+    if (left.length < 2) return false;
+    return rightValues.some((rightValue) => {
+      const right = normalizedTerm(rightValue);
+      return (
+        right.length >= 2 &&
+        (left === right || left.includes(right) || right.includes(left))
+      );
+    });
+  });
+
+const numericSlot = (
+  request: RecommendationRequest,
+  slot: string,
+): number | undefined => {
+  const value = request.normalized.slots[slot]?.value;
+  return typeof value === "number" && Number.isFinite(value)
+    ? value
+    : undefined;
+};
+
+const ageRestrictionApplies = (description: string, age: number): boolean => {
+  for (const match of description.matchAll(
+    /(?:만\s*)?(\d+(?:\.\d+)?)\s*개월\s*(미만|이하|초과|이상)/gu,
+  )) {
+    const boundary = Number(match[1]) / 12;
+    switch (match[2]) {
+      case "미만":
+        if (age < boundary) return true;
+        break;
+      case "이하":
+        if (age <= boundary) return true;
+        break;
+      case "초과":
+        if (age > boundary) return true;
+        break;
+      case "이상":
+        if (age >= boundary) return true;
+        break;
+    }
+  }
+  const range = description.match(
+    /(?:만\s*)?(\d+(?:\.\d+)?)\s*세\s*(?:이상|부터)\s*(\d+(?:\.\d+)?)\s*세\s*(?:이하|까지)/u,
+  );
+  if (range?.[1] && range[2])
+    return age >= Number(range[1]) && age <= Number(range[2]);
+
+  for (const match of description.matchAll(
+    /(?:만\s*)?(\d+(?:\.\d+)?)\s*세\s*(미만|이하|초과|이상)/gu,
+  )) {
+    const boundary = Number(match[1]);
+    switch (match[2]) {
+      case "미만":
+        if (age < boundary) return true;
+        break;
+      case "이하":
+        if (age <= boundary) return true;
+        break;
+      case "초과":
+        if (age > boundary) return true;
+        break;
+      case "이상":
+        if (age >= boundary) return true;
+        break;
+    }
+  }
+  if (/신생아/u.test(description)) return age < 1 / 12;
+  if (/영아/u.test(description)) return age < 1;
+  if (/소아|어린이/u.test(description)) return age < 18;
+  return false;
+};
+
+const productSafetyEligible = (
+  product: RecommendationDrugProduct,
+  verified: VerifiedOption,
+  request: RecommendationRequest,
+): boolean => {
+  const ingredientTerms = [
+    verified.ingredient.display_name_ko,
+    ...(product.active_ingredients ?? []).map((item) => item.name),
+  ];
+  const productTerms = [
+    product.display_name,
+    ...(product.retail_offer ? [product.retail_offer.display_name] : []),
+    ...ingredientTerms,
+  ];
+  const allergies = stringValues(request.normalized.slots["allergies"]?.value);
+  if (termsOverlap(allergies, productTerms)) return false;
+
+  const currentProducts = stringValues(
+    request.normalized.slots["current_products"]?.value,
+  );
+  if (termsOverlap(currentProducts, ingredientTerms)) return false;
+  if (
+    currentProducts.some((currentProduct) =>
+      (product.interactions ?? []).some((interaction) =>
+        termsOverlap([currentProduct], [interaction]),
+      ),
+    )
+  )
+    return false;
+
+  const age = numericSlot(request, "age_years");
+  const pediatricOnly =
+    /키즈|어린이|소아/u.test(
+      `${product.display_name} ${product.retail_offer?.display_name ?? ""}`,
+    ) ||
+    (/소아|어린이/u.test(product.dosage_summary ?? "") &&
+      !/성인/u.test(product.dosage_summary ?? ""));
+  if (pediatricOnly && (age === undefined || age >= 18)) return false;
+  const pregnancyStatus = String(
+    request.normalized.slots["pregnancy_status"]?.value ?? "",
+  );
+  const conditions = stringValues(
+    request.normalized.slots["conditions"]?.value,
+  );
+  for (const flag of product.dur_flags ?? []) {
+    if (flag.blocking === false) continue;
+    switch (flag.type) {
+      case "age":
+        if (age === undefined || ageRestrictionApplies(flag.description, age))
+          return false;
+        break;
+      case "pregnancy":
+        if (pregnancyStatus !== "not_pregnant") return false;
+        break;
+      case "elderly":
+        if (age === undefined || age >= 65) return false;
+        break;
+      case "duplicate":
+        if (
+          termsOverlap(currentProducts, ingredientTerms) ||
+          currentProducts.some((item) =>
+            termsOverlap([item], [flag.description]),
+          )
+        )
+          return false;
+        break;
+      case "coadministration":
+        if (
+          currentProducts.some((item) =>
+            termsOverlap([item], [flag.description]),
+          )
+        )
+          return false;
+        break;
+      case "other":
+        if (
+          flag.blocking === true &&
+          (conditions.length === 0 ||
+            conditions.some((item) => termsOverlap([item], [flag.description])))
+        )
+          return false;
+        break;
+      case "dose":
+      case "duration":
+      case "split":
+        // These restrictions constrain a regimen, not product eligibility.
+        // The deterministic engine does not infer an unprovided regimen.
+        break;
+    }
+  }
+  return true;
+};
+
+const productClinicalGroupKey = (
+  product: RecommendationDrugProduct,
+  ingredientId: string,
+): string => {
+  if (product.clinical_group_key) return product.clinical_group_key;
+  const ingredients = (product.active_ingredients ?? [])
+    .map((item) => normalizedTerm(item.ingredient_id || item.name))
+    .filter(Boolean)
+    .toSorted()
+    .join("+");
+  return [
+    ingredients || ingredientId,
+    product.dosage_form ?? "unknown-form",
+    product.route ?? "unknown-route",
+  ].join("|");
+};
+
+const recentSalesForProtocol = (
+  item: TenantSalesAggregate,
+  protocol: OTCProtocol,
+  request: RecommendationRequest,
+): boolean => {
+  if (item.symptom_category !== protocol.symptom_category) return false;
+  const start = Date.parse(`${item.window_start}T00:00:00Z`);
+  const end = Date.parse(`${item.window_end}T00:00:00Z`);
+  const now = Date.UTC(
+    request.now.getUTCFullYear(),
+    request.now.getUTCMonth(),
+    request.now.getUTCDate(),
+  );
+  const ninetyDays = 90 * 24 * 60 * 60 * 1_000;
+  return (
+    Number.isFinite(start) &&
+    Number.isFinite(end) &&
+    start <= end &&
+    end <= now &&
+    start >= now - ninetyDays
+  );
+};
+
+const productPrice = (product: RecommendationDrugProduct): number =>
+  product.retail_offer?.displayed_price_krw ?? Number.MAX_SAFE_INTEGER;
 
 const rankedProducts = (
   options: readonly VerifiedOption[],
   protocol: OTCProtocol,
   request: RecommendationRequest,
 ): readonly RankedProduct[] => {
+  const researchPreview = request.tenant.tenantId === "local-research-preview";
   const activeFormulary =
     request.tenant.formulary?.tenant_id === request.tenant.tenantId &&
     request.tenant.formulary.pack_id === request.knowledge.packId &&
     request.tenant.formulary.status === "active" &&
-    activeReview(request.tenant.formulary.review, request.now)
+    (researchPreview ||
+      activeReview(request.tenant.formulary.review, request.now))
       ? request.tenant.formulary
       : undefined;
   if (!activeFormulary) return [];
@@ -328,7 +752,8 @@ const rankedProducts = (
   );
   const productById = new Map(
     request.knowledge.products.map(
-      (product) => [product.product_id, product] as const,
+      (product) =>
+        [product.product_id, asRecommendationProduct(product)] as const,
     ),
   );
   const inventoryByProduct = new Map(
@@ -345,7 +770,8 @@ const rankedProducts = (
       .filter(
         (item) =>
           item.tenant_id === request.tenant.tenantId &&
-          item.pack_id === request.knowledge.packId,
+          item.pack_id === request.knowledge.packId &&
+          recentSalesForProtocol(item, protocol, request),
       )
       .map((item) => [item.product_id, item] as const),
   );
@@ -358,12 +784,10 @@ const rankedProducts = (
     ]);
   }
 
-  return activeFormulary.entries
+  const ranked = activeFormulary.entries
     .filter(
       (entry) =>
-        entry.active &&
-        entry.pharmacist_approved &&
-        entry.symptom_category === protocol.symptom_category,
+        entry.active && entry.symptom_category === protocol.symptom_category,
     )
     .map((entry): RankedProduct | undefined => {
       const product = productById.get(entry.product_id);
@@ -371,13 +795,14 @@ const rankedProducts = (
       const link = productIngredients
         .get(entry.product_id)
         ?.find((item) => item.ingredient_id === entry.ingredient_id);
+      // Public supply-performance reporting is not a permit, formulary, or
+      // retail-availability status and must not decide clinical eligibility.
       if (
         !product ||
         !verified ||
         !link ||
         product.status !== "active" ||
         product.otc_status !== "otc" ||
-        product.supply_performance === false ||
         !activeSourceRefs(
           product.source_refs,
           request.knowledge.sourceSnapshotIds,
@@ -385,6 +810,16 @@ const rankedProducts = (
         !activeSourceRefs(link.source_refs, request.knowledge.sourceSnapshotIds)
       )
         return undefined;
+      const imported = isHealthKrImported(product);
+      const importedConfirmed = confirmedImportedProduct(product, protocol);
+      if (imported && !importedConfirmed) return undefined;
+      if (!entry.pharmacist_approved && !researchPreview) return undefined;
+      if (
+        !imported &&
+        !explicitlySupportedProductIds(verified).has(product.product_id)
+      )
+        return undefined;
+      if (!productSafetyEligible(product, verified, request)) return undefined;
       const inventory = inventoryByProduct.get(product.product_id);
       if (
         request.tenant.inventory !== undefined &&
@@ -399,6 +834,10 @@ const rankedProducts = (
         product,
         ingredientId: verified.ingredient.ingredient_id,
         option: verified.option,
+        clinicalGroupKey: productClinicalGroupKey(
+          product,
+          verified.ingredient.ingredient_id,
+        ),
         sourceRefs: uniqueSourceRefs([
           ...sourceRefsFor(verified),
           ...product.source_refs,
@@ -414,21 +853,44 @@ const rankedProducts = (
     .sort((left, right) => {
       // Sales can never alter clinical or safety eligibility. It is only the
       // final tie-breaker after clinical fit, safety, and inventory.
-      const clinical =
-        right.option.clinical_priority - left.option.clinical_priority;
-      if (clinical) return clinical;
-      const safety = right.option.safety_priority - left.option.safety_priority;
-      if (safety) return safety;
+      const therapeuticFit = compareProtocolOptions(left.option, right.option);
+      if (therapeuticFit) return therapeuticFit;
       const stock =
         (right.inventory?.available_quantity ?? 0) -
         (left.inventory?.available_quantity ?? 0);
       if (stock) return stock;
+      const price = productPrice(left.product) - productPrice(right.product);
+      if (price) return price;
       const sales =
         (left.sales?.sales_rank ?? Number.MAX_SAFE_INTEGER) -
         (right.sales?.sales_rank ?? Number.MAX_SAFE_INTEGER);
       if (sales) return sales;
       return left.product.product_id.localeCompare(right.product.product_id);
     });
+
+  const seenProductIds = new Set<string>();
+  const uniqueProducts = ranked.filter((item) => {
+    if (seenProductIds.has(item.product.product_id)) return false;
+    seenProductIds.add(item.product.product_id);
+    return true;
+  });
+  const groupCounts = new Map<string, number>();
+  for (const item of uniqueProducts)
+    groupCounts.set(
+      item.clinicalGroupKey,
+      (groupCounts.get(item.clinicalGroupKey) ?? 0) + 1,
+    );
+  const seenGroups = new Set<string>();
+  return uniqueProducts
+    .filter((item) => {
+      if (seenGroups.has(item.clinicalGroupKey)) return false;
+      seenGroups.add(item.clinicalGroupKey);
+      return true;
+    })
+    .map((item) => ({
+      ...item,
+      sameGroupProductCount: groupCounts.get(item.clinicalGroupKey) ?? 1,
+    }));
 };
 
 export function buildRecommendationDecision(
@@ -458,6 +920,16 @@ export function buildRecommendationDecision(
     return noDecision(request, ["PROTOCOL_NOT_VERIFIED"], protocol);
 
   const rules = rulesFor(protocol, request);
+  const choiceFields = new Set(
+    rules
+      .filter(
+        (rule) => rule.effect === "ask" && (rule.option_ids?.length ?? 0) > 0,
+      )
+      .map((rule) => rule.field),
+  );
+  const selectionRules = rules.filter(
+    (rule) => rule.effect === "select" && choiceFields.has(rule.field),
+  );
   for (const rule of rules) {
     const matched = ruleMatches(rule, request);
     if (rule.effect === "refer" && matched)
@@ -470,7 +942,11 @@ export function buildRecommendationDecision(
           action: "제품 후보를 제시하지 말고 약사가 직접 평가하세요.",
         },
       };
-    if (rule.effect === "ask" && !matched) {
+    if (
+      rule.effect === "ask" &&
+      !matched &&
+      !request.allowProgressiveCandidates
+    ) {
       const slot = slotName(rule.field);
       if (request.consultationState?.asked_slots.includes(slot))
         return noDecision(request, ["QUESTION_ALREADY_ASKED", rule.rule_id]);
@@ -481,7 +957,11 @@ export function buildRecommendationDecision(
         ]);
       return askDecision(
         request,
-        { question: rule.question, reason: rule.reason, slot },
+        {
+          question: renderedQuestion(rule.question, request),
+          reason: rule.reason,
+          slot,
+        },
         rule.rule_id,
         protocol,
       );
@@ -494,23 +974,36 @@ export function buildRecommendationDecision(
       .flatMap((rule) => rule.option_ids ?? []),
   );
   const selectedOptionIds = new Set(
-    rules
-      .filter((rule) => rule.effect === "select" && ruleMatches(rule, request))
+    selectionRules
+      .filter((rule) => ruleMatches(rule, request))
       .flatMap((rule) => rule.option_ids ?? []),
   );
+  const unresolvedChoiceRule = rules.find(
+    (rule) =>
+      rule.effect === "ask" &&
+      (rule.option_ids?.length ?? 0) > 0 &&
+      !ruleMatches(rule, request),
+  );
+  const provisionalOptionId =
+    request.allowProgressiveCandidates && selectedOptionIds.size === 0
+      ? unresolvedChoiceRule?.option_ids?.[0]
+      : undefined;
   const options = verifiedOptions(protocol, request)
     .filter((item) => !exclusionOptionIds.has(item.option.option_id))
     .filter(
       (item) =>
-        selectedOptionIds.size === 0 ||
+        item.option.therapeutic_role !== "conditional" ||
         selectedOptionIds.has(item.option.option_id),
     )
-    .sort(
-      (left, right) =>
-        right.option.clinical_priority - left.option.clinical_priority ||
-        right.option.safety_priority - left.option.safety_priority ||
-        left.option.option_id.localeCompare(right.option.option_id),
+    .filter(
+      (item) =>
+        selectionRules.length === 0 ||
+        (selectedOptionIds.size > 0
+          ? selectedOptionIds.has(item.option.option_id)
+          : provisionalOptionId === undefined ||
+            item.option.option_id === provisionalOptionId),
     )
+    .sort((left, right) => compareProtocolOptions(left.option, right.option))
     .slice(0, 3);
   if (options.length === 0)
     return noDecision(request, ["NO_VERIFIED_INGREDIENT_OPTION"], protocol);
@@ -530,7 +1023,8 @@ export function buildRecommendationDecision(
   }));
   const productCandidates = products.map((ranked) => ({
     product_id: ranked.product.product_id,
-    display_name: ranked.product.display_name,
+    display_name:
+      ranked.product.retail_offer?.display_name ?? ranked.product.display_name,
     ingredient_id: ranked.ingredientId,
     claim_ids: [...ranked.option.claim_ids] as [string, ...string[]],
     source_refs: [...ranked.sourceRefs] as [SourceRef, ...SourceRef[]],
@@ -540,6 +1034,28 @@ export function buildRecommendationDecision(
       : ("not_connected" as const),
     available_quantity: ranked.inventory?.available_quantity ?? null,
     sales_rank: ranked.sales?.sales_rank ?? null,
+    manufacturer: ranked.product.manufacturer ?? null,
+    specification: ranked.product.retail_offer?.specification ?? "",
+    displayed_price_krw:
+      ranked.product.retail_offer?.displayed_price_krw ?? null,
+    price_recorded_at: ranked.product.retail_offer?.recorded_at ?? null,
+    image_url: ranked.product.retail_offer?.image_url ?? null,
+    image_source_url: ranked.product.retail_offer?.image_source_url ?? null,
+    image_rights_status:
+      ranked.product.retail_offer?.image_rights_status ?? null,
+    image_kind: ranked.product.retail_offer?.image_kind ?? null,
+    image_checked_at: ranked.product.retail_offer?.image_checked_at ?? null,
+    ...(ranked.product.official_match_status
+      ? { official_match_status: ranked.product.official_match_status }
+      : {}),
+    official_source_url: ranked.product.official_source_url ?? null,
+    indication_summary: ranked.product.indication_summary ?? "",
+    dosage_summary: ranked.product.dosage_summary ?? "",
+    precaution_summary: ranked.product.precaution_summary ?? "",
+    dosage_form: ranked.product.dosage_form ?? null,
+    route: ranked.product.route ?? null,
+    clinical_group_key: ranked.clinicalGroupKey,
+    same_group_product_count: ranked.sameGroupProductCount ?? 1,
   }));
   const sourceRefs = uniqueSourceRefs([
     ...protocol.source_refs,
@@ -548,7 +1064,11 @@ export function buildRecommendationDecision(
   ]);
 
   return {
-    decision_id: decisionId(request.sessionId, request.sequence),
+    decision_id: decisionId(
+      request.sessionId,
+      request.sequence,
+      protocol.protocol_id,
+    ),
     status: "recommend",
     pack_id: request.knowledge.packId,
     protocol_id: protocol.protocol_id,
@@ -570,13 +1090,20 @@ export function renderDecisionSentence(
 ): string {
   switch (decision.status) {
     case "recommend": {
-      const ingredients = decision.ingredient_options
-        .map((item) => item.ingredient_name)
-        .join(" 또는 ");
       const product = decision.product_candidates[0];
+      const leadIngredient = product
+        ? decision.ingredient_options.find(
+            (item) => item.ingredient_id === product.ingredient_id,
+          )
+        : decision.ingredient_options[0];
+      const ingredientLabel = leadIngredient
+        ? leadIngredient.ingredient_name.endsWith("성분")
+          ? leadIngredient.ingredient_name
+          : `${leadIngredient.ingredient_name} 성분`
+        : "허가 성분";
       return product
-        ? `${ingredients} 성분에 해당하고 현재 재고가 확인된 제품 후보는 ${product.display_name}이며, 약사가 최종 확인해 선택하세요.`
-        : `${ingredients} 성분 후보를 약사가 현재 복용약과 금기를 최종 확인해 선택하세요.`;
+        ? `지금은 ${withKoreanObjectParticle(product.display_name)} 후보로 볼게요. 이 제품에는 ${ingredientLabel}이 들어 있어요.`
+        : `지금은 ${withKoreanObjectParticle(ingredientLabel)} 중심으로 살펴볼게요.`;
     }
     case "ask":
       return (
@@ -591,6 +1118,31 @@ export function renderDecisionSentence(
     case "insufficient":
       return "현재 활성 지식팩과 약국 데이터만으로는 검증된 후보를 결정할 수 없습니다.";
   }
+}
+
+const latinLettersWithFinalConsonant = new Set([
+  "F",
+  "L",
+  "M",
+  "N",
+  "R",
+  "S",
+  "X",
+]);
+const digitsWithFinalConsonant = new Set(["0", "1", "3", "6", "7", "8"]);
+
+export function withKoreanObjectParticle(value: string): string {
+  const lastPronounced = [...value.trim()]
+    .reverse()
+    .find((character) => /[가-힣0-9A-Za-z]/u.test(character));
+  if (!lastPronounced) return `${value}를`;
+  const codePoint = lastPronounced.codePointAt(0) ?? 0;
+  const hasFinalConsonant = /[가-힣]/u.test(lastPronounced)
+    ? (codePoint - 0xac00) % 28 !== 0
+    : /[0-9]/u.test(lastPronounced)
+      ? digitsWithFinalConsonant.has(lastPronounced)
+      : latinLettersWithFinalConsonant.has(lastPronounced.toUpperCase());
+  return `${value}${hasFinalConsonant ? "을" : "를"}`;
 }
 
 export function assertDecisionInvariants(
@@ -626,14 +1178,57 @@ export function nextConsultationState(
     packId: string;
     protocolId: string | null;
     intent: string | null;
+    symptomCategory?: string | null;
     decision: RecommendationDecision;
+    pendingQuestion?: Readonly<{
+      question: string;
+      reason: string;
+      slot: string;
+    }> | null;
+    topicStates?: readonly ConsultationState["topics"][number][];
     answeredSlots?: Readonly<Record<string, unknown>>;
     now: Date;
   }>,
 ): ConsultationState {
   const asked = new Set(prior?.asked_slots ?? []);
-  if (input.decision.status === "ask" && input.decision.question)
-    asked.add(input.decision.question.slot);
+  const pendingQuestion =
+    input.pendingQuestion ??
+    (input.decision.status === "ask" ? input.decision.question : null);
+  if (pendingQuestion) asked.add(pendingQuestion.slot);
+  const priorTopics = prior?.topics ?? [];
+  const currentTopic = input.protocolId
+    ? {
+        protocol_id: input.protocolId,
+        intent: input.intent ?? "",
+        symptom_category: input.symptomCategory ?? "",
+        answered_slots: {
+          ...(priorTopics.find((item) => item.protocol_id === input.protocolId)
+            ?.answered_slots ?? {}),
+          ...(input.answeredSlots ?? {}),
+        },
+        asked_slots: [...asked],
+        pending_question_slot: pendingQuestion?.slot ?? null,
+        pending_question: pendingQuestion
+          ? {
+              question: pendingQuestion.question,
+              reason: pendingQuestion.reason,
+              slot: pendingQuestion.slot,
+            }
+          : null,
+        last_decision_status: input.decision.status,
+        updated_at: input.now.toISOString(),
+      }
+    : null;
+  const topics = input.topicStates
+    ? [...input.topicStates]
+    : currentTopic
+      ? [
+          ...priorTopics.filter(
+            (item) => item.protocol_id !== currentTopic.protocol_id,
+          ),
+          currentTopic,
+        ]
+      : [...priorTopics];
   return {
     session_id: input.sessionId,
     tenant_id: input.tenantId,
@@ -644,10 +1239,8 @@ export function nextConsultationState(
       ...(input.answeredSlots ?? {}),
     },
     asked_slots: [...asked],
-    pending_question_slot:
-      input.decision.status === "ask" && input.decision.question
-        ? input.decision.question.slot
-        : null,
+    topics: topics.slice(0, 8) as ConsultationState["topics"],
+    pending_question_slot: pendingQuestion?.slot ?? null,
     active_protocol_id: input.protocolId,
     active_intent: input.intent,
     last_decision_status: input.decision.status,

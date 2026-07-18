@@ -56,8 +56,10 @@ describe("stateful fast consult flow", () => {
 
       expect(result.output.status).toBe("blocked");
       expect(result.output.decision.status).toBe("ask");
-      expect(result.output.ask_next[0]?.slot).toBe("symptom_pattern");
-      expect(result.output.ask_next[0]?.question).toContain("쥐어짜는 통증");
+      expect(result.output.ask_next[0]?.slot).toBe("patient.detail");
+      expect(result.output.ask_next[0]?.question).toContain(
+        "평소 말씀하시는 표현",
+      );
     },
   );
 

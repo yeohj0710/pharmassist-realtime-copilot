@@ -1,0 +1,68 @@
+[
+  {
+    "item_seq": "197000053",
+    "drug_cd": "A11A0500A0068",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=A11A0500A0068",
+    "source_image_url": "https://common.health.kr/shared/images/sb_photo/big3/A11A0500A006801.jpg"
+  },
+  {
+    "item_seq": "200905692",
+    "drug_cd": "2009091800015",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=2009091800015",
+    "source_image_url": "https://common.health.kr/shared/images/sb_photo/big3/200909180001501.jpg"
+  },
+  {
+    "item_seq": "200300406",
+    "drug_cd": null,
+    "healthkr_url": "https://www.health.kr/searchDrug/search_total_result.asp?search_word=%EB%8B%A5%ED%84%B0%EB%B2%A0%EC%95%84%EC%A0%9C%EC%A0%95",
+    "source_image_url": null
+  },
+  {
+    "item_seq": "202107495",
+    "drug_cd": "2021111700001",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=2021111700001",
+    "source_image_url": "https://common.health.kr/shared/images/sb_photo/big3/202111170000101.jpg"
+  },
+  {
+    "item_seq": "201900312",
+    "drug_cd": "2019012500051",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=2019012500051",
+    "source_image_url": null
+  },
+  {
+    "item_seq": "200402651",
+    "drug_cd": "A11AOOOOO4636",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO4636",
+    "source_image_url": "https://common.health.kr/shared/images/ext_images/pack_img/P_8806435034519.jpg"
+  },
+  {
+    "item_seq": "201105482",
+    "drug_cd": null,
+    "healthkr_url": "https://www.health.kr/searchDrug/search_total_result.asp?search_word=%EC%95%84%EC%9D%B4%ED%88%AC%EC%98%A4%EB%AF%B8%EB%8B%88%EC%A0%90%EC%95%88%EC%95%A1",
+    "source_image_url": null
+  },
+  {
+    "item_seq": "198701129",
+    "drug_cd": "2019101800006",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=2019101800006",
+    "source_image_url": "https://common.health.kr/shared/images/ext_images/pack_img/P_2019101800006_00.jpg"
+  },
+  {
+    "item_seq": "198500023",
+    "drug_cd": "A11A0071B0011",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=A11A0071B0011",
+    "source_image_url": "https://common.health.kr/shared/images/ext_images/pack_img/P_A11A0071B0011_03.jpg"
+  },
+  {
+    "item_seq": "199900422",
+    "drug_cd": "A11A0390B0011",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=A11A0390B0011",
+    "source_image_url": "https://common.health.kr/shared/images/ext_images/pack_img/P_A11A0390B0011_00.jpg"
+  },
+  {
+    "item_seq": "200906877",
+    "drug_cd": "2009092800048",
+    "healthkr_url": "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=2009092800048",
+    "source_image_url": "https://common.health.kr/shared/images/sb_photo/big3/200909280004804.jpg"
+  }
+]

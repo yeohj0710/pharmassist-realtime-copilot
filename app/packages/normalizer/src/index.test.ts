@@ -15,6 +15,11 @@ describe("Korean normalizer", () => {
     expect(value.slots["weight_kg"]?.value).toBe(16);
   });
 
+  it("preserves an explicit pregnancy negation", () => {
+    const value = normalizeKorean("35살이고 임신은 아니에요");
+    expect(value.slots["pregnancy_status"]?.value).toBe("not_pregnant");
+  });
+
   it("masks phone/email/RRN and fails closed for high-risk PII", () => {
     const value = redactPii("010-1234-5678 a@b.co 주민번호 900101-1234567");
     expect(value.text).not.toContain("010-1234-5678");
@@ -25,6 +30,32 @@ describe("Korean normalizer", () => {
   it("preserves ASR alternatives without selecting one", () => {
     const value = normalizeKorean("페니", ["페니라민", "페니실린", "페니라민"]);
     expect(value.alternatives).toEqual(["페니라민", "페니실린"]);
+  });
+
+  it.each([
+    ["어깨가 결려요", "어깨"],
+    ["무릎이 아파요", "무릎"],
+    ["허리가 뻐근해요", "허리"],
+    ["손목이 시큰해요", "손목"],
+    ["발목을 삐었어요", "발목"],
+    ["팔꿈치가 아파요", "팔꿈치"],
+    ["고관절이 불편해요", "고관절"],
+    ["목이 뻐근해요", "목"],
+    ["팔이 아파요", "팔"],
+    ["다리가 아파요", "다리"],
+  ])("extracts a canonical body site: %s", (input, expected) => {
+    expect(normalizeKorean(input).slots["body_site"]?.value).toBe(expected);
+  });
+
+  it.each([
+    ["배아프노", "배가 아파요"],
+    ["배가 아픈데", "배가 아파요"],
+    ["속쓰리네", "속이 쓰려요"],
+    ["소화 안된다", "소화 안 돼요"],
+    ["머리아프다", "머리가 아파요"],
+    ["기침나네", "기침나요"],
+  ])("normalizes colloquial symptom wording: %s", (input, expected) => {
+    expect(normalizeKorean(input).normalizedText).toContain(expected);
   });
 
   it("respects IME composition", () => {

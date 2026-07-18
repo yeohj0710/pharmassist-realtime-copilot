@@ -29,4 +29,19 @@ describe("topic transitions", () => {
     expect(next.output.decision.status).toBe("ask");
     expect(next.output.decision.protocol_id).toBe("PTC-SYN-MUSCLE");
   });
+
+  it("re-evaluates an AI-corrected turn from the state before that turn", () => {
+    const flow = new StatefulConsultFlow(syntheticPack);
+    flow.run(input("기침이 나요", 1));
+    const immediate = flow.run(input("그리고 어깨도 아파요", 2));
+    const corrected = flow.run(input("그리고 어깨 근육통도 있어요", 2));
+
+    expect(
+      new Set(immediate.output.topic_results.map((topic) => topic.protocol_id)),
+    ).toEqual(new Set(["PTC-SYN-COUGH", "PTC-SYN-MUSCLE"]));
+    expect(
+      new Set(corrected.output.topic_results.map((topic) => topic.protocol_id)),
+    ).toEqual(new Set(["PTC-SYN-COUGH", "PTC-SYN-MUSCLE"]));
+    expect(corrected.consultationState.sequence).toBe(2);
+  });
 });

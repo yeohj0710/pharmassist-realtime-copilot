@@ -11,6 +11,7 @@
     "pack_id",
     "answered_slots",
     "asked_slots",
+    "topics",
     "pending_question_slot",
     "active_protocol_id",
     "active_intent",
@@ -42,6 +43,60 @@
       "uniqueItems": true,
       "items": {
         "type": "string"
+      }
+    },
+    "topics": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "protocol_id",
+          "intent",
+          "symptom_category",
+          "answered_slots",
+          "asked_slots",
+          "pending_question_slot",
+          "pending_question",
+          "last_decision_status",
+          "updated_at"
+        ],
+        "properties": {
+          "protocol_id": { "type": "string" },
+          "intent": { "type": "string" },
+          "symptom_category": { "type": "string" },
+          "answered_slots": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "asked_slots": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "type": "string" }
+          },
+          "pending_question_slot": { "type": ["string", "null"] },
+          "pending_question": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["question", "reason", "slot"],
+                "properties": {
+                  "question": { "type": "string" },
+                  "reason": { "type": "string" },
+                  "slot": { "type": "string" }
+                }
+              }
+            ]
+          },
+          "last_decision_status": {
+            "type": ["string", "null"],
+            "enum": ["recommend", "ask", "refer", "insufficient", null]
+          },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
       }
     },
     "active_protocol_id": {

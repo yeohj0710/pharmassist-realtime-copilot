@@ -218,3 +218,6 @@ ALIAS-SEED-0216,supplement_drug_nutrient_chart_query,약과 영양제 조합,pat
 ALIAS-SEED-0217,admin_pharmacy_operations,근무약사 가이드,patient_phrase,True,unreviewed,False
 ALIAS-SEED-0218,admin_pharmacy_operations,조제실 업무,patient_phrase,True,unreviewed,False
 ALIAS-SEED-0219,admin_pharmacy_operations,약국 운영 절차,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0220,bowel_urgency_context,화장실이 급해요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0221,bowel_urgency_context,변이 마려워요,patient_phrase,True,unreviewed,False
+ALIAS-SEED-0222,bowel_urgency_context,배변감이 있어요,patient_phrase,True,unreviewed,False

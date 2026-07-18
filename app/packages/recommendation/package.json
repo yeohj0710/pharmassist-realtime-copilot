@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@pharmassist/contracts": "workspace:*",
+    "@pharmassist/dialogue": "workspace:*",
     "@pharmassist/domain": "workspace:*"
   },
   "devDependencies": {

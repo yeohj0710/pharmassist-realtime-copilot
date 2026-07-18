@@ -1,0 +1,648 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharmassist.local/schemas/pharmacy_product_registry.schema.json",
+  "title": "PharmacyProductRegistry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "generatedAt", "source", "pack", "records"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["logicalName", "contentSha256", "byteLength", "recordCount"],
+      "properties": {
+        "logicalName": {
+          "const": "pharmacy-product-catalog-portable-v1"
+        },
+        "contentSha256": { "$ref": "#/$defs/sha256" },
+        "byteLength": { "type": "integer", "minimum": 1 },
+        "recordCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "pack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packId",
+        "version",
+        "mappingContentSha256",
+        "ingredientCount",
+        "protocolOptionCount"
+      ],
+      "properties": {
+        "packId": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "mappingContentSha256": { "$ref": "#/$defs/sha256" },
+        "ingredientCount": { "type": "integer", "minimum": 1 },
+        "protocolOptionCount": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/registryRecord" }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "nullableText": {
+      "type": ["string", "null"]
+    },
+    "textArray": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "contentBlock": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "text"],
+          "properties": {
+            "type": { "const": "paragraph" },
+            "text": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "headers", "rows"],
+          "properties": {
+            "type": { "const": "table" },
+            "headers": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "contentSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "blocks"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "blocks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/contentBlock" }
+        }
+      }
+    },
+    "officialContent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "normalizationVersion",
+        "efficacy",
+        "dosage",
+        "precautions",
+        "professionalPrecautions",
+        "patientGuidance",
+        "medicationGuide"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "1.0" },
+        "normalizationVersion": { "type": "string", "minLength": 1 },
+        "efficacy": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/contentSection" }]
+        },
+        "dosage": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/contentSection" }]
+        },
+        "precautions": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/contentSection" }]
+        },
+        "professionalPrecautions": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/contentSection" }]
+        },
+        "patientGuidance": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/contentSection" }]
+        },
+        "medicationGuide": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/contentSection" }]
+        }
+      }
+    },
+    "registryRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registryRecordId",
+        "retailOffer",
+        "officialMatch",
+        "officialProduct",
+        "recommendation"
+      ],
+      "properties": {
+        "registryRecordId": {
+          "type": "string",
+          "pattern": "^REG-HEALTHKR-[A-F0-9]{16}$"
+        },
+        "retailOffer": { "$ref": "#/$defs/retailOffer" },
+        "officialMatch": { "$ref": "#/$defs/officialMatch" },
+        "officialProduct": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/officialProduct" }]
+        },
+        "recommendation": { "$ref": "#/$defs/recommendation" }
+      }
+    },
+    "retailOffer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "skuId",
+        "documentId",
+        "displayName",
+        "normalizedName",
+        "capacity",
+        "normalizedCapacity",
+        "specification",
+        "category",
+        "displayedPriceKrw",
+        "currency",
+        "recordedAt",
+        "priceStatus",
+        "sourceType",
+        "verificationStatus",
+        "image"
+      ],
+      "properties": {
+        "skuId": { "type": "string", "minLength": 1 },
+        "documentId": { "type": "string", "minLength": 1 },
+        "displayName": { "type": "string", "minLength": 1 },
+        "normalizedName": { "type": "string", "minLength": 1 },
+        "capacity": { "type": "string", "minLength": 1 },
+        "normalizedCapacity": { "type": "string", "minLength": 1 },
+        "specification": { "type": "string", "minLength": 1 },
+        "category": { "type": "string", "minLength": 1 },
+        "displayedPriceKrw": { "type": "integer", "minimum": 0 },
+        "currency": { "const": "KRW" },
+        "recordedAt": { "type": "string", "format": "date" },
+        "priceStatus": { "type": "string", "minLength": 1 },
+        "sourceType": { "type": "string", "minLength": 1 },
+        "verificationStatus": { "type": "string", "minLength": 1 },
+        "image": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url", "sourceUrl", "rightsStatus", "kind", "checkedAt"],
+          "properties": {
+            "url": { "$ref": "#/$defs/nullableText" },
+            "sourceUrl": { "$ref": "#/$defs/nullableText" },
+            "rightsStatus": { "$ref": "#/$defs/nullableText" },
+            "kind": { "$ref": "#/$defs/nullableText" },
+            "checkedAt": {
+              "oneOf": [
+                { "type": "null" },
+                { "type": "string", "format": "date-time" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "officialMatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "score",
+        "itemSeq",
+        "productKey",
+        "identityValid",
+        "checkedAt",
+        "sourceType",
+        "sourceUrl",
+        "alternatives",
+        "evidence"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "confirmed",
+            "review_required",
+            "not_found",
+            "not_applicable"
+          ]
+        },
+        "score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "itemSeq": { "$ref": "#/$defs/nullableText" },
+        "productKey": { "$ref": "#/$defs/nullableText" },
+        "identityValid": { "type": "boolean" },
+        "checkedAt": { "$ref": "#/$defs/nullableText" },
+        "sourceType": { "$ref": "#/$defs/nullableText" },
+        "sourceUrl": { "$ref": "#/$defs/nullableText" },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "itemName",
+              "itemSeq",
+              "manufacturer",
+              "dosageForm",
+              "packUnit",
+              "sourceUrl",
+              "score",
+              "conflicts"
+            ],
+            "properties": {
+              "itemName": { "type": "string", "minLength": 1 },
+              "itemSeq": { "type": "string", "minLength": 1 },
+              "manufacturer": { "$ref": "#/$defs/nullableText" },
+              "dosageForm": { "$ref": "#/$defs/nullableText" },
+              "packUnit": { "$ref": "#/$defs/nullableText" },
+              "sourceUrl": { "$ref": "#/$defs/nullableText" },
+              "score": { "type": "number", "minimum": 0, "maximum": 100 },
+              "conflicts": { "$ref": "#/$defs/textArray" }
+            }
+          }
+        },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "detailPageVerified",
+            "ajaxPayloadVerified",
+            "matchReasons",
+            "conflicts",
+            "sourceUrls",
+            "verifiedFields",
+            "pipelineVersion"
+          ],
+          "properties": {
+            "detailPageVerified": { "type": "boolean" },
+            "ajaxPayloadVerified": { "type": "boolean" },
+            "matchReasons": { "$ref": "#/$defs/textArray" },
+            "conflicts": { "$ref": "#/$defs/textArray" },
+            "sourceUrls": { "$ref": "#/$defs/textArray" },
+            "verifiedFields": { "$ref": "#/$defs/textArray" },
+            "pipelineVersion": { "$ref": "#/$defs/nullableText" }
+          }
+        }
+      }
+    },
+    "officialProduct": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "itemSeq",
+        "productKey",
+        "itemName",
+        "englishName",
+        "manufacturer",
+        "manufacturerDetails",
+        "sourceType",
+        "sourceUrl",
+        "otcStatus",
+        "permit",
+        "classification",
+        "dosageForm",
+        "route",
+        "packUnit",
+        "storage",
+        "validTerm",
+        "appearance",
+        "efficacy",
+        "dosage",
+        "precautions",
+        "professionalPrecautions",
+        "content",
+        "ingredients",
+        "activeIngredients",
+        "additives",
+        "insurance",
+        "consumerGuidance",
+        "identification",
+        "interactions",
+        "sameIngredientProducts",
+        "insertPdfUrl",
+        "dur",
+        "images",
+        "pictograms",
+        "contentStatus",
+        "upstreamUpdatedAt"
+      ],
+      "properties": {
+        "itemSeq": { "type": "string", "minLength": 1 },
+        "productKey": { "type": "string", "minLength": 1 },
+        "itemName": { "type": "string", "minLength": 1 },
+        "englishName": { "$ref": "#/$defs/nullableText" },
+        "manufacturer": { "type": "string", "minLength": 1 },
+        "manufacturerDetails": { "$ref": "#/$defs/manufacturerDetails" },
+        "sourceType": { "type": "string", "minLength": 1 },
+        "sourceUrl": { "type": "string", "format": "uri" },
+        "otcStatus": { "enum": ["otc", "not_otc", "unknown"] },
+        "permit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["permitDate", "cancelled", "cancelDate"],
+          "properties": {
+            "permitDate": { "$ref": "#/$defs/nullableText" },
+            "cancelled": { "type": "boolean" },
+            "cancelDate": { "$ref": "#/$defs/nullableText" }
+          }
+        },
+        "classification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["category", "code", "atcCode", "kpicAtc"],
+          "properties": {
+            "category": { "$ref": "#/$defs/nullableText" },
+            "code": { "$ref": "#/$defs/nullableText" },
+            "atcCode": { "$ref": "#/$defs/nullableText" },
+            "kpicAtc": { "$ref": "#/$defs/nullableText" }
+          }
+        },
+        "dosageForm": { "$ref": "#/$defs/nullableText" },
+        "route": { "$ref": "#/$defs/nullableText" },
+        "packUnit": { "$ref": "#/$defs/nullableText" },
+        "storage": { "$ref": "#/$defs/nullableText" },
+        "validTerm": { "$ref": "#/$defs/nullableText" },
+        "appearance": { "$ref": "#/$defs/nullableText" },
+        "efficacy": { "$ref": "#/$defs/nullableText" },
+        "dosage": { "$ref": "#/$defs/nullableText" },
+        "precautions": { "$ref": "#/$defs/nullableText" },
+        "professionalPrecautions": { "$ref": "#/$defs/nullableText" },
+        "content": { "$ref": "#/$defs/officialContent" },
+        "ingredients": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ingredientSource" }
+        },
+        "activeIngredients": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ingredientSource" }
+        },
+        "additives": { "$ref": "#/$defs/textArray" },
+        "insurance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "detail", "history", "reimbursementCriteria"],
+          "properties": {
+            "status": { "$ref": "#/$defs/nullableText" },
+            "detail": { "$ref": "#/$defs/nullableText" },
+            "history": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["code", "detail"],
+                "properties": {
+                  "code": { "$ref": "#/$defs/nullableText" },
+                  "detail": { "$ref": "#/$defs/nullableText" }
+                }
+              }
+            },
+            "reimbursementCriteria": { "$ref": "#/$defs/nullableText" }
+          }
+        },
+        "consumerGuidance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "summary",
+            "guide",
+            "patientGuidance",
+            "medicationGuide",
+            "sourceUrl"
+          ],
+          "properties": {
+            "summary": { "$ref": "#/$defs/nullableText" },
+            "guide": { "$ref": "#/$defs/nullableText" },
+            "patientGuidance": { "$ref": "#/$defs/nullableText" },
+            "medicationGuide": { "$ref": "#/$defs/nullableText" },
+            "sourceUrl": { "$ref": "#/$defs/nullableText" }
+          }
+        },
+        "identification": { "$ref": "#/$defs/nullableText" },
+        "interactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["tableIndex", "cells"],
+            "properties": {
+              "tableIndex": { "type": "integer", "minimum": 0 },
+              "cells": { "$ref": "#/$defs/textArray" }
+            }
+          }
+        },
+        "sameIngredientProducts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "productName",
+              "manufacturer",
+              "otcStatus",
+              "price",
+              "bioequivalence",
+              "supplied",
+              "tableIndex",
+              "cells"
+            ],
+            "properties": {
+              "productName": { "$ref": "#/$defs/nullableText" },
+              "manufacturer": { "$ref": "#/$defs/nullableText" },
+              "otcStatus": { "$ref": "#/$defs/nullableText" },
+              "price": { "$ref": "#/$defs/nullableText" },
+              "bioequivalence": { "$ref": "#/$defs/nullableText" },
+              "supplied": { "$ref": "#/$defs/nullableText" },
+              "tableIndex": { "type": ["integer", "null"], "minimum": 0 },
+              "cells": { "$ref": "#/$defs/textArray" }
+            }
+          }
+        },
+        "insertPdfUrl": { "$ref": "#/$defs/nullableText" },
+        "dur": { "$ref": "#/$defs/dur" },
+        "images": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/media" }
+        },
+        "pictograms": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/media" }
+        },
+        "contentStatus": { "$ref": "#/$defs/nullableText" },
+        "upstreamUpdatedAt": { "$ref": "#/$defs/nullableText" }
+      }
+    },
+    "manufacturerDetails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "englishName", "address", "phone", "fax", "website"],
+      "properties": {
+        "name": { "$ref": "#/$defs/nullableText" },
+        "englishName": { "$ref": "#/$defs/nullableText" },
+        "address": { "$ref": "#/$defs/nullableText" },
+        "phone": { "$ref": "#/$defs/nullableText" },
+        "fax": { "$ref": "#/$defs/nullableText" },
+        "website": { "$ref": "#/$defs/nullableText" }
+      }
+    },
+    "ingredientSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceText",
+        "sourceIngredientCode",
+        "sourceUrl",
+        "ingredientId"
+      ],
+      "properties": {
+        "sourceText": { "type": "string", "minLength": 1 },
+        "sourceIngredientCode": { "$ref": "#/$defs/nullableText" },
+        "sourceUrl": { "$ref": "#/$defs/nullableText" },
+        "ingredientId": { "$ref": "#/$defs/nullableText" }
+      }
+    },
+    "dur": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contraindications",
+        "age",
+        "pregnancy",
+        "senior",
+        "maxDose",
+        "maxPeriod",
+        "splitDosage",
+        "pregnancyCategory"
+      ],
+      "properties": {
+        "contraindications": { "$ref": "#/$defs/durSection" },
+        "age": { "$ref": "#/$defs/durSection" },
+        "pregnancy": { "$ref": "#/$defs/durSection" },
+        "senior": { "$ref": "#/$defs/durSection" },
+        "maxDose": { "$ref": "#/$defs/durSection" },
+        "maxPeriod": { "$ref": "#/$defs/durSection" },
+        "splitDosage": { "$ref": "#/$defs/durSection" },
+        "pregnancyCategory": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["code", "description"],
+              "properties": {
+                "code": { "type": "string", "minLength": 1 },
+                "description": { "$ref": "#/$defs/nullableText" }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "durSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "entries", "raw"],
+      "properties": {
+        "present": { "type": "boolean" },
+        "entries": { "$ref": "#/$defs/textArray" },
+        "raw": { "$ref": "#/$defs/nullableText" }
+      }
+    },
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "kind",
+        "sourceUrl",
+        "sourceDatasetId",
+        "license",
+        "fetchedAt"
+      ],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "kind": { "$ref": "#/$defs/nullableText" },
+        "sourceUrl": { "$ref": "#/$defs/nullableText" },
+        "sourceDatasetId": { "$ref": "#/$defs/nullableText" },
+        "license": { "$ref": "#/$defs/nullableText" },
+        "fetchedAt": { "$ref": "#/$defs/nullableText" }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "productId",
+        "ingredientIds",
+        "ingredientMappings",
+        "unmappedActiveIngredients",
+        "protocolIds",
+        "optionIds",
+        "clinicalGroupKey",
+        "eligible",
+        "exclusionReasons"
+      ],
+      "properties": {
+        "productId": {
+          "type": "string",
+          "pattern": "^PRD-HEALTHKR-[A-F0-9]{16}$"
+        },
+        "ingredientIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "ingredientMappings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["ingredientId", "sourceText"],
+            "properties": {
+              "ingredientId": { "$ref": "#/$defs/nullableText" },
+              "sourceText": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "unmappedActiveIngredients": { "$ref": "#/$defs/textArray" },
+        "protocolIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "optionIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "clinicalGroupKey": { "$ref": "#/$defs/nullableText" },
+        "eligible": { "type": "boolean" },
+        "exclusionReasons": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "official_match_not_confirmed",
+              "official_identity_invalid",
+              "not_otc",
+              "permit_cancelled",
+              "source_match_conflict",
+              "active_ingredient_missing",
+              "active_ingredient_unmapped",
+              "protocol_indication_mismatch"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

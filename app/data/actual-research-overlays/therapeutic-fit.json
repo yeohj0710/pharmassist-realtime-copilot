@@ -1,0 +1,289 @@
+{
+  "version": 1,
+  "candidate_only": true,
+  "clinical_use_prohibited": true,
+  "options": [
+    {
+      "option_id": "OPT-ABDOMINAL_PAIN_VOMITING-ALUMINUM_PHOSPHATE_GEL",
+      "role": "alternative",
+      "evidence_scope": "phenotype_specific",
+      "rationale": "속쓰림·위산 관련 복통 표현형에서만 맞는 제산 후보"
+    },
+    {
+      "option_id": "OPT-ABDOMINAL_PAIN_VOMITING-DIMENHYDRINATE",
+      "role": "alternative",
+      "evidence_scope": "phenotype_specific",
+      "rationale": "멀미·이동과 연결된 구역 표현형에서만 맞는 후보"
+    },
+    {
+      "option_id": "OPT-ABDOMINAL_PAIN_VOMITING-DIOSMECTITE",
+      "role": "alternative",
+      "evidence_scope": "phenotype_specific",
+      "rationale": "설사·묽은 변이 동반된 표현형에서만 맞는 후보"
+    },
+    {
+      "option_id": "OPT-ACID_REFLUX-ALUMINUM_PHOSPHATE_GEL",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "위산과다·속쓰림 허가 효능이 현재 치료 목표와 직접 일치"
+    },
+    {
+      "option_id": "OPT-ACID_REFLUX-MAGNESIUM_HYDROXIDE",
+      "role": "alternative",
+      "evidence_scope": "supportive",
+      "rationale": "복합 제산 제품에서 위산 중화에 기여하는 대안 성분"
+    },
+    {
+      "option_id": "OPT-ALLERGIC_RHINITIS-LORATADINE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "알레르기비염 증상 완화 허가 효능과 직접 일치"
+    },
+    {
+      "option_id": "OPT-ALLERGIC_RHINITIS-CETIRIZINE_HCL",
+      "role": "alternative",
+      "evidence_scope": "direct",
+      "rationale": "알레르기비염 증상 완화 허가 효능을 가진 대안"
+    },
+    {
+      "option_id": "OPT-BLOATING-SIMETHICONE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "가스·복부팽만 완화라는 치료 목표에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-BLOATING-DIASTASE_PROTEASE_CELLULASE",
+      "role": "conditional",
+      "evidence_scope": "phenotype_specific",
+      "rationale": "소화불량과 음식 정체감이 함께 있을 때 검토하는 소화효소 후보"
+    },
+    {
+      "option_id": "OPT-CONSTIPATION-BISACODYL",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "변비 단기 완화 허가 효능과 직접 일치"
+    },
+    {
+      "option_id": "OPT-CONSTIPATION-DOCUSATE_SODIUM",
+      "role": "alternative",
+      "evidence_scope": "direct",
+      "rationale": "변을 부드럽게 하는 기전의 변비 대안"
+    },
+    {
+      "option_id": "OPT-DIARRHEA-DIOSMECTITE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "급성 설사 증상 완화 허가 효능과 직접 일치"
+    },
+    {
+      "option_id": "OPT-DRY_COUGH-DEXTROMETHORPHAN_HBR_HYDRATE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "가래가 뚜렷하지 않은 기침 억제 목표에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-DRY_EYE-CARBOXYMETHYLCELLULOSE_SODIUM",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "안구건조와 자극 완화 허가 효능에 직접 맞는 점안 후보"
+    },
+    {
+      "option_id": "OPT-FEVER-ACETAMINOPHEN",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "해열 목표에 직접 맞고 일반 성인의 기본 후보로 검토 가능"
+    },
+    {
+      "option_id": "OPT-FEVER-IBUPROFEN",
+      "role": "alternative",
+      "evidence_scope": "direct",
+      "rationale": "해열 허가 효능을 가진 NSAID 대안"
+    },
+    {
+      "option_id": "OPT-GAS-SIMETHICONE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "장내 가스와 복부팽만 완화 목표에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-HEADACHE-ACETAMINOPHEN",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "두통 완화 허가 효능을 가진 기본 진통 후보"
+    },
+    {
+      "option_id": "OPT-HEADACHE-IBUPROFEN",
+      "role": "alternative",
+      "evidence_scope": "direct",
+      "rationale": "두통 완화 허가 효능을 가진 NSAID 대안"
+    },
+    {
+      "option_id": "OPT-HEARTBURN-ALUMINUM_PHOSPHATE_GEL",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "속쓰림·위산과다 완화 허가 효능에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-HEARTBURN-MAGNESIUM_HYDROXIDE",
+      "role": "alternative",
+      "evidence_scope": "supportive",
+      "rationale": "복합 제산 제품에서 위산 중화에 기여하는 대안 성분"
+    },
+    {
+      "option_id": "OPT-INDIGESTION-DIASTASE_PROTEASE_CELLULASE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "소화불량과 음식 소화 보조 목표에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-INDIGESTION-SIMETHICONE",
+      "role": "alternative",
+      "evidence_scope": "phenotype_specific",
+      "rationale": "가스와 복부팽만이 두드러지는 소화불량에서 검토하는 대안"
+    },
+    {
+      "option_id": "OPT-INSECT_BITE-HYDROCORTISONE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "국소 염증·가려움 완화 목표에 직접 맞는 외용 후보"
+    },
+    {
+      "option_id": "OPT-INSECT_BITE-CETIRIZINE_HCL",
+      "role": "conditional",
+      "evidence_scope": "supportive",
+      "rationale": "전신성 알레르기 가려움이 두드러질 때만 검토하는 보조 후보"
+    },
+    {
+      "option_id": "OPT-JOINT_PAIN-ACETAMINOPHEN",
+      "role": "alternative",
+      "evidence_scope": "direct",
+      "rationale": "관절통 허가 효능은 있으나 항염 목표가 없는 일반 진통 대안"
+    },
+    {
+      "option_id": "OPT-JOINT_PAIN-IBUPROFEN",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "관절의 통증·염증 완화 목표에 직접 맞는 NSAID 후보"
+    },
+    {
+      "option_id": "OPT-MENSTRUAL_PAIN-IBUPROFEN",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "월경통 허가 효능과 기전이 직접 맞는 NSAID 후보"
+    },
+    {
+      "option_id": "OPT-MENSTRUAL_PAIN-ACETAMINOPHEN",
+      "role": "alternative",
+      "evidence_scope": "direct",
+      "rationale": "월경통 허가 효능을 가진 일반 진통 대안"
+    },
+    {
+      "option_id": "OPT-MILD_DERMATITIS-HYDROCORTISONE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "경증 국소 피부염의 염증·가려움 완화 목표에 직접 맞는 외용 후보"
+    },
+    {
+      "option_id": "OPT-MILD_DERMATITIS-CETIRIZINE_HCL",
+      "role": "conditional",
+      "evidence_scope": "supportive",
+      "rationale": "전신 가려움이나 두드러기 표현형일 때만 검토하는 보조 후보"
+    },
+    {
+      "option_id": "OPT-MINOR_WOUND-POVIDONE_IODINE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "경증 상처의 국소 살균·소독 목표에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-MOTION_SICKNESS-DIMENHYDRINATE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "멀미에 따른 구역·구토 예방과 완화 허가 효능에 직접 일치"
+    },
+    {
+      "option_id": "OPT-MUSCLE_PAIN-ACETAMINOPHEN",
+      "role": "alternative",
+      "evidence_scope": "direct",
+      "rationale": "근육통 허가 효능은 있으나 항염 작용이 없는 일반 진통 대안"
+    },
+    {
+      "option_id": "OPT-MUSCLE_PAIN-IBUPROFEN",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "근육통과 염증성 근골격 통증 목표에 직접 맞는 NSAID 후보"
+    },
+    {
+      "option_id": "OPT-NASAL_CONGESTION-LORATADINE",
+      "role": "conditional",
+      "evidence_scope": "phenotype_specific",
+      "rationale": "재채기·맑은 콧물 등 알레르기비염 표현형이 확인될 때만 맞는 후보"
+    },
+    {
+      "option_id": "OPT-NASAL_CONGESTION-PSEUDOEPHEDRINE_HCL",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "감기·비염의 코막힘 완화 허가 효능에 직접 맞는 비충혈 제거 후보"
+    },
+    {
+      "option_id": "OPT-PRODUCTIVE_COUGH-ACETYLCYSTEINE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "가래 배출을 돕는 점액용해 목표에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-RUNNY_NOSE-LORATADINE",
+      "role": "conditional",
+      "evidence_scope": "phenotype_specific",
+      "rationale": "알레르기비염형 맑은 콧물·재채기에서만 맞는 후보"
+    },
+    {
+      "option_id": "OPT-RUNNY_NOSE-CETIRIZINE_HCL",
+      "role": "conditional",
+      "evidence_scope": "phenotype_specific",
+      "rationale": "알레르기비염형 맑은 콧물·재채기에서만 맞는 대안"
+    },
+    {
+      "option_id": "OPT-RUNNY_NOSE-TRIPROLIDINE_HCL_HYDRATE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "감기·비염에 동반된 콧물 완화 허가 효능에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-SORE_THROAT-ACETAMINOPHEN",
+      "role": "conditional",
+      "evidence_scope": "supportive",
+      "rationale": "발열이나 전신 통증이 함께 있을 때만 검토하는 일반 진통·해열 후보"
+    },
+    {
+      "option_id": "OPT-SORE_THROAT-FLURBIPROFEN",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "인후염의 국소 통증·염증 단기 완화 허가 효능에 직접 맞는 트로키 후보"
+    },
+    {
+      "option_id": "OPT-SORE_THROAT-IBUPROFEN",
+      "role": "alternative",
+      "evidence_scope": "supportive",
+      "rationale": "국소 후보가 맞지 않을 때 검토할 수 있는 전신 진통·항염 대안"
+    },
+    {
+      "option_id": "OPT-STOMATITIS-TRIAMCINOLONE_ACETONIDE",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "구내염 병변의 국소 염증 완화 허가 효능에 직접 맞는 후보"
+    },
+    {
+      "option_id": "OPT-URTICARIA_ITCH-CETIRIZINE_HCL",
+      "role": "preferred",
+      "evidence_scope": "direct",
+      "rationale": "두드러기·가려움 완화 허가 효능에 직접 맞는 항히스타민 후보"
+    },
+    {
+      "option_id": "OPT-URTICARIA_ITCH-LORATADINE",
+      "role": "alternative",
+      "evidence_scope": "direct",
+      "rationale": "만성 특발성 두드러기 완화 허가 효능을 가진 대안"
+    }
+  ]
+}

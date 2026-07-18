@@ -2,6 +2,131 @@ import type { RuntimeOutput } from "@pharmassist/contracts";
 
 export type Domain =
   "human_otc" | "prescription_counseling" | "supplement" | "animal_medicine";
+
+const productProtocolProfiles: Readonly<
+  Record<string, Readonly<{ indication: RegExp; routeForm: RegExp }>>
+> = {
+  "PTC-ABDOMINAL_PAIN_VOMITING": {
+    indication: /복통|구토|구역|오심/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-ACID_REFLUX": {
+    indication: /위산|역류|속쓰림|가슴쓰림/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-ALLERGIC_RHINITIS": {
+    indication: /알레르기성?\s*비염|비염/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-BLOATING": {
+    indication: /복부\s*팽만|팽만|고창/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-CONSTIPATION": {
+    indication: /변비/u,
+    routeForm: /경구|내용|항문|직장|좌제/u,
+  },
+  "PTC-DIARRHEA": { indication: /설사/u, routeForm: /경구|내용/u },
+  "PTC-DRY_COUGH": {
+    indication: /마른\s*기침|기침|진해/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-DRY_EYE": {
+    indication: /안구\s*건조|눈의\s*건조|인공눈물|각결막/u,
+    routeForm: /눈|점안/u,
+  },
+  "PTC-FEVER": {
+    indication: /발열|해열|열을\s*내/u,
+    routeForm: /경구|내용|항문|직장|좌제/u,
+  },
+  "PTC-GAS": {
+    indication: /가스|고창|복부\s*팽만/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-HEADACHE": {
+    indication: /두통|머리\s*(?:통증|아픔)/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-HEARTBURN": {
+    indication: /속쓰림|가슴쓰림|위산과다/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-INDIGESTION": {
+    indication: /소화불량|과식|식욕감퇴|소화촉진/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-INSECT_BITE": {
+    indication: /벌레|곤충|자상|물림/u,
+    routeForm: /경구|내용|피부|외용|경피/u,
+  },
+  "PTC-JOINT_PAIN": {
+    indication: /관절통|관절염|삠|염좌/u,
+    routeForm: /경구|내용|피부|외용|경피/u,
+  },
+  "PTC-MENSTRUAL_PAIN": {
+    indication: /생리통|월경통/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-MILD_DERMATITIS": {
+    indication: /피부염|습진|가려움|소양/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-MINOR_WOUND": {
+    indication: /상처|창상|화상|살균|소독/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-MOTION_SICKNESS": {
+    indication: /멀미|구역|구토|어지러움/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-MUSCLE_PAIN": {
+    indication: /근육통|근육|요통|신경통/u,
+    routeForm: /경구|내용|피부|외용|경피/u,
+  },
+  "PTC-NASAL_CONGESTION": {
+    indication: /코막힘|비충혈|비염/u,
+    routeForm: /경구|내용|코|비강|비강용/u,
+  },
+  "PTC-PRODUCTIVE_COUGH": {
+    indication: /가래|객담|거담|점액/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-RUNNY_NOSE": {
+    indication: /콧물|비염|재채기/u,
+    routeForm: /경구|내용|코|비강|비강용/u,
+  },
+  "PTC-SORE_THROAT": {
+    indication: /인후|목의\s*통증|인두염|편도염/u,
+    routeForm: /경구|내용|구강|인후|트로키/u,
+  },
+  "PTC-STOMATITIS": {
+    indication: /구내염|아프타|혀의\s*염증/u,
+    routeForm: /구강|치아|구강용|인후/u,
+  },
+  "PTC-URTICARIA_ITCH": {
+    indication: /두드러기|소양|가려움/u,
+    routeForm: /경구|내용|피부|외용|경피/u,
+  },
+};
+
+export const productProtocolProfileIds = Object.freeze(
+  Object.keys(productProtocolProfiles).sort(),
+);
+
+export function matchesProductProtocolProfile(
+  protocolId: string,
+  indication: string | null | undefined,
+  route: string | null | undefined,
+  dosageForm: string | null | undefined,
+): boolean {
+  const profile = productProtocolProfiles[protocolId];
+  return Boolean(
+    profile &&
+    indication &&
+    profile.indication.test(indication) &&
+    profile.routeForm.test(`${route ?? ""} ${dosageForm ?? ""}`),
+  );
+}
 export type EvidenceState = "positive" | "negative" | "uncertain";
 export type PersonScope = "self" | "child" | "family" | "other" | "unknown";
 export type Temporality = "current" | "past" | "possible" | "unknown";

@@ -1,25 +1,26 @@
 import { describe, expect, it } from "vitest";
 import {
-  buildPatientSummary,
-  isPatientFacingText,
-  patientVisibleLines,
-  upsertAssistantTurn,
-} from "./consult-memory.js";
+  buildCustomerSummary,
+  customerTurn,
+  upsertCounselorTurn,
+  type DialogueTurn,
+} from "@pharmassist/dialogue";
+import { isPatientFacingText, patientVisibleLines } from "./consult-memory.js";
 
 describe("consultation memory", () => {
   it("keeps accumulated patient facts beyond six turns", () => {
-    const turns = [
-      "환자: 배가 아파요",
-      "상담 도우미: 언제부터 아팠나요?",
-      "환자: 어제부터요",
-      "상담 도우미: 어느 부위인가요?",
-      "환자: 윗배요",
-      "상담 도우미: 어떤 느낌인가요?",
-      "환자: 쓰려요",
-      "상담 도우미: 다른 증상도 있나요?",
-      "환자: 잘 모르겠어요",
+    const turns: DialogueTurn[] = [
+      customerTurn("배가 아파요", 1),
+      { speaker: "counselor", text: "언제부터 아팠나요?", sequence: 1 },
+      customerTurn("어제부터요", 2),
+      { speaker: "counselor", text: "어느 부위인가요?", sequence: 2 },
+      customerTurn("윗배요", 3),
+      { speaker: "counselor", text: "어떤 느낌인가요?", sequence: 3 },
+      customerTurn("쓰려요", 4),
+      { speaker: "counselor", text: "다른 증상도 있나요?", sequence: 4 },
+      customerTurn("잘 모르겠어요", 5),
     ];
-    const summary = buildPatientSummary(turns);
+    const summary = buildCustomerSummary(turns);
 
     expect(summary.facts).toContain("배가 아파요");
     expect(summary.duration).toBe("어제부터요");
@@ -29,17 +30,21 @@ describe("consultation memory", () => {
   });
 
   it("replaces the provisional assistant turn with the refined answer", () => {
-    const initial = ["환자: 기침이 나요"];
-    const local = upsertAssistantTurn(initial, 1, "언제부터 시작됐나요?");
-    const refined = upsertAssistantTurn(
+    const initial = [customerTurn("기침이 나요", 1)];
+    const local = upsertCounselorTurn(initial, 1, "언제부터 시작됐나요?");
+    const refined = upsertCounselorTurn(
       local,
       1,
       "기침은 언제부터 시작됐나요?",
     );
 
     expect(refined).toEqual([
-      "환자: 기침이 나요",
-      "상담 도우미: 기침은 언제부터 시작됐나요?",
+      customerTurn("기침이 나요", 1),
+      {
+        speaker: "counselor",
+        text: "기침은 언제부터 시작됐나요?",
+        sequence: 1,
+      },
     ]);
   });
 
@@ -55,18 +60,26 @@ describe("consultation memory", () => {
     });
 
     expect(visible).toEqual([
-      "기침 양상을 조금 더 여쭤볼게요.",
       "가래도 함께 나오나요?",
+      "기침 양상을 조금 더 여쭤볼게요.",
     ]);
     expect(isPatientFacingText("성분군 후보를 검토한다.")).toBe(false);
   });
 
   it("does not list elliptical choices as standalone patient facts", () => {
-    const summary = buildPatientSummary([
-      "환자: 배가 아파요",
-      "상담 도우미: 설사인가요, 변비인가요?",
-      "환자: 아니 전자라고요",
+    const summary = buildCustomerSummary([
+      customerTurn("배가 아파요", 1),
+      { speaker: "counselor", text: "설사인가요, 변비인가요?", sequence: 1 },
+      customerTurn("아니 전자라고요", 2),
     ]);
     expect(summary.facts).toEqual(["배가 아파요"]);
+  });
+
+  it("does not store greetings as patient facts", () => {
+    const summary = buildCustomerSummary([
+      customerTurn("어이", 1),
+      { speaker: "counselor", text: "네, 말씀하세요.", sequence: 1 },
+    ]);
+    expect(summary.facts).toEqual([]);
   });
 });

@@ -156,9 +156,9 @@ describe("local retrieval", () => {
             display_name: "기침",
             status: "published",
             triggers: {
-              anchors: ["기침"],
+              anchors: ["마른기침"],
               aliases: ["기침약"],
-              keywords: ["기침 기간"],
+              keywords: ["기침"],
               negative: [],
             },
             option_ids: ["OPT-COUGH"],
@@ -200,5 +200,19 @@ describe("local retrieval", () => {
       decisionIndex,
     );
     expect(results.map((item) => item.protocolId)).toEqual(["PTC-COUGH"]);
+    expect(
+      retrieveProtocols(input("기침나요"), "human_otc", decisionIndex).map(
+        (item) => item.protocolId,
+      ),
+    ).toEqual(["PTC-COUGH"]);
+    expect(
+      retrieveProtocols(
+        input("기침나요"),
+        "human_otc",
+        decisionIndex,
+        3,
+        false,
+      ),
+    ).toEqual([]);
   });
 });

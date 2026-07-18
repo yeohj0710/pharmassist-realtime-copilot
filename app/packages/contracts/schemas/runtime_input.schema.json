@@ -37,6 +37,10 @@
       "type": "string",
       "maxLength": 2000
     },
+    "intent_hint": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{1,127}$"
+    },
     "is_partial": {
       "type": "boolean"
     },

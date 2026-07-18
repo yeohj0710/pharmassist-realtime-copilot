@@ -13,6 +13,7 @@
     "vitest": "4.1.10"
   },
   "dependencies": {
-    "@pharmassist/contracts": "workspace:*"
+    "@pharmassist/contracts": "workspace:*",
+    "@pharmassist/domain": "workspace:*"
   }
 }

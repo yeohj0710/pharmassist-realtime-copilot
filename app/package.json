@@ -31,6 +31,9 @@
     "db:seed:synthetic": "pnpm --filter @pharmassist/api db:seed:synthetic",
     "sbom:generate": "pnpm sbom --sbom-format cyclonedx --sbom-spec-version 1.6 --prod --out reports/sbom.cdx.json",
     "docs:check": "node scripts/docs-check.mjs",
+    "data:import:healthkr-registry": "tsx scripts/import-healthkr-product-registry.ts",
+    "data:import:local-catalog": "tsx scripts/import-local-pharmacy-catalog.ts",
+    "data:sync:mfds-otc": "tsx scripts/sync-mfds-otc-catalog.ts",
     "check": "pnpm lint && pnpm format:check && pnpm schema:check && pnpm typecheck && pnpm test && pnpm build && pnpm docs:check"
   },
   "devDependencies": {
@@ -39,6 +42,7 @@
     "@types/node": "24.13.3",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
+    "ajv": "8.20.0",
     "fake-indexeddb": "6.2.5",
     "fast-check": "4.9.0",
     "json-schema-to-typescript": "15.0.4",

@@ -163,7 +163,7 @@ export function lintDecisionPack(
     if (source.status !== "parsed")
       errors.push(`${source.source_snapshot_id}:SOURCE_NOT_PARSED`);
     if (
-      source.usage_rights === "unknown" ||
+      (profile !== "local-demo" && source.usage_rights === "unknown") ||
       (profile === "production" && source.usage_rights === "contract_required")
     )
       errors.push(`${source.source_snapshot_id}:USAGE_RIGHTS_UNRESOLVED`);

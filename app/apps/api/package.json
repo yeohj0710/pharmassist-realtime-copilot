@@ -20,6 +20,7 @@
     "@fastify/helmet": "13.1.0",
     "@fastify/rate-limit": "11.1.0",
     "@pharmassist/contracts": "workspace:*",
+    "@pharmassist/dialogue": "workspace:*",
     "@pharmassist/knowledge": "workspace:*",
     "@pharmassist/normalizer": "workspace:*",
     "@pharmassist/observability": "workspace:*",

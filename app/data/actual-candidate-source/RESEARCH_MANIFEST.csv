@@ -1,0 +1,14 @@
+﻿file_name,sha256,row_count,schema_name,validation_status,source_scope,notes
+source_snapshots.jsonl,b6cc2b9475fe5b49aba03af8d210aeb4dd16615ea9047cb08b067f408b3ad274,39,source_snapshot.schema.json,PASSED,official product/ingredient/clinical/protocol candidate data,JSONL; one schema-validated object per line
+ingredients.jsonl,b4ecf47e2d2d7d2bcdfc80320675c2965f31e8a3973cf3872d287365752a0cfc,31,ingredient.schema.json,PASSED,official product/ingredient/clinical/protocol candidate data,JSONL; one schema-validated object per line
+drug_products.jsonl,4ab20a49c9c032e7d3bcf8e751b1d6c736deaa867fd88c1e001b3ceb7ef8f322,17,drug_product.schema.json,PASSED,official product/ingredient/clinical/protocol candidate data,JSONL; one schema-validated object per line
+product_ingredients.jsonl,2bb8288e873411f1d1e2b53ed211dcb064d037ad24a7d77a32ab6a110bcad0ea,32,product_ingredient.schema.json,PASSED,official product/ingredient/clinical/protocol candidate data,JSONL; one schema-validated object per line
+clinical_claims.jsonl,78964143983c897306f0c35990251ae42ec5e2dc5571ea9adfe3183437ee03d8,193,clinical_claim.schema.json,PASSED,official product/ingredient/clinical/protocol candidate data,JSONL; one schema-validated object per line
+otc_protocols.jsonl,4c1c6a0501fd301ce236e6451bcf262865c704f431b974e7e9442d559d666e04,26,otc_protocol.schema.json,PASSED,official product/ingredient/clinical/protocol candidate data,JSONL; one schema-validated object per line
+protocol_options.jsonl,510ea87f3d3d6b7d294654adffaff0295f4791395a8fb8271ceba9fde3d71bea,47,protocol_option.schema.json,PASSED,official product/ingredient/clinical/protocol candidate data,JSONL; one schema-validated object per line
+protocol_rules.jsonl,d3f71fbb7d13e6bc6d5ab5cbad3f331d513e7884159364a772e226514a115235,177,protocol_rule.schema.json,PASSED,official product/ingredient/clinical/protocol candidate data,JSONL; one schema-validated object per line
+market_popularity_candidates.csv,cf0da31c221acf6bad7172085193b98e7d0ec59b534a461cc619d8f03285f172,9,exact CSV header contract,PASSED,public MFDS production/import performance proxy,not retail sales rank; currencies and years separated
+tenant_pos_template.csv,4413f3759562caf39075056fe0347187c1f49fae5a3258a12978ed5bc25d9332,0,tenant_pos_template contract,PASSED,empty tenant POS import template,header only; no fake sales or PII
+VALIDATION_REPORT.md,9e0a9af231556ffc504146f98c04b1d98bd66d0d19e967faf7639ca36c8e4225,52,n/a,PASSED,research/validation documentation,row_count is physical line count
+DATA_NOT_PUBLICLY_AVAILABLE.md,21b08ae1c3f22557230e3fe8958ef1852b0a205a3cf834ea6bf5a823a9e56ff9,18,n/a,PASSED,research/validation documentation,row_count is physical line count
+POS_MAPPING_NOTES.md,803f8e0074b6254d744a90eeb66268211f8da3b89981a71faa7c013e232fdc75,43,n/a,PASSED,research/validation documentation,row_count is physical line count

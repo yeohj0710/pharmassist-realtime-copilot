@@ -2,16 +2,49 @@ import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 import { describe, expect, it } from "vitest";
 import {
   createRealtimeTranscriptionCall,
+  conversationInterpretationSchema,
   emptyTranscriptState,
   isDeferredPharmacyAnswer,
+  isReportStyleNarration,
+  joinNarration,
   limitCounterConversationOutput,
   MockResponsesRefiner,
+  pharmacyNarrationMessages,
+  PHARMACY_COUNTER_NARRATION_PROMPT,
   postValidateOutput,
   reduceRealtime,
   safeOpenAIConfig,
   stablePrefix,
   toStrictOutputSchema,
 } from "./index.js";
+
+it("allows non-catalog dialogue acts without forcing a clinical intent", () => {
+  const schema = conversationInterpretationSchema([
+    { intent: "headache", title: "두통 문의", aliases: ["머리가 아파요"] },
+    {
+      intent: "cough_general",
+      title: "기침 일반 문의",
+      aliases: ["기침이 나요", "콜록거려요"],
+    },
+  ]);
+  expect(schema).toMatchObject({
+    additionalProperties: false,
+    required: ["disposition", "intent", "confidence", "topic_changed"],
+    properties: {
+      disposition: {
+        enum: [
+          "clinical_intent",
+          "answer_or_detail",
+          "conversation_only",
+          "unclear",
+        ],
+      },
+      intent: {
+        anyOf: [{ enum: ["headache", "cough_general"] }, { type: "null" }],
+      },
+    },
+  });
+});
 
 const base: RuntimeOutput = {
   request_id: "9b1deb4d-3b7d-4ca4-9e2a-77d62f095349",
@@ -52,6 +85,7 @@ const base: RuntimeOutput = {
     source_refs: [],
     reason_codes: ["TEST_ASK"],
   },
+  topic_results: [],
   source_refs: [],
   latency: {
     total_ms: 1,
@@ -87,6 +121,54 @@ const context = {
   promptDeveloper: "d",
 };
 
+const sourceRef = {
+  claim_id: "CLM-TEST",
+  source_id: "SRC-TEST",
+  source_snapshot_id: "SNP-TEST",
+  locator: "test",
+  verified_at: "2026-07-10T00:00:00Z",
+} as const;
+
+const recommendedDecision = (
+  protocolId: string,
+  productName: string,
+  ingredientName: string,
+): RuntimeOutput["decision"] => ({
+  ...base.decision,
+  decision_id: `${base.decision.decision_id}-${protocolId}`,
+  status: "recommend",
+  protocol_id: protocolId,
+  intent: protocolId,
+  ingredient_options: [
+    {
+      option_id: `OPT-${protocolId}`,
+      ingredient_id: `ING-${protocolId}`,
+      ingredient_name: ingredientName,
+      claim_ids: [sourceRef.claim_id],
+      source_refs: [sourceRef],
+      clinical_score: 0.8,
+      safety_score: 0.8,
+    },
+  ],
+  product_candidates: [
+    {
+      product_id: `PRD-${protocolId}`,
+      display_name: productName,
+      ingredient_id: `ING-${protocolId}`,
+      claim_ids: [sourceRef.claim_id],
+      source_refs: [sourceRef],
+      formulary_active: true,
+      inventory_status: "not_connected",
+      available_quantity: null,
+      sales_rank: null,
+    },
+  ],
+  question: null,
+  referral: null,
+  source_refs: [sourceRef],
+  reason_codes: ["TEST_RECOMMEND"],
+});
+
 describe("OpenAI boundaries", () => {
   it("converts nested objects to strict structured-output schemas", () => {
     const strict = toStrictOutputSchema({
@@ -106,6 +188,71 @@ describe("OpenAI boundaries", () => {
     ).toEqual(["optional"]);
   });
   it("pins store false", () => expect(safeOpenAIConfig.store).toBe(false));
+  it("uses a pharmacy-counter writing assistant role without impersonating a pharmacist", () => {
+    expect(PHARMACY_COUNTER_NARRATION_PROMPT).toContain(
+      "상담 문장을 작성하는 어시스턴트",
+    );
+    expect(PHARMACY_COUNTER_NARRATION_PROMPT).toContain(
+      "면허 약사라고 자칭하거나",
+    );
+    expect(PHARMACY_COUNTER_NARRATION_PROMPT).not.toMatch(
+      /당신은 .*면허 약사(?:다|입니다)/u,
+    );
+  });
+  it("rejects report-style AI narration before it reaches the patient", () => {
+    const reportStyle =
+      "복통과 함께 배에 불편이 느껴지는 상황으로 보입니다. 현재 증상에 연결된 후보로 인산알루미늄겔을 고려해볼 수 있습니다.";
+    expect(isReportStyleNarration(reportStyle)).toBe(true);
+    expect(
+      isReportStyleNarration(
+        "배가 아프면서 속도 불편하셨군요. 지금은 겔포스엠현탁액을 후보로 볼게요.",
+      ),
+    ).toBe(false);
+    expect(
+      postValidateOutput(context, { ...base, say_now: [reportStyle] }),
+    ).toEqual({ ok: false, code: "REPORT_STYLE_NARRATION" });
+  });
+  it("gives the narrator its role, safety policy, and prior conversation", () => {
+    const messages = pharmacyNarrationMessages({
+      ...context,
+      redactedText: "속도 불편해요",
+      promptSystem: "DECISION_LOCK",
+      promptDeveloper: "SUPPLIED_FACTS_ONLY",
+      promptDeveloperOverride: "NO_NEW_RECOMMENDATION",
+      conversation: [
+        { role: "user", content: "배가 아파요" },
+        { role: "assistant", content: "어떻게 아픈가요?" },
+        { role: "user", content: "속도 불편해요" },
+      ],
+    });
+    expect(messages.map((message) => message.role)).toEqual([
+      "system",
+      "developer",
+      "user",
+      "assistant",
+      "user",
+    ]);
+    expect(messages[0]?.content).toContain("상담 문장을 작성하는 어시스턴트");
+    expect(messages[0]?.content).toContain("DECISION_LOCK");
+    expect(messages[1]?.content).toContain("SUPPLIED_FACTS_ONLY");
+    expect(messages[1]?.content).toContain("NO_NEW_RECOMMENDATION");
+    expect(
+      messages.filter(
+        (message) =>
+          message.role === "user" && message.content === "속도 불편해요",
+      ),
+    ).toHaveLength(1);
+  });
+  it("rejects efficacy rationale added during wording refinement", () => {
+    expect(
+      postValidateOutput(context, {
+        ...base,
+        say_now: [
+          "똥마려운 듯한 배 아픔에는 속쓰림 관련 불편의 완화 후보로 쓰일 수 있어요.",
+        ],
+      }),
+    ).toEqual({ ok: false, code: "UNSUPPORTED_CLAIM" });
+  });
   it("detects promises that defer the actual pharmacy guidance", () => {
     expect(
       isDeferredPharmacyAnswer({
@@ -143,7 +290,133 @@ describe("OpenAI boundaries", () => {
         say_now: ["이 약을 500mg씩 복용하세요."],
       }),
     ).toEqual({ ok: false, code: "UNSUPPORTED_ENTITY" });
-    expect(postValidateOutput(context, base)).toEqual({ ok: true });
+    expect(
+      postValidateOutput(context, {
+        ...base,
+        say_now: ["증상 정보를 한 가지만 알려주세요."],
+      }),
+    ).toEqual({ ok: true });
+  });
+  it("rejects narration that dumps more than three sentences", () => {
+    expect(
+      postValidateOutput(context, {
+        ...base,
+        say_now: [
+          "첫 설명입니다. 두 번째입니다. 세 번째입니다. 네 번째입니다.",
+        ],
+      }),
+    ).toEqual({ ok: false, code: "UNSUPPORTED_ENTITY" });
+  });
+  it("rejects generic care-seeking language without a supplied referral", () => {
+    expect(
+      postValidateOutput(context, {
+        ...base,
+        say_now: ["증상이 지속되면 진료를 받으세요."],
+      }),
+    ).toEqual({ ok: false, code: "UNSUPPORTED_CLAIM" });
+  });
+  it("rejects AI narration that drops one of multiple symptom topics", () => {
+    const throat = recommendedDecision(
+      "PTC-SORE_THROAT",
+      "타세놀정",
+      "아세트아미노펜",
+    );
+    const heartburn = recommendedDecision(
+      "PTC-HEARTBURN",
+      "겔포스엠현탁액",
+      "인산알루미늄",
+    );
+    const multi: RuntimeOutput = {
+      ...base,
+      mode: "instant",
+      status: "provisional",
+      decision: heartburn,
+      topic_results: [
+        {
+          protocol_id: "PTC-HEARTBURN",
+          intent: "heartburn",
+          symptom_category: "소화기/속쓰림",
+          decision: heartburn,
+          ask_next: [],
+        },
+        {
+          protocol_id: "PTC-SORE_THROAT",
+          intent: "sore_throat",
+          symptom_category: "감기/인후통",
+          decision: throat,
+          ask_next: [],
+        },
+      ],
+      source_refs: [sourceRef],
+      say_now: ["속쓰림과 인후통을 함께 확인하고 있어요."],
+    };
+    const multiContext = {
+      ...context,
+      instant: multi,
+      allowedClaimIds: [sourceRef.claim_id],
+      allowedEntities: [
+        "타세놀정",
+        "아세트아미노펜",
+        "겔포스엠현탁액",
+        "인산알루미늄",
+      ],
+    };
+
+    expect(
+      postValidateOutput(multiContext, {
+        ...multi,
+        say_now: ["속쓰림 후보는 겔포스엠현탁액입니다."],
+      }),
+    ).toEqual({ ok: false, code: "TOPIC_OMISSION" });
+    expect(
+      postValidateOutput(multiContext, {
+        ...multi,
+        say_now: [
+          "속쓰림 후보는 겔포스엠현탁액이고 인후통 후보는 타세놀정입니다.",
+        ],
+      }),
+    ).toEqual({ ok: true });
+  });
+  it("keeps a supplied follow-up question out of the candidate narration", () => {
+    expect(
+      joinNarration({
+        reply:
+          "지금은 타세놀정을 후보로 볼게요. 이 제품에는 아세트아미노펜 성분이 들어 있어요.",
+        next_step: "목 통증은 언제부터 시작됐나요?",
+      }),
+    ).toBe(
+      "지금은 타세놀정을 후보로 볼게요. 이 제품에는 아세트아미노펜 성분이 들어 있어요.",
+    );
+  });
+  it("rejects definitive product direction while a question remains open", () => {
+    const provisional: RuntimeOutput = {
+      ...base,
+      mode: "instant",
+      status: "provisional",
+      say_now: ["현재 제품 후보는 타세놀정입니다."],
+      decision: {
+        ...base.decision,
+        status: "recommend",
+        question: null,
+      },
+    };
+    expect(
+      postValidateOutput(
+        { ...context, instant: provisional },
+        { ...provisional, say_now: ["타세놀정으로 시작해 보세요."] },
+      ),
+    ).toEqual({ ok: false, code: "PROVISIONAL_NARRATION_REQUIRED" });
+    expect(
+      postValidateOutput(
+        { ...context, instant: provisional },
+        {
+          ...provisional,
+          say_now: [
+            "현재 제품 후보는 타세놀정입니다. 선택에 필요한 증상 정보를 한 가지만 알려주세요?",
+          ],
+        },
+      ),
+    ).toEqual({ ok: false, code: "DUPLICATE_QUESTION" });
   });
   it("limits counter speech to one sentence and can suppress the one allowed question", () => {
     const limited = limitCounterConversationOutput({

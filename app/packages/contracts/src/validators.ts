@@ -13,6 +13,7 @@ import feedbackSchema from "../schemas/feedback.schema.json" with { type: "json"
 import ingredientSchema from "../schemas/ingredient.schema.json" with { type: "json" };
 import otcProtocolSchema from "../schemas/otc_protocol.schema.json" with { type: "json" };
 import packManifestSchema from "../schemas/pack_manifest.schema.json" with { type: "json" };
+import pharmacyProductRegistrySchema from "../schemas/pharmacy_product_registry.schema.json" with { type: "json" };
 import productIngredientSchema from "../schemas/product_ingredient.schema.json" with { type: "json" };
 import protocolOptionSchema from "../schemas/protocol_option.schema.json" with { type: "json" };
 import protocolRuleSchema from "../schemas/protocol_rule.schema.json" with { type: "json" };
@@ -38,6 +39,7 @@ const schemaDocuments = {
   ingredient: ingredientSchema,
   otcProtocol: otcProtocolSchema,
   packManifest: packManifestSchema,
+  pharmacyProductRegistry: pharmacyProductRegistrySchema,
   productIngredient: productIngredientSchema,
   protocolOption: protocolOptionSchema,
   protocolRule: protocolRuleSchema,

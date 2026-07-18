@@ -46,6 +46,21 @@ describe("ordered safety gates", () => {
     ).toContain("RF-BREATHING");
   });
 
+  it("stops a generic cough recommendation when current chest pain is present", () => {
+    const result = evaluateSafety(
+      normalizeKorean("기침나요 흉통이 있어요"),
+      "human_otc",
+    );
+    expect(result.mode).toBe("escalate");
+    expect(result.ruleIds).toContain("RF-CHEST-PAIN");
+    expect(
+      evaluateSafety(
+        normalizeKorean("기침은 나지만 흉통은 없어요"),
+        "human_otc",
+      ).mode,
+    ).not.toBe("escalate");
+  });
+
   it("selects the most urgent concurrent red flag", () => {
     const decision = evaluateSafety(
       normalizeKorean("검은 변을 봤고 약을 너무 많이 먹었어요"),
@@ -88,5 +103,23 @@ describe("ordered safety gates", () => {
   it("detects unsupported clinical numbers", () => {
     expect(containsUnsupportedClinicalNumber("500 mg 복용", [])).toBe(true);
     expect(containsUnsupportedClinicalNumber("119에 연락", [])).toBe(false);
+  });
+
+  it("accepts explicit pregnancy and allergy negation", () => {
+    expect(
+      evaluateSafety(
+        normalizeKorean("임신 아니고 특이사항 없어요"),
+        "human_otc",
+      ).ruleIds,
+    ).not.toContain("PREGNANCY_GATE");
+    expect(
+      evaluateSafety(normalizeKorean("알레르기 없음"), "human_otc").ruleIds,
+    ).not.toContain("ALLERGY_GATE");
+  });
+
+  it("does not treat allergic rhinitis symptom text as allergy history", () => {
+    expect(
+      evaluateSafety(normalizeKorean("알레르기 비염"), "human_otc").ruleIds,
+    ).not.toContain("ALLERGY_GATE");
   });
 });

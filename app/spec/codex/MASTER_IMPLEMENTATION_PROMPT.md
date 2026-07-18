@@ -209,7 +209,7 @@ UI 우선순위:
 6. 출처/검증일/knowledge version
 
 필수 동작:
-- 키보드 중심: `/` 입력 focus, `Esc` clear/cancel, `F` freeze, `Enter` selected action confirm, 접근 가능한 PTT shortcut
+- 키보드 중심: `/` 입력 focus, `Esc`는 열린 modal/cancel에만 사용하고 상담 전체를 초기화하지 않음, `F` freeze, `Enter` selected action confirm, 접근 가능한 PTT shortcut
 - IME composition 중 검색 금지
 - provisional/stable/blocked/final 상태를 색상 이외의 텍스트/아이콘으로 구분
 - critical card가 고정되고 확인 전 다른 결과가 덮지 못함

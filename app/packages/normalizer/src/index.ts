@@ -88,12 +88,64 @@ function slot<T>(
   provenance: SlotEvidence["provenance"] = "derived",
   confidence = 0.9,
   verified = false,
+  span?: readonly [number, number],
 ): SlotEvidence<T> {
-  return { value, provenance, confidence, verified };
+  return { value, provenance, confidence, verified, ...(span ? { span } : {}) };
 }
+
+const anatomyLexicon: ReadonlyArray<
+  Readonly<{ value: string; aliases: readonly string[] }>
+> = [
+  { value: "고관절", aliases: ["고관절", "엉덩이 관절", "골반 관절"] },
+  { value: "팔꿈치", aliases: ["팔꿈치", "엘보"] },
+  { value: "손가락", aliases: ["손가락", "손 마디"] },
+  { value: "발가락", aliases: ["발가락", "발가락 마디"] },
+  { value: "손목", aliases: ["손목"] },
+  { value: "발목", aliases: ["발목"] },
+  { value: "무릎", aliases: ["무릎", "슬관절"] },
+  { value: "어깨", aliases: ["어깨", "견관절"] },
+  { value: "허리", aliases: ["허리", "요추"] },
+  { value: "허벅지", aliases: ["허벅지", "대퇴부"] },
+  { value: "종아리", aliases: ["종아리"] },
+  { value: "엉덩이", aliases: ["엉덩이", "둔부"] },
+  { value: "등", aliases: ["등", "등쪽"] },
+  { value: "목", aliases: ["목", "목덜미", "경추"] },
+  { value: "팔", aliases: ["팔", "상완", "전완"] },
+  { value: "다리", aliases: ["다리", "하지"] },
+  { value: "손", aliases: ["손"] },
+  { value: "발", aliases: ["발"] },
+];
+
+const bodySite = (
+  text: string,
+): Readonly<{ value: string; span: readonly [number, number] }> | undefined => {
+  const candidates = anatomyLexicon.flatMap((entry) =>
+    entry.aliases.map((alias) => ({ value: entry.value, alias })),
+  );
+  for (const candidate of candidates.sort(
+    (left, right) => right.alias.length - left.alias.length,
+  )) {
+    const start = text.indexOf(candidate.alias);
+    if (start >= 0)
+      return {
+        value: candidate.value,
+        span: [start, start + candidate.alias.length],
+      };
+  }
+  return undefined;
+};
 
 function extractSlots(text: string): Readonly<Record<string, SlotEvidence>> {
   const slots: Record<string, SlotEvidence> = {};
+  const anatomicalSite = bodySite(text);
+  if (anatomicalSite)
+    slots["body_site"] = slot(
+      anatomicalSite.value,
+      "derived",
+      0.95,
+      false,
+      anatomicalSite.span,
+    );
   const age = text.match(
     /((?:\d+(?:\.\d+)?|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|십)\s*(?:세|살))/u,
   )?.[0];
@@ -113,9 +165,15 @@ function extractSlots(text: string): Readonly<Record<string, SlotEvidence>> {
   )?.[0];
   if (concentration)
     slots["product_concentration"] = slot(concentration, "typed", 0.95, false);
+  const pregnancyNegated =
+    /임신(?:은|이)?\s*(?:아니|아님|가능성\s*(?:없|낮))/u.test(text);
   if (/임신/u.test(text))
     slots["pregnancy_status"] = slot(
-      /가능|일 수도|모르/u.test(text) ? "possible" : "pregnant",
+      pregnancyNegated
+        ? "not_pregnant"
+        : /가능|일 수도|모르/u.test(text)
+          ? "possible"
+          : "pregnant",
     );
   const weeks = text.match(/임신\s*(\d{1,2})\s*주/u)?.[1];
   if (weeks) slots["gestational_weeks"] = slot(Number(weeks));
@@ -142,6 +200,26 @@ function temporality(text: string): Temporality {
   return "current";
 }
 
+const normalizeColloquialSymptoms = (text: string): string =>
+  text
+    .replace(
+      /배\s*(?:가\s*)?(?:아프(?:노|다|네|구나|구만|냐|니)|아픈데)/gu,
+      "배가 아파요",
+    )
+    .replace(/속\s*(?:이\s*)?쓰리(?:노|다|네|구나|구만|냐|니)/gu, "속이 쓰려요")
+    .replace(
+      /소화\s*(?:가\s*)?안\s*된(?:다|다니까|다네|다노)/gu,
+      "소화 안 돼요",
+    )
+    .replace(
+      /머리\s*(?:가\s*)?(?:아프(?:노|다|네|구나|구만|냐|니)|아픈데)/gu,
+      "머리가 아파요",
+    )
+    .replace(/기침\s*나(?:노|다|네|구나|구만|냐|니)/gu, "기침나요")
+    .replace(/설사\s*하(?:노|다|네|구나|구만|냐|니)/gu, "설사해요")
+    .replace(/코\s*막히(?:노|다|네|구나|구만|냐|니)/gu, "코막혀요")
+    .replace(/콧물\s*나(?:노|다|네|구나|구만|냐|니)/gu, "콧물나요");
+
 export function normalizeKorean(
   text: string,
   alternatives: readonly string[] = [],
@@ -151,15 +229,17 @@ export function normalizeKorean(
     .replace(zeroWidthAndControls, "")
     .replace(/\r\n?/gu, "\n")
     .trim();
-  const normalizedText = displayText
-    .replace(/씨씨/gu, "mL")
-    .replace(/(?:미리|밀리)(?=\s|$)/gu, "mL")
-    .replace(/킬로그램|킬로/gu, "kg")
-    .replace(/[\t\n ]+/gu, " ")
-    .replace(/\s*([,!?])\s*/gu, "$1 ")
-    .trim()
-    .toLowerCase()
-    .replace(/\bml\b/giu, "mL");
+  const normalizedText = normalizeColloquialSymptoms(
+    displayText
+      .replace(/씨씨/gu, "mL")
+      .replace(/(?:미리|밀리)(?=\s|$)/gu, "mL")
+      .replace(/킬로그램|킬로/gu, "kg")
+      .replace(/[\t\n ]+/gu, " ")
+      .replace(/\s*([,!?])\s*/gu, "$1 ")
+      .trim()
+      .toLowerCase()
+      .replace(/\bml\b/giu, "mL"),
+  );
   const redaction = redactPii(normalizedText);
   const tokens = normalizedText.split(/[^\p{L}\p{N}.]+/u).filter(Boolean);
   return {
