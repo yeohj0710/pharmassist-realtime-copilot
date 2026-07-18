@@ -1,0 +1,254 @@
+gth > 0,
+    efficacy: efficacy.length > 2,
+    dosage: dosage.length > 2,
+    precautions: precautions.length > 2,
+    storage: storage.length > 2,
+    manufacturer: manufacturer.length > 1,
+    dosage_form: dosageForm.length > 0,
+    route: route.length > 0,
+    package: packUnit.length > 0,
+    images: officialImages.length > 0,
+  };
+  const coreComplete = ['ingredients', 'efficacy', 'dosage', 'precautions', 'storage', 'manufacturer', 'dosage_form', 'route', 'package'].every((k) => required[k]);
+  const sourceUrl = `${BASE}/searchDrug/result_drug.asp?drug_cd=${encodeURIComponent(detail.drug_code)}`;
+  const drugClass = detail.drug_cls === '1' ? '전문' : detail.drug_cls === '2' ? '일반' : cleanOneLine(detail.drug_cls);
+  const insertPdf = detail.insertpaper ? (String(detail.insertpaper).startsWith('http') ? detail.insertpaper : BASE + detail.insertpaper) : '';
+
+  const qcFlags = [];
+  if (!coreComplete) qcFlags.push('missing_core_fields');
+  if (!officialImages.length) qcFlags.push('no_official_image');
+  if (/<[a-z][\s\S]*?>/i.test([efficacy, dosage, precautions, additives, kpicAtc].join(' '))) qcFlags.push('html_residue');
+  if (/^(?:1\.\s*)?(?:경고|효능.?효과|주의사항|용법.?용량)$/u.test(precautions)) qcFlags.push('precautions_heading_only');
+  if (/^(?:1\.\s*)?(?:주효능.?효과|효능.?효과)$/u.test(efficacy)) qcFlags.push('efficacy_heading_only');
+
+  const additionalData = {
+    ...(record.official_additional_data || {}),
+    english_name: cleanOneLine(detail.drug_enm),
+    insurance,
+    insurance_detail: insuranceDetail,
+    classification: cleanOneLine(detail.cls_code),
+    classification_code: cleanOneLine(detail.cls_code_num),
+    appearance: cleanRich(detail.charact_new || detail.charact),
+    permit_date: cleanOneLine(detail.item_permit_date),
+    atc: cleanRich(detail.atc_cd),
+    kpic_atc: kpicAtc,
+    additives,
+    medication_summary: medicationSummary,
+    medication_guide: medicationGuide,
+    identification: cleanRich(detail.idfylength || detail.etc || record.official_identification || ''),
+    dur_age: cleanRich(detail.dur_age),
+    dur_contraindications: cleanRich(detail.dur_contra),
+    dur_pregnancy: cleanRich(detail.dur_preg),
+    dur_senior: cleanRich(detail.dur_senior),
+    dur_max_dose: cleanRich(detail.dur_dose),
+    dur_max_period: cleanRich(detail.dur_period),
+    dur_split_dosage: cleanRich(detail.dur_form),
+    fda_pregnancy_code: cleanOneLine(detail.fdacode),
+    fda_pregnancy_content: cleanRich(detail.fdacontent),
+    manufacturer_details: {
+      name: cleanOneLine(manufacturerParts[0]),
+      english_name: cleanOneLine(manufacturerParts[1]),
+      address: cleanRich(manufacturerParts[2]),
+      phone: cleanOneLine(manufacturerParts[3]),
+      fax: cleanOneLine(manufacturerParts[4]),
+      website: cleanOneLine(manufacturerParts[5]),
+    },
+    ingredient_details: ingredientDetails,
+  };
+
+  return {
+    official_match_status: 'confirmed',
+    enrichment_status: 'official_details_linked',
+    official_item_name: cleanOneLine(detail.drug_name),
+    official_manufacturer: manufacturer,
+    official_item_seq: String(detail.drug_code || ''),
+    official_source_type: '약학정보원 의약품 상세정보',
+    official_source_url: sourceUrl,
+    official_match_score: Math.round(matchScore * 10) / 10,
+    official_checked_at: checkedAt,
+    official_domain: 'health.kr',
+    official_efficacy: efficacy,
+    official_dosage: dosage,
+    official_precautions: precautions,
+    official_storage: storage,
+    official_dosage_form: dosageForm,
+    official_route: route,
+    official_pack_unit: packUnit,
+    official_appearance: cleanRich(detail.charact_new || detail.charact),
+    official_category: cleanOneLine(detail.cls_code),
+    official_atc_code: cleanRich(detail.atc_cd),
+    official_ingredients: ingredients,
+    official_active_ingredients: ingredients,
+    official_additives: additives,
+    official_english_name: cleanOneLine(detail.drug_enm),
+    official_insurance: insurance,
+    official_insurance_detail: insuranceDetail,
+    official_permit_date: cleanOneLine(detail.item_permit_date),
+    official_patient_guidance: medicationSummary,
+    official_medication_guide: medicationGuide,
+    official_medication_summary: medicationSummary,
+    official_classification_code: cleanOneLine(detail.cls_code_num),
+    official_kpic_atc: kpicAtc,
+    official_identification: cleanRich(detail.idfylength || detail.etc || record.official_identification || ''),
+    official_manufacturer_details: additionalData.manufacturer_details,
+    official_insert_pdf_url: insertPdf,
+    official_dur_contraindications: cleanRich(detail.dur_contra),
+    official_dur_age: cleanRich(detail.dur_age),
+    official_dur_pregnancy: cleanRich(detail.dur_preg),
+    official_dur_senior: cleanRich(detail.dur_senior),
+    official_dur_max_dose: cleanRich(detail.dur_dose),
+    official_dur_max_period: cleanRich(detail.dur_period),
+    official_dur_split_dosage: cleanRich(detail.dur_form),
+    official_section_evidence: {
+      detail_page_verified: true,
+      ajax_payload_verified: true,
+      source_endpoint: '/searchDrug/ajax/ajax_result_drug2.asp',
+      required_fields_present: required,
+      html_text_fields: ['efficacy', 'dosage', 'precautions'],
+      match_method: matchMeta.method || 'search_and_score',
+      match_alias: matchMeta.alias || '',
+      match_margin: matchMeta.margin ?? null,
+    },
+    official_additional_data: additionalData,
+    official_images: officialImages,
+    official_content_status: coreComplete ? 'complete' : 'partial',
+    official_qc_flags: qcFlags,
+    image_url: primaryImage?.url || record.image_url || '',
+    image_source_url: primaryImage ? sourceUrl : record.image_source_url || '',
+    image_rights_status: primaryImage ? 'official_source_preview' : record.image_rights_status || '미확인',
+    image_kind: primaryImage?.kind || record.image_kind || '',
+    image_checked_at: primaryImage ? checkedAt : record.image_checked_at || '',
+    official_match_candidates: [],
+    official_search_queries: matchMeta.queries || [],
+    official_match_rationale: matchMeta.rationale || '',
+  };
+}
+
+async function fetchWithRetry(url, options = {}, attempts = 4) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 25_000);
+    try {
+      const response = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timer);
+      if (response.status === 429 || response.status >= 500) {
+        await sleep(400 * attempt + Math.floor(Math.random() * 300));
+        continue;
+      }
+      return response;
+    } catch (error) {
+      clearTimeout(timer);
+      lastError = error;
+      await sleep(450 * attempt + Math.floor(Math.random() * 300));
+    }
+  }
+  throw lastError || new Error(`request failed: ${url}`);
+}
+
+async function createSearchSession(seed = '챔프시럽') {
+  const url = `${BASE}/searchDrug/search_total_result.asp?search_word=${encodeURIComponent(seed)}&search_flag=all`;
+  const response = await fetchWithRetry(url, { headers: { 'user-agent': UA, 'accept-language': 'ko-KR,ko;q=0.9' } });
+  const html = await response.text();
+  const token = (html.match(/window\.csrfToken\s*=\s*["']([^"']+)/) || [])[1];
+  const setCookies = response.headers.getSetCookie?.() || [];
+  const cookie = setCookies.map((x) => x.split(';')[0]).join('; ');
+  if (!token || !cookie) throw new Error('health.kr CSRF session initialization failed');
+  return { token, cookie, uses: 0 };
+}
+
+async function searchHealth(session, query) {
+  if (!session.token || !session.cookie || session.uses > 350) Object.assign(session, await createSearchSession(query));
+  const endpoint = `${BASE}/searchDrug/ajax/ajax_commonSearch.asp?search_word=${encodeURIComponent(query)}&csrf_token=${encodeURIComponent(session.token)}&search_flag=all`;
+  const response = await fetchWithRetry(endpoint, {
+    method: 'POST',
+    headers: {
+      'user-agent': UA,
+      'accept-language': 'ko-KR,ko;q=0.9',
+      cookie: session.cookie,
+      'x-requested-with': 'XMLHttpRequest',
+      'x-csrf-token': session.token,
+      'content-type': 'application/x-www-form-urlencoded',
+      referer: `${BASE}/searchDrug/search_total_result.asp?search_word=${encodeURIComponent(query)}&search_flag=all`,
+    },
+    body: `csrf_token=${encodeURIComponent(session.token)}`,
+  });
+  session.uses++;
+  const text = await response.text();
+  if (response.status === 403 || /invalid csrf token/i.test(text)) {
+    Object.assign(session, await createSearchSession(query));
+    return searchHealth(session, query);
+  }
+  if (!response.ok) throw new Error(`search ${query}: HTTP ${response.status}`);
+  await sleep(REQUEST_DELAY_MS);
+  try {
+    const parsed = JSON.parse(text);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+async function fetchDetail(code) {
+  const url = `${BASE}/searchDrug/ajax/ajax_result_drug2.asp?drug_cd=${encodeURIComponent(code)}`;
+  const response = await fetchWithRetry(url, { headers: { 'user-agent': UA, 'accept-language': 'ko-KR,ko;q=0.9' } });
+  const text = await response.text();
+  if (!response.ok) throw new Error(`detail ${code}: HTTP ${response.status}`);
+  await sleep(REQUEST_DELAY_MS);
+  const parsed = JSON.parse(text);
+  if (!Array.isArray(parsed) || !parsed[0]?.drug_code) throw new Error(`detail ${code}: empty payload`);
+  return parsed[0];
+}
+
+function candidateSummary(c, scoreData, query) {
+  return {
+    drug_code: String(c.drug_code || ''),
+    drug_name: cleanOneLine(c.drug_name),
+    drug_enm: cleanOneLine(c.drug_enm),
+    manufacturer: cleanOneLine(c.upso_name_kfda),
+    ingredients: cleanOneLine(c.ingr_mg || c.list_sunb_name),
+    dosage_form: cleanOneLine(c.drug_form),
+    drug_class: cleanOneLine(c.drug_class),
+    score: Math.round(scoreData.score * 10) / 10,
+    matched_alias: scoreData.bestAlias,
+    query,
+    source_url: `${BASE}/searchDrug/result_drug.asp?drug_cd=${encodeURIComponent(c.drug_code || '')}`,
+  };
+}
+
+async function findBestMatch(record, session) {
+  const queries = buildAliases(record).slice(0, SEARCH_VARIANTS);
+  const byCode = new Map();
+  for (const query of queries) {
+    let candidates = [];
+    try {
+      candidates = await searchHealth(session, query);
+    } catch (error) {
+      record.__searchErrors = [...(record.__searchErrors || []), `${query}: ${error.message}`];
+      continue;
+    }
+    for (const candidate of candidates) {
+      if (!candidate?.drug_code) continue;
+      const scoreData = baseNameScore(record, candidate);
+      const summary = candidateSummary(candidate, scoreData, query);
+      const prior = byCode.get(summary.drug_code);
+      if (!prior || summary.score > prior.summary.score) byCode.set(summary.drug_code, { candidate, summary, scoreData });
+    }
+    const bestSoFar = [...byCode.values()].sort((a, b) => b.summary.score - a.summary.score)[0];
+    if (bestSoFar?.summary.score >= 99.5) break;
+  }
+  const ranked = [...byCode.values()].sort((a, b) => b.summary.score - a.summary.score);
+  if (!ranked.length) return { status: 'unmatched', queries, ranked: [], top: null, margin: null };
+  const top = ranked[0];
+  const second = ranked[1];
+  const margin = second ? top.summary.score - second.summary.score : 99;
+
+  // Exact or near-exact names can be confirmed even when the API returns many weaker variants.
+  const topNorm = normalizeName(top.candidate.drug_name);
+  const aliases = buildAliases(record).map(normalizeName);
+  const exactAlias = aliases.includes(topNorm);
+  const duplicateExact = ranked.filter((x) => normalizeName(x.candidate.drug_name) === topNorm && x.summary.score >= top.summary.score - 1).length > 1;
+  let status = 'review_required';
+  if (top.summary.score >= 94 && (!duplicateExact || margin >= 3)) status = 'confirmed';
+  else if (exactAlias && top.summary.score >= 98 && !duplicateExact) status = 'confirmed';
+  else if (top.summary.score 
