@@ -1,0 +1,68 @@
+name: KPIC enrichment pipeline
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout enrichment branch
+        uses: actions/checkout@v4
+        with:
+          ref: kpic-artifact-test-0716
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Reconstruct crawler and input
+        run: |
+          mkdir -p automation/kpic-enrichment/input automation/kpic-enrichment/output
+          cat automation/kpic-enrichment/script.part.* > /tmp/script.br.b64
+          cat automation/kpic-enrichment/input.part.* > /tmp/input.br.b64
+          node - <<'NODE'
+          const fs = require('fs');
+          const zlib = require('zlib');
+          const decode = (src, dst) => {
+            const b64 = fs.readFileSync(src, 'utf8').replace(/\s+/g, '');
+            fs.writeFileSync(dst, zlib.brotliDecompressSync(Buffer.from(b64, 'base64')));
+          };
+          decode('/tmp/script.br.b64', 'automation/kpic-enrichment/kpic-enrich-production.mjs');
+          decode('/tmp/input.br.b64', 'automation/kpic-enrichment/input/enrichment-queue.json');
+          NODE
+          node --check automation/kpic-enrichment/kpic-enrich-production.mjs
+          node -e "const d=require('./automation/kpic-enrichment/input/enrichment-queue.json'); if(d.length!==776) throw new Error('expected 776, got '+d.length); console.log('INPUT_RECORDS='+d.length)"
+      - name: Install parser dependency
+        working-directory: automation/kpic-enrichment
+        run: |
+          printf '%s' '{"type":"module","dependencies":{"cheerio":"^1.0.0"}}' > package.json
+          npm install --no-audit --no-fund
+      - name: Run 20-record integration test
+        env:
+          KPIC_LIMIT: '20'
+          KPIC_INPUT_DIR: automation/kpic-enrichment/input
+          KPIC_OUTPUT_DIR: automation/kpic-enrichment/output
+          KPIC_WORKERS: '4'
+          KPIC_NET_CONCURRENCY: '8'
+        run: node automation/kpic-enrichment/kpic-enrich-production.mjs
+      - name: Verify test output
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const dir='automation/kpic-enrichment/output';
+          const f=fs.readdirSync(dir).find(x=>x.endsWith('.json') && x!=='enrichment-report.json');
+          if(!f) throw new Error('missing enriched json');
+          const d=JSON.parse(fs.readFileSync(dir+'/'+f,'utf8'));
+          if(d.length!==20) throw new Error('expected 20, got '+d.length);
+          const allowed=new Set(['confirmed','review_required','not_found','not_applicable']);
+          for(const r of d){if(!allowed.has(r.official_match_status)) throw new Error('bad status '+r.official_match_status)}
+          console.log('TEST_OUTPUT_RECORDS='+d.length);
+          NODE
+      - name: Upload test artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kpic-enrichment-test
+          path: automation/kpic-enrichment/output
+          if-no-files-found: error
+          retention-days: 1
