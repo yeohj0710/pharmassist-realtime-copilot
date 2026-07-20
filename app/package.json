@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "turbo dev",
     "dev:demo": "turbo dev --filter=@pharmassist/web --filter=@pharmassist/api --filter=@pharmassist/reviewer",
+    "dev:web": "turbo dev --filter=@pharmassist/web --filter=@pharmassist/api",
     "build": "turbo build",
     "deploy:web": "turbo build --filter=@pharmassist/web... && node scripts/deploy-web.mjs",
     "lint": "node scripts/static-check.mjs",

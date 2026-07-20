@@ -23,7 +23,7 @@ corepack pnpm deploy:web
 ## 접속 주소
 
 - 웹 데모: https://pharmassist-realtime-copilot.vercel.app
-- 로컬 상담 화면: `http://127.0.0.1:4173`
+- 로컬 상담 화면: `http://127.0.0.1:14273` (14273~14282 중 첫 가용 포트)
 - GitHub 저장소: https://github.com/yeohj0710/pharmassist-realtime-copilot
 - 최신 배포판: https://github.com/yeohj0710/pharmassist-realtime-copilot/releases/latest
 
