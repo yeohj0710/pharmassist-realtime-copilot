@@ -222,3 +222,18 @@ feeds the same layer; local behavior stays deterministic.
 
 Verified: unit+integration 231/231, E2E 12/12 (card assertions updated to
 the simplified layout), lint/schema/typecheck/build/security/docs green.
+
+### Session 5 addendum: AI interpretation activated in production
+
+OPENAI_API_KEY was added to the Vercel project and the interpret function is
+live: 목아파요 → sore_throat 0.99, 코가 맹맹하고 답답해요 →
+nasal_symptom_general 0.95, 속이 부대껴서 힘들어요 → dyspepsia_general 0.88,
+안녕하세요 → conversation_only 0.99, 하루종일 졸려요 → unclear (no catalog
+intent — honest). Hardening found along the way: max_output_tokens must
+leave room for reasoning tokens (a 400 cap returned reasoning-only
+incomplete responses), non-completed responses fail closed, and the strict
+schema uses a "none" sentinel instead of anyOf[enum, null]. Interpretation
+defaults to gpt-5.4-mini (the adapter's ambiguity model) with medium effort;
+OPENAI_INTERPRET_MODEL / OPENAI_INTERPRET_EFFORT override. Testing note:
+Windows curl mangles Korean CLI arguments to CP949 — use --data-binary with
+a UTF-8 file when probing the endpoint.
