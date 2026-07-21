@@ -5,11 +5,21 @@ import {
 } from "@pharmassist/dialogue";
 import { isPatientFacingText } from "./consult-memory.js";
 
-const apiBaseUrl = () =>
-  (import.meta.env["VITE_API_BASE_URL"] as string | undefined) ??
-  // Production serves /v1/* from the same origin (Vercel functions); local
-  // development keeps the standalone API server default.
-  (import.meta.env.PROD ? "" : "http://127.0.0.1:8080");
+const loopbackUrl = /^https?:\/\/(?:127\.0\.0\.1|localhost)(?:[:/]|$)/u;
+
+// The repo-root .env carries the local dev API address (and can even carry
+// NODE_ENV=development, which flips Vite's PROD flag on a production build),
+// so build-time flags cannot be trusted here. The page origin is the runtime
+// truth: a page that is not itself on loopback must never call the visitor's
+// loopback and uses the same origin (Vercel functions) instead.
+const apiBaseUrl = (): string => {
+  const configured = import.meta.env["VITE_API_BASE_URL"] as string | undefined;
+  const pageOnLoopback =
+    typeof window === "undefined" || loopbackUrl.test(window.location.origin);
+  if (configured && (pageOnLoopback || !loopbackUrl.test(configured)))
+    return configured;
+  return pageOnLoopback ? "http://127.0.0.1:8080" : "";
+};
 
 const authHeaders = (): Readonly<Record<string, string>> => ({
   "content-type": "application/json",
