@@ -533,6 +533,52 @@ describe("actual research preview pack", () => {
     ).not.toContain("배가 어떻게");
   });
 
+  it("resolves a triage question answered by a different-cluster topic", () => {
+    const engine = new LocalClinicalEngine(actualPack);
+    const sessionId = crypto.randomUUID();
+    const input = (text: string, sequence: number): RuntimeInput => ({
+      request_id: crypto.randomUUID(),
+      session_id: sessionId,
+      sequence,
+      input_type: "typed",
+      text,
+      is_partial: false,
+      locale: "ko-KR",
+      domain: "human_otc",
+      patient_context: {},
+      client_timestamp: new Date().toISOString(),
+    });
+    const tenant = {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    } as const;
+
+    const first = engine.run(input("배아파요", 1), tenant);
+    expect(first.output.ask_next[0]?.question).toContain("배가 어떻게");
+
+    // 멀미 is one of the question's own answer patterns; the reply opens the
+    // motion-sickness topic and must retire the abdominal question.
+    const second = engine.run(input("멀미 있어요", 2), {
+      ...tenant,
+      consultationState: first.consultationState,
+    });
+    expect(
+      second.output.ask_next.map((question) => question.question).join(" "),
+    ).not.toContain("배가 어떻게");
+    expect(
+      second.output.topic_results.some(
+        (topic) =>
+          topic.protocol_id === "PTC-MOTION_SICKNESS" &&
+          topic.decision.status === "recommend",
+      ),
+    ).toBe(true);
+    expect(
+      second.consultationState.topics.find(
+        (topic) => topic.protocol_id === "PTC-ABDOMINAL_PAIN_VOMITING",
+      )?.pending_question,
+    ).toBeNull();
+  });
+
   it("still uses a dialogue card that shares a discriminative term", () => {
     const engine = new LocalClinicalEngine(actualPack);
     const result = engine.run({

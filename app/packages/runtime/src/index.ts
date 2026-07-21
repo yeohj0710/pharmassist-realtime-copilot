@@ -846,8 +846,8 @@ export class LocalClinicalEngine {
         .filter((item): item is NonNullable<typeof item> => Boolean(item))
         .map((item) => clusterOf(item.symptom_category)),
     );
-    const supersededTopicIds = new Set(
-      (prior?.topics ?? [])
+    const supersededTopicIds = new Set([
+      ...(prior?.topics ?? [])
         .filter(
           (topic) =>
             topic.pending_question_slot &&
@@ -855,7 +855,14 @@ export class LocalClinicalEngine {
             currentClusters.has(clusterOf(topic.symptom_category)),
         )
         .map((topic) => topic.protocol_id),
-    );
+      // An answer that matches the pending question's own accepted patterns
+      // resolves that question even when it anchors a different topic (배가
+      // 어떻게 불편한가요? → 멀미 있어요 opens the motion topic and must not
+      // leave the abdominal question repeating).
+      ...(answersPriorPendingQuestion && prior?.active_protocol_id
+        ? [prior.active_protocol_id]
+        : []),
+    ]);
     const orderedTopicProtocols = retraction
       ? []
       : [
