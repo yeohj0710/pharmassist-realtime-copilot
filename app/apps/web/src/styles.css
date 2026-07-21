@@ -378,7 +378,7 @@ footer {
 .sidebar-product strong {
   overflow-wrap: anywhere;
   color: #191f28;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.35;
 }
 .sidebar-product .product-detail {
@@ -1105,7 +1105,8 @@ footer {
 .product-name {
   overflow-wrap: anywhere;
   color: #191f28;
-  font-size: 15px;
+  font-size: 17px;
+  font-weight: 800;
   line-height: 1.4;
 }
 
@@ -1217,24 +1218,28 @@ footer {
 
 .product-clinical-details dt {
   color: #59636e;
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
   line-height: 1.55;
 }
 
 .product-clinical-details dd {
+  display: -webkit-box;
   min-width: 0;
   margin: 0;
+  overflow: hidden;
   overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   color: #333d4b;
-  font-size: 12px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .product-source-link {
   width: fit-content;
   color: #1b64da;
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 700;
   text-decoration: none;
 }
@@ -1312,15 +1317,15 @@ footer {
 
 .product-detail.compact .product-clinical-details dt,
 .product-detail.compact .product-source-link {
-  font-size: 10.5px;
+  font-size: 12px;
 }
 
 .product-detail.compact .product-clinical-details dd {
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  font-size: 11.5px;
+  -webkit-line-clamp: 2;
+  font-size: 13px;
 }
 
 .ingredient-summary {

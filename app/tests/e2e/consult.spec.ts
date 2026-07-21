@@ -214,9 +214,11 @@ test("actual dry-cough protocol is selected without abdominal leakage", async ({
     coughProduct.getByText("주요 적응증", { exact: true }),
   ).toBeVisible();
   await expect(coughProduct.getByText("용법", { exact: true })).toBeVisible();
+  // The card stays scannable: no long precaution block and a single official
+  // source link; full text lives behind the 약학정보원 link.
   await expect(
     coughProduct.getByText("핵심 주의", { exact: true }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await expect(
     coughProduct.getByText("기침, 가래", { exact: true }),
   ).toBeVisible();
@@ -228,11 +230,7 @@ test("actual dry-cough protocol is selected without abdominal leakage", async ({
   );
   await expect(
     coughProduct.getByRole("link", { name: "제품 이미지 출처" }),
-  ).toHaveAttribute(
-    "href",
-    "https://www.glpharma.co.kr/product/haesocopu_s_syrup",
-  );
-  await expect(coughProduct.getByText("제품 포장 · 출처 확인")).toBeVisible();
+  ).toHaveCount(0);
 
   await page.getByText("근거·주의사항", { exact: true }).click();
   const supportingDetails = page.locator(".supporting-content");

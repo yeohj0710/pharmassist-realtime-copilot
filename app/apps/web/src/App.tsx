@@ -154,20 +154,6 @@ const officialMatchCopy: Readonly<
   },
 };
 
-const imageKindCopy = (value: string | null | undefined): string | null => {
-  if (!value) return null;
-  if (value === "package") return "제품 포장";
-  if (value === "pill") return "제형 이미지";
-  return value;
-};
-
-const imageRightsCopy = (value: string | null | undefined): string | null => {
-  if (!value) return null;
-  if (value === "verified") return "출처 확인";
-  if (value === "unknown") return "사용 권리 미확인";
-  return value;
-};
-
 const productEnrichment = new Map(
   (productEnrichmentJson as ProductEnrichment[]).map((item) => [
     item.product_id,
@@ -238,10 +224,11 @@ function ProductSnapshotDetails({
   const recordedAt = formatRecordedDate(product.price_recorded_at);
   const formAndRoute = routeAndForm(product);
   const manufacturer = product.manufacturer?.trim() || enriched?.manufacturer;
+  // The card stays scannable: indication and dosage only. Full precautions
+  // and image provenance live behind the single official source link.
   const clinicalDetails = [
     ["주요 적응증", cleanSummary(product.indication_summary)],
     ["용법", cleanSummary(product.dosage_summary)],
-    ["핵심 주의", cleanSummary(product.precaution_summary)],
   ].filter((item): item is [string, string] => Boolean(item[1]));
 
   return (
@@ -294,29 +281,16 @@ function ProductSnapshotDetails({
           {statusCopy.sourceLabel} <span aria-hidden="true">→</span>
         </a>
       )}
-      {product.image_source_url && (
-        <p className="product-image-source">
-          <a href={product.image_source_url} target="_blank" rel="noreferrer">
-            제품 이미지 출처 <span aria-hidden="true">→</span>
-          </a>
-          {(product.image_kind || product.image_rights_status) && (
-            <small>
-              {[
-                imageKindCopy(product.image_kind),
-                imageRightsCopy(product.image_rights_status),
-              ]
-                .filter(Boolean)
-                .join(" · ")}
-            </small>
-          )}
-        </p>
-      )}
     </div>
   );
 }
 
+// Internal taxonomy suffixes (…트리아지) never reach the counter UI.
 const topicLabel = (symptomCategory: string): string =>
-  symptomCategory.split("/").at(-1) ?? symptomCategory;
+  (symptomCategory.split("/").at(-1) ?? symptomCategory).replace(
+    /\s*트리아지$/u,
+    "",
+  );
 
 function TopicDecisionBlock({
   topic,

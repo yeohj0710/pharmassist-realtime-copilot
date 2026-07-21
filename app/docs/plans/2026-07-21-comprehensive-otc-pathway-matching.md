@@ -199,3 +199,26 @@ Verified: unit+integration 231/231, E2E 12/12 (the abdominal-phenotype E2E
 now asserts the question is not repeated after the answer), lint/schema/
 typecheck/build/security/docs green. The AI interpreter, when connected,
 feeds the same layer; local behavior stays deterministic.
+
+## Session 5 follow-up (2026-07-21): UI simplification and AI-native wiring
+
+1. Product cards show 적응증 and 용법 only (two-line clamp, larger type,
+   bolder product name); the precaution block, image-provenance link, and
+   internal labels (…트리아지, official_source_preview) are gone. One
+   약학정보원 link remains per card.
+2. Same-origin AI interpretation now ships with the static deploy:
+   `apps/web/api-functions` provides /v1/health/ready and
+   /v1/consult/interpret as Vercel functions (gpt-5-nano by default,
+   OPENAI_INTERPRET_MODEL to override). The function ports the official
+   adapter contract: intent catalog generated from the audited pack at
+   deploy time, strict JSON-schema output, PII fail-closed gates, passcode
+   check, 8s timeout. `vercel.json` rewrites /v1/* to the functions and the
+   web client uses the same origin in production.
+3. Activation requires one secret: `vercel env add OPENAI_API_KEY` on the
+   pharmassist-realtime-copilot project. Until then readiness reports
+   degraded and the badge stays "AI 미연결 · 로컬 분석"; the deterministic
+   local engine remains the decision maker either way — the LLM only maps
+   wording to the predefined intent catalog.
+
+Verified: unit+integration 231/231, E2E 12/12 (card assertions updated to
+the simplified layout), lint/schema/typecheck/build/security/docs green.

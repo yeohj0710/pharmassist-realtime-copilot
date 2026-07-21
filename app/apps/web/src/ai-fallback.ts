@@ -7,7 +7,9 @@ import { isPatientFacingText } from "./consult-memory.js";
 
 const apiBaseUrl = () =>
   (import.meta.env["VITE_API_BASE_URL"] as string | undefined) ??
-  "http://127.0.0.1:8080";
+  // Production serves /v1/* from the same origin (Vercel functions); local
+  // development keeps the standalone API server default.
+  (import.meta.env.PROD ? "" : "http://127.0.0.1:8080");
 
 const authHeaders = (): Readonly<Record<string, string>> => ({
   "content-type": "application/json",

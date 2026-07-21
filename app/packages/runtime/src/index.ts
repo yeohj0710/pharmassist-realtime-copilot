@@ -1170,8 +1170,9 @@ export class LocalClinicalEngine {
       })),
     ];
     const combinedTopicCandidates = topicResults.flatMap((item) => {
-      const label =
-        item.symptom_category.split("/").at(-1) ?? item.symptom_category;
+      const label = (
+        item.symptom_category.split("/").at(-1) ?? item.symptom_category
+      ).replace(/\s*트리아지$/u, "");
       const product = item.decision.product_candidates[0];
       const ingredient = item.decision.ingredient_options[0];
       const candidate =
