@@ -35,6 +35,7 @@ import {
 import {
   buildDecisionIndex,
   buildIndex,
+  includesTermWithBoundary,
   retrieve,
   retrieveProtocols,
   type DecisionRetrievalIndex,
@@ -207,6 +208,60 @@ const pendingSlotPatterns = (
       ).filter((value) => !/^__.*__$/u.test(value)),
     );
 };
+
+// A retrieved dialogue card may only steer the consultation when one of its
+// trigger terms is actually present in the input. BM25/trigram ranking always
+// produces some top card, so an ungrounded best match (e.g. 잇몸 출혈 →
+// 성인 발열 카드) must not decide the category.
+const cardTokenSplit = /[^\p{L}\p{N}]+/u;
+
+const cardGroundedInText = (
+  card: KnowledgeCard,
+  text: string,
+  index: RetrievalIndex,
+): boolean => {
+  const normalized = text.normalize("NFKC").toLowerCase();
+  const phraseGrounded = [
+    ...(card.anchors ?? []),
+    ...card.aliases,
+    ...card.keywords,
+  ].some((term) => {
+    const value = term.normalize("NFKC").toLowerCase().trim();
+    return value.length >= 2 && includesTermWithBoundary(normalized, value);
+  });
+  if (phraseGrounded) return true;
+  // A particle or compound prefix breaks phrase containment (감기 기운이
+  // 있어요, 목감기 …), so an exact shared token also grounds the card — but
+  // only a discriminative one: tokens common across many cards (있어요,
+  // 주세요) must not tie an unrelated card to the input.
+  const cardTokens = new Set(
+    [card.title, ...(card.anchors ?? []), ...card.aliases, ...card.keywords]
+      .join(" ")
+      .normalize("NFKC")
+      .toLowerCase()
+      .split(cardTokenSplit)
+      .filter((token) => token.length >= 2),
+  );
+  const commonDocumentFrequency = Math.max(
+    2,
+    Math.ceil(index.cards.size * 0.25),
+  );
+  return normalized
+    .split(cardTokenSplit)
+    .some(
+      (token) =>
+        token.length >= 2 &&
+        cardTokens.has(token) &&
+        (index.documentFrequency.get(token) ?? 0) <= commonDocumentFrequency,
+    );
+};
+
+const unmatchedSymptomQuestion = {
+  question:
+    "지금 가장 불편한 증상을 평소 말씀하시는 표현으로 조금 더 알려주세요.",
+  reason: "활성 지식팩 분류와 연결할 증상 확인",
+  slot: "patient.detail",
+} as const;
 
 const evidence = (
   value: unknown,
@@ -782,13 +837,21 @@ export class LocalClinicalEngine {
       ? []
       : retrieve(normalized, input.domain, this.index);
     const cardCandidate = cardCandidates[0];
-    const card = cardCandidate
+    const retrievedCard = cardCandidate
       ? this.index.cards.get(cardCandidate.cardId)
-      : focusPrior?.active_intent && !startsNewIntent
+      : undefined;
+    const groundedRetrievedCard =
+      retrievedCard &&
+      cardGroundedInText(retrievedCard, normalized.normalizedText, this.index)
+        ? retrievedCard
+        : undefined;
+    const card =
+      groundedRetrievedCard ??
+      (focusPrior?.active_intent && !startsNewIntent
         ? [...this.index.cards.values()].find(
             (item) => item.intent === focusPrior.active_intent,
           )
-        : undefined;
+        : undefined);
     const retrieveMs = this.clock.monotonicMs() - retrievalStart;
 
     const tenant: TenantRecommendationContext = {
@@ -904,6 +967,24 @@ export class LocalClinicalEngine {
         card.askNext,
         "LEGACY_CARD_COMPATIBILITY_ASK",
         card.intent,
+      );
+
+    if (
+      decision.status === "insufficient" &&
+      safety.mode === "continue" &&
+      !protocol &&
+      !card &&
+      !(prior?.asked_slots.includes(unmatchedSymptomQuestion.slot) ?? false)
+    )
+      // No grounded protocol or card: ask for the symptom in the customer's
+      // own words once instead of borrowing an unrelated category's question.
+      decision = askDecision(
+        this.pack.packId,
+        input,
+        context.inventory !== undefined,
+        unmatchedSymptomQuestion,
+        "SYMPTOM_NOT_MATCHED_ASK",
+        null,
       );
 
     if (

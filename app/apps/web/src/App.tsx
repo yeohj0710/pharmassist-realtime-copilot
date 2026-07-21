@@ -552,7 +552,9 @@ export function App() {
   const [processing, setProcessing] = useState(false);
   const [engineError, setEngineError] = useState("");
   const [aiInterpreting, setAiInterpreting] = useState(false);
-  const [aiReady, setAiReady] = useState(false);
+  const [aiStatus, setAiStatus] = useState<
+    "checking" | "ready" | "unavailable"
+  >("checking");
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
   const pendingWorkerInputsRef = useRef<RuntimeInput[]>([]);
@@ -631,7 +633,9 @@ export function App() {
     if (workerRef.current) workerRef.current.postMessage(immediateInput);
     else pendingWorkerInputsRef.current.push(immediateInput);
 
-    if (shouldInterpretWithAi(aiReady, navigator.onLine, normalized)) {
+    if (
+      shouldInterpretWithAi(aiStatus === "ready", navigator.onLine, normalized)
+    ) {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 3_500);
       try {
@@ -678,11 +682,32 @@ export function App() {
   }, [result?.status]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    void requestAiReadiness(controller.signal)
-      .then(setAiReady)
-      .catch(() => setAiReady(false));
-    return () => controller.abort();
+    // Readiness must resolve to a definite state: a failed or hung check shows
+    // "미연결 · 로컬 분석" instead of staying on "확인 중" forever, and an
+    // unavailable API is re-checked periodically so the badge can recover.
+    let disposed = false;
+    let retryTimer: ReturnType<typeof setTimeout> | null = null;
+    const check = async (): Promise<void> => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5_000);
+      try {
+        const ready = await requestAiReadiness(controller.signal);
+        if (disposed) return;
+        setAiStatus(ready ? "ready" : "unavailable");
+        if (!ready) retryTimer = setTimeout(() => void check(), 30_000);
+      } catch {
+        if (disposed) return;
+        setAiStatus("unavailable");
+        retryTimer = setTimeout(() => void check(), 30_000);
+      } finally {
+        clearTimeout(timeout);
+      }
+    };
+    void check();
+    return () => {
+      disposed = true;
+      if (retryTimer) clearTimeout(retryTimer);
+    };
   }, []);
 
   useEffect(() => {
@@ -1119,9 +1144,11 @@ export function App() {
               ? "오프라인 · 로컬 사용 가능"
               : aiInterpreting
                 ? "AI 해석 중"
-                : aiReady
+                : aiStatus === "ready"
                   ? "AI 연결됨"
-                  : "AI 연결 확인 중"}
+                  : aiStatus === "unavailable"
+                    ? "AI 미연결 · 로컬 분석"
+                    : "AI 연결 확인 중"}
           </span>
           {history.length > 0 && (
             <button className="reset-button" onClick={resetConsult}>

@@ -328,6 +328,145 @@ describe("actual research preview pack", () => {
     );
   });
 
+  it("keeps official alternatives visible behind the curated first choice", () => {
+    const engine = new LocalClinicalEngine(actualPack);
+    const result = engine.run(
+      {
+        request_id: crypto.randomUUID(),
+        session_id: crypto.randomUUID(),
+        sequence: 1,
+        input_type: "typed",
+        text: "근육통이 있어요",
+        is_partial: false,
+        locale: "ko-KR",
+        domain: "human_otc",
+        patient_context: {},
+        client_timestamp: new Date().toISOString(),
+      },
+      {
+        tenantId: "local-research-preview",
+        formulary: previewFormulary,
+      },
+    );
+
+    const names = result.output.decision.product_candidates.map(
+      (item) => item.display_name,
+    );
+    expect(names.slice(0, 2)).toEqual([
+      "이지엔6애니연질캡슐",
+      "게보린브이정(아세트아미노펜)",
+    ]);
+    // Officially linked products must appear as alternatives instead of being
+    // filtered down to the curated pair.
+    expect(names.length).toBeGreaterThan(2);
+    // Without a known age or a child context, pediatric-labelled products may
+    // not outrank adult candidates.
+    expect(names.join(" ")).not.toMatch(/키즈|어린이/u);
+  });
+
+  it.each([
+    ["가래 끓는 기침이에요", "PTC-PRODUCTIVE_COUGH"],
+    ["코가 막혀요", "PTC-NASAL_CONGESTION"],
+    ["입안이 헐었어요", "PTC-STOMATITIS"],
+    ["속이 더부룩해요", "PTC-BLOATING"],
+    ["목아파요", "PTC-SORE_THROAT"],
+    ["그냥 목이 따가움", "PTC-SORE_THROAT"],
+    ["눈이 건조해요", "PTC-DRY_EYE"],
+    ["상처가 났어요", "PTC-MINOR_WOUND"],
+    ["손목이 아파요", "PTC-JOINT_PAIN"],
+    ["발목이 아파요", "PTC-JOINT_PAIN"],
+  ])(
+    "routes colloquial symptom wording to its own pathway: %s",
+    (text, protocolId) => {
+      const engine = new LocalClinicalEngine(actualPack);
+      const result = engine.run(
+        {
+          request_id: crypto.randomUUID(),
+          session_id: crypto.randomUUID(),
+          sequence: 1,
+          input_type: "typed",
+          text,
+          is_partial: false,
+          locale: "ko-KR",
+          domain: "human_otc",
+          patient_context: {},
+          client_timestamp: new Date().toISOString(),
+        },
+        {
+          tenantId: "local-research-preview",
+          formulary: previewFormulary,
+        },
+      );
+
+      expect(
+        result.output.decision.protocol_id,
+        JSON.stringify(result.output.decision),
+      ).toBe(protocolId);
+      expect(result.output.decision.status).toBe("recommend");
+      expect(result.output.decision.product_candidates.length).toBeGreaterThan(
+        0,
+      );
+    },
+  );
+
+  it.each(["잇몸에서 피나요", "하루종일 졸려요"])(
+    "asks for the symptom in plain words instead of borrowing an unrelated card: %s",
+    (text) => {
+      const engine = new LocalClinicalEngine(actualPack);
+      const result = engine.run(
+        {
+          request_id: crypto.randomUUID(),
+          session_id: crypto.randomUUID(),
+          sequence: 1,
+          input_type: "typed",
+          text,
+          is_partial: false,
+          locale: "ko-KR",
+          domain: "human_otc",
+          patient_context: {},
+          client_timestamp: new Date().toISOString(),
+        },
+        {
+          tenantId: "local-research-preview",
+          formulary: previewFormulary,
+        },
+      );
+
+      expect(result.output.decision.status).toBe("ask");
+      expect(result.output.decision.reason_codes).toContain(
+        "SYMPTOM_NOT_MATCHED_ASK",
+      );
+      // An ungrounded best-scoring card must not name a category (치통, 발열,
+      // 외용제 …) the customer never mentioned.
+      expect(result.output.say_now.join(" ")).not.toMatch(
+        /치통|발열|외용제|콧물|기침/u,
+      );
+      expect(result.output.decision.product_candidates).toEqual([]);
+    },
+  );
+
+  it("still uses a dialogue card that shares a discriminative term", () => {
+    const engine = new LocalClinicalEngine(actualPack);
+    const result = engine.run({
+      request_id: crypto.randomUUID(),
+      session_id: crypto.randomUUID(),
+      sequence: 1,
+      input_type: "typed",
+      text: "감기 기운이 있어요",
+      is_partial: false,
+      locale: "ko-KR",
+      domain: "human_otc",
+      patient_context: {},
+      client_timestamp: new Date().toISOString(),
+    });
+
+    expect(result.output.decision.status).toBe("ask");
+    expect(result.output.decision.reason_codes).toContain(
+      "LEGACY_CARD_COMPATIBILITY_ASK",
+    );
+    expect(result.output.say_now.join(" ")).toContain("감기");
+  });
+
   it("returns no product for generic cough with a chest-pain red flag", () => {
     const engine = new LocalClinicalEngine(actualPack);
     const result = engine.run(
@@ -720,7 +859,9 @@ describe("actual research preview pack", () => {
         (option) => option.ingredient_id,
       ),
     ).toContain("ING-ALUMINUM_PHOSPHATE_GEL");
-    expect(second.output.decision.product_candidates).toHaveLength(1);
+    // The curated first choice stays on top while officially linked
+    // alternatives remain visible behind it.
+    expect(second.output.decision.product_candidates.length).toBeGreaterThan(1);
     expect(second.output.decision.product_candidates[0]?.display_name).toBe(
       "겔포스엠",
     );

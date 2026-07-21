@@ -51,9 +51,21 @@ describe("Korean normalizer", () => {
     ["배아프노", "배가 아파요"],
     ["배가 아픈데", "배가 아파요"],
     ["속쓰리네", "속이 쓰려요"],
+    ["속도 쓰려요", "속이 쓰려요"],
+    ["속이 쓰린데", "속이 쓰려요"],
     ["소화 안된다", "소화 안 돼요"],
     ["머리아프다", "머리가 아파요"],
     ["기침나네", "기침나요"],
+    ["목아파요", "인후통이 있어요"],
+    ["그냥 목이 따가움", "인후통이 있어요"],
+    ["목아프다고", "인후통이 있어요"],
+    ["눈이 건조해요", "안구건조가 있어요"],
+    ["코가 막혀요", "코막힘이 있어요"],
+    ["코가 꽉 막혔어요", "코막힘이 있어요"],
+    ["가래가 나와요", "가래기침이에요"],
+    ["가래 끓는 기침", "가래기침이에요 기침"],
+    ["입안이 헐었어요", "구내염이 있어요"],
+    ["속이 더부룩해요", "더부룩함이 있어요"],
     ["똥마려워요", "변이 마려워요"],
     ["똥이 마려운 배아픔", "변이 마려워요 배아픔"],
     ["대변이 마려운데", "변이 마려워요"],
@@ -61,6 +73,28 @@ describe("Korean normalizer", () => {
   ])("normalizes colloquial symptom wording: %s", (input, expected) => {
     expect(normalizeKorean(input).normalizedText).toContain(expected);
   });
+
+  it.each([
+    ["속이 쓰리지 않아요", "속이 쓰려요"],
+    ["가래가 나오지 않아요", "가래기침이에요"],
+    ["코가 막히지는 않았어요", "코막힘이 있어요"],
+  ])(
+    "keeps a negated symptom out of the canonical form: %s",
+    (input, canonical) => {
+      expect(normalizeKorean(input).normalizedText).not.toContain(canonical);
+    },
+  );
+
+  it.each([
+    ["손목이 아파요", "인후통"],
+    ["발목이 아파요", "인후통"],
+    ["눈물이 말라요", "안구건조"],
+  ])(
+    "keeps a compound noun out of a single-syllable concept: %s",
+    (input, canonical) => {
+      expect(normalizeKorean(input).normalizedText).not.toContain(canonical);
+    },
+  );
 
   it("respects IME composition", () => {
     expect(shouldSearchDuringComposition(true, "input")).toBe(false);

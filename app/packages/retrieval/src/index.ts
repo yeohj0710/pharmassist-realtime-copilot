@@ -264,6 +264,45 @@ export function selectStable(
   return { ...state, sequence };
 }
 
+// A Korean trigger term matched mid-word is usually a compound-noun collision
+// (손목이 아파요 must not match the throat term 목이 아파요). An occurrence
+// counts only when it starts the text, follows a non-Hangul character, or
+// follows a particle syllable — the particle case keeps spacing-free typing
+// like 속이더부룩해요 matched.
+const particleBoundaryChars = new Set([
+  "이",
+  "가",
+  "은",
+  "는",
+  "도",
+  "만",
+  "을",
+  "를",
+  "에",
+  "서",
+  "의",
+  "와",
+  "과",
+  "랑",
+  "고",
+]);
+
+export const includesTermWithBoundary = (
+  text: string,
+  term: string,
+): boolean => {
+  for (
+    let index = text.indexOf(term);
+    index !== -1;
+    index = text.indexOf(term, index + 1)
+  ) {
+    const before = index === 0 ? "" : text[index - 1]!;
+    if (!/[가-힣]/u.test(before) || particleBoundaryChars.has(before))
+      return true;
+  }
+  return false;
+};
+
 export interface ProtocolCandidate {
   readonly protocolId: string;
   readonly intent: string;
@@ -352,15 +391,23 @@ export function retrieveProtocols(
     )
       continue;
     const anchors = protocol.triggers.anchors.filter((anchor) =>
-      normalized.includes(anchor.normalize("NFKC").toLowerCase()),
+      includesTermWithBoundary(
+        normalized,
+        anchor.normalize("NFKC").toLowerCase(),
+      ),
     );
     const aliases = protocol.triggers.aliases.filter((alias) =>
-      normalized.includes(alias.normalize("NFKC").toLowerCase()),
+      includesTermWithBoundary(
+        normalized,
+        alias.normalize("NFKC").toLowerCase(),
+      ),
     );
     const keywords = protocol.triggers.keywords.filter((keyword) => {
       const value = keyword.normalize("NFKC").toLowerCase().trim();
       return (
-        value.length >= 2 && !/\s/u.test(value) && normalized.includes(value)
+        value.length >= 2 &&
+        !/\s/u.test(value) &&
+        includesTermWithBoundary(normalized, value)
       );
     });
     const terms = index.protocolTerms.get(protocol.protocol_id) ?? new Set();

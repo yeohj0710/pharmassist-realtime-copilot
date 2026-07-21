@@ -186,29 +186,36 @@ function criticalDecision(input: NormalizedInput): SafetyDecision | undefined {
   };
   const matches: { readonly rule: RedFlagRule; readonly matched: string }[] =
     [];
+  // Red flags scan the original surface text as well as the normalized text:
+  // colloquial-concept canonicalization may rewrite wording that a danger
+  // pattern needs (e.g. 발진 + 입안 헐음), and no normalization step is allowed
+  // to mask an escalation.
+  const haystacks = [
+    ...new Set([input.normalizedText, input.displayText].filter(Boolean)),
+  ];
   for (const rule of redFlagRules) {
     const flags = rule.pattern.flags.includes("g")
       ? rule.pattern.flags
       : `${rule.pattern.flags}g`;
     const occurrencePattern = new RegExp(rule.pattern.source, flags);
-    for (const match of input.normalizedText.matchAll(occurrencePattern)) {
-      const clause = matchedClause(
-        input.normalizedText,
-        match.index,
-        match[0].length,
-      );
-      const clauseStart = input.normalizedText.indexOf(
-        clause,
-        Math.max(0, match.index - clause.length),
-      );
-      const relativeIndex = Math.max(0, match.index - clauseStart);
-      if (
-        clauseIsPast(clause) ||
-        clauseIsOtherPerson(clause) ||
-        appearsNegated(clause, relativeIndex, match[0].length)
-      )
-        continue;
-      matches.push({ rule, matched: match[0] });
+    for (const haystack of haystacks) {
+      if (matches.some((item) => item.rule.id === rule.id)) break;
+      for (const match of haystack.matchAll(occurrencePattern)) {
+        const clause = matchedClause(haystack, match.index, match[0].length);
+        const clauseStart = haystack.indexOf(
+          clause,
+          Math.max(0, match.index - clause.length),
+        );
+        const relativeIndex = Math.max(0, match.index - clauseStart);
+        if (
+          clauseIsPast(clause) ||
+          clauseIsOtherPerson(clause) ||
+          appearsNegated(clause, relativeIndex, match[0].length)
+        )
+          continue;
+        matches.push({ rule, matched: match[0] });
+        break;
+      }
     }
   }
   if (!matches.length) return undefined;
@@ -341,7 +348,9 @@ export function evaluateSafety(
       "포장이나 처방전에서 제품명을 확인할 수 있나요?",
       "product_name",
     );
-  if (/얼굴색|생김새|체질|기운/u.test(text))
+  // "기운" alone is common symptom wording (감기 기운, 몸살 기운), so only
+  // appearance/constitution-reading phrasings block here.
+  if (/얼굴색|생김새|체질|관상|기운.{0,4}(?:없어\s*보|보이)/u.test(text))
     return {
       mode: "no_match",
       ruleIds: ["NO_APPEARANCE_DIAGNOSIS"],

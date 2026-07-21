@@ -422,6 +422,8 @@ interface RankedProduct {
   readonly sourceRefs: readonly SourceRef[];
   readonly clinicalGroupKey: string;
   readonly pendingSafetySlots: readonly CandidateSafetySlot[];
+  /** -1 fits the current age context best, 1 fits it worst, 0 is neutral. */
+  readonly ageScopeRank: number;
   readonly sameGroupProductCount?: number;
   readonly inventory?: TenantInventory;
   readonly sales?: TenantSalesAggregate;
@@ -618,6 +620,13 @@ const ageRestrictionApplies = (description: string, age: number): boolean => {
   return false;
 };
 
+const pediatricScopedProduct = (product: RecommendationDrugProduct): boolean =>
+  /키즈|어린이|소아/u.test(
+    `${product.display_name} ${product.retail_offer?.display_name ?? ""}`,
+  ) ||
+  (/소아|어린이/u.test(product.dosage_summary ?? "") &&
+    !/성인/u.test(product.dosage_summary ?? ""));
+
 const productSafetyAssessment = (
   product: RecommendationDrugProduct,
   verified: VerifiedOption,
@@ -654,12 +663,7 @@ const productSafetyAssessment = (
     return ineligible();
 
   const age = numericSlot(request, "age_years");
-  const pediatricOnly =
-    /키즈|어린이|소아/u.test(
-      `${product.display_name} ${product.retail_offer?.display_name ?? ""}`,
-    ) ||
-    (/소아|어린이/u.test(product.dosage_summary ?? "") &&
-      !/성인/u.test(product.dosage_summary ?? ""));
+  const pediatricOnly = pediatricScopedProduct(product);
   if (pediatricOnly) {
     if (age === undefined) pendingSlots.add("age_years");
     else if (age >= 18) return ineligible();
@@ -835,6 +839,19 @@ const rankedProducts = (
       link,
     ]);
   }
+  // Pediatric-labelled products fit a child consultation first and an unknown
+  // or adult consultation last; ineligibility for a known adult age is still
+  // decided by the safety assessment, this only orders otherwise-eligible
+  // candidates by age context.
+  const knownAge = numericSlot(request, "age_years");
+  const childContext =
+    request.normalized.personScope === "child" ||
+    (knownAge !== undefined && knownAge < 18);
+  const ageScopeRankFor = (product: RecommendationDrugProduct): number => {
+    if (!pediatricScopedProduct(product)) return 0;
+    if (childContext) return -1;
+    return knownAge === undefined ? 1 : 0;
+  };
 
   const ranked = activeFormulary.entries
     .filter(
@@ -901,6 +918,7 @@ const rankedProducts = (
           verified.ingredient.ingredient_id,
         ),
         pendingSafetySlots: safetyAssessment.pendingSlots,
+        ageScopeRank: ageScopeRankFor(product),
         sourceRefs: uniqueSourceRefs([
           ...sourceRefsFor(verified),
           ...product.source_refs,
@@ -917,6 +935,8 @@ const rankedProducts = (
       const safetyContext =
         left.pendingSafetySlots.length - right.pendingSafetySlots.length;
       if (safetyContext) return safetyContext;
+      const ageScope = left.ageScopeRank - right.ageScopeRank;
+      if (ageScope) return ageScope;
       // Sales can never alter clinical or safety eligibility. It is only the
       // final tie-breaker after clinical fit, safety, and inventory.
       const therapeuticFit = compareProtocolOptions(left.option, right.option);
@@ -940,19 +960,19 @@ const rankedProducts = (
     seenProductIds.add(item.product.product_id);
     return true;
   });
-  const productsAtBestKnownSafety = uniqueProducts.some(
-    (item) => item.pendingSafetySlots.length === 0,
-  )
-    ? uniqueProducts.filter((item) => item.pendingSafetySlots.length === 0)
-    : uniqueProducts;
+  // Products whose age/pregnancy context is still unknown stay listed but are
+  // ranked after fully-cleared products (pendingSafetySlots is the first sort
+  // key above). Removing them entirely would hide every official alternative
+  // until the safety slots are answered, so unknown context demotes instead of
+  // excluding; explicit restriction violations are already ineligible.
   const groupCounts = new Map<string, number>();
-  for (const item of productsAtBestKnownSafety)
+  for (const item of uniqueProducts)
     groupCounts.set(
       item.clinicalGroupKey,
       (groupCounts.get(item.clinicalGroupKey) ?? 0) + 1,
     );
   const seenGroups = new Set<string>();
-  return productsAtBestKnownSafety
+  return uniqueProducts
     .filter((item) => {
       if (seenGroups.has(item.clinicalGroupKey)) return false;
       seenGroups.add(item.clinicalGroupKey);
@@ -1122,24 +1142,40 @@ export function buildRecommendationDecision(
           : provisionalOptionId === undefined ||
             item.option.option_id === provisionalOptionId),
     )
-    .sort((left, right) => compareProtocolOptions(left.option, right.option))
-    .slice(0, 3);
+    .sort((left, right) => compareProtocolOptions(left.option, right.option));
   if (options.length === 0)
     return noDecision(request, ["NO_VERIFIED_INGREDIENT_OPTION"], protocol);
 
-  const products = rankedProducts(options, protocol, request).slice(0, 5);
+  // Every verified option participates in product ranking; truncating options
+  // before ranking would silently drop most officially linked products. Only
+  // the displayed lists below are capped by the decision contract.
+  const rankedPool = rankedProducts(options, protocol, request);
+  const products = rankedPool.slice(0, 5);
   if (request.tenant.inventory !== undefined && products.length === 0)
     return noDecision(request, ["NO_IN_STOCK_FORMULARY_PRODUCT"], protocol);
 
-  const ingredientOptions = options.map((verified) => ({
-    option_id: verified.option.option_id,
-    ingredient_id: verified.ingredient.ingredient_id,
-    ingredient_name: verified.ingredient.display_name_ko,
-    claim_ids: [...verified.option.claim_ids] as [string, ...string[]],
-    source_refs: [...sourceRefsFor(verified)] as [SourceRef, ...SourceRef[]],
-    clinical_score: verified.option.clinical_priority / 100,
-    safety_score: verified.option.safety_priority / 100,
-  }));
+  const displayedIngredientIds = new Set(
+    products.map((ranked) => ranked.ingredientId),
+  );
+  const ingredientOptions = [
+    ...options.filter((verified) =>
+      displayedIngredientIds.has(verified.ingredient.ingredient_id),
+    ),
+    ...options.filter(
+      (verified) =>
+        !displayedIngredientIds.has(verified.ingredient.ingredient_id),
+    ),
+  ]
+    .slice(0, 3)
+    .map((verified) => ({
+      option_id: verified.option.option_id,
+      ingredient_id: verified.ingredient.ingredient_id,
+      ingredient_name: verified.ingredient.display_name_ko,
+      claim_ids: [...verified.option.claim_ids] as [string, ...string[]],
+      source_refs: [...sourceRefsFor(verified)] as [SourceRef, ...SourceRef[]],
+      clinical_score: verified.option.clinical_priority / 100,
+      safety_score: verified.option.safety_priority / 100,
+    }));
   const productCandidates = products.map((ranked) => ({
     product_id: ranked.product.product_id,
     display_name:
@@ -1221,12 +1257,17 @@ export function buildRecommendationDecision(
     analgesia: "진통",
     antiinflammatory_analgesia: "소염·진통",
   };
+  // Supportive partners are searched in a wider ranked pool than the five
+  // displayed candidates so a complementary-mechanism product (e.g. herbal
+  // support) still pairs with a displayed primary when the display list is
+  // full of same-role alternatives.
+  const supportivePool = rankedPool.slice(0, 32);
   const combinationCandidates = products
     .flatMap((primary) =>
       profilesFor(primary)
         .filter((profile) => profile.combination_role === "primary")
         .flatMap((primaryProfile) =>
-          products.flatMap((supportive) => {
+          supportivePool.flatMap((supportive) => {
             if (supportive.product.product_id === primary.product.product_id)
               return [];
             const primaryIngredients = activeIngredientIds(primary);
