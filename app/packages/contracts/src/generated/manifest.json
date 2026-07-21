@@ -1,5 +1,5 @@
 {
-  "schemaHash": "5e3c28531e68a39992b37985d01eaa0f81d9ff333b22e86ee5ad340eb094de64",
+  "schemaHash": "4fb3ef9b15fcd78509a39ef8656fca8710673554cc0038783ea30b29fc60ebd1",
   "generated": [
     {
       "file": "claim.ts",
@@ -24,7 +24,7 @@
     {
       "file": "drug_product.ts",
       "title": "DrugProduct",
-      "sha256": "ae06b4f68b3d68e5ebaca8e3775d2b6d32dbd41752019087784f4f682fda9080"
+      "sha256": "63ac436f36c5eecd96b785fa2f1e2782407ae6ff6b4a375773bac075d0be8bc7"
     },
     {
       "file": "error_envelope.ts",
@@ -74,12 +74,12 @@
     {
       "file": "recommendation_decision.ts",
       "title": "RecommendationDecision",
-      "sha256": "0d810c82fd905a57566d01773bef44ba708ca9094b8c27c34f391b53f5fdd3ab"
+      "sha256": "ec6c788bdcca1dc1e58059fba9fe2b70b681e072f0114a2e37a3f0c312ee35e0"
     },
     {
       "file": "refinement_request.ts",
       "title": "RefinementRequestEnvelope",
-      "sha256": "a53fcae1ac672e9aeaaa82f08f69742ce95af9a14c3cd313f143cad92d2a6deb"
+      "sha256": "2176c9e49733b553db790bee2cb1aa511e93c7c078afdb589fc97714a92128f1"
     },
     {
       "file": "runtime_input.ts",
@@ -89,12 +89,12 @@
     {
       "file": "runtime_output.ts",
       "title": "RuntimeOutput",
-      "sha256": "a026a7b1d69fee565d09b60bd7dcda400c1bd3c7f3bf625baed0b032af19a083"
+      "sha256": "5c30efd8339d5bfee492892ab2ff13dbcb669490b569d735314301cb4b266c82"
     },
     {
       "file": "runtime_pack.ts",
       "title": "RuntimePackContract",
-      "sha256": "dab7e4d3fd415f6787560dc813dcbec7ad4fe6d0106d3a525d37e85aa64fe03c"
+      "sha256": "d193ff746512c7f7c42d65dc032511ab899f878498bca1a341a445c6055f64a9"
     },
     {
       "file": "source_record.ts",

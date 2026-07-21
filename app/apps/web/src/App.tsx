@@ -125,6 +125,13 @@ type ProductCandidateDetails = ProductCandidate &
     route?: string | null;
     clinical_group_key?: string;
     same_group_product_count?: number;
+    selection_guidance?: Readonly<{
+      choose_when: string;
+      differentiators: readonly string[];
+      comparison_note: string;
+      practical_points: readonly string[];
+      evidence_source: string;
+    }>;
   }>;
 
 const officialMatchCopy: Readonly<
@@ -255,6 +262,10 @@ function ProductSnapshotDetails({
     ["주요 적응증", cleanSummary(product.indication_summary)],
     ["용법", cleanSummary(product.dosage_summary)],
   ].filter((item): item is [string, string] => Boolean(item[1]));
+  const selectionGuidance = product.selection_guidance;
+  const differentiators = selectionGuidance?.differentiators
+    .slice(0, compact ? 1 : 3)
+    .join(" · ");
 
   return (
     <div className={compact ? "product-detail compact" : "product-detail"}>
@@ -283,6 +294,26 @@ function ProductSnapshotDetails({
         <p className="product-price-snapshot">
           <strong>{price}</strong>
         </p>
+      )}
+      {selectionGuidance && (
+        <dl className="product-selection-guidance">
+          <div>
+            <dt>언제 이 제품</dt>
+            <dd>{selectionGuidance.choose_when}</dd>
+          </div>
+          {differentiators && (
+            <div>
+              <dt>다른 후보와 차이</dt>
+              <dd>{differentiators}</dd>
+            </div>
+          )}
+          {!compact && (
+            <div>
+              <dt>비교 기준</dt>
+              <dd>{selectionGuidance.comparison_note}</dd>
+            </div>
+          )}
+        </dl>
       )}
       {clinicalDetails.length > 0 && (
         <dl className="product-clinical-details">

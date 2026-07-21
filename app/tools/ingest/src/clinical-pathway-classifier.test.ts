@@ -8,6 +8,10 @@ import {
 const dataset = parseClinicalPathwayDataset({
   schemaVersion: "1.0.0",
   researchOnly: true,
+  mechanismEvidence: {
+    adsorbent: ["디오스멕타이트"],
+    antimicrobial: ["니푸록사지드"],
+  },
   pathways: [
     {
       pathwayId: "heartburn",
@@ -19,6 +23,16 @@ const dataset = parseClinicalPathwayDataset({
       compatibleRoles: ["barrier_support"],
       priority: 80,
       source: "SRC-PRACTICE#page=4",
+    },
+    {
+      pathwayId: "diarrhea",
+      protocolId: "PTC-DIARRHEA",
+      efficacyAny: ["설사"],
+      routeFormAny: ["경구"],
+      mechanisms: ["adsorbent", "antimicrobial"],
+      combinationRole: "primary",
+      priority: 80,
+      source: "SRC-PRACTICE#page=5",
     },
   ],
   supportiveDirectRules: [
@@ -73,6 +87,26 @@ describe("clinical pathway classifier", () => {
         dataset,
       ),
     ).toEqual([]);
+  });
+
+  it("keeps only mechanisms supported by the product composition", () => {
+    expect(
+      classifyOfficialProduct(
+        {
+          efficacy: "성인의 급성 및 만성 설사",
+          route: "경구",
+          dosageForm: "현탁액",
+          officialCategory: "정장제",
+          activeIngredientTexts: ["Diosmectite 디오스멕타이트 3g"],
+        },
+        dataset,
+      )[0],
+    ).toEqual(
+      expect.objectContaining({
+        pathwayId: "diarrhea",
+        mechanisms: ["adsorbent"],
+      }),
+    );
   });
 
   it("marks a direct herbal formula as a compatible supportive role", () => {

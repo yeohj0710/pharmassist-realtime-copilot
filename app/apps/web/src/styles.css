@@ -1251,6 +1251,37 @@ a.product-name:focus-visible {
   font-size: 15px;
 }
 
+.product-selection-guidance {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f3f8ff;
+}
+
+.product-selection-guidance > div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.product-selection-guidance dt {
+  color: #1769d2;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.product-selection-guidance dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #333d4b;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
 .product-clinical-details {
   display: grid;
   margin: 0;
@@ -1349,6 +1380,28 @@ a.product-name:focus-visible {
 
 .product-detail.compact .product-price-snapshot strong {
   font-size: 13px;
+}
+
+.product-detail.compact .product-selection-guidance {
+  gap: 6px;
+  padding: 9px;
+}
+
+.product-detail.compact .product-selection-guidance > div {
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+
+.product-detail.compact .product-selection-guidance dt {
+  font-size: 11.5px;
+}
+
+.product-detail.compact .product-selection-guidance dd {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 12.5px;
 }
 
 .product-detail.compact .product-clinical-details > div {

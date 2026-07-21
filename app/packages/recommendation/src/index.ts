@@ -407,6 +407,15 @@ type RecommendationDrugProduct = DrugProduct &
       score: number;
       source: string;
     }>[];
+    selection_profiles?: readonly Readonly<{
+      protocol_id: string;
+      fit_score: number;
+      choose_when: string;
+      differentiators: readonly string[];
+      comparison_note: string;
+      practical_points: readonly string[];
+      evidence_source: string;
+    }>[];
     clinical_group_key?: string;
     indication_summary?: string;
     dosage_summary?: string;
@@ -424,6 +433,9 @@ interface RankedProduct {
   readonly pendingSafetySlots: readonly CandidateSafetySlot[];
   /** -1 fits the current age context best, 1 fits it worst, 0 is neutral. */
   readonly ageScopeRank: number;
+  readonly selectionProfile?: NonNullable<
+    RecommendationDrugProduct["selection_profiles"]
+  >[number];
   readonly sameGroupProductCount?: number;
   readonly inventory?: TenantInventory;
   readonly sales?: TenantSalesAggregate;
@@ -787,6 +799,14 @@ const recentSalesForProtocol = (
 const productPrice = (product: RecommendationDrugProduct): number =>
   product.retail_offer?.displayed_price_krw ?? Number.MAX_SAFE_INTEGER;
 
+const selectionProfileForProtocol = (
+  product: RecommendationDrugProduct,
+  protocolId: string,
+) =>
+  product.selection_profiles?.find(
+    (profile) => profile.protocol_id === protocolId,
+  );
+
 const rankedProducts = (
   options: readonly VerifiedOption[],
   protocol: OTCProtocol,
@@ -909,6 +929,10 @@ const rankedProducts = (
           inventory.discontinued)
       )
         return undefined;
+      const selectionProfile = selectionProfileForProtocol(
+        product,
+        protocol.protocol_id,
+      );
       return {
         product,
         ingredientId: verified.ingredient.ingredient_id,
@@ -919,6 +943,7 @@ const rankedProducts = (
         ),
         pendingSafetySlots: safetyAssessment.pendingSlots,
         ageScopeRank: ageScopeRankFor(product),
+        ...(selectionProfile ? { selectionProfile } : {}),
         sourceRefs: uniqueSourceRefs([
           ...sourceRefsFor(verified),
           ...product.source_refs,
@@ -941,6 +966,10 @@ const rankedProducts = (
       // final tie-breaker after clinical fit, safety, and inventory.
       const therapeuticFit = compareProtocolOptions(left.option, right.option);
       if (therapeuticFit) return therapeuticFit;
+      const productFit =
+        (right.selectionProfile?.fit_score ?? 0) -
+        (left.selectionProfile?.fit_score ?? 0);
+      if (productFit) return productFit;
       const stock =
         (right.inventory?.available_quantity ?? 0) -
         (left.inventory?.available_quantity ?? 0);
@@ -1164,6 +1193,17 @@ export function buildRecommendationDecision(
     route: ranked.product.route ?? null,
     clinical_group_key: ranked.clinicalGroupKey,
     same_group_product_count: ranked.sameGroupProductCount ?? 1,
+    ...(ranked.selectionProfile
+      ? {
+          selection_guidance: {
+            choose_when: ranked.selectionProfile.choose_when,
+            differentiators: [...ranked.selectionProfile.differentiators],
+            comparison_note: ranked.selectionProfile.comparison_note,
+            practical_points: [...ranked.selectionProfile.practical_points],
+            evidence_source: ranked.selectionProfile.evidence_source,
+          },
+        }
+      : {}),
   }));
   const profilesFor = (ranked: RankedProduct) => {
     const productProfiles =

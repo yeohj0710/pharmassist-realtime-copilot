@@ -314,6 +314,11 @@ describe("actual research preview pack", () => {
     expect(second.output.decision.product_candidates[0]?.display_name).toBe(
       "해소코푸에스시럽",
     );
+    expect(
+      second.output.decision.product_candidates[0]?.selection_guidance,
+    ).toMatchObject({
+      choose_when: "가래보다 마른기침 억제가 우선인 경우",
+    });
     expect(second.output.topic_results[0]?.decision).toBe(
       second.output.decision,
     );
@@ -691,6 +696,44 @@ describe("actual research preview pack", () => {
           product.official_source_url?.startsWith("https://health.kr/"),
       ),
     ).toBe(true);
+    const officiallyLinkedProducts = actualPack.products.filter((product) =>
+      product.official_source_url?.startsWith("https://health.kr/"),
+    );
+    expect(officiallyLinkedProducts).toHaveLength(expectedImportedProducts + 6);
+    expect(
+      officiallyLinkedProducts.every(
+        (product) =>
+          (product.selection_profiles?.length ?? 0) > 0 &&
+          product.pathway_profiles?.every((pathway) =>
+            product.selection_profiles?.some(
+              (profile) => profile.protocol_id === pathway.protocol_id,
+            ),
+          ) &&
+          product.selection_profiles?.every(
+            (profile) =>
+              profile.choose_when.length > 0 &&
+              profile.differentiators.length >= 2 &&
+              profile.comparison_note.length > 0 &&
+              profile.evidence_source.includes("SRC-CENTRALPARK"),
+          ),
+      ),
+    ).toBe(true);
+    const directlyLinkedEnrichment = productEnrichment.filter((item) =>
+      item.healthkr_url.includes("/result_drug.asp"),
+    );
+    const enrichedHealthKrProducts = directlyLinkedEnrichment.map((item) =>
+      actualPack.products.find(
+        (product) => product.product_id === item.product_id,
+      ),
+    );
+    expect(enrichedHealthKrProducts).toHaveLength(
+      directlyLinkedEnrichment.length,
+    );
+    expect(
+      enrichedHealthKrProducts.every(
+        (product) => (product?.selection_profiles?.length ?? 0) > 0,
+      ),
+    ).toBe(true);
     expect(
       healthKrProducts.every(
         (product) =>
@@ -798,6 +841,38 @@ describe("actual research preview pack", () => {
         .slice(0, 2)
         .map((item) => item.ingredient_name),
     ).toEqual(["이부프로펜", "아세트아미노펜"]);
+  });
+
+  it("returns product-specific selection guidance for officially linked alternatives", () => {
+    const engine = new LocalClinicalEngine(actualPack);
+    const result = engine.run(
+      {
+        request_id: crypto.randomUUID(),
+        session_id: crypto.randomUUID(),
+        sequence: 1,
+        input_type: "typed",
+        text: "설사를 해요",
+        is_partial: false,
+        locale: "ko-KR",
+        domain: "human_otc",
+        patient_context: {},
+        client_timestamp: new Date().toISOString(),
+      },
+      {
+        tenantId: "local-research-preview",
+        formulary: previewFormulary,
+      },
+    );
+
+    expect(result.output.decision.product_candidates.length).toBeGreaterThan(1);
+    expect(
+      result.output.decision.product_candidates.every(
+        (product) =>
+          product.selection_guidance?.choose_when &&
+          product.selection_guidance.differentiators.length >= 2 &&
+          product.selection_guidance.comparison_note,
+      ),
+    ).toBe(true);
   });
 
   it("creates preview formulary entries only from product-level indication evidence", () => {

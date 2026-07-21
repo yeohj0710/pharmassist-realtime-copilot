@@ -1593,6 +1593,48 @@
                 "same_group_product_count": {
                   "type": "integer",
                   "minimum": 1
+                },
+                "selection_guidance": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "choose_when",
+                    "differentiators",
+                    "comparison_note",
+                    "practical_points",
+                    "evidence_source"
+                  ],
+                  "properties": {
+                    "choose_when": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "differentiators": {
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "comparison_note": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "practical_points": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "evidence_source": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
                 }
               }
             }

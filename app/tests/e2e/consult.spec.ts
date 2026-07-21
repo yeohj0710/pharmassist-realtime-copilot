@@ -216,6 +216,20 @@ test("actual dry-cough protocol is selected without abdominal leakage", async ({
     coughProduct.getByText("주요 적응증", { exact: true }),
   ).toBeVisible();
   await expect(coughProduct.getByText("용법", { exact: true })).toBeVisible();
+  await expect(
+    coughProduct.getByText("언제 이 제품", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    coughProduct.getByText("가래보다 마른기침 억제가 우선인 경우", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(
+    coughProduct.getByText("다른 후보와 차이", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    coughProduct.getByText("비교 기준", { exact: true }),
+  ).toBeVisible();
   // The card stays scannable: no long precaution block and a single official
   // source link; full text lives behind the 약학정보원 link.
   await expect(

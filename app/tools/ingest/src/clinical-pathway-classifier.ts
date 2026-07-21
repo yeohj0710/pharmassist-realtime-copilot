@@ -35,6 +35,7 @@ export interface SupportiveDirectRuleDefinition {
 export interface ClinicalPathwayDataset {
   readonly schemaVersion: "1.0.0";
   readonly researchOnly: true;
+  readonly mechanismEvidence: Readonly<Record<string, readonly string[]>>;
   readonly pathways: readonly ClinicalPathwayDefinition[];
   readonly supportiveClassifications: readonly SupportiveClassificationDefinition[];
   readonly supportiveDirectRules?: readonly SupportiveDirectRuleDefinition[];
@@ -73,12 +74,22 @@ export function parseClinicalPathwayDataset(
     throw new Error("clinical pathway dataset version or mode is invalid");
   if (!Array.isArray(root["pathways"]) || !root["pathways"].length)
     throw new Error("clinical pathway dataset requires direct pathways");
+  if (
+    !root["mechanismEvidence"] ||
+    typeof root["mechanismEvidence"] !== "object" ||
+    Array.isArray(root["mechanismEvidence"])
+  )
+    throw new Error("clinical pathway dataset requires mechanism evidence");
   if (!Array.isArray(root["supportiveClassifications"]))
     throw new Error(
       "clinical pathway dataset requires supportive classifications",
     );
 
   const pathways = root["pathways"] as ClinicalPathwayDefinition[];
+  const mechanismEvidence = root["mechanismEvidence"] as Record<
+    string,
+    readonly string[]
+  >;
   const supportive = root[
     "supportiveClassifications"
   ] as SupportiveClassificationDefinition[];
@@ -99,6 +110,12 @@ export function parseClinicalPathwayDataset(
       !Number.isFinite(pathway.priority)
     )
       throw new Error(`invalid direct clinical pathway: ${pathway.pathwayId}`);
+  for (const pathway of pathways.filter(
+    (candidate) => candidate.mechanisms.length > 1,
+  ))
+    for (const mechanism of pathway.mechanisms)
+      if (!mechanismEvidence[mechanism]?.length)
+        throw new Error(`missing mechanism evidence: ${mechanism}`);
   for (const pathway of supportive)
     if (
       !pathway.officialCategoryAny?.length ||
@@ -118,6 +135,7 @@ export function parseClinicalPathwayDataset(
   return {
     schemaVersion: "1.0.0",
     researchOnly: true,
+    mechanismEvidence,
     pathways,
     supportiveClassifications: supportive,
     supportiveDirectRules: Array.isArray(root["supportiveDirectRules"])
@@ -146,6 +164,16 @@ export function classifyOfficialProduct(
   const itemName = normalized(product.itemName ?? "");
   const kpic = normalized(product.kpicAtc ?? "");
   const ingredientTexts = (product.activeIngredientTexts ?? []).map(normalized);
+  const mechanismEvidenceText = normalized(
+    [
+      product.itemName ?? "",
+      product.officialCategory ?? "",
+      product.kpicAtc ?? "",
+      product.route ?? "",
+      product.dosageForm ?? "",
+      ...(product.activeIngredientTexts ?? []),
+    ].join(" "),
+  );
   const direct = dataset.pathways
     .flatMap((pathway): ProductClinicalPathwayMatch[] => {
       const matchedTerms = pathway.efficacyAny.filter((term) =>
@@ -162,6 +190,18 @@ export function classifyOfficialProduct(
       const specificity = Math.max(
         ...matchedTerms.map((term) => normalized(term).length),
       );
+      const supportedMechanisms =
+        pathway.mechanisms.length === 1
+          ? pathway.mechanisms
+          : pathway.mechanisms.filter((mechanism) =>
+              dataset.mechanismEvidence[mechanism]?.some((term) =>
+                includesTerm(mechanismEvidenceText, term),
+              ),
+            );
+      const resolvedMechanisms =
+        supportedMechanisms.length > 0
+          ? supportedMechanisms
+          : ["official_indication_match"];
       const supportiveRule = (dataset.supportiveDirectRules ?? []).find(
         (rule) => {
           if (
@@ -215,11 +255,11 @@ export function classifyOfficialProduct(
           mechanisms: supportiveRule
             ? [
                 ...new Set([
-                  ...pathway.mechanisms,
+                  ...resolvedMechanisms,
                   supportiveRule.supportMechanism,
                 ]),
               ]
-            : pathway.mechanisms,
+            : resolvedMechanisms,
           combinationRole: supportiveRule
             ? "supportive"
             : pathway.combinationRole,

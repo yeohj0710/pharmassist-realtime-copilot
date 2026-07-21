@@ -255,6 +255,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         }
       ]
     | [
@@ -307,6 +317,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -357,6 +377,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         }
       ]
     | [
@@ -409,6 +439,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -459,6 +499,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -509,6 +559,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         }
       ]
     | [
@@ -561,6 +621,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -611,6 +681,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -661,6 +741,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -711,6 +801,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         }
       ]
     | [
@@ -763,6 +863,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -813,6 +923,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -863,6 +983,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -913,6 +1043,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         },
         {
           product_id: string;
@@ -963,6 +1103,16 @@ export type RecommendationDecision = {
           route?: string | null;
           clinical_group_key?: string;
           same_group_product_count?: number;
+          selection_guidance?: {
+            choose_when: string;
+            /**
+             * @minItems 1
+             */
+            differentiators: [string, ...string[]];
+            comparison_note: string;
+            practical_points: string[];
+            evidence_source: string;
+          };
         }
       ];
   /**

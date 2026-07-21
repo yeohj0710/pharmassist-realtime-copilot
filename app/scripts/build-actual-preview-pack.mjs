@@ -574,6 +574,134 @@ const healthKrInteractionTerms = (official) => [
     ),
   ),
 ];
+const mechanismSelectionGuidance = {
+  acid_control: "위산 역류 자체를 줄이는 작용이 필요한 경우",
+  acid_neutralization: "이미 나온 위산을 빠르게 중화하는 쪽이 필요한 경우",
+  acid_suppression: "반복되는 위산 분비를 오래 억제하는 쪽이 필요한 경우",
+  adsorbent: "묽은 설사에서 장운동 억제보다 흡착과 점막 보호를 우선하는 경우",
+  analgesia: "통증 완화가 주된 목표인 경우",
+  anticholinergic: "멀미에서 구역과 어지럼을 줄이는 항콜린 작용이 필요한 경우",
+  antihistamine: "알레르기성 콧물·재채기·가려움이 두드러지는 경우",
+  antimicrobial: "공식 적응증에 맞는 항균 성분 포함 복합제를 검토하는 경우",
+  antiinflammatory_analgesia: "염증을 동반한 관절·근육 통증이나 월경통인 경우",
+  antipyretic: "발열과 몸살 통증을 함께 낮춰야 하는 경우",
+  antipruritic: "가려움 완화가 가장 중요한 경우",
+  antiseptic: "가벼운 상처나 구강 부위의 살균이 필요한 경우",
+  antispasmodic: "쥐어짜는 양상의 경련성 통증이 함께 있는 경우",
+  bile_support: "지방식 뒤 더부룩함처럼 담즙 보조가 필요한 소화불량인 경우",
+  bulk_laxative: "변의 부피와 수분을 늘리는 완만한 변비 관리가 필요한 경우",
+  central_analgesia: "발열·두통처럼 중추성 통증 완화가 필요한 경우",
+  cough_support: "인후 불편과 함께 기침 완화도 필요한 경우",
+  cough_suppression: "가래보다 마른기침 억제가 우선인 경우",
+  decongestant: "콧물보다 코막힘이 더 불편한 경우",
+  digestive_enzyme: "과식이나 음식 소화 저하가 중심인 경우",
+  digestion_support: "체함과 더부룩함을 함께 완화해야 하는 경우",
+  diuretic_support: "월경통과 함께 붓기·복부팽만이 있는 경우",
+  expectorant: "가래를 묽게 하거나 배출을 도와야 하는 경우",
+  gas_reduction: "가스와 복부팽만이 주된 불편인 경우",
+  herbal_support: "공식 적응증에 맞는 생약 복합 보조를 함께 검토하는 경우",
+  local_analgesia: "통증 부위에 국소적으로 작용하는 제형이 필요한 경우",
+  local_antiinflammatory:
+    "피부·구강·인후의 국소 염증을 직접 완화해야 하는 경우",
+  local_support: "먹는 약과 별도로 통증 부위를 국소 관리해야 하는 경우",
+  motility_reduction:
+    "발열·혈변 같은 위험 신호가 없는 설사에서 잦은 배변을 줄여야 하는 경우",
+  motility_regulation:
+    "위장 운동 저하나 불규칙한 운동이 소화불량의 중심인 경우",
+  mucolytic: "끈적한 가래를 묽게 만들어 배출해야 하는 경우",
+  mucosal_barrier: "역류나 자극으로부터 식도·위 점막을 덮어 보호해야 하는 경우",
+  mucosal_protection: "위장 또는 구강 점막의 자극과 통증을 보호해야 하는 경우",
+  nasal_local_support: "전신 복용약보다 코에 직접 쓰는 국소 관리가 필요한 경우",
+  ocular_lubrication: "건조감과 이물감에 윤활·보습이 필요한 경우",
+  official_indication_match:
+    "공식 효능·효과는 현재 증상과 맞지만 세부 기전 비교 근거가 부족한 경우",
+  oral_antiseptic: "구내염 부위의 구강 살균이 필요한 경우",
+  osmotic_laxative: "딱딱한 변에 수분을 끌어들여 부드럽게 해야 하는 경우",
+  peripheral_analgesia: "염증성·말초성 통증을 낮추는 작용이 필요한 경우",
+  secretion_reduction: "콧물과 분비물이 많은 경우",
+  stimulant_laxative: "단기간에 장운동을 직접 자극해야 하는 변비인 경우",
+  stool_softener: "힘주기 어려운 변을 부드럽게 해야 하는 경우",
+  symptom_specific_gastrointestinal:
+    "복통·구역·구토 등 제품의 공식 적응증과 현재 증상이 직접 맞는 경우",
+  tissue_repair: "상처 부위의 피부 회복을 보조해야 하는 경우",
+  vitamin_support: "통증 치료와 별도로 비타민·미네랄 보조를 검토하는 경우",
+  wound_protection: "가벼운 상처를 외부 자극에서 보호해야 하는 경우",
+};
+const ingredientSelectionLabel = (value) => {
+  const text = String(value ?? "")
+    .normalize("NFKC")
+    .trim();
+  const korean = text.match(/[가-힣][가-힣0-9·\- ]*/u)?.[0];
+  return (korean ?? text).replace(/\s+\d[\s\S]*$/u, "").trim();
+};
+const selectionEvidenceIdentity = (value) =>
+  String(value ?? "")
+    .normalize("NFKC")
+    .toLocaleLowerCase("ko-KR")
+    .replace(/[^0-9a-z가-힣]/gu, "");
+const dosagePopulationLabel = (dosage, productName = "") => {
+  const text = String(dosage ?? "");
+  const pediatric =
+    /(?:만\s*)?\d+(?:\.\d+)?\s*(?:개월|세)|소아|어린이/u.test(text) ||
+    /키즈|어린이|소아|꼬마/u.test(productName);
+  const adult = /성인/u.test(text);
+  if (pediatric && adult) return "성인·소아 연령별 용량이 구분된 제품";
+  if (pediatric) return "소아 연령별 용량이 확인된 제품";
+  if (adult) return "성인 용량이 확인된 제품";
+  return null;
+};
+const evidenceMechanismsFor = (pathway, evidenceValues) => {
+  if (pathway.mechanisms.length === 1) return pathway.mechanisms;
+  const evidence = selectionEvidenceIdentity(evidenceValues.join(" "));
+  const supported = pathway.mechanisms.filter((mechanism) =>
+    (clinicalPathwayDefinitions.mechanismEvidence?.[mechanism] ?? []).some(
+      (term) => evidence.includes(selectionEvidenceIdentity(term)),
+    ),
+  );
+  return supported.length > 0 ? supported : ["official_indication_match"];
+};
+const healthKrSelectionProfiles = (record, pathwayMapping) => {
+  const official = record.officialProduct;
+  const ingredients = pathwayMapping.ingredientMappings
+    .map((mapping) => ingredientSelectionLabel(mapping.sourceText))
+    .filter(Boolean)
+    .slice(0, 3);
+  const form = [official.dosageForm, official.route]
+    .filter(Boolean)
+    .filter((value, index, all) => all.indexOf(value) === index)
+    .join(" · ");
+  const population = dosagePopulationLabel(official.dosage, official.itemName);
+  return pathwayMapping.pathways.map((pathway) => {
+    const fitStatements = pathway.mechanisms
+      .map((mechanism) => mechanismSelectionGuidance[mechanism])
+      .filter(Boolean);
+    const differentiators = [
+      ingredients.length > 0 ? `주요 성분: ${ingredients.join(", ")}` : null,
+      form ? `제형·투여경로: ${form}` : null,
+      population ? `복용 대상: ${population}` : null,
+      pathway.combinationRole === "supportive"
+        ? "주증상 치료를 대신하기보다 보조 역할로 검토"
+        : "현재 증상 경로에서 직접 작용하는 1차 역할로 검토",
+    ].filter(Boolean);
+    const dosagePoint = compactClinicalText(official.dosage, 180);
+    return {
+      protocol_id: pathway.protocolId,
+      fit_score: pathway.score,
+      choose_when: pathway.mechanisms.includes("official_indication_match")
+        ? `공식 효능에 ${pathway.matchedTerms.join("·")}가 포함된 ${official.dosageForm ?? "제품"}을 검토하는 경우`
+        : fitStatements.length > 0
+          ? [...new Set(fitStatements)].join(" 또는 ")
+          : "제품의 공식 효능·효과와 현재 증상이 직접 맞는 경우",
+      differentiators,
+      comparison_note:
+        pathway.combinationRole === "supportive"
+          ? "직접 치료형 후보와 같은 순위로 보지 않고 보조 후보로 구분합니다."
+          : "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다.",
+      practical_points: dosagePoint ? [dosagePoint] : [],
+      evidence_source: pathway.source,
+    };
+  });
+};
 const healthKrProductMetadata = (record, pathwayMapping) => {
   const official = record.officialProduct;
   return {
@@ -614,6 +742,9 @@ const healthKrProductMetadata = (record, pathwayMapping) => {
           score: pathway.score,
           source: pathway.source,
         }))
+      : [],
+    selection_profiles: pathwayMapping
+      ? healthKrSelectionProfiles(record, pathwayMapping)
       : [],
     indication_summary: compactClinicalText(official.efficacy),
     dosage_summary: compactClinicalText(official.dosage),
@@ -1028,10 +1159,109 @@ const overlayRecordFor = (product) => {
   );
   return signatures.size === 1 ? records[0] : undefined;
 };
+const healthKrEnrichmentProductIds = new Set(
+  enrichmentIndex
+    .filter((item) => item.healthkr_url.includes("/result_drug.asp"))
+    .map((item) => item.product_id),
+);
+const legacySelectionProfilesFor = (product) => {
+  const ingredientIds = new Set(
+    [...productIngredients, ...newProductIngredients]
+      .filter(
+        (link) =>
+          link.product_id === product.product_id &&
+          link.is_active &&
+          link.role !== "excipient",
+      )
+      .map((link) => link.ingredient_id),
+  );
+  const protocolIds = new Set(
+    claims.flatMap((claim) => {
+      if (
+        claim.claim_type !== "indication" ||
+        typeof claim.object !== "object" ||
+        claim.object === null ||
+        Array.isArray(claim.object) ||
+        !claim.object.candidate_product_ids?.includes(product.product_id)
+      )
+        return [];
+      const protocolId = claim.qualifiers?.protocol_id;
+      return typeof protocolId === "string" ? [protocolId] : [];
+    }),
+  );
+  for (const option of protocolOptions)
+    if (ingredientIds.has(option.ingredient_id))
+      protocolIds.add(option.protocol_id);
+  return [...protocolIds].flatMap((protocolId) => {
+    const pathway = clinicalPathwayByProtocolId.get(protocolId);
+    if (!pathway) return [];
+    const fitScore = Math.max(
+      pathway.priority ?? 0,
+      ...protocolOptions
+        .filter(
+          (option) =>
+            option.protocol_id === protocolId &&
+            ingredientIds.has(option.ingredient_id),
+        )
+        .map((option) => option.clinical_priority),
+    );
+    const ingredients = (product.active_ingredients ?? [])
+      .map((ingredient) => ingredientSelectionLabel(ingredient.name))
+      .filter(Boolean)
+      .slice(0, 3);
+    const form = [product.dosage_form, product.route]
+      .filter(Boolean)
+      .filter((value, index, all) => all.indexOf(value) === index)
+      .join(" · ");
+    const supportive = pathway.combinationRole === "supportive";
+    const mechanisms = evidenceMechanismsFor(pathway, [
+      product.display_name,
+      product.dosage_form,
+      product.route,
+      ...(product.active_ingredients ?? []).map(
+        (ingredient) => ingredient.name,
+      ),
+    ]);
+    const population = dosagePopulationLabel("", product.display_name);
+    return [
+      {
+        protocol_id: protocolId,
+        fit_score: Math.min(100, Math.max(0, fitScore)),
+        choose_when: mechanisms.includes("official_indication_match")
+          ? `공식 효능·효과와 현재 증상이 직접 맞는 ${product.dosage_form ?? "제품"}을 검토하는 경우`
+          : mechanisms
+              .map((mechanism) => mechanismSelectionGuidance[mechanism])
+              .filter(Boolean)
+              .join(" 또는 "),
+        differentiators: [
+          ingredients.length > 0
+            ? `주요 성분: ${ingredients.join(", ")}`
+            : null,
+          form ? `제형·투여경로: ${form}` : null,
+          population ? `복용 대상: ${population}` : null,
+          supportive
+            ? "주증상 치료를 대신하기보다 보조 역할로 검토"
+            : "현재 증상 경로에서 직접 작용하는 1차 역할로 검토",
+        ].filter(Boolean),
+        comparison_note: supportive
+          ? "직접 치료형 후보와 같은 순위로 보지 않고 보조 후보로 구분합니다."
+          : "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다.",
+        practical_points: [],
+        evidence_source: pathway.source,
+      },
+    ];
+  });
+};
 const productsWithHealthKrOverlays = [...products, ...newProducts].map(
   (product) => {
     const record = overlayRecordFor(product);
-    if (!record) return product;
+    if (!record)
+      return healthKrEnrichmentProductIds.has(product.product_id)
+        ? {
+            ...product,
+            selection_profiles: legacySelectionProfilesFor(product),
+          }
+        : product;
     const sourceRef = healthKrSourceRef(record);
     const durFlags = [
       ...(product.dur_flags ?? []),
@@ -1045,12 +1275,26 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
             candidate.description === flag.description,
         ) === index,
     );
+    const officialMetadata = healthKrProductMetadata(
+      record,
+      clinicalPathwayByRegistryRecordId.get(record.registryRecordId),
+    );
+    const legacySelectionProfiles = legacySelectionProfilesFor(product);
+    const officialSelectionProfiles = officialMetadata.selection_profiles;
+    const mergedSelectionProfiles = [
+      ...officialSelectionProfiles,
+      ...legacySelectionProfiles.filter(
+        (legacyProfile) =>
+          !officialSelectionProfiles.some(
+            (officialProfile) =>
+              officialProfile.protocol_id === legacyProfile.protocol_id,
+          ),
+      ),
+    ];
     return {
       ...product,
-      ...healthKrProductMetadata(
-        record,
-        clinicalPathwayByRegistryRecordId.get(record.registryRecordId),
-      ),
+      ...officialMetadata,
+      selection_profiles: mergedSelectionProfiles,
       source_snapshot_ids: [
         ...new Set([...product.source_snapshot_ids, healthKrSnapshotId]),
       ],

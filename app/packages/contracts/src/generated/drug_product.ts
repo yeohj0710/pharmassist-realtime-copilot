@@ -48,6 +48,18 @@ export interface DrugProduct {
     score: number;
     source: string;
   }[];
+  selection_profiles?: {
+    protocol_id: string;
+    fit_score: number;
+    choose_when: string;
+    /**
+     * @minItems 1
+     */
+    differentiators: [string, ...string[]];
+    comparison_note: string;
+    practical_points: string[];
+    evidence_source: string;
+  }[];
   clinical_group_key?: string;
   indication_summary?: string;
   dosage_summary?: string;
