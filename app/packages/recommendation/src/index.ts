@@ -1369,8 +1369,8 @@ export function renderDecisionSentence(
           : `${leadIngredient.ingredient_name} 성분`
         : "허가 성분";
       return product
-        ? `지금은 ${withKoreanObjectParticle(product.display_name)} 후보로 볼게요. 이 제품에는 ${ingredientLabel}이 들어 있어요.`
-        : `지금은 ${withKoreanObjectParticle(ingredientLabel)} 중심으로 살펴볼게요.`;
+        ? `많이 불편하셨겠어요. 말씀해 주신 증상에는 우선 ${withKoreanObjectParticle(product.display_name)} 살펴보면 좋겠어요. 이 제품에는 ${ingredientLabel}이 들어 있어요.`
+        : `많이 불편하셨겠어요. 말씀해 주신 증상에는 우선 ${withKoreanObjectParticle(ingredientLabel)} 중심으로 살펴보면 좋겠어요.`;
     }
     case "ask":
       return (

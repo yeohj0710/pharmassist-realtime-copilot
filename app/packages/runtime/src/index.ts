@@ -1194,8 +1194,8 @@ export class LocalClinicalEngine {
     const combinedTopicNarration =
       topicResults.length > 1
         ? combinedTopicCandidates.length > 0
-          ? `말씀하신 증상들을 같이 볼게요. 지금은 ${combinedTopicCandidates.join(", ")} 후보로 볼게요.`
-          : "말씀하신 증상들을 같이 볼게요."
+          ? `말씀하신 증상이 함께 있어서 많이 불편하셨겠어요. 현재 정보로는 ${combinedTopicCandidates.join(", ")} 각각 살펴볼게요.`
+          : "말씀하신 증상이 함께 있어서 많이 불편하셨겠어요. 하나씩 차근차근 살펴볼게요."
         : null;
     const output: RuntimeOutput = {
       request_id: input.request_id,

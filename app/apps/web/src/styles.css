@@ -816,8 +816,8 @@ kbd {
 }
 
 .multi-topic-overview {
-  margin-top: 16px;
-  padding: 14px;
+  margin: 16px 20px 0;
+  padding: 20px 22px;
   border-radius: 12px;
   background: #eaf4ff;
 }

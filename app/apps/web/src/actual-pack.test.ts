@@ -209,8 +209,9 @@ describe("actual research preview pack", () => {
     expect(combined.output.say_now.join(" ")).toContain("플루르비프로펜");
     expect(combined.output.say_now.join(" ")).not.toContain("아세트아미노펜");
     expect(combined.output.say_now.join(" ")).toContain(
-      "말씀하신 증상들을 같이 볼게요.",
+      "말씀하신 증상이 함께 있어서 많이 불편하셨겠어요.",
     );
+    expect(combined.output.say_now.join(" ")).toContain("각각 살펴볼게요.");
     expect(combined.output.say_now.join(" ")).not.toMatch(
       /현재 .* 증상을 함께 보고 있습니다|제품 후보는|성분 후보는/u,
     );

@@ -741,12 +741,12 @@ describe("verified recommendation decision", () => {
       "not_connected",
     );
     expect(renderDecisionSentence(decision)).toBe(
-      "지금은 검토용 속쓰림 제품 A를 후보로 볼게요. 이 제품에는 검토용 속쓰림 성분 A 성분이 들어 있어요.",
+      "많이 불편하셨겠어요. 말씀해 주신 증상에는 우선 검토용 속쓰림 제품 A를 살펴보면 좋겠어요. 이 제품에는 검토용 속쓰림 성분 A 성분이 들어 있어요.",
     );
     expect(renderDecisionSentence(decision)).not.toMatch(
       /근거가 연결된|상황으로 보입니다|고려해볼 수 있습니다/u,
     );
-    expect(renderDecisionSentence(decision)).not.toContain("먼저");
+    expect(renderDecisionSentence(decision)).toContain("우선");
     expect(renderDecisionSentence(decision)).not.toContain("부터 확인");
     expect(renderDecisionSentence(decision)).not.toContain("재고");
   });

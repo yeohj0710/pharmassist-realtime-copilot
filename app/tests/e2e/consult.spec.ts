@@ -168,7 +168,9 @@ test("actual dry-cough protocol is selected without abdominal leakage", async ({
     combinationSummary.getByText("쎄파렉신연조엑스", { exact: true }),
   ).toBeVisible();
   const spokenGuidance = page.locator(".primary-guidance .say").first();
-  await expect(spokenGuidance).toContainText("후보로 볼게요");
+  await expect(spokenGuidance).toContainText("많이 불편하셨겠어요");
+  await expect(spokenGuidance).toContainText("우선");
+  await expect(spokenGuidance).toContainText("살펴보면 좋겠어요");
   await expect(spokenGuidance).not.toContainText(
     /상황으로 보입니다|현재 증상에 연결된|근거가 연결된|고려해볼 수 있습니다|판단됩니다/u,
   );
@@ -380,6 +382,16 @@ test("a new symptom keeps earlier topic candidates in the same patient consultat
     page.getByRole("heading", { name: "함께 확인 중인 증상" }),
   ).toBeVisible();
   await expect(page.getByText(/마른기침 · 알레르기비염/u)).toBeVisible();
+  const topicOverview = page.locator(".multi-topic-overview");
+  const topicOverviewSpacing = await topicOverview.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      paddingInline: Number.parseFloat(style.paddingInlineStart),
+      marginInline: Number.parseFloat(style.marginInlineStart),
+    };
+  });
+  expect(topicOverviewSpacing.paddingInline).toBeGreaterThanOrEqual(20);
+  expect(topicOverviewSpacing.marginInline).toBeGreaterThanOrEqual(20);
 });
 
 test("sore throat and heartburn remain separate while one useful question leads", async ({
