@@ -179,14 +179,6 @@ const formatPrice = (value: number | null | undefined): string | null =>
     ? null
     : `${new Intl.NumberFormat("ko-KR").format(value)}원`;
 
-const formatRecordedDate = (
-  value: string | null | undefined,
-): string | null => {
-  if (!value) return null;
-  const [year, month, day] = value.split("-").map(Number);
-  return year && month && day ? `${year}. ${month}. ${day}. 기록` : value;
-};
-
 const cleanSummary = (value: string | undefined): string | null => {
   const cleaned = value
     ?.replace(/<br\s*\/?>/giu, " ")
@@ -203,6 +195,40 @@ const routeAndForm = (product: ProductCandidateDetails): string | null => {
   );
   return values.length > 0 ? [...new Set(values)].join(" · ") : null;
 };
+
+const officialProductUrl = (
+  product: ProductCandidateDetails,
+): string | null => {
+  const enriched = productEnrichment.get(product.product_id);
+  const matchStatus = inferredOfficialMatchStatus(product, enriched);
+  return matchStatus === "not_applicable"
+    ? null
+    : (product.official_source_url ??
+        fallbackHealthKrUrl(product.product_id, product.display_name));
+};
+
+function ProductName({
+  product,
+  className,
+}: Readonly<{
+  product: ProductCandidate;
+  className: string;
+}>) {
+  const url = officialProductUrl(product as ProductCandidateDetails);
+  return url ? (
+    <a
+      className={className}
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      title="약학정보원 정보를 새 창에서 봅니다"
+    >
+      {product.display_name}
+    </a>
+  ) : (
+    <strong className={className}>{product.display_name}</strong>
+  );
+}
 
 function ProductSnapshotDetails({
   product: rawProduct,
@@ -221,7 +247,6 @@ function ProductSnapshotDetails({
       : (product.official_source_url ??
         fallbackHealthKrUrl(product.product_id, product.display_name));
   const price = formatPrice(product.displayed_price_krw);
-  const recordedAt = formatRecordedDate(product.price_recorded_at);
   const formAndRoute = routeAndForm(product);
   const manufacturer = product.manufacturer?.trim() || enriched?.manufacturer;
   // The card stays scannable: indication and dosage only. Full precautions
@@ -256,9 +281,7 @@ function ProductSnapshotDetails({
       )}
       {price && (
         <p className="product-price-snapshot">
-          <span>가격 스냅샷</span>
           <strong>{price}</strong>
-          <small>{recordedAt ?? "표시 가격 기록"}</small>
         </p>
       )}
       {clinicalDetails.length > 0 && (
@@ -379,9 +402,7 @@ function TopicDecisionBlock({
                           </span>
                         )}
                       </div>
-                      <strong className="product-name">
-                        {product.display_name}
-                      </strong>
+                      <ProductName product={product} className="product-name" />
                       <ProductSnapshotDetails product={product} />
                     </div>
                   </article>
@@ -440,6 +461,80 @@ function TopicDecisionBlock({
   );
 }
 
+function SidebarTopicCandidates({
+  topic,
+}: Readonly<{
+  topic: RuntimeOutput["topic_results"][number];
+}>) {
+  const products = topic.decision.product_candidates;
+  const [index, setIndex] = useState(0);
+  const active = Math.min(index, Math.max(products.length - 1, 0));
+  const product = products[active];
+  if (!product) return null;
+  const productDetails = product as ProductCandidateDetails;
+  const enriched = productEnrichment.get(product.product_id);
+  const imageUrl = productDetails.image_url ?? enriched?.image_url;
+  const label =
+    topic.ask_next.some((question) => question.slot === "symptom_pattern") &&
+    topic.symptom_category.includes("기침")
+      ? "기침"
+      : topicLabel(topic.symptom_category);
+  return (
+    <section className="sidebar-candidate-topic">
+      <div className="sidebar-topic-heading">
+        <p>{label}</p>
+        {products.length > 1 && (
+          <div
+            className="sidebar-candidate-nav"
+            role="group"
+            aria-label={`${label} 후보 넘겨보기`}
+          >
+            <button
+              type="button"
+              aria-label="이전 후보"
+              disabled={active === 0}
+              onClick={() => setIndex(active - 1)}
+            >
+              ‹
+            </button>
+            <span aria-live="polite">
+              {active + 1}/{products.length}
+            </span>
+            <button
+              type="button"
+              aria-label="다음 후보"
+              disabled={active === products.length - 1}
+              onClick={() => setIndex(active + 1)}
+            >
+              ›
+            </button>
+          </div>
+        )}
+      </div>
+      <article className="sidebar-product">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={`${product.display_name} 제품 이미지`}
+            width={62}
+            height={62}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className="sidebar-product-placeholder" aria-hidden="true">
+            약
+          </div>
+        )}
+        <div className="sidebar-product-body">
+          <ProductName product={product} className="sidebar-product-name" />
+        </div>
+        <ProductSnapshotDetails product={product} compact />
+      </article>
+    </section>
+  );
+}
+
 function ProvisionalCandidateSidebar({
   topics,
 }: Readonly<{
@@ -455,54 +550,10 @@ function ProvisionalCandidateSidebar({
         지금까지 확인한 내용으로 먼저 볼 수 있는 제품이에요.
       </p>
       <div className="sidebar-candidate-list">
-        {topics.map((topic) => {
-          const product = topic.decision.product_candidates[0];
-          if (!product) return null;
-          const productDetails = product as ProductCandidateDetails;
-          const enriched = productEnrichment.get(product.product_id);
-          const imageUrl = productDetails.image_url ?? enriched?.image_url;
-          const label =
-            topic.ask_next.some(
-              (question) => question.slot === "symptom_pattern",
-            ) && topic.symptom_category.includes("기침")
-              ? "기침"
-              : topicLabel(topic.symptom_category);
-          return (
-            <section
-              key={topic.protocol_id}
-              className="sidebar-candidate-topic"
-            >
-              <p>{label}</p>
-              <article className="sidebar-product">
-                {imageUrl ? (
-                  <img
-                    src={imageUrl}
-                    alt={`${product.display_name} 제품 이미지`}
-                    width={62}
-                    height={62}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <div
-                    className="sidebar-product-placeholder"
-                    aria-hidden="true"
-                  >
-                    약
-                  </div>
-                )}
-                <div className="sidebar-product-body">
-                  <strong>{product.display_name}</strong>
-                </div>
-                <ProductSnapshotDetails product={product} compact />
-              </article>
-            </section>
-          );
-        })}
+        {topics.map((topic) => (
+          <SidebarTopicCandidates key={topic.protocol_id} topic={topic} />
+        ))}
       </div>
-      <small>
-        판매순위가 아니며, 대답에 따라 더 맞는 제품으로 바뀔 수 있어요.
-      </small>
     </aside>
   );
 }
@@ -1193,10 +1244,6 @@ export function App() {
                 </select>
               </label>
             )}
-            <p className="privacy">
-              음성은 이 데모에서 저장되지 않습니다. 음성 인식 연결 전에는 직접
-              입력을 사용하세요.
-            </p>
           </section>
           {processing && (
             <section className="engine-status" role="status" aria-live="polite">
@@ -1384,10 +1431,6 @@ export function App() {
           </div>
         ) : null}
       </div>
-      <footer>
-        개인정보를 입력하지 마세요. 진단·처방 변경·확정 용량을 생성하지
-        않습니다.
-      </footer>
     </main>
   );
 }

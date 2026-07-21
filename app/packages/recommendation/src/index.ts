@@ -984,53 +984,6 @@ const rankedProducts = (
     }));
 };
 
-export function nextCandidateSafetyQuestion(
-  request: RecommendationRequest,
-  decision: RecommendationDecision,
-): ProgressiveQuestion | null {
-  if (
-    request.allowProgressiveCandidates !== true ||
-    decision.status !== "recommend"
-  )
-    return null;
-  const protocol = request.protocol;
-  const candidate = decision.product_candidates[0];
-  if (!protocol || !candidate) return null;
-  const product = request.knowledge.products.find(
-    (item) => item.product_id === candidate.product_id,
-  );
-  const verified = verifiedOptions(protocol, request).find(
-    (item) => item.ingredient.ingredient_id === candidate.ingredient_id,
-  );
-  if (!product || !verified) return null;
-  const assessment = productSafetyAssessment(
-    asRecommendationProduct(product),
-    verified,
-    request,
-  );
-  if (assessment.status !== "requires_context") return null;
-  const asked = new Set(request.consultationState?.asked_slots ?? []);
-  const slot = assessment.pendingSlots.find((item) => !asked.has(item));
-  switch (slot) {
-    case "age_years":
-      return {
-        question: "연령이 어떻게 되나요?",
-        reason: "연령 제한이 있는 제품인지 확인합니다.",
-        slot,
-        ruleId: "PRODUCT_SAFETY_AGE_CONTEXT",
-      };
-    case "pregnancy_status":
-      return {
-        question: "임신 중이거나 임신 가능성이 있나요?",
-        reason: "임신 중 사용 여부에 따라 현재 제품 후보가 달라집니다.",
-        slot,
-        ruleId: "PRODUCT_SAFETY_PREGNANCY_CONTEXT",
-      };
-    default:
-      return null;
-  }
-}
-
 export function buildRecommendationDecision(
   request: RecommendationRequest,
 ): RecommendationDecision {

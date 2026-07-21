@@ -25,7 +25,6 @@ import { normalizeKorean } from "@pharmassist/normalizer";
 import {
   assertDecisionInvariants,
   buildRecommendationDecision,
-  nextCandidateSafetyQuestion,
   nextConsultationState,
   nextProtocolQuestion,
   renderDecisionSentence,
@@ -938,10 +937,12 @@ export class LocalClinicalEngine {
       ...(focusPrior ? { consultationState: focusPrior } : {}),
     };
     let decision = buildRecommendationDecision(recommendationRequest);
+    // Counter reality: age/pregnancy context is not interrogated up front.
+    // Unknown safety context only demotes candidates in ranking; the engine
+    // asks symptom-discriminating protocol questions and nothing more.
     const progressiveQuestion =
       decision.status === "recommend"
-        ? (nextProtocolQuestion(recommendationRequest) ??
-          nextCandidateSafetyQuestion(recommendationRequest, decision))
+        ? nextProtocolQuestion(recommendationRequest)
         : null;
     const additionalTopicEvaluations = orderedTopicProtocols
       .filter(
@@ -989,8 +990,7 @@ export class LocalClinicalEngine {
         const topicDecision = buildRecommendationDecision(topicRequest);
         const nextQuestion =
           mentionedNow && topicDecision.status === "recommend"
-            ? (nextProtocolQuestion(topicRequest) ??
-              nextCandidateSafetyQuestion(topicRequest, topicDecision))
+            ? nextProtocolQuestion(topicRequest)
             : supersededTopicIds.has(topicProtocol.protocol_id)
               ? null
               : priorTopic?.pending_question;

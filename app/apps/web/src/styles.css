@@ -271,10 +271,8 @@ label {
   background: #fee;
   color: #d22030;
 }
-.privacy,
 .muted,
-small,
-footer {
+small {
   color: #4e5968;
   font-size: 13px;
 }
@@ -339,11 +337,56 @@ footer {
   display: grid;
   gap: 12px;
 }
-.sidebar-candidate-topic > p {
-  margin: 0 0 6px;
+.sidebar-topic-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.sidebar-topic-heading > p {
+  margin: 0;
   color: #1b64da;
   font-size: 12px;
   font-weight: 800;
+}
+.sidebar-candidate-nav {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sidebar-candidate-nav span {
+  min-width: 28px;
+  color: #6b7684;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.sidebar-candidate-nav button {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid #e5e8eb;
+  border-radius: 7px;
+  background: #fff;
+  color: #333d4b;
+  font-size: 14px;
+  line-height: 1;
+  place-items: center;
+  cursor: pointer;
+}
+.sidebar-candidate-nav button:hover:not(:disabled) {
+  background: #f2f4f6;
+}
+.sidebar-candidate-nav button:disabled {
+  color: #b0b8c1;
+  cursor: default;
+}
+.sidebar-candidate-nav button:focus-visible {
+  outline: 3px solid #bcd8ff;
+  outline-offset: 1px;
 }
 .sidebar-product {
   display: grid;
@@ -375,21 +418,27 @@ footer {
   min-width: 0;
   gap: 3px;
 }
-.sidebar-product strong {
+.sidebar-product-name {
   overflow-wrap: anywhere;
   color: #191f28;
   font-size: 15px;
+  font-weight: 700;
   line-height: 1.35;
+}
+a.sidebar-product-name {
+  text-decoration: none;
+}
+a.sidebar-product-name:hover {
+  color: #1b64da;
+  text-decoration: underline;
+}
+a.sidebar-product-name:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid #bcd8ff;
+  outline-offset: 2px;
 }
 .sidebar-product .product-detail {
   grid-column: 1 / -1;
-}
-.candidate-sidebar > small {
-  display: block;
-  margin-top: 12px;
-  color: #6b7684;
-  font-size: 11px;
-  line-height: 1.5;
 }
 .summary-heading {
   display: flex;
@@ -617,10 +666,6 @@ kbd {
   padding: 2px 6px;
   background: #eef1f5;
   border-radius: 5px;
-}
-footer {
-  text-align: center;
-  margin-top: 26px;
 }
 @media (min-width: 1241px) {
   .consult-sidebar {
@@ -1110,6 +1155,22 @@ footer {
   line-height: 1.4;
 }
 
+a.product-name {
+  width: fit-content;
+  text-decoration: none;
+}
+
+a.product-name:hover {
+  color: #1b64da;
+  text-decoration: underline;
+}
+
+a.product-name:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid #bcd8ff;
+  outline-offset: 2px;
+}
+
 .product-detail {
   display: grid;
   width: 100%;
@@ -1177,29 +1238,17 @@ footer {
 
 .product-price-snapshot {
   display: flex;
+  width: fit-content;
   margin: 0;
-  padding: 8px 10px;
+  padding: 6px 10px;
   border-radius: 10px;
   background: #f9fafb;
   align-items: baseline;
-  gap: 7px;
-}
-
-.product-price-snapshot > span {
-  color: #59636e;
-  font-size: 11px;
-  font-weight: 700;
 }
 
 .product-price-snapshot strong {
   color: #191f28;
   font-size: 15px;
-}
-
-.product-price-snapshot small {
-  margin-left: auto;
-  color: #59636e;
-  font-size: 10px;
 }
 
 .product-clinical-details {
@@ -1295,18 +1344,11 @@ footer {
 }
 
 .product-detail.compact .product-price-snapshot {
-  flex-wrap: wrap;
-  padding: 7px 8px;
-  gap: 4px 6px;
+  padding: 5px 8px;
 }
 
 .product-detail.compact .product-price-snapshot strong {
   font-size: 13px;
-}
-
-.product-detail.compact .product-price-snapshot small {
-  width: 100%;
-  margin-left: 0;
 }
 
 .product-detail.compact .product-clinical-details > div {
@@ -1387,15 +1429,6 @@ footer {
   .product-clinical-details > div {
     grid-template-columns: 72px minmax(0, 1fr);
     gap: 8px;
-  }
-
-  .product-price-snapshot {
-    flex-wrap: wrap;
-  }
-
-  .product-price-snapshot small {
-    width: 100%;
-    margin-left: 0;
   }
 
   .ingredient-summary {

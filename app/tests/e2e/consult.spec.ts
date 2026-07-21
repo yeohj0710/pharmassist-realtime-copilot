@@ -146,13 +146,9 @@ test("actual dry-cough protocol is selected without abdominal leakage", async ({
   await input.fill("마른기침이 나요");
   await input.press("Enter");
   await expect(page.getByText(/복통·구토/)).toHaveCount(0);
-  await expect(
-    page
-      .locator(".candidate-sidebar")
-      .getByText("해소코푸에스시럽", { exact: true }),
-  ).toBeVisible();
-  await input.fill("35살이고 임신은 아니에요");
-  await input.press("Enter");
+  // Age/pregnancy is never interrogated up front, so the pattern already
+  // named in the first turn completes the consult immediately.
+  await expect(page.locator(".primary-guidance")).not.toContainText("임신");
   await expect(
     page
       .locator(".result .ingredient-summary")
@@ -196,15 +192,21 @@ test("actual dry-cough protocol is selected without abdominal leakage", async ({
   await expect(
     coughProduct.locator('[data-official-match-status="confirmed"]'),
   ).toHaveText("약학정보원 공식 연결");
-  await expect(
-    coughProduct.getByText("가격 스냅샷", { exact: true }),
-  ).toBeVisible();
+  // The price shows as a bare figure: no snapshot label, no recorded date.
   await expect(
     coughProduct.getByText("2,500원", { exact: true }),
   ).toBeVisible();
   await expect(
-    coughProduct.getByText("2026. 7. 15. 기록", { exact: true }),
-  ).toBeVisible();
+    coughProduct.getByText("가격 스냅샷", { exact: true }),
+  ).toHaveCount(0);
+  await expect(coughProduct.getByText(/기록/u)).toHaveCount(0);
+  // The product name itself links to the official 약학정보원 page.
+  await expect(
+    coughProduct.getByRole("link", { name: "해소코푸에스시럽" }),
+  ).toHaveAttribute(
+    "href",
+    /^https:\/\/(?:www\.)?health\.kr\/searchDrug\/result_drug\.asp\?drug_cd=2019012500051$/u,
+  );
   await expect(coughProduct.getByText("6P", { exact: true })).toBeVisible();
   await expect(coughProduct.getByText(/지엘파마/u)).toBeVisible();
   await expect(
@@ -263,6 +265,27 @@ test("generic cough shows a current product, asks one pattern question, and keep
   await expect(page.locator(".candidate-sidebar .sidebar-product")).toHaveCount(
     1,
   );
+  await expect(
+    page
+      .locator(".candidate-sidebar")
+      .getByText("해소코푸에스시럽", { exact: true })
+      .first(),
+  ).toBeVisible();
+  // The sidebar pages through every current candidate instead of pinning one.
+  const sidebarNav = page.locator(".sidebar-candidate-nav");
+  await expect(sidebarNav.locator("span")).toHaveText(/^1\/[2-9]$/u);
+  await sidebarNav.getByRole("button", { name: "다음 후보" }).click();
+  await expect(sidebarNav.locator("span")).toHaveText(/^2\/[2-9]$/u);
+  await expect(
+    page
+      .locator(".candidate-sidebar")
+      .getByText("쎄파렉신연조엑스", { exact: true })
+      .first(),
+  ).toBeVisible();
+  await expect(page.locator(".candidate-sidebar .sidebar-product")).toHaveCount(
+    1,
+  );
+  await sidebarNav.getByRole("button", { name: "이전 후보" }).click();
   await expect(
     page
       .locator(".candidate-sidebar")

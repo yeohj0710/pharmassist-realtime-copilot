@@ -269,7 +269,7 @@ describe("actual research preview pack", () => {
     ).toEqual(new Set(["PTC-SORE_THROAT", "PTC-HEARTBURN"]));
   });
 
-  it("keeps a provisional dry-cough product visible while resolving safety context", () => {
+  it("completes the dry-cough consult after the pattern answer without safety-context questions", () => {
     const engine = new LocalClinicalEngine(actualPack);
     const sessionId = crypto.randomUUID();
     const input = (text: string, sequence: number): RuntimeInput => ({
@@ -308,23 +308,14 @@ describe("actual research preview pack", () => {
       consultationState: first.consultationState,
     });
 
-    expect(second.output.status).toBe("provisional");
-    expect(second.output.ask_next[0]?.slot).toBe("pregnancy_status");
+    // Age/pregnancy context is never interrogated up front: unknown safety
+    // context only demotes candidates, so the consult completes here.
+    expect(second.output.ask_next).toEqual([]);
     expect(second.output.decision.product_candidates[0]?.display_name).toBe(
       "해소코푸에스시럽",
     );
-
-    const completed = engine.run(input("임신은 아니에요", 3), {
-      ...tenant,
-      consultationState: second.consultationState,
-    });
-
-    expect(completed.output.ask_next).toEqual([]);
-    expect(completed.output.decision.product_candidates[0]?.display_name).toBe(
-      "해소코푸에스시럽",
-    );
-    expect(completed.output.topic_results[0]?.decision).toBe(
-      completed.output.decision,
+    expect(second.output.topic_results[0]?.decision).toBe(
+      second.output.decision,
     );
   });
 
