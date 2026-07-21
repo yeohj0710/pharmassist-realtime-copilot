@@ -76,6 +76,18 @@ const healthKrProductCrosswalkSource = join(
   "actual-research-overlays",
   "healthkr-product-crosswalk.json",
 );
+const clinicalPathwayMappingSource = join(
+  root,
+  "data",
+  "clinical-pathways",
+  "product-mappings.json",
+);
+const clinicalPathwayDefinitionSource = join(
+  root,
+  "data",
+  "clinical-pathways",
+  "pathways.json",
+);
 const healthKrLegacyMatchReportOutput = join(
   root,
   "data",
@@ -259,6 +271,8 @@ const [
   healthKrRegistryBody,
   healthKrRegistryManifest,
   healthKrProductCrosswalk,
+  clinicalPathwayMappings,
+  clinicalPathwayDefinitions,
 ] = await Promise.all([
   readJsonl("source_snapshots.jsonl"),
   readJsonl("ingredients.jsonl"),
@@ -279,12 +293,28 @@ const [
   readFile(healthKrRegistrySource, "utf8"),
   readFile(healthKrRegistryManifestSource, "utf8").then(JSON.parse),
   readFile(healthKrProductCrosswalkSource, "utf8").then(JSON.parse),
+  readFile(clinicalPathwayMappingSource, "utf8").then(JSON.parse),
+  readFile(clinicalPathwayDefinitionSource, "utf8").then(JSON.parse),
 ]);
 
 const healthKrRegistry = JSON.parse(healthKrRegistryBody);
 const healthKrRegistryContentSha256 = createHash("sha256")
-  .update(healthKrRegistryBody)
+  .update(healthKrRegistryBody.replace(/\r\n/gu, "\n"))
   .digest("hex");
+const clinicalPathwayByRegistryRecordId = new Map(
+  clinicalPathwayMappings.records.map((item) => [item.registryRecordId, item]),
+);
+const clinicalPathwayByProtocolId = new Map(
+  clinicalPathwayDefinitions.pathways.map((pathway) => [
+    pathway.protocolId,
+    pathway,
+  ]),
+);
+if (
+  clinicalPathwayMappings.schemaVersion !== "1.0.0" ||
+  clinicalPathwayMappings.records.length !== healthKrRegistry.records.length
+)
+  throw new Error("Clinical pathway mappings are missing or inconsistent");
 
 const normalizedIngredientName = (value) =>
   value.toLocaleLowerCase("ko-KR").replace(/[^0-9a-z가-힣]/gu, "");
@@ -468,7 +498,13 @@ const healthKrSnapshotId = `SNAP-HEALTHKR-REGISTRY-${healthKrRegistryContentSha2
 const healthKrSourceId = "SRC-HEALTHKR-LOCAL-REGISTRY";
 const legacyProducts = [...products, ...newProducts];
 const healthKrImportedRecords = healthKrRegistry.records.filter(
-  (record) => record.recommendation.eligible,
+  (record) =>
+    clinicalPathwayByRegistryRecordId.get(record.registryRecordId)
+      ?.mappingStatus === "direct" &&
+    record.officialMatch.status === "confirmed" &&
+    record.officialProduct?.otcStatus === "otc" &&
+    !record.officialProduct.permit.cancelled &&
+    record.officialMatch.evidence.conflicts.length === 0,
 );
 if (healthKrImportedRecords.length > 0)
   newSources.push({
@@ -538,7 +574,7 @@ const healthKrInteractionTerms = (official) => [
     ),
   ),
 ];
-const healthKrProductMetadata = (record) => {
+const healthKrProductMetadata = (record, pathwayMapping) => {
   const official = record.officialProduct;
   return {
     manufacturer: official.manufacturer,
@@ -560,7 +596,25 @@ const healthKrProductMetadata = (record) => {
       image_kind: record.retailOffer.image.kind,
       image_checked_at: record.retailOffer.image.checkedAt,
     },
-    clinical_group_key: record.recommendation.clinicalGroupKey,
+    clinical_group_key: pathwayMapping
+      ? [
+          ...pathwayMapping.ingredientMappings.map(
+            (mapping) => mapping.ingredientId,
+          ),
+          official.route ?? "",
+          official.dosageForm ?? "",
+        ].join("|")
+      : record.recommendation.clinicalGroupKey,
+    pathway_profiles: pathwayMapping
+      ? pathwayMapping.pathways.map((pathway) => ({
+          protocol_id: pathway.protocolId,
+          mechanisms: pathway.mechanisms,
+          combination_role: pathway.combinationRole,
+          compatible_roles: pathway.compatibleRoles,
+          score: pathway.score,
+          source: pathway.source,
+        }))
+      : [],
     indication_summary: compactClinicalText(official.efficacy),
     dosage_summary: compactClinicalText(official.dosage),
     precaution_summary: compactClinicalText(official.precautions),
@@ -582,23 +636,42 @@ const healthKrProductMetadata = (record) => {
     permit_cancelled: false,
   };
 };
+const therapeuticIngredientMappings = (record, pathwayMapping) => {
+  if (pathwayMapping.ingredientMappings.length === 1)
+    return pathwayMapping.ingredientMappings;
+  const identity = createHash("sha256")
+    .update(record.officialProduct.productKey)
+    .digest("hex")
+    .slice(0, 16)
+    .toUpperCase();
+  return [
+    {
+      sourceText: `${record.officialProduct.itemName} 복합성분`,
+      ingredientId: `ING-FORMULA-${identity}`,
+      identitySource: "official_product_composition",
+    },
+  ];
+};
 for (const record of healthKrImportedRecords) {
   const official = record.officialProduct;
+  const pathwayMapping = clinicalPathwayByRegistryRecordId.get(
+    record.registryRecordId,
+  );
   if (
     !official ||
+    !pathwayMapping ||
+    pathwayMapping.mappingStatus !== "direct" ||
     record.officialMatch.status !== "confirmed" ||
     official.otcStatus !== "otc" ||
     official.permit.cancelled ||
     record.officialMatch.evidence.conflicts.length > 0 ||
-    record.recommendation.ingredientMappings.some(
-      (mapping) => !mapping.ingredientId,
-    )
+    pathwayMapping.ingredientMappings.some((mapping) => !mapping.ingredientId)
   )
     throw new Error(
       `Ineligible Health.kr product escaped the registry gate: ${record.registryRecordId}`,
     );
   const sourceRef = healthKrSourceRef(record);
-  const activeIngredients = record.recommendation.ingredientMappings.map(
+  const activeIngredients = pathwayMapping.ingredientMappings.map(
     (mapping) => ({
       ingredient_id: mapping.ingredientId,
       name: mapping.sourceText,
@@ -608,9 +681,9 @@ for (const record of healthKrImportedRecords) {
     }),
   );
   healthKrProducts.push({
-    product_id: record.recommendation.productId,
+    product_id: pathwayMapping.productId,
     display_name: record.retailOffer.displayName,
-    ...healthKrProductMetadata(record),
+    ...healthKrProductMetadata(record, pathwayMapping),
     jurisdiction: "KR",
     item_seq: official.itemSeq,
     permit_number: null,
@@ -619,16 +692,16 @@ for (const record of healthKrImportedRecords) {
     permit_status: "active",
     supply_performance: false,
     active_ingredients: activeIngredients,
-    protocol_ids: record.recommendation.protocolIds,
+    protocol_ids: pathwayMapping.pathways.map((pathway) => pathway.protocolId),
     status: "active",
     source_snapshot_ids: [healthKrSnapshotId],
     source_refs: [sourceRef],
     dur_flags: healthKrDurFlags(official),
   });
-  for (const mapping of record.recommendation.ingredientMappings)
+  for (const mapping of therapeuticIngredientMappings(record, pathwayMapping))
     healthKrProductIngredients.push({
-      product_ingredient_id: `PRI-${record.recommendation.productId.replace(/^PRD-/u, "")}-${mapping.ingredientId.replace(/^ING-/u, "")}`,
-      product_id: record.recommendation.productId,
+      product_ingredient_id: `PRI-${pathwayMapping.productId.replace(/^PRD-/u, "")}-${mapping.ingredientId.replace(/^ING-/u, "")}`,
+      product_id: pathwayMapping.productId,
       ingredient_id: mapping.ingredientId,
       strength_text: mapping.sourceText,
       normalized_amount: null,
@@ -663,6 +736,163 @@ const sourceIngredientName = (value) => {
     .replace(/\s+\d[\s\S]*$/u, "")
     .trim();
 };
+const generatedReview = {
+  expires_at: "2027-01-13T00:00:00+09:00",
+  notes:
+    "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지.",
+  official_source_verified: true,
+  pharmacist_approved: false,
+  reviewed_at: null,
+  reviewer_ids: [],
+};
+const existingIngredientIds = new Set(
+  ingredients.map((item) => item.ingredient_id),
+);
+const existingOptionByProtocolIngredient = new Map(
+  protocolOptions.map((option) => [
+    `${option.protocol_id}|${option.ingredient_id}`,
+    option,
+  ]),
+);
+const generatedIngredientById = new Map();
+const generatedOptionGroups = new Map();
+for (const record of healthKrImportedRecords) {
+  const mapping = clinicalPathwayByRegistryRecordId.get(
+    record.registryRecordId,
+  );
+  const sourceRef = healthKrSourceRef(record);
+  for (const ingredient of therapeuticIngredientMappings(record, mapping)) {
+    if (
+      !existingIngredientIds.has(ingredient.ingredientId) &&
+      !generatedIngredientById.has(ingredient.ingredientId)
+    ) {
+      const displayName = sourceIngredientName(ingredient.sourceText);
+      generatedIngredientById.set(ingredient.ingredientId, {
+        ingredient_id: ingredient.ingredientId,
+        display_name_ko: displayName,
+        display_name_en: displayName,
+        normalized_name: normalizedIngredientIdentity(displayName),
+        mfds_ingredient_code: null,
+        status: "active",
+        source_snapshot_ids: [healthKrSnapshotId],
+        source_refs: [
+          {
+            ...sourceRef,
+            claim_id: `REG-ING-${ingredient.ingredientId.replace(/^ING-/u, "")}`,
+          },
+        ],
+        review: generatedReview,
+      });
+    }
+    for (const pathway of mapping.pathways) {
+      const key = `${pathway.protocolId}|${ingredient.ingredientId}`;
+      if (existingOptionByProtocolIngredient.has(key)) continue;
+      const current = generatedOptionGroups.get(key) ?? {
+        protocolId: pathway.protocolId,
+        ingredientId: ingredient.ingredientId,
+        displayName: sourceIngredientName(ingredient.sourceText),
+        productIds: new Set(),
+        sourceRefs: [],
+        mechanisms: new Set(),
+        combinationRoles: new Set(),
+        compatibleRoles: new Set(),
+        score: 0,
+      };
+      current.productIds.add(mapping.productId);
+      current.sourceRefs.push(sourceRef);
+      for (const mechanism of pathway.mechanisms)
+        current.mechanisms.add(mechanism);
+      if (pathway.combinationRole)
+        current.combinationRoles.add(pathway.combinationRole);
+      for (const role of pathway.compatibleRoles ?? [])
+        current.compatibleRoles.add(role);
+      current.score = Math.max(current.score, pathway.score);
+      generatedOptionGroups.set(key, current);
+    }
+  }
+}
+const generatedIngredients = [...generatedIngredientById.values()];
+const generatedProtocolOptions = [];
+const generatedClaims = [];
+for (const group of generatedOptionGroups.values()) {
+  const protocolTemplate = protocols.find(
+    (protocol) => protocol.protocol_id === group.protocolId,
+  );
+  const optionTemplate = protocolOptions.find(
+    (option) => option.protocol_id === group.protocolId,
+  );
+  if (!protocolTemplate || !optionTemplate)
+    throw new Error(
+      `Clinical pathway protocol is missing: ${group.protocolId}`,
+    );
+  const suffix = `${group.protocolId.replace(/^PTC-/u, "")}-${group.ingredientId.replace(/^ING-/u, "")}`;
+  const optionId = `OPT-PATHWAY-${suffix}`;
+  const claimId = `CLM-PATHWAY-${suffix}-INDICATION`;
+  const supportive =
+    group.combinationRoles.size > 0 &&
+    [...group.combinationRoles].every((role) => role === "supportive");
+  const sourceRefs = group.sourceRefs.filter(
+    (sourceRef, index, all) =>
+      all.findIndex((candidate) => candidate.locator === sourceRef.locator) ===
+      index,
+  );
+  generatedProtocolOptions.push({
+    option_id: optionId,
+    protocol_id: group.protocolId,
+    ingredient_id: group.ingredientId,
+    display_name: group.displayName,
+    eligibility_rule_ids: optionTemplate.eligibility_rule_ids,
+    exclusion_rule_ids: optionTemplate.exclusion_rule_ids,
+    claim_ids: [claimId],
+    clinical_priority: Math.min(99, Math.max(50, group.score)),
+    // Newly expanded options have official product safety text, but they have
+    // not received the same structured pharmacist review as curated options.
+    // Keep them behind curated options until that review is complete.
+    safety_priority: 1,
+    therapeutic_role: "alternative",
+    evidence_scope: supportive ? "supportive" : "direct",
+    fit_rationale:
+      "공식 품목 효능·효과와 투여경로가 증상 경로에 직접 일치합니다.",
+    pathway_mechanisms: [...group.mechanisms],
+    combination_roles: [...group.combinationRoles],
+    compatible_roles: [...group.compatibleRoles],
+    status: "candidate",
+    source_refs: sourceRefs.map((sourceRef) => ({
+      ...sourceRef,
+      claim_id: optionId,
+    })),
+    review: generatedReview,
+  });
+  generatedClaims.push({
+    claim_id: claimId,
+    claim_type: "indication",
+    subject_type: "option",
+    subject_id: optionId,
+    predicate: "candidate_for_symptom",
+    object: {
+      candidate_product_ids: [...group.productIds],
+      candidate_product_names: [],
+      ingredient_id: group.ingredientId,
+      symptom_category: protocolTemplate.symptom_category,
+      inventory_gate: true,
+      tenant_formulary_gate: true,
+      selection_basis:
+        "공식 효능·효과, 성분, 제형, 투여경로를 모두 확인한 연구 미리보기 후보",
+      rationale:
+        "공식 품목 효능·효과와 약국 실습자료에서 정리한 증상별 사용 경로가 일치",
+    },
+    qualifiers: { protocol_id: group.protocolId },
+    risk_level: "moderate",
+    conflict_claim_ids: [],
+    pack_id: "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+    status: "candidate",
+    source_refs: sourceRefs.map((sourceRef) => ({
+      ...sourceRef,
+      claim_id: claimId,
+    })),
+    review: generatedReview,
+  });
+}
 const packComposition = (product) =>
   new Set(
     (product.active_ingredients ?? []).map((ingredient) =>
@@ -817,7 +1047,10 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
     );
     return {
       ...product,
-      ...healthKrProductMetadata(record),
+      ...healthKrProductMetadata(
+        record,
+        clinicalPathwayByRegistryRecordId.get(record.registryRecordId),
+      ),
       source_snapshot_ids: [
         ...new Set([...product.source_snapshot_ids, healthKrSnapshotId]),
       ],
@@ -1039,13 +1272,13 @@ const pack = {
   createdAt: "2026-07-13T12:00:00+09:00",
   expiresAt: "2027-01-13T00:00:00+09:00",
   sources: runtimeSources,
-  ingredients: ingredients.map((item) => ({
+  ingredients: [...ingredients, ...generatedIngredients].map((item) => ({
     ...item,
     review: previewReview(item.review),
   })),
   products: runtimeProducts,
   productIngredients: runtimeProductIngredients,
-  claims: claims.map((item) => ({
+  claims: [...claims, ...generatedClaims].map((item) => ({
     ...item,
     status: "published",
     review: previewReview(item.review),
@@ -1059,6 +1292,12 @@ const pack = {
       ...selectionOverlayRules
         .filter((rule) => rule.protocol_id === item.protocol_id)
         .map((rule) => rule.rule_id),
+    ],
+    option_ids: [
+      ...item.option_ids,
+      ...generatedProtocolOptions
+        .filter((option) => option.protocol_id === item.protocol_id)
+        .map((option) => option.option_id),
     ],
     triggers: {
       ...item.triggers,
@@ -1076,17 +1315,26 @@ const pack = {
       ],
     },
   })),
-  protocolOptions: protocolOptions.map((item) => {
-    const fit = therapeuticFitByOptionId.get(item.option_id);
-    return {
-      ...item,
-      therapeutic_role: fit.role,
-      evidence_scope: fit.evidence_scope,
-      fit_rationale: fit.rationale,
-      status: "published",
-      review: previewReview(item.review),
-    };
-  }),
+  protocolOptions: [...protocolOptions, ...generatedProtocolOptions].map(
+    (item) => {
+      const fit = therapeuticFitByOptionId.get(item.option_id);
+      const pathway = clinicalPathwayByProtocolId.get(item.protocol_id);
+      return {
+        ...item,
+        therapeutic_role: fit?.role ?? item.therapeutic_role,
+        evidence_scope: fit?.evidence_scope ?? item.evidence_scope,
+        fit_rationale: fit?.rationale ?? item.fit_rationale,
+        pathway_mechanisms: item.pathway_mechanisms ?? pathway?.mechanisms,
+        combination_roles:
+          item.combination_roles ??
+          (pathway?.combinationRole ? [pathway.combinationRole] : undefined),
+        compatible_roles:
+          item.compatible_roles ?? pathway?.compatibleRoles ?? [],
+        status: "published",
+        review: previewReview(item.review),
+      };
+    },
+  ),
   // Candidate ask rules remain local research-preview guidance. The runtime
   // presents them progressively alongside provisional candidates; this does
   // not convert them into production-approved clinical rules.
@@ -1148,5 +1396,5 @@ await writeFile(
   "utf8",
 );
 process.stdout.write(
-  `built ${pack.version}: ${ingredients.length} ingredients, ${runtimeProducts.length} products, ${protocols.length} protocols, ${enrichmentIndex.length} enriched products, ${dialogueCards.length} dialogue intents, ${aliasSeeds.length} aliases\n`,
+  `built ${pack.version}: ${pack.ingredients.length} ingredients, ${runtimeProducts.length} products, ${protocols.length} protocols, ${pack.protocolOptions.length} options, ${enrichmentIndex.length} enriched products, ${dialogueCards.length} dialogue intents, ${aliasSeeds.length} aliases\n`,
 );

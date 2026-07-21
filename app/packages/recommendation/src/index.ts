@@ -13,11 +13,8 @@ import type {
   TenantSalesAggregate,
 } from "@pharmassist/contracts";
 import { renderQuestionTemplate } from "@pharmassist/dialogue";
-import {
-  matchesProductProtocolProfile,
-  type NormalizedInput,
-  type SafetyDecision,
-} from "@pharmassist/domain";
+import type { NormalizedInput, SafetyDecision } from "@pharmassist/domain";
+import { matchesProductProtocolProfile } from "@pharmassist/domain";
 
 export interface RecommendationKnowledge {
   readonly packId: string;
@@ -402,6 +399,14 @@ type RecommendationDrugProduct = DrugProduct &
       image_checked_at?: string | null;
     }>;
     protocol_ids?: readonly string[];
+    pathway_profiles?: readonly Readonly<{
+      protocol_id: string;
+      mechanisms: readonly string[];
+      combination_role: "primary" | "supportive";
+      compatible_roles: readonly string[];
+      score: number;
+      source: string;
+    }>[];
     clinical_group_key?: string;
     indication_summary?: string;
     dosage_summary?: string;
@@ -416,10 +421,21 @@ interface RankedProduct {
   readonly option: ProtocolOption;
   readonly sourceRefs: readonly SourceRef[];
   readonly clinicalGroupKey: string;
+  readonly pendingSafetySlots: readonly CandidateSafetySlot[];
   readonly sameGroupProductCount?: number;
   readonly inventory?: TenantInventory;
   readonly sales?: TenantSalesAggregate;
 }
+
+type CandidateSafetySlot = "age_years" | "pregnancy_status";
+
+type CandidateSafetyAssessment =
+  | Readonly<{ status: "eligible"; pendingSlots: readonly [] }>
+  | Readonly<{
+      status: "requires_context";
+      pendingSlots: readonly CandidateSafetySlot[];
+    }>
+  | Readonly<{ status: "ineligible"; pendingSlots: readonly [] }>;
 
 const therapeuticRolePriority = {
   preferred: 3,
@@ -498,12 +514,19 @@ const confirmedImportedProduct = (
   Boolean(product.official_product_key) &&
   product.permit_cancelled !== true &&
   product.protocol_ids?.includes(protocol.protocol_id) === true &&
-  matchesProductProtocolProfile(
-    protocol.protocol_id,
-    product.indication_summary,
-    product.route,
-    product.dosage_form,
-  );
+  (product.pathway_profiles?.some(
+    (profile) =>
+      profile.protocol_id === protocol.protocol_id &&
+      profile.mechanisms.length > 0 &&
+      profile.score > 0,
+  ) === true ||
+    (product.pathway_profiles === undefined &&
+      matchesProductProtocolProfile(
+        protocol.protocol_id,
+        product.indication_summary,
+        product.route,
+        product.dosage_form,
+      )));
 
 const normalizedTerm = (value: string): string =>
   value
@@ -595,11 +618,16 @@ const ageRestrictionApplies = (description: string, age: number): boolean => {
   return false;
 };
 
-const productSafetyEligible = (
+const productSafetyAssessment = (
   product: RecommendationDrugProduct,
   verified: VerifiedOption,
   request: RecommendationRequest,
-): boolean => {
+): CandidateSafetyAssessment => {
+  const ineligible = (): CandidateSafetyAssessment => ({
+    status: "ineligible",
+    pendingSlots: [],
+  });
+  const pendingSlots = new Set<CandidateSafetySlot>();
   const ingredientTerms = [
     verified.ingredient.display_name_ko,
     ...(product.active_ingredients ?? []).map((item) => item.name),
@@ -610,12 +638,12 @@ const productSafetyEligible = (
     ...ingredientTerms,
   ];
   const allergies = stringValues(request.normalized.slots["allergies"]?.value);
-  if (termsOverlap(allergies, productTerms)) return false;
+  if (termsOverlap(allergies, productTerms)) return ineligible();
 
   const currentProducts = stringValues(
     request.normalized.slots["current_products"]?.value,
   );
-  if (termsOverlap(currentProducts, ingredientTerms)) return false;
+  if (termsOverlap(currentProducts, ingredientTerms)) return ineligible();
   if (
     currentProducts.some((currentProduct) =>
       (product.interactions ?? []).some((interaction) =>
@@ -623,7 +651,7 @@ const productSafetyEligible = (
       ),
     )
   )
-    return false;
+    return ineligible();
 
   const age = numericSlot(request, "age_years");
   const pediatricOnly =
@@ -632,10 +660,28 @@ const productSafetyEligible = (
     ) ||
     (/소아|어린이/u.test(product.dosage_summary ?? "") &&
       !/성인/u.test(product.dosage_summary ?? ""));
-  if (pediatricOnly && (age === undefined || age >= 18)) return false;
-  const pregnancyStatus = String(
-    request.normalized.slots["pregnancy_status"]?.value ?? "",
+  if (pediatricOnly) {
+    if (age === undefined) pendingSlots.add("age_years");
+    else if (age >= 18) return ineligible();
+  }
+  const sexAtBirth = String(
+    request.normalized.slots["sex_at_birth"]?.value ?? "",
   );
+  const pregnancyStatus =
+    sexAtBirth === "male"
+      ? "not_pregnant"
+      : String(
+          request.normalized.slots["pregnancy_status"]?.value ?? "unknown",
+        );
+  // The registry currently has complete official text but only structured DUR
+  // flags for restrictions that were explicitly present. In research preview,
+  // missing age or pregnancy context must not make a newly imported product
+  // look safer than a curated option with an explicit restriction.
+  if (isHealthKrImported(product) && product.pathway_profiles?.length) {
+    if (age === undefined) pendingSlots.add("age_years");
+    if (!pregnancyStatus || pregnancyStatus === "unknown")
+      pendingSlots.add("pregnancy_status");
+  }
   const conditions = stringValues(
     request.normalized.slots["conditions"]?.value,
   );
@@ -643,14 +689,18 @@ const productSafetyEligible = (
     if (flag.blocking === false) continue;
     switch (flag.type) {
       case "age":
-        if (age === undefined || ageRestrictionApplies(flag.description, age))
-          return false;
+        if (age === undefined) pendingSlots.add("age_years");
+        else if (ageRestrictionApplies(flag.description, age))
+          return ineligible();
         break;
       case "pregnancy":
-        if (pregnancyStatus !== "not_pregnant") return false;
+        if (!pregnancyStatus || pregnancyStatus === "unknown")
+          pendingSlots.add("pregnancy_status");
+        else if (pregnancyStatus !== "not_pregnant") return ineligible();
         break;
       case "elderly":
-        if (age === undefined || age >= 65) return false;
+        if (age === undefined) pendingSlots.add("age_years");
+        else if (age >= 65) return ineligible();
         break;
       case "duplicate":
         if (
@@ -659,7 +709,7 @@ const productSafetyEligible = (
             termsOverlap([item], [flag.description]),
           )
         )
-          return false;
+          return ineligible();
         break;
       case "coadministration":
         if (
@@ -667,7 +717,7 @@ const productSafetyEligible = (
             termsOverlap([item], [flag.description]),
           )
         )
-          return false;
+          return ineligible();
         break;
       case "other":
         if (
@@ -675,7 +725,7 @@ const productSafetyEligible = (
           (conditions.length === 0 ||
             conditions.some((item) => termsOverlap([item], [flag.description])))
         )
-          return false;
+          return ineligible();
         break;
       case "dose":
       case "duration":
@@ -685,7 +735,9 @@ const productSafetyEligible = (
         break;
     }
   }
-  return true;
+  return pendingSlots.size > 0
+    ? { status: "requires_context", pendingSlots: [...pendingSlots] }
+    : { status: "eligible", pendingSlots: [] };
 };
 
 const productClinicalGroupKey = (
@@ -819,7 +871,17 @@ const rankedProducts = (
         !explicitlySupportedProductIds(verified).has(product.product_id)
       )
         return undefined;
-      if (!productSafetyEligible(product, verified, request)) return undefined;
+      const safetyAssessment = productSafetyAssessment(
+        product,
+        verified,
+        request,
+      );
+      if (safetyAssessment.status === "ineligible") return undefined;
+      if (
+        safetyAssessment.status === "requires_context" &&
+        !(researchPreview && request.allowProgressiveCandidates)
+      )
+        return undefined;
       const inventory = inventoryByProduct.get(product.product_id);
       if (
         request.tenant.inventory !== undefined &&
@@ -838,6 +900,7 @@ const rankedProducts = (
           product,
           verified.ingredient.ingredient_id,
         ),
+        pendingSafetySlots: safetyAssessment.pendingSlots,
         sourceRefs: uniqueSourceRefs([
           ...sourceRefsFor(verified),
           ...product.source_refs,
@@ -851,6 +914,9 @@ const rankedProducts = (
     })
     .filter((item): item is RankedProduct => Boolean(item))
     .sort((left, right) => {
+      const safetyContext =
+        left.pendingSafetySlots.length - right.pendingSafetySlots.length;
+      if (safetyContext) return safetyContext;
       // Sales can never alter clinical or safety eligibility. It is only the
       // final tie-breaker after clinical fit, safety, and inventory.
       const therapeuticFit = compareProtocolOptions(left.option, right.option);
@@ -874,14 +940,19 @@ const rankedProducts = (
     seenProductIds.add(item.product.product_id);
     return true;
   });
+  const productsAtBestKnownSafety = uniqueProducts.some(
+    (item) => item.pendingSafetySlots.length === 0,
+  )
+    ? uniqueProducts.filter((item) => item.pendingSafetySlots.length === 0)
+    : uniqueProducts;
   const groupCounts = new Map<string, number>();
-  for (const item of uniqueProducts)
+  for (const item of productsAtBestKnownSafety)
     groupCounts.set(
       item.clinicalGroupKey,
       (groupCounts.get(item.clinicalGroupKey) ?? 0) + 1,
     );
   const seenGroups = new Set<string>();
-  return uniqueProducts
+  return productsAtBestKnownSafety
     .filter((item) => {
       if (seenGroups.has(item.clinicalGroupKey)) return false;
       seenGroups.add(item.clinicalGroupKey);
@@ -892,6 +963,53 @@ const rankedProducts = (
       sameGroupProductCount: groupCounts.get(item.clinicalGroupKey) ?? 1,
     }));
 };
+
+export function nextCandidateSafetyQuestion(
+  request: RecommendationRequest,
+  decision: RecommendationDecision,
+): ProgressiveQuestion | null {
+  if (
+    request.allowProgressiveCandidates !== true ||
+    decision.status !== "recommend"
+  )
+    return null;
+  const protocol = request.protocol;
+  const candidate = decision.product_candidates[0];
+  if (!protocol || !candidate) return null;
+  const product = request.knowledge.products.find(
+    (item) => item.product_id === candidate.product_id,
+  );
+  const verified = verifiedOptions(protocol, request).find(
+    (item) => item.ingredient.ingredient_id === candidate.ingredient_id,
+  );
+  if (!product || !verified) return null;
+  const assessment = productSafetyAssessment(
+    asRecommendationProduct(product),
+    verified,
+    request,
+  );
+  if (assessment.status !== "requires_context") return null;
+  const asked = new Set(request.consultationState?.asked_slots ?? []);
+  const slot = assessment.pendingSlots.find((item) => !asked.has(item));
+  switch (slot) {
+    case "age_years":
+      return {
+        question: "연령이 어떻게 되나요?",
+        reason: "연령 제한이 있는 제품인지 확인합니다.",
+        slot,
+        ruleId: "PRODUCT_SAFETY_AGE_CONTEXT",
+      };
+    case "pregnancy_status":
+      return {
+        question: "임신 중이거나 임신 가능성이 있나요?",
+        reason: "임신 중 사용 여부에 따라 현재 제품 후보가 달라집니다.",
+        slot,
+        ruleId: "PRODUCT_SAFETY_PREGNANCY_CONTEXT",
+      };
+    default:
+      return null;
+  }
+}
 
 export function buildRecommendationDecision(
   request: RecommendationRequest,
@@ -945,7 +1063,8 @@ export function buildRecommendationDecision(
     if (
       rule.effect === "ask" &&
       !matched &&
-      !request.allowProgressiveCandidates
+      (!request.allowProgressiveCandidates ||
+        (rule.option_ids?.length ?? 0) > 1)
     ) {
       const slot = slotName(rule.field);
       if (request.consultationState?.asked_slots.includes(slot))
@@ -1057,6 +1176,117 @@ export function buildRecommendationDecision(
     clinical_group_key: ranked.clinicalGroupKey,
     same_group_product_count: ranked.sameGroupProductCount ?? 1,
   }));
+  const profilesFor = (ranked: RankedProduct) => {
+    const productProfiles =
+      ranked.product.pathway_profiles?.filter(
+        (profile) => profile.protocol_id === protocol.protocol_id,
+      ) ?? [];
+    if (productProfiles.length > 0) return productProfiles;
+    if (
+      !ranked.option.pathway_mechanisms?.length ||
+      !ranked.option.combination_roles?.length
+    )
+      return [];
+    return [
+      {
+        protocol_id: protocol.protocol_id,
+        mechanisms: ranked.option.pathway_mechanisms,
+        combination_role: ranked.option.combination_roles[0],
+        compatible_roles: ranked.option.compatible_roles ?? [],
+        score: ranked.option.clinical_priority,
+        source:
+          ranked.option.source_refs[0]?.locator ?? "active protocol option",
+      },
+    ];
+  };
+  const activeIngredientIds = (ranked: RankedProduct) =>
+    new Set(
+      (ranked.product.active_ingredients ?? []).map(
+        (ingredient) => ingredient.ingredient_id,
+      ),
+    );
+  const mechanismLabels: Readonly<Record<string, string>> = {
+    cough_suppression: "기침 억제",
+    expectorant: "가래 배출",
+    mucolytic: "가래 점도 감소",
+    herbal_support: "생약 보조",
+    local_support: "국소 보조",
+    vitamin_support: "비타민·미네랄 보조",
+    mucosal_barrier: "점막 보호",
+    acid_suppression: "위산 억제",
+    acid_neutralization: "위산 중화",
+    digestive_enzyme: "소화효소 보충",
+    motility_regulation: "위장 운동 조절",
+    gas_reduction: "가스 감소",
+    analgesia: "진통",
+    antiinflammatory_analgesia: "소염·진통",
+  };
+  const combinationCandidates = products
+    .flatMap((primary) =>
+      profilesFor(primary)
+        .filter((profile) => profile.combination_role === "primary")
+        .flatMap((primaryProfile) =>
+          products.flatMap((supportive) => {
+            if (supportive.product.product_id === primary.product.product_id)
+              return [];
+            const primaryIngredients = activeIngredientIds(primary);
+            if (
+              [...activeIngredientIds(supportive)].some((ingredientId) =>
+                primaryIngredients.has(ingredientId),
+              )
+            )
+              return [];
+            const supportiveProfile = profilesFor(supportive).find(
+              (profile) =>
+                profile.combination_role === "supportive" &&
+                profile.mechanisms.some(
+                  (mechanism) =>
+                    primaryProfile.compatible_roles.includes(mechanism) &&
+                    !primaryProfile.mechanisms.includes(mechanism),
+                ),
+            );
+            if (!supportiveProfile) return [];
+            const complementaryMechanisms = supportiveProfile.mechanisms.filter(
+              (mechanism) =>
+                primaryProfile.compatible_roles.includes(mechanism) &&
+                !primaryProfile.mechanisms.includes(mechanism),
+            );
+            const primaryMechanism =
+              mechanismLabels[primaryProfile.mechanisms[0] ?? ""] ??
+              "주 증상 완화";
+            const supportiveMechanism =
+              mechanismLabels[
+                supportiveProfile.mechanisms.find((mechanism) =>
+                  primaryProfile.compatible_roles.includes(mechanism),
+                ) ?? ""
+              ] ?? "다른 기전의 보조";
+            return [
+              {
+                primary_product_id: primary.product.product_id,
+                primary_product_name:
+                  primary.product.retail_offer?.display_name ??
+                  primary.product.display_name,
+                supportive_product_id: supportive.product.product_id,
+                supportive_product_name:
+                  supportive.product.retail_offer?.display_name ??
+                  supportive.product.display_name,
+                primary_mechanisms: [...primaryProfile.mechanisms],
+                supportive_mechanisms: complementaryMechanisms,
+                rationale: `${primaryMechanism} 제품과 ${supportiveMechanism} 제품을 서로 다른 역할로 조합한 연구 미리보기입니다.`,
+              },
+            ];
+          }),
+        ),
+    )
+    .filter(
+      (pair, index, all) =>
+        all.findIndex(
+          (candidate) =>
+            candidate.primary_product_id === pair.primary_product_id &&
+            candidate.supportive_product_id === pair.supportive_product_id,
+        ) === index,
+    )
+    .slice(0, 2);
   const sourceRefs = uniqueSourceRefs([
     ...protocol.source_refs,
     ...ingredientOptions.flatMap((item) => item.source_refs),
@@ -1078,6 +1308,9 @@ export function buildRecommendationDecision(
       ingredientOptions as RecommendationDecision["ingredient_options"],
     product_candidates:
       productCandidates as RecommendationDecision["product_candidates"],
+    combination_candidates: combinationCandidates as NonNullable<
+      RecommendationDecision["combination_candidates"]
+    >,
     question: null,
     referral: null,
     source_refs: sourceRefs,

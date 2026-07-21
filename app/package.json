@@ -34,6 +34,7 @@
     "sbom:generate": "pnpm sbom --sbom-format cyclonedx --sbom-spec-version 1.6 --prod --out reports/sbom.cdx.json",
     "docs:check": "node scripts/docs-check.mjs",
     "data:import:healthkr-registry": "tsx scripts/import-healthkr-product-registry.ts",
+    "data:build:clinical-pathways": "tsx scripts/build-clinical-pathway-mappings.ts && prettier --write data/clinical-pathways/product-mappings.json data/clinical-pathways/coverage-report.json",
     "data:import:local-catalog": "tsx scripts/import-local-pharmacy-catalog.ts",
     "data:sync:mfds-otc": "tsx scripts/sync-mfds-otc-catalog.ts",
     "check": "pnpm lint && pnpm format:check && pnpm schema:check && pnpm typecheck && pnpm test && pnpm build && pnpm docs:check"

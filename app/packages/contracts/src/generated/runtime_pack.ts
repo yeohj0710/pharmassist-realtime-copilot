@@ -159,6 +159,17 @@ export interface DrugProduct {
     image_checked_at?: string | null;
   };
   protocol_ids?: string[];
+  pathway_profiles?: {
+    protocol_id: string;
+    /**
+     * @minItems 1
+     */
+    mechanisms: [string, ...string[]];
+    combination_role: "primary" | "supportive";
+    compatible_roles: string[];
+    score: number;
+    source: string;
+  }[];
   clinical_group_key?: string;
   indication_summary?: string;
   dosage_summary?: string;
@@ -345,6 +356,15 @@ export interface ProtocolOption {
   therapeutic_role?: "preferred" | "alternative" | "conditional";
   evidence_scope?: "direct" | "supportive" | "phenotype_specific";
   fit_rationale?: string;
+  /**
+   * @minItems 1
+   */
+  pathway_mechanisms?: [string, ...string[]];
+  /**
+   * @minItems 1
+   */
+  combination_roles?: ["primary" | "supportive", ...("primary" | "supportive")[]];
+  compatible_roles?: string[];
   /**
    * @minItems 1
    */

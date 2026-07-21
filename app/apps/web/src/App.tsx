@@ -327,8 +327,10 @@ function TopicDecisionBlock({
   const synthetic = isSyntheticDecision(topic.decision);
   const ingredients = topic.decision.ingredient_options;
   const products = topic.decision.product_candidates;
+  const combinations = topic.decision.combination_candidates ?? [];
   const hasCandidateDetails =
-    !synthetic && (ingredients.length > 0 || products.length > 0);
+    !synthetic &&
+    (ingredients.length > 0 || products.length > 0 || combinations.length > 0);
   return (
     <section className="topic-decision">
       {multiple && (
@@ -410,6 +412,31 @@ function TopicDecisionBlock({
                   </article>
                 );
               })}
+            </div>
+          )}
+          {combinations.length > 0 && (
+            <div className="combination-summary">
+              <div>
+                <p className="combination-label">함께 검토할 조합</p>
+                <small>
+                  같은 성분을 겹치지 않고 서로 다른 역할을 보완한 조합이에요.
+                </small>
+              </div>
+              <div className="combination-list">
+                {combinations.map((combination) => (
+                  <article
+                    key={`${combination.primary_product_id}-${combination.supportive_product_id}`}
+                    className="combination-card"
+                  >
+                    <p>
+                      <strong>{combination.primary_product_name}</strong>
+                      <span aria-hidden="true">+</span>
+                      <strong>{combination.supportive_product_name}</strong>
+                    </p>
+                    <small>{combination.rationale}</small>
+                  </article>
+                ))}
+              </div>
             </div>
           )}
           {ingredients.length > 0 && (

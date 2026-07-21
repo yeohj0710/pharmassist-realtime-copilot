@@ -13,6 +13,15 @@ export interface ProtocolOption {
   /**
    * @minItems 1
    */
+  pathway_mechanisms?: [string, ...string[]];
+  /**
+   * @minItems 1
+   */
+  combination_roles?: ["primary" | "supportive", ...("primary" | "supportive")[]];
+  compatible_roles?: string[];
+  /**
+   * @minItems 1
+   */
   claim_ids: [string, ...string[]];
   eligibility_rule_ids?: string[];
   exclusion_rule_ids?: string[];

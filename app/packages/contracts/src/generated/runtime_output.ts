@@ -965,6 +965,60 @@ export type RecommendationDecision = {
           same_group_product_count?: number;
         }
       ];
+  /**
+   * @maxItems 2
+   */
+  combination_candidates?:
+    | []
+    | [
+        {
+          primary_product_id: string;
+          primary_product_name: string;
+          supportive_product_id: string;
+          supportive_product_name: string;
+          /**
+           * @minItems 1
+           */
+          primary_mechanisms: [string, ...string[]];
+          /**
+           * @minItems 1
+           */
+          supportive_mechanisms: [string, ...string[]];
+          rationale: string;
+        }
+      ]
+    | [
+        {
+          primary_product_id: string;
+          primary_product_name: string;
+          supportive_product_id: string;
+          supportive_product_name: string;
+          /**
+           * @minItems 1
+           */
+          primary_mechanisms: [string, ...string[]];
+          /**
+           * @minItems 1
+           */
+          supportive_mechanisms: [string, ...string[]];
+          rationale: string;
+        },
+        {
+          primary_product_id: string;
+          primary_product_name: string;
+          supportive_product_id: string;
+          supportive_product_name: string;
+          /**
+           * @minItems 1
+           */
+          primary_mechanisms: [string, ...string[]];
+          /**
+           * @minItems 1
+           */
+          supportive_mechanisms: [string, ...string[]];
+          rationale: string;
+        }
+      ];
   question: {
     question: string;
     reason: string;

@@ -5,6 +5,7 @@ import type {
   SlotEvidence,
   Temporality,
 } from "@pharmassist/domain";
+import { normalizeColloquialConcepts } from "./colloquial-concepts.js";
 
 const zeroWidthAndControls =
   /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B-\u200D\uFEFF]/gu;
@@ -201,24 +202,10 @@ function temporality(text: string): Temporality {
 }
 
 const normalizeColloquialSymptoms = (text: string): string =>
-  text
-    .replace(
-      /배\s*(?:가\s*)?(?:아프(?:노|다|네|구나|구만|냐|니)|아픈데)/gu,
-      "배가 아파요",
-    )
-    .replace(/속\s*(?:이\s*)?쓰리(?:노|다|네|구나|구만|냐|니)/gu, "속이 쓰려요")
-    .replace(
-      /소화\s*(?:가\s*)?안\s*된(?:다|다니까|다네|다노)/gu,
-      "소화 안 돼요",
-    )
-    .replace(
-      /머리\s*(?:가\s*)?(?:아프(?:노|다|네|구나|구만|냐|니)|아픈데)/gu,
-      "머리가 아파요",
-    )
-    .replace(/기침\s*나(?:노|다|네|구나|구만|냐|니)/gu, "기침나요")
-    .replace(/설사\s*하(?:노|다|네|구나|구만|냐|니)/gu, "설사해요")
-    .replace(/코\s*막히(?:노|다|네|구나|구만|냐|니)/gu, "코막혀요")
-    .replace(/콧물\s*나(?:노|다|네|구나|구만|냐|니)/gu, "콧물나요");
+  normalizeColloquialConcepts(text).replace(
+    /소화\s*(?:가\s*)?안\s*된(?:다|다니까|다네|다노)/gu,
+    "소화 안 돼요",
+  );
 
 export function normalizeKorean(
   text: string,

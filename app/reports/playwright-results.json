@@ -94,12 +94,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 663,
+                  "duration": 920,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:07.270Z",
+                  "startTime": "2026-07-21T04:58:01.021Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -128,12 +128,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 191,
+                  "duration": 217,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:08.016Z",
+                  "startTime": "2026-07-21T04:58:02.030Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -162,12 +162,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 315,
+                  "duration": 599,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:08.212Z",
+                  "startTime": "2026-07-21T04:58:02.253Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -196,12 +196,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 330,
+                  "duration": 581,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:08.532Z",
+                  "startTime": "2026-07-21T04:58:02.858Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -230,12 +230,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 370,
+                  "duration": 667,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:08.867Z",
+                  "startTime": "2026-07-21T04:58:03.452Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -249,7 +249,7 @@
           "column": 5
         },
         {
-          "title": "generic abdominal pain shows a current product and keeps phenotype open",
+          "title": "generic abdominal pain waits for the phenotype before showing a product",
           "ok": true,
           "tags": [],
           "tests": [
@@ -264,12 +264,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 334,
+                  "duration": 1180,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:09.248Z",
+                  "startTime": "2026-07-21T04:58:04.127Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -277,7 +277,7 @@
               "status": "expected"
             }
           ],
-          "id": "827050d6aeb1f8bc4895-2bab847688aae803d1b9",
+          "id": "827050d6aeb1f8bc4895-2890e4e0326a99510c0d",
           "file": "consult.spec.ts",
           "line": 103,
           "column": 5
@@ -298,12 +298,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 461,
+                  "duration": 812,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:09.587Z",
+                  "startTime": "2026-07-21T04:58:05.314Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -313,11 +313,11 @@
           ],
           "id": "827050d6aeb1f8bc4895-c2bd2e1a28cf948562b7",
           "file": "consult.spec.ts",
-          "line": 128,
+          "line": 137,
           "column": 5
         },
         {
-          "title": "generic cough asks one pattern question and loading does not shift layout",
+          "title": "generic cough shows a current product, asks one pattern question, and keeps layout stable",
           "ok": true,
           "tags": [],
           "tests": [
@@ -332,12 +332,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 376,
+                  "duration": 587,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:10.054Z",
+                  "startTime": "2026-07-21T04:58:06.132Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -345,9 +345,9 @@
               "status": "expected"
             }
           ],
-          "id": "827050d6aeb1f8bc4895-381fada0afb40e0247a3",
+          "id": "827050d6aeb1f8bc4895-01304d4f2a355a335fcf",
           "file": "consult.spec.ts",
-          "line": 224,
+          "line": 240,
           "column": 5
         },
         {
@@ -366,12 +366,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 460,
+                  "duration": 644,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:10.436Z",
+                  "startTime": "2026-07-21T04:58:06.726Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -381,7 +381,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-4c4e3028e4a039fa21e9",
           "file": "consult.spec.ts",
-          "line": 279,
+          "line": 300,
           "column": 5
         },
         {
@@ -400,12 +400,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 384,
+                  "duration": 530,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:10.903Z",
+                  "startTime": "2026-07-21T04:58:07.376Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -415,7 +415,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-3c027113d22b5630a2e2",
           "file": "consult.spec.ts",
-          "line": 322,
+          "line": 345,
           "column": 5
         },
         {
@@ -434,12 +434,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 342,
+                  "duration": 454,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:11.293Z",
+                  "startTime": "2026-07-21T04:58:07.913Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -449,7 +449,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-0dd494789acc19592839",
           "file": "consult.spec.ts",
-          "line": 357,
+          "line": 380,
           "column": 5
         },
         {
@@ -468,12 +468,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 405,
+                  "duration": 512,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-07-16T14:32:11.641Z",
+                  "startTime": "2026-07-21T04:58:08.373Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -483,7 +483,7 @@
           ],
           "id": "827050d6aeb1f8bc4895-52ede7416e64a45ae9aa",
           "file": "consult.spec.ts",
-          "line": 393,
+          "line": 416,
           "column": 5
         }
       ]
@@ -491,8 +491,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-16T14:32:06.041Z",
-    "duration": 6304.353,
+    "startTime": "2026-07-21T04:57:59.692Z",
+    "duration": 9453.876,
     "expected": 12,
     "skipped": 0,
     "unexpected": 0,

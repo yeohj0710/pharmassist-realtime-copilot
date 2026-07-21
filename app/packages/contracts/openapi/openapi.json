@@ -1597,6 +1597,63 @@
               }
             }
           },
+          "combination_candidates": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "primary_product_id",
+                "primary_product_name",
+                "supportive_product_id",
+                "supportive_product_name",
+                "primary_mechanisms",
+                "supportive_mechanisms",
+                "rationale"
+              ],
+              "properties": {
+                "primary_product_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "primary_product_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "supportive_product_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "supportive_product_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "primary_mechanisms": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "supportive_mechanisms": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "rationale": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
           "question": {
             "type": [
               "object",

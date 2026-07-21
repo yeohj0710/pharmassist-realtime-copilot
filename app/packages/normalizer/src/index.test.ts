@@ -54,6 +54,10 @@ describe("Korean normalizer", () => {
     ["소화 안된다", "소화 안 돼요"],
     ["머리아프다", "머리가 아파요"],
     ["기침나네", "기침나요"],
+    ["똥마려워요", "변이 마려워요"],
+    ["똥이 마려운 배아픔", "변이 마려워요 배아픔"],
+    ["대변이 마려운데", "변이 마려워요"],
+    ["화장실이 급해요", "변이 마려워요"],
   ])("normalizes colloquial symptom wording: %s", (input, expected) => {
     expect(normalizeKorean(input).normalizedText).toContain(expected);
   });

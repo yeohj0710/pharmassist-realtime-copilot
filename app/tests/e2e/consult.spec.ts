@@ -100,7 +100,7 @@ test("critical result cannot be cleared before acknowledgement", async ({
   ).toBeVisible();
 });
 
-test("generic abdominal pain shows a current product and keeps phenotype open", async ({
+test("generic abdominal pain waits for the phenotype before showing a product", async ({
   page,
 }) => {
   const input = page.getByLabel("손님이 말한 증상이나 질문을 입력하세요");
@@ -112,17 +112,26 @@ test("generic abdominal pain shows a current product and keeps phenotype open", 
   await expect(page.getByText(/대표 제품은 한 가지/u)).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: "현재 무난한 후보" }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await expect(page.getByText("보나링츄어블정", { exact: true })).toHaveCount(
     0,
   );
-  await expect(
-    page.locator(".candidate-sidebar .sidebar-product").first(),
-  ).toBeVisible();
+  await expect(page.locator(".candidate-sidebar .sidebar-product")).toHaveCount(
+    0,
+  );
   await expect(page.getByRole("link", { name: "식약처 품목정보" })).toHaveCount(
     0,
   );
   await expect(page.getByText(/^DEC-/)).toHaveCount(0);
+
+  await input.fill("속쓰림도 있어요");
+  await input.press("Enter");
+  await expect(
+    page.getByRole("heading", { name: "현재 무난한 후보" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("겔포스엠", { exact: true }).first(),
+  ).toBeVisible();
 });
 
 test("actual dry-cough protocol is selected without abdominal leakage", async ({
@@ -134,22 +143,29 @@ test("actual dry-cough protocol is selected without abdominal leakage", async ({
   await expect(page.getByText(/복통·구토/)).toHaveCount(0);
   await expect(
     page
+      .locator(".candidate-sidebar")
+      .getByText("해소코푸에스시럽", { exact: true }),
+  ).toBeVisible();
+  await input.fill("35살이고 임신은 아니에요");
+  await input.press("Enter");
+  await expect(
+    page
       .locator(".result .ingredient-summary")
       .getByText("덱스트로메토르판브롬화수소산염수화물", {
         exact: true,
       }),
   ).toBeVisible();
-  await expect(page.getByText("해소코푸에스시럽", { exact: true })).toHaveCount(
-    0,
-  );
-  await input.fill("35살이고 임신은 아니에요");
-  await input.press("Enter");
-  await expect(
-    page.getByText("해소코푸에스시럽", { exact: true }),
-  ).toBeVisible();
   const coughProduct = page
     .locator(".result .product-card")
     .filter({ hasText: "해소코푸에스시럽" });
+  await expect(coughProduct).toBeVisible();
+  const combinationSummary = page.locator(".result .combination-summary");
+  await expect(
+    combinationSummary.getByText("함께 검토할 조합", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    combinationSummary.getByText("쎄파렉신연조엑스", { exact: true }),
+  ).toBeVisible();
   const spokenGuidance = page.locator(".primary-guidance .say").first();
   await expect(spokenGuidance).toContainText("후보로 볼게요");
   await expect(spokenGuidance).not.toContainText(
@@ -221,7 +237,7 @@ test("actual dry-cough protocol is selected without abdominal leakage", async ({
   );
 });
 
-test("generic cough asks one pattern question and loading does not shift layout", async ({
+test("generic cough shows a current product, asks one pattern question, and keeps layout stable", async ({
   page,
 }) => {
   const input = page.getByLabel("손님이 말한 증상이나 질문을 입력하세요");
@@ -234,19 +250,22 @@ test("generic cough asks one pattern question and loading does not shift layout"
   ).toBeVisible();
   await expect(
     page.getByRole("complementary", { name: "현재 제품 후보" }),
-  ).toHaveCount(0);
+  ).toBeVisible();
   const queryPanelBox = await page.locator(".query-panel").boundingBox();
   expect(queryPanelBox).not.toBeNull();
   const viewportWidth = page.viewportSize()!.width;
   expect(
     Math.abs(queryPanelBox!.x + queryPanelBox!.width / 2 - viewportWidth / 2),
   ).toBeLessThan(2);
+  await expect(page.locator(".candidate-sidebar .sidebar-product")).toHaveCount(
+    1,
+  );
   await expect(
-    page.locator(".result .product-candidates > article"),
-  ).toHaveCount(0);
-  await expect(
-    page.locator(".result").getByText("해소코푸에스시럽", { exact: true }),
-  ).toHaveCount(0);
+    page
+      .locator(".candidate-sidebar")
+      .getByText("해소코푸에스시럽", { exact: true })
+      .first(),
+  ).toBeVisible();
 
   const loadingPosition = await page.evaluate(() => {
     const status = document.createElement("div");
@@ -261,7 +280,9 @@ test("generic cough asks one pattern question and loading does not shift layout"
   await input.fill("마른기침이고 임신은 아니에요");
   await input.press("Enter");
   await expect(
-    page.getByText("해소코푸에스시럽", { exact: true }),
+    page
+      .locator(".result .product-card")
+      .filter({ hasText: "해소코푸에스시럽" }),
   ).toBeVisible();
   const coughProduct = page
     .locator(".result .product-card")
@@ -311,7 +332,9 @@ test("a new symptom keeps earlier topic candidates in the same patient consultat
       }),
   ).toBeVisible();
   await expect(
-    page.getByText("해소코푸에스시럽", { exact: true }),
+    page
+      .locator(".result .product-card")
+      .filter({ hasText: "해소코푸에스시럽" }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "함께 확인 중인 증상" }),

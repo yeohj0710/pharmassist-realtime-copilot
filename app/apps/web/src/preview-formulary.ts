@@ -77,11 +77,6 @@ export function buildResearchPreviewFormulary(
       !product.protocol_ids?.length
     )
       return [];
-    const activeIngredientIds = new Set(
-      product.active_ingredients?.map(
-        (ingredient) => ingredient.ingredient_id,
-      ) ?? [],
-    );
     return product.protocol_ids.flatMap((protocolId) => {
       const protocol = previewPack.protocols.find(
         (candidate) => candidate.protocol_id === protocolId,
@@ -90,7 +85,6 @@ export function buildResearchPreviewFormulary(
       return previewPack.protocolOptions.flatMap((option) =>
         option.protocol_id === protocolId &&
         protocol.option_ids.includes(option.option_id) &&
-        activeIngredientIds.has(option.ingredient_id) &&
         previewPack.productIngredients.some(
           (link) =>
             link.product_id === product.product_id &&

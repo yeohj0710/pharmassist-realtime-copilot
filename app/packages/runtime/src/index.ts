@@ -25,6 +25,7 @@ import { normalizeKorean } from "@pharmassist/normalizer";
 import {
   assertDecisionInvariants,
   buildRecommendationDecision,
+  nextCandidateSafetyQuestion,
   nextConsultationState,
   nextProtocolQuestion,
   renderDecisionSentence,
@@ -810,7 +811,9 @@ export class LocalClinicalEngine {
       protocolOptions: this.pack.protocolOptions,
       protocolRules: this.pack.protocolRules,
     };
-    let decision = buildRecommendationDecision({
+    const allowProgressiveCandidates =
+      this.pack.clinicalUseProhibited && !this.pack.synthetic;
+    const recommendationRequest = {
       sequence: input.sequence,
       sessionId: input.session_id,
       now,
@@ -819,24 +822,14 @@ export class LocalClinicalEngine {
       ...(protocol ? { protocol } : {}),
       knowledge,
       tenant,
-      allowProgressiveCandidates:
-        this.pack.clinicalUseProhibited && !this.pack.synthetic,
+      allowProgressiveCandidates,
       ...(focusPrior ? { consultationState: focusPrior } : {}),
-    });
+    };
+    let decision = buildRecommendationDecision(recommendationRequest);
     const progressiveQuestion =
       decision.status === "recommend"
-        ? nextProtocolQuestion({
-            sequence: input.sequence,
-            sessionId: input.session_id,
-            now,
-            normalized,
-            safety,
-            ...(protocol ? { protocol } : {}),
-            knowledge,
-            tenant,
-            allowProgressiveCandidates: true,
-            ...(focusPrior ? { consultationState: focusPrior } : {}),
-          })
+        ? (nextProtocolQuestion(recommendationRequest) ??
+          nextCandidateSafetyQuestion(recommendationRequest, decision))
         : null;
     const additionalTopicEvaluations = orderedTopicProtocols
       .filter(
@@ -869,7 +862,7 @@ export class LocalClinicalEngine {
           undefined,
           undefined,
         );
-        const topicDecision = buildRecommendationDecision({
+        const topicRequest = {
           sequence: input.sequence,
           sessionId: input.session_id,
           now,
@@ -878,26 +871,14 @@ export class LocalClinicalEngine {
           protocol: topicProtocol,
           knowledge,
           tenant,
-          allowProgressiveCandidates:
-            this.pack.clinicalUseProhibited && !this.pack.synthetic,
+          allowProgressiveCandidates,
           ...(priorTopicState ? { consultationState: priorTopicState } : {}),
-        });
+        };
+        const topicDecision = buildRecommendationDecision(topicRequest);
         const nextQuestion =
           mentionedNow && topicDecision.status === "recommend"
-            ? nextProtocolQuestion({
-                sequence: input.sequence,
-                sessionId: input.session_id,
-                now,
-                normalized: topicNormalized,
-                safety,
-                protocol: topicProtocol,
-                knowledge,
-                tenant,
-                allowProgressiveCandidates: true,
-                ...(priorTopicState
-                  ? { consultationState: priorTopicState }
-                  : {}),
-              })
+            ? (nextProtocolQuestion(topicRequest) ??
+              nextCandidateSafetyQuestion(topicRequest, topicDecision))
             : priorTopic?.pending_question;
         return {
           protocol: topicProtocol,

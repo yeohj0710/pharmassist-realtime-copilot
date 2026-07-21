@@ -41,6 +41,9 @@ export default defineConfig(({ mode }) => {
           cacheId: "pharmassist-realtime-copilot",
           navigateFallback: "/index.html",
           globPatterns: ["**/*.{js,css,html}"],
+          // The deterministic worker embeds the audited research-preview
+          // product/pathway pack so it remains available offline.
+          maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         },
       }),
     ],

@@ -54,6 +54,26 @@
       "minLength": 1,
       "maxLength": 1000
     },
+    "pathway_mechanisms": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "combination_roles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["primary", "supportive"]
+      }
+    },
+    "compatible_roles": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
     "claim_ids": {
       "type": "array",
       "minItems": 1,

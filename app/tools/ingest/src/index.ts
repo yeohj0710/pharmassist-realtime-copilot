@@ -4,6 +4,7 @@ import type { SourceSnapshot } from "@pharmassist/contracts";
 
 export * from "./local-pharmacy-catalog.js";
 export * from "./healthkr-product-registry.js";
+export * from "./clinical-pathway-classifier.js";
 
 export const MAX_IMPORT_BYTES = 20 * 1024 * 1024;
 export function secureImportPath(root: string, candidate: string): string {

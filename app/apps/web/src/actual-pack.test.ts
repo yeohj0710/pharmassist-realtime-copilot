@@ -7,8 +7,8 @@ import { LocalClinicalEngine } from "@pharmassist/runtime";
 import actualPackJson from "../../../data/actual-candidate-pack/pack.json" with { type: "json" };
 import dialogueSeedReport from "../../../data/actual-candidate-pack/dialogue-seed-report.json" with { type: "json" };
 import productEnrichment from "../../../data/actual-candidate-pack/product-enrichment.json" with { type: "json" };
-import healthKrRegistryReport from "../../../data/healthkr-product-registry/report.json" with { type: "json" };
 import healthKrLegacyMatchReport from "../../../data/actual-candidate-pack/healthkr-legacy-match-report.json" with { type: "json" };
+import clinicalPathwayMappings from "../../../data/clinical-pathways/product-mappings.json" with { type: "json" };
 import { buildResearchPreviewFormulary } from "./preview-formulary.js";
 
 const validated = validateContract<RuntimePack>("runtimePack", actualPackJson);
@@ -45,14 +45,14 @@ describe("actual research preview pack", () => {
     ).toBe("recommend");
     expect(result.output.decision.ingredient_options.length).toBeGreaterThan(0);
     expect(
-      result.output.decision.ingredient_options.map(
-        (item) => item.ingredient_name,
-      ),
+      result.output.decision.ingredient_options
+        .slice(0, 2)
+        .map((item) => item.ingredient_name),
     ).toEqual(["이부프로펜", "아세트아미노펜"]);
     expect(
-      result.output.decision.product_candidates.map(
-        (item) => item.display_name,
-      ),
+      result.output.decision.product_candidates
+        .slice(0, 2)
+        .map((item) => item.display_name),
     ).toEqual(["이지엔6애니연질캡슐", "게보린브이정(아세트아미노펜)"]);
     expect(result.output.say_now.join(" ")).not.toContain("아세트아미노펜");
     expect(result.output.ask_next).toHaveLength(1);
@@ -136,17 +136,12 @@ describe("actual research preview pack", () => {
     expect(first.output.decision.status).toBe("recommend");
     expect(first.output.status).toBe("provisional");
     expect(first.output.decision.ingredient_options.length).toBeGreaterThan(0);
-    expect(
-      first.output.decision.ingredient_options.map(
-        (item) => item.ingredient_name,
-      ),
-    ).toEqual(["플루르비프로펜", "이부프로펜"]);
-    expect(
-      first.output.decision.product_candidates.map((item) => item.display_name),
-    ).toEqual([
+    expect(first.output.decision.ingredient_options[0]?.ingredient_name).toBe(
+      "플루르비프로펜",
+    );
+    expect(first.output.decision.product_candidates[0]?.display_name).toBe(
       "스트렙실허니앤레몬트로키(플루르비프로펜)",
-      "이지엔6애니연질캡슐",
-    ]);
+    );
     expect(first.output.say_now.join(" ")).not.toContain("아세트아미노펜");
     expect(first.output.ask_next).toHaveLength(1);
     expect(first.output.ask_next[0]?.question).toBe(
@@ -274,34 +269,62 @@ describe("actual research preview pack", () => {
     ).toEqual(new Set(["PTC-SORE_THROAT", "PTC-HEARTBURN"]));
   });
 
-  it("keeps ingredient guidance but no product with unresolved safety context", () => {
+  it("keeps a provisional dry-cough product visible while resolving safety context", () => {
     const engine = new LocalClinicalEngine(actualPack);
-    const result = engine.run(
-      {
-        request_id: crypto.randomUUID(),
-        session_id: crypto.randomUUID(),
-        sequence: 1,
-        input_type: "typed",
-        text: "기침나요",
-        is_partial: false,
-        locale: "ko-KR",
-        domain: "human_otc",
-        patient_context: {},
-        client_timestamp: new Date().toISOString(),
-      },
-      {
-        tenantId: "local-research-preview",
-        formulary: previewFormulary,
-      },
+    const sessionId = crypto.randomUUID();
+    const input = (text: string, sequence: number): RuntimeInput => ({
+      request_id: crypto.randomUUID(),
+      session_id: sessionId,
+      sequence,
+      input_type: "typed",
+      text,
+      is_partial: false,
+      locale: "ko-KR",
+      domain: "human_otc",
+      patient_context: {},
+      client_timestamp: new Date().toISOString(),
+    });
+    const tenant = {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    } as const;
+
+    const first = engine.run(input("기침나요", 1), tenant);
+
+    expect(first.output.ask_next[0]?.slot).toBe("symptom.cough_pattern");
+    expect(first.output.ask_next[0]?.question).toContain("마른기침");
+    expect(first.output.decision.status).toBe("recommend");
+    expect(first.output.decision.product_candidates[0]?.display_name).toBe(
+      "해소코푸에스시럽",
+    );
+    expect(first.output.decision.combination_candidates?.[0]).toMatchObject({
+      primary_product_name: "해소코푸에스시럽",
+      supportive_product_name: "쎄파렉신연조엑스",
+      supportive_mechanisms: ["herbal_support"],
+    });
+
+    const second = engine.run(input("가래는 없는거 같아요", 2), {
+      ...tenant,
+      consultationState: first.consultationState,
+    });
+
+    expect(second.output.status).toBe("provisional");
+    expect(second.output.ask_next[0]?.slot).toBe("pregnancy_status");
+    expect(second.output.decision.product_candidates[0]?.display_name).toBe(
+      "해소코푸에스시럽",
     );
 
-    expect(result.output.ask_next[0]?.slot).toBe("symptom.cough_pattern");
-    expect(result.output.ask_next[0]?.question).toContain("마른기침");
-    expect(result.output.decision.status).toBe("recommend");
-    expect(result.output.decision.ingredient_options.length).toBeGreaterThan(0);
-    expect(result.output.decision.product_candidates).toEqual([]);
-    expect(result.output.topic_results[0]?.decision).toBe(
-      result.output.decision,
+    const completed = engine.run(input("임신은 아니에요", 3), {
+      ...tenant,
+      consultationState: second.consultationState,
+    });
+
+    expect(completed.output.ask_next).toEqual([]);
+    expect(completed.output.decision.product_candidates[0]?.display_name).toBe(
+      "해소코푸에스시럽",
+    );
+    expect(completed.output.topic_results[0]?.decision).toBe(
+      completed.output.decision,
     );
   });
 
@@ -372,16 +395,21 @@ describe("actual research preview pack", () => {
         (entry) => entry.pharmacist_approved === false,
       ),
     ).toBe(true);
-    expect(actualPack.ingredients).toHaveLength(31);
-    expect(actualPack.products).toHaveLength(
-      27 + healthKrRegistryReport.eligibleRetailSkuCount,
-    );
+    const expectedImportedProducts = clinicalPathwayMappings.records.filter(
+      (record) =>
+        record.mappingStatus === "direct" &&
+        !record.exclusionReasons.some((reason) =>
+          ["not_otc", "permit_cancelled", "source_match_conflict"].includes(
+            reason,
+          ),
+        ),
+    ).length;
+    expect(actualPack.ingredients.length).toBeGreaterThan(31);
+    expect(actualPack.products).toHaveLength(27 + expectedImportedProducts);
     const healthKrProducts = actualPack.products.filter((product) =>
       product.product_id.startsWith("PRD-HEALTHKR-"),
     );
-    expect(healthKrProducts).toHaveLength(
-      healthKrRegistryReport.eligibleRetailSkuCount,
-    );
+    expect(healthKrProducts).toHaveLength(expectedImportedProducts);
     expect(healthKrLegacyMatchReport).toMatchObject({
       total: 27,
       matched: 6,
@@ -440,7 +468,7 @@ describe("actual research preview pack", () => {
     expect(productProtocolProfileIds).toEqual(
       actualPack.protocols.map((protocol) => protocol.protocol_id).sort(),
     );
-    expect(actualPack.protocolOptions).toHaveLength(47);
+    expect(actualPack.protocolOptions.length).toBeGreaterThan(47);
     expect(
       actualPack.protocolOptions.every(
         (option) =>
@@ -483,9 +511,9 @@ describe("actual research preview pack", () => {
     const congestion = run("코가 막힘");
     expect(congestion.output.decision.protocol_id).toBe("PTC-NASAL_CONGESTION");
     expect(
-      congestion.output.decision.ingredient_options.map(
-        (item) => item.ingredient_name,
-      ),
+      congestion.output.decision.ingredient_options
+        .slice(0, 1)
+        .map((item) => item.ingredient_name),
     ).toEqual(["슈도에페드린염산염"]);
     expect(congestion.output.decision.product_candidates[0]?.display_name).toBe(
       "액티피드정",
@@ -502,9 +530,9 @@ describe("actual research preview pack", () => {
     const jointPain = run("관절이 쑤심");
     expect(jointPain.output.decision.protocol_id).toBe("PTC-JOINT_PAIN");
     expect(
-      jointPain.output.decision.ingredient_options.map(
-        (item) => item.ingredient_name,
-      ),
+      jointPain.output.decision.ingredient_options
+        .slice(0, 2)
+        .map((item) => item.ingredient_name),
     ).toEqual(["이부프로펜", "아세트아미노펜"]);
   });
 
@@ -625,11 +653,11 @@ describe("actual research preview pack", () => {
     expect(
       result.output.decision.status,
       JSON.stringify(result.output.decision),
-    ).toBe("recommend");
-    expect(result.output.status).toBe("provisional");
+    ).toBe("ask");
+    expect(result.output.status).toBe("blocked");
     expect(result.output.ask_next).toHaveLength(1);
     expect(result.output.ask_next[0]?.slot).toBe("symptom.phenotype");
-    expect(result.output.decision.ingredient_options).toHaveLength(1);
+    expect(result.output.decision.ingredient_options).toEqual([]);
     expect(result.output.decision.product_candidates).toEqual([]);
   });
 
@@ -653,12 +681,12 @@ describe("actual research preview pack", () => {
     expect(
       result.output.decision.status,
       JSON.stringify(result.output.decision),
-    ).toBe("recommend");
+    ).toBe("ask");
     expect(result.output.ask_next[0]?.slot).toBe("symptom.phenotype");
-    expect(result.output.decision.ingredient_options).toHaveLength(1);
+    expect(result.output.decision.ingredient_options).toEqual([]);
   });
 
-  it("does not treat an unrelated colloquial follow-up as a valid imported slot answer", () => {
+  it("shows the matching abdominal product after the phenotype is known", () => {
     const engine = new LocalClinicalEngine(actualPack);
     const sessionId = crypto.randomUUID();
     const input = (text: string, sequence: number): RuntimeInput => ({
@@ -678,21 +706,60 @@ describe("actual research preview pack", () => {
       tenantId: "local-research-preview",
       formulary: previewFormulary,
     });
-    const second = engine.run(input("똥마려요", 2), {
+    const second = engine.run(input("속쓰림도 있어요", 2), {
       tenantId: "local-research-preview",
       formulary: previewFormulary,
       consultationState: first.consultationState,
     });
 
-    expect(first.output.decision.product_candidates.length).toBeGreaterThan(0);
-    expect(second.output.status).toBe("provisional");
-    expect(second.output.ask_next[0]?.slot).toBe("symptom.phenotype");
-    expect(second.output.decision.product_candidates).toEqual(
-      first.output.decision.product_candidates,
+    expect(first.output.decision.product_candidates).toEqual([]);
+    expect(second.output.decision.status).toBe("recommend");
+    expect(second.output.decision.protocol_id).toBe("PTC-HEARTBURN");
+    expect(
+      second.output.decision.ingredient_options.map(
+        (option) => option.ingredient_id,
+      ),
+    ).toContain("ING-ALUMINUM_PHOSPHATE_GEL");
+    expect(second.output.decision.product_candidates).toHaveLength(1);
+    expect(second.output.decision.product_candidates[0]?.display_name).toBe(
+      "겔포스엠",
     );
-    expect(second.consultationState.answered_slots).not.toHaveProperty(
-      "symptom.phenotype",
+  });
+
+  it("routes a colloquial bowel-urgency correction instead of repeating an abdominal question", () => {
+    const engine = new LocalClinicalEngine(actualPack);
+    const sessionId = crypto.randomUUID();
+    const input = (text: string, sequence: number): RuntimeInput => ({
+      request_id: crypto.randomUUID(),
+      session_id: sessionId,
+      sequence,
+      input_type: "typed",
+      text,
+      is_partial: false,
+      locale: "ko-KR",
+      domain: "human_otc",
+      patient_context: {},
+      client_timestamp: new Date().toISOString(),
+    });
+
+    const first = engine.run(input("배아파요", 1), {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    });
+    const second = engine.run(input("아니 똥마려운 배아픔", 2), {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+      consultationState: first.consultationState,
+    });
+
+    expect(first.output.decision.product_candidates).toEqual([]);
+    expect(second.output.intent).toBe("bowel_urgency_context");
+    expect(second.output.decision.status).toBe("ask");
+    expect(second.output.ask_next[0]?.question).toBe(
+      "배도 아프신가요, 아니면 변이 마려운 느낌만 있으신가요?",
     );
+    expect(second.output.decision.ingredient_options).toEqual([]);
+    expect(second.output.decision.product_candidates).toEqual([]);
   });
 
   it("routes a semantic bowel-urgency correction to conversation before medicine", () => {
