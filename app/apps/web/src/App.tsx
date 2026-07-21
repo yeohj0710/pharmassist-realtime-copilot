@@ -3,6 +3,7 @@ import {
   buildCustomerSummary,
   customerTurn,
   upsertCounselorTurn,
+  withoutRetractedTurns,
   type DialogueTurn,
 } from "@pharmassist/dialogue";
 import {
@@ -740,8 +741,15 @@ export function App() {
         const localOutput = event.data.output;
         const commitOutput = (output: RuntimeOutput) => {
           setResult(output);
+          // A retraction removes the retracted symptom turn from the visible
+          // record so it stops appearing as a patient fact.
+          const baseHistory = output.decision.reason_codes.includes(
+            "RETRACT_TURN",
+          )
+            ? withoutRetractedTurns(historyRef.current, output.sequence)
+            : historyRef.current;
           const nextHistory = upsertCounselorTurn(
-            historyRef.current,
+            baseHistory,
             output.sequence,
             outputText(output),
           );

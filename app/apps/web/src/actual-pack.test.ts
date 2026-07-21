@@ -445,6 +445,94 @@ describe("actual research preview pack", () => {
     },
   );
 
+  it("drops the active topic on a retraction instead of storing it as a fact", () => {
+    const engine = new LocalClinicalEngine(actualPack);
+    const sessionId = crypto.randomUUID();
+    const input = (text: string, sequence: number): RuntimeInput => ({
+      request_id: crypto.randomUUID(),
+      session_id: sessionId,
+      sequence,
+      input_type: "typed",
+      text,
+      is_partial: false,
+      locale: "ko-KR",
+      domain: "human_otc",
+      patient_context: {},
+      client_timestamp: new Date().toISOString(),
+    });
+    const tenant = {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    } as const;
+
+    const symptom = engine.run(input("어깨가아파요", 1), tenant);
+    expect(symptom.output.decision.status).toBe("recommend");
+
+    const retracted = engine.run(input("아 취소", 2), {
+      ...tenant,
+      consultationState: symptom.consultationState,
+    });
+    expect(retracted.output.decision.reason_codes).toContain("RETRACT_TURN");
+    expect(retracted.output.say_now.join(" ")).toContain("지웠어요");
+    expect(retracted.output.ask_next).toEqual([]);
+    expect(retracted.output.decision.product_candidates).toEqual([]);
+    expect(retracted.consultationState.topics).toHaveLength(0);
+    expect(retracted.consultationState.active_protocol_id).toBeNull();
+
+    const fresh = engine.run(input("속이 쓰려요", 3), {
+      ...tenant,
+      consultationState: retracted.consultationState,
+    });
+    expect(fresh.output.decision.status).toBe("recommend");
+    expect(fresh.output.decision.protocol_id).toBe("PTC-HEARTBURN");
+  });
+
+  it("stops repeating a triage question once the answer anchors a same-cluster topic", () => {
+    const engine = new LocalClinicalEngine(actualPack);
+    const sessionId = crypto.randomUUID();
+    const input = (text: string, sequence: number): RuntimeInput => ({
+      request_id: crypto.randomUUID(),
+      session_id: sessionId,
+      sequence,
+      input_type: "typed",
+      text,
+      is_partial: false,
+      locale: "ko-KR",
+      domain: "human_otc",
+      patient_context: {},
+      client_timestamp: new Date().toISOString(),
+    });
+    const tenant = {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    } as const;
+
+    const first = engine.run(input("배가 아파요", 1), tenant);
+    expect(first.output.ask_next[0]?.question).toContain("배가 어떻게");
+
+    const second = engine.run(input("가스찬느낌", 2), {
+      ...tenant,
+      consultationState: first.consultationState,
+    });
+    expect(second.output.decision.status).toBe("recommend");
+    expect(
+      second.output.ask_next.map((question) => question.question).join(" "),
+    ).not.toContain("배가 어떻게");
+    expect(
+      second.consultationState.topics.find(
+        (topic) => topic.protocol_id === "PTC-ABDOMINAL_PAIN_VOMITING",
+      )?.pending_question,
+    ).toBeNull();
+
+    const third = engine.run(input("그니까 가스가 찬 느낌이라고요", 3), {
+      ...tenant,
+      consultationState: second.consultationState,
+    });
+    expect(
+      third.output.ask_next.map((question) => question.question).join(" "),
+    ).not.toContain("배가 어떻게");
+  });
+
   it("still uses a dialogue card that shares a discriminative term", () => {
     const engine = new LocalClinicalEngine(actualPack);
     const result = engine.run({

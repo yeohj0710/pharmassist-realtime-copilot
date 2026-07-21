@@ -172,3 +172,30 @@ Verified: unit+integration 227/227, E2E 12/12, lint/schema/typecheck/build/
 security/docs all green; live dev-server session confirmed 목아파요 →
 인후통 우선 후보 + 공식 대안 4종 across three frustrated re-phrasings, and
 잇몸에서 피나요 → generic symptom question with no wrong category claim.
+
+## Session 4 follow-up (2026-07-21): deterministic dialogue-act layer
+
+Reported: answering a triage question with a same-area wording (배가 어떻게
+불편한가요? → 가스찬느낌) repeated the question verbatim, and a retraction
+(아 취소) was stored as a symptom fact while the question kept repeating.
+Root cause: every judgment was turn-local lexical matching with no
+conversation-level act interpretation. Deterministic fixes:
+
+1. `packages/runtime`: retraction acts (취소/잘못 말했/없던 걸로) are
+   conversation turns — retrieval is skipped, the active topic is dropped
+   from consultation state with its pending question and candidates, the
+   decision carries `RETRACT_TURN`, and the reply acknowledges the reset.
+2. `packages/runtime`: a newly anchored protocol in the same top-level
+   symptom cluster (소화기/감기/통증/피부/알레르기/기타) supersedes an
+   earlier topic's pending triage question — the customer answered it by
+   redirecting — while cross-cluster questions stay alive (sore-throat
+   question still resurfaces during a heartburn turn).
+3. `packages/dialogue`: retraction wording never becomes a customer fact,
+   and `withoutRetractedTurns` removes the retracted turn plus its counselor
+   reply from the visible record; `apps/web/App.tsx` applies it when a
+   decision carries `RETRACT_TURN`.
+
+Verified: unit+integration 231/231, E2E 12/12 (the abdominal-phenotype E2E
+now asserts the question is not repeated after the answer), lint/schema/
+typecheck/build/security/docs green. The AI interpreter, when connected,
+feeds the same layer; local behavior stays deterministic.

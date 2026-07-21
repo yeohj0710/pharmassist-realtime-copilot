@@ -126,12 +126,17 @@ test("generic abdominal pain waits for the phenotype before showing a product", 
 
   await input.fill("속쓰림도 있어요");
   await input.press("Enter");
+  // The answer supersedes the abdominal triage question, so the candidates
+  // panel (provisional or confirmed) appears without repeating it.
   await expect(
-    page.getByRole("heading", { name: "현재 무난한 후보" }),
+    page.getByRole("heading", { name: /현재 (?:무난한|제품) 후보/u }),
   ).toBeVisible();
   await expect(
     page.getByText("겔포스엠", { exact: true }).first(),
   ).toBeVisible();
+  await expect(
+    page.getByText(/속쓰림·신물, 멀미 뒤 메스꺼움, 설사/u),
+  ).toHaveCount(0);
 });
 
 test("actual dry-cough protocol is selected without abdominal leakage", async ({

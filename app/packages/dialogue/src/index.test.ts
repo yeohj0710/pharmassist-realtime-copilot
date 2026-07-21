@@ -7,6 +7,7 @@ import {
   serializeDialogueTurns,
   toModelConversation,
   upsertCounselorTurn,
+  withoutRetractedTurns,
 } from "./index.js";
 
 describe("consultation dialogue", () => {
@@ -23,6 +24,29 @@ describe("consultation dialogue", () => {
     expect(toModelConversation(parseDialogueTurns(serialized))).toEqual([
       { role: "user", content: "무릎이 아파요" },
       { role: "assistant", content: "언제부터 아프셨어요?" },
+    ]);
+  });
+
+  it("keeps a retraction out of the customer facts", () => {
+    const summary = buildCustomerSummary([
+      customerTurn("어깨가아파요", 1),
+      customerTurn("아 취소", 2),
+      customerTurn("잘못 말했어요", 3),
+    ]);
+    expect(summary.facts).toEqual(["어깨가아파요"]);
+  });
+
+  it("removes the retracted turn and its counselor reply from the record", () => {
+    const turns = [
+      customerTurn("어깨가아파요", 1),
+      ...upsertCounselorTurn([], 1, "움직일 때 더 아픈가요?"),
+      customerTurn("아 취소", 2),
+    ];
+    const trimmed = withoutRetractedTurns(turns, 2);
+    expect(trimmed).toEqual([customerTurn("아 취소", 2)]);
+    // Without an earlier customer turn there is nothing to retract.
+    expect(withoutRetractedTurns([customerTurn("아 취소", 1)], 1)).toEqual([
+      customerTurn("아 취소", 1),
     ]);
   });
 

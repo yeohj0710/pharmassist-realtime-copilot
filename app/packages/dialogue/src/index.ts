@@ -42,10 +42,29 @@ const riskPattern = /숨|호흡|의식|실신|피가|혈변|토혈|마비|경련
 const durationPattern =
   /(?:오늘|어제|그제|방금|아까|며칠|일주일|한달|\d+\s*(?:시간|일|주|개월))(?:부터|째)?/u;
 const nonFactPattern =
-  /모르|몰라|애매|기억 안|글쎄|확실하지|그냥 그래|무슨 말|왜요|뭔가요|^(?:어이|저기(?:요)?|여보세요|안녕(?:하세요)?|하이|헬로|고마워(?:요)?|감사(?:합니다|해요)?|땡큐)[.!?~ ]*$|^(?:아니\s*)?(?:그거|그쪽|앞(?:에|쪽)?|뒤(?:에|쪽)?|처음|마지막|전자|후자|\d+\s*번|[첫둘셋넷]째|[첫두세네]\s*번째)(?:라고요|요)?[.!?]?$/u;
+  /모르|몰라|애매|기억 안|글쎄|확실하지|그냥 그래|무슨 말|왜요|뭔가요|취소|캔슬|잘못\s*(?:말했|입력했|눌렀)|없던\s*(?:일|걸)로|^(?:어이|저기(?:요)?|여보세요|안녕(?:하세요)?|하이|헬로|고마워(?:요)?|감사(?:합니다|해요)?|땡큐)[.!?~ ]*$|^(?:아니\s*)?(?:그거|그쪽|앞(?:에|쪽)?|뒤(?:에|쪽)?|처음|마지막|전자|후자|\d+\s*번|[첫둘셋넷]째|[첫두세네]\s*번째)(?:라고요|요)?[.!?]?$/u;
 
 export function customerTurn(text: string, sequence: number): DialogueTurn {
   return { speaker: "customer", text: text.trim(), sequence };
+}
+
+/**
+ * Removes the customer turn a retraction refers to (the most recent customer
+ * turn before the retracting turn) together with its counselor reply, so a
+ * retracted symptom disappears from the visible consultation record. The
+ * retracting exchange itself stays in the transcript.
+ */
+export function withoutRetractedTurns(
+  turns: readonly DialogueTurn[],
+  retractSequence: number,
+): readonly DialogueTurn[] {
+  const retracted = [...turns]
+    .filter(
+      (turn) => turn.speaker === "customer" && turn.sequence < retractSequence,
+    )
+    .sort((left, right) => right.sequence - left.sequence)[0];
+  if (!retracted) return turns;
+  return turns.filter((turn) => turn.sequence !== retracted.sequence);
 }
 
 export function upsertCounselorTurn(

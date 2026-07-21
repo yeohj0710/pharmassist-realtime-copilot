@@ -108,6 +108,15 @@ const conversationalReply = (text: string): string | undefined => {
   return undefined;
 };
 
+// A retraction is a conversation act about the consultation itself, not a
+// symptom: the active topic is dropped, nothing is stored as a patient fact,
+// and no pending question survives it.
+const retractionPattern =
+  /^(?:아+\s*)?(?:취소|캔슬)(?:요|할게요|해\s*주세요|해줘)?$|(?:방금|아까|그)\s*(?:거|말|얘기|내용)?\s*(?:은|는)?\s*(?:취소|지워|무시|없던\s*걸로)|잘못\s*(?:말했|입력했|눌렀)|없던\s*(?:일|걸)로\s*(?:해|하)/u;
+
+const retractionReplyText =
+  "네, 방금 상담 내용은 지웠어요. 다시 편하게 말씀해 주세요.";
+
 const protocolCandidateForIntent = (
   intent: string | undefined,
   cards: readonly KnowledgeCard[],
@@ -670,20 +679,24 @@ export class LocalClinicalEngine {
       input.text,
       input.asr?.alternatives ?? [],
     );
-    const conversationReply = conversationalReply(rawNormalized.normalizedText);
+    const retraction = retractionPattern.test(rawNormalized.normalizedText);
+    const conversationReply = retraction
+      ? retractionReplyText
+      : conversationalReply(rawNormalized.normalizedText);
     const uncertainReply = Boolean(
       prior?.pending_question_slot &&
       uncertainAnswer.test(rawNormalized.normalizedText),
     );
-    const retrievedProtocols = uncertainReply
-      ? []
-      : retrieveProtocols(
-          rawNormalized,
-          input.domain,
-          this.decisionIndex,
-          3,
-          !prior?.pending_question_slot,
-        );
+    const retrievedProtocols =
+      uncertainReply || retraction
+        ? []
+        : retrieveProtocols(
+            rawNormalized,
+            input.domain,
+            this.decisionIndex,
+            3,
+            !prior?.pending_question_slot,
+          );
     const answersPriorPendingQuestion = Boolean(
       prior?.pending_question_slot &&
       plausibleSlotAnswer(
@@ -708,9 +721,10 @@ export class LocalClinicalEngine {
         : hintedProtocol && !answersPriorPendingQuestion
           ? [hintedProtocol]
           : [];
-    const preliminaryCards = uncertainReply
-      ? []
-      : retrieve(rawNormalized, input.domain, this.index);
+    const preliminaryCards =
+      uncertainReply || retraction
+        ? []
+        : retrieve(rawNormalized, input.domain, this.index);
     const strongPreliminaryCard = preliminaryCards.find(
       (candidate) => candidate.score >= 0.8,
     );
@@ -798,13 +812,14 @@ export class LocalClinicalEngine {
     const safetyMs = this.clock.monotonicMs() - safetyStart;
 
     const retrievalStart = this.clock.monotonicMs();
-    const protocolCandidates = uncertainReply
-      ? []
-      : retrieveProtocols(normalized, input.domain, this.decisionIndex);
+    const protocolCandidates =
+      uncertainReply || retraction
+        ? []
+        : retrieveProtocols(normalized, input.domain, this.decisionIndex);
     const protocolCandidate = protocolCandidates[0];
     const protocol = protocolCandidate
       ? this.decisionIndex.protocols.get(protocolCandidate.protocolId)
-      : !startsNewIntent
+      : !startsNewIntent && !retraction
         ? ((focusPrior?.active_protocol_id
             ? this.decisionIndex.protocols.get(focusPrior.active_protocol_id)
             : undefined) ??
@@ -817,25 +832,52 @@ export class LocalClinicalEngine {
     const currentProtocolIds = new Set(
       protocolCandidates.map((candidate) => candidate.protocolId),
     );
-    const orderedTopicProtocols = [
-      ...(protocol ? [protocol] : []),
-      ...protocolCandidates
+    // A newly anchored protocol in the same top-level symptom cluster answers
+    // an earlier triage question by redirecting it (배가 어떻게 불편한가요? →
+    // 가스찬느낌): that topic's pending question is superseded and must not be
+    // repeated. Questions from other clusters stay alive.
+    const clusterOf = (category: string): string =>
+      category.split("/")[0] ?? category;
+    const currentClusters = new Set(
+      protocolCandidates
         .map((candidate) =>
           this.decisionIndex.protocols.get(candidate.protocolId),
         )
-        .filter((item): item is NonNullable<typeof item> => Boolean(item)),
-      ...(prior?.topics ?? [])
-        .map((topic) => this.decisionIndex.protocols.get(topic.protocol_id))
-        .filter((item): item is NonNullable<typeof item> => Boolean(item)),
-    ].filter(
-      (item, index, all) =>
-        all.findIndex(
-          (candidate) => candidate.protocol_id === item.protocol_id,
-        ) === index,
+        .filter((item): item is NonNullable<typeof item> => Boolean(item))
+        .map((item) => clusterOf(item.symptom_category)),
     );
-    const cardCandidates = uncertainReply
+    const supersededTopicIds = new Set(
+      (prior?.topics ?? [])
+        .filter(
+          (topic) =>
+            topic.pending_question_slot &&
+            !currentProtocolIds.has(topic.protocol_id) &&
+            currentClusters.has(clusterOf(topic.symptom_category)),
+        )
+        .map((topic) => topic.protocol_id),
+    );
+    const orderedTopicProtocols = retraction
       ? []
-      : retrieve(normalized, input.domain, this.index);
+      : [
+          ...(protocol ? [protocol] : []),
+          ...protocolCandidates
+            .map((candidate) =>
+              this.decisionIndex.protocols.get(candidate.protocolId),
+            )
+            .filter((item): item is NonNullable<typeof item> => Boolean(item)),
+          ...(prior?.topics ?? [])
+            .map((topic) => this.decisionIndex.protocols.get(topic.protocol_id))
+            .filter((item): item is NonNullable<typeof item> => Boolean(item)),
+        ].filter(
+          (item, index, all) =>
+            all.findIndex(
+              (candidate) => candidate.protocol_id === item.protocol_id,
+            ) === index,
+        );
+    const cardCandidates =
+      uncertainReply || retraction
+        ? []
+        : retrieve(normalized, input.domain, this.index);
     const cardCandidate = cardCandidates[0];
     const retrievedCard = cardCandidate
       ? this.index.cards.get(cardCandidate.cardId)
@@ -847,7 +889,7 @@ export class LocalClinicalEngine {
         : undefined;
     const card =
       groundedRetrievedCard ??
-      (focusPrior?.active_intent && !startsNewIntent
+      (focusPrior?.active_intent && !startsNewIntent && !retraction
         ? [...this.index.cards.values()].find(
             (item) => item.intent === focusPrior.active_intent,
           )
@@ -942,7 +984,9 @@ export class LocalClinicalEngine {
           mentionedNow && topicDecision.status === "recommend"
             ? (nextProtocolQuestion(topicRequest) ??
               nextCandidateSafetyQuestion(topicRequest, topicDecision))
-            : priorTopic?.pending_question;
+            : supersededTopicIds.has(topicProtocol.protocol_id)
+              ? null
+              : priorTopic?.pending_question;
         return {
           protocol: topicProtocol,
           normalized: topicNormalized,
@@ -1031,7 +1075,9 @@ export class LocalClinicalEngine {
         this.pack.packId,
         input,
         context.inventory !== undefined,
-        ["CONVERSATION_TURN"],
+        retraction
+          ? ["RETRACT_TURN", "CONVERSATION_TURN"]
+          : ["CONVERSATION_TURN"],
         null,
       );
     const baseShape: Pick<
@@ -1116,7 +1162,10 @@ export class LocalClinicalEngine {
         decision: item.decision,
         ask_next: outputQuestion(
           item.question ??
-            (item.decision.status === "ask" ? item.decision.question : null),
+            (item.decision.status === "ask" &&
+            !supersededTopicIds.has(item.protocol.protocol_id)
+              ? item.decision.question
+              : null),
         ),
       })),
     ];
@@ -1150,12 +1199,13 @@ export class LocalClinicalEngine {
         : shape.say_now,
       status:
         partial && decision.status !== "refer" ? "provisional" : shape.status,
-      intent:
-        decision.intent ??
-        protocol?.intent ??
-        card?.intent ??
-        prior?.active_intent ??
-        null,
+      intent: retraction
+        ? null
+        : (decision.intent ??
+          protocol?.intent ??
+          card?.intent ??
+          prior?.active_intent ??
+          null),
       red_flags: [...safety.redFlags],
       avoid: card?.avoid
         ? [...card.avoid]
@@ -1209,7 +1259,17 @@ export class LocalClinicalEngine {
         topicResult.protocol_id === protocol?.protocol_id ||
         Boolean(additional?.mentionedNow);
       if (previous && !touchedNow) {
-        topicStateUpdates.set(topicResult.protocol_id, previous);
+        topicStateUpdates.set(
+          topicResult.protocol_id,
+          supersededTopicIds.has(topicResult.protocol_id)
+            ? {
+                ...previous,
+                pending_question_slot: null,
+                pending_question: null,
+                updated_at: now.toISOString(),
+              }
+            : previous,
+        );
         continue;
       }
       const topicNormalized =
@@ -1255,7 +1315,13 @@ export class LocalClinicalEngine {
             ),
         )
         .map((item) => topicStateUpdates.get(item.protocol_id)!),
-    ].filter(Boolean);
+    ]
+      .filter(Boolean)
+      // A retraction drops the active topic entirely: its question, its
+      // candidates, and its stored answers no longer apply.
+      .filter(
+        (item) => !retraction || item.protocol_id !== prior?.active_protocol_id,
+      );
     const questionOwner = selectedTopicQuestion
       ? topicResults.find((item) =>
           item.ask_next.some(
