@@ -1,0 +1,208 @@
+< 76) status = 'unmatched';
+  return { status, queries, ranked, top, margin, duplicateExact };
+}
+
+function coreSnapshot(record) {
+  const keys = [
+    'document_id', 'document_create_time', 'document_update_time', 'id', 'name', 'category', 'capacity', 'price', 'updated', 'etc',
+    'app_id', 'app_name', 'app_category', 'app_capacity', 'app_price', 'app_updated', 'app_etc',
+    'specification', 'displayed_price_krw', 'normalized_name', 'normalized_capacity', 'source_order', 'source_type',
+  ];
+  return Object.fromEntries(keys.map((k) => [k, record[k]]));
+}
+
+async function processRecord(record, session, stats) {
+  const originalStatus = record.official_match_status || 'pending';
+  const originalCode = String(record.official_item_seq || '');
+  let directDetail = null;
+  let directScore = null;
+
+  if (originalCode) {
+    try {
+      directDetail = await fetchDetail(originalCode);
+      directScore = baseNameScore(record, {
+        drug_name: directDetail.drug_name,
+        drug_form: directDetail.drug_form,
+        ingr_mg: directDetail.sunb,
+        list_sunb_name: directDetail.list_sunb_name,
+        produce: 'O',
+      });
+      if (directScore.score >= 82 || (originalStatus === 'confirmed' && directScore.score >= 74)) {
+        stats.refreshed++;
+        const updates = detailToUpdates(directDetail, record, Math.max(directScore.score, Number(record.official_match_score || 0)), {
+          method: 'existing_code_reverified', alias: directScore.bestAlias, margin: null, queries: [],
+          rationale: `기존 품목코드 재검증; 이름 점수 ${directScore.score.toFixed(1)}`,
+        });
+        return { ...record, ...updates };
+      }
+    } catch (error) {
+      stats.detailErrors++;
+      record.__detailError = error.message;
+    }
+  }
+
+  const match = await findBestMatch(record, session);
+  const candidates = match.ranked.slice(0, 5).map((x) => x.summary);
+  if (match.status === 'confirmed' && match.top) {
+    try {
+      const detail = await fetchDetail(match.top.candidate.drug_code);
+      let adjusted = baseNameScore(record, {
+        drug_name: detail.drug_name,
+        drug_form: detail.drug_form,
+        ingr_mg: detail.sunb,
+        list_sunb_name: detail.list_sunb_name,
+        produce: 'O',
+      });
+      let score = Math.max(match.top.summary.score, adjusted.score);
+      const cap = normalizeName(record.capacity || record.specification || '');
+      const box = normalizeName(detail.drug_box || '');
+      if (cap && box && (box.includes(cap) || cap.includes(box))) score = Math.min(100, score + 2);
+      stats.newConfirmed++;
+      const updates = detailToUpdates(detail, record, score, {
+        method: 'search_and_score', alias: adjusted.bestAlias || match.top.summary.matched_alias,
+        margin: match.margin, queries: match.queries,
+        rationale: `검색 후보 자동확정; 상위 점수 ${score.toFixed(1)}, 차점자 격차 ${Number(match.margin).toFixed(1)}`,
+      });
+      return { ...record, ...updates };
+    } catch (error) {
+      stats.detailErrors++;
+      record.__detailError = error.message;
+    }
+  }
+
+  if (match.status === 'review_required') {
+    stats.reviewRequired++;
+    return {
+      ...record,
+      official_match_status: 'review_required',
+      enrichment_status: 'official_review_required',
+      official_checked_at: nowSeoul(),
+      official_match_score: match.top?.summary.score ?? record.official_match_score ?? '',
+      official_match_candidates: candidates,
+      official_search_queries: match.queries,
+      official_match_rationale: `후보 간 자동확정 기준 미충족; 상위 점수 ${match.top?.summary.score?.toFixed?.(1) ?? ''}, 격차 ${match.margin?.toFixed?.(1) ?? ''}`,
+      official_qc_flags: [...new Set([...(record.official_qc_flags || []), 'manual_match_review_required'])],
+    };
+  }
+
+  stats.unmatched++;
+  return {
+    ...record,
+    official_match_status: 'pending',
+    enrichment_status: 'pending',
+    official_checked_at: nowSeoul(),
+    official_match_candidates: candidates,
+    official_search_queries: match.queries,
+    official_match_rationale: candidates.length ? '검색 후보의 유사도가 자동확정/검토 기준에 미달' : '약학정보원 의약품 검색 결과 없음',
+    official_qc_flags: [...new Set([...(record.official_qc_flags || []), candidates.length ? 'low_confidence_match' : 'no_healthkr_candidate'])],
+  };
+}
+
+async function main() {
+  const b64 = (await fs.readFile(INPUT_B64, 'utf8')).trim();
+  const rawInput = await gunzip(Buffer.from(b64, 'base64'));
+  const records = JSON.parse(rawInput.toString('utf8'));
+  if (!Array.isArray(records)) throw new Error('input is not a JSON array');
+  const originalCore = records.map(coreSnapshot);
+  const originalHash = sha256(Buffer.from(JSON.stringify(originalCore)));
+  const stats = { total: records.length, refreshed: 0, newConfirmed: 0, reviewRequired: 0, unmatched: 0, detailErrors: 0, workerErrors: 0 };
+  const results = new Array(records.length);
+  let cursor = 0;
+  let completed = 0;
+
+  async function worker(workerId) {
+    let session = await createSearchSession('챔프시럽');
+    while (true) {
+      const index = cursor++;
+      if (index >= records.length) break;
+      try {
+        results[index] = await processRecord({ ...records[index] }, session, stats);
+      } catch (error) {
+        stats.workerErrors++;
+        results[index] = {
+          ...records[index],
+          official_checked_at: nowSeoul(),
+          official_qc_flags: [...new Set([...(records[index].official_qc_flags || []), 'processing_error'])],
+          official_processing_error: error.message,
+        };
+      }
+      completed++;
+      if (completed % 25 === 0 || completed === records.length) {
+        console.log(`PROGRESS ${completed}/${records.length} confirmed=${stats.refreshed + stats.newConfirmed} review=${stats.reviewRequired} unmatched=${stats.unmatched} errors=${stats.workerErrors + stats.detailErrors}`);
+      }
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(WORKERS, records.length) }, (_, i) => worker(i + 1)));
+
+  // Hard preservation check: all source/core values must remain byte-equivalent after JSON serialization.
+  const resultCore = results.map(coreSnapshot);
+  const resultHash = sha256(Buffer.from(JSON.stringify(resultCore)));
+  const corePreserved = originalHash === resultHash;
+  if (!corePreserved) throw new Error('core field preservation check failed');
+
+  const statusCounts = {};
+  const contentCounts = {};
+  const qcCounts = {};
+  for (const record of results) {
+    statusCounts[record.official_match_status || ''] = (statusCounts[record.official_match_status || ''] || 0) + 1;
+    contentCounts[record.official_content_status || 'none'] = (contentCounts[record.official_content_status || 'none'] || 0) + 1;
+    for (const flag of record.official_qc_flags || []) qcCounts[flag] = (qcCounts[flag] || 0) + 1;
+  }
+  const sourceOrders = results.map((x) => Number(x.source_order)).filter(Number.isFinite);
+  const orderUnique = new Set(sourceOrders).size === results.length;
+  const orderContiguous = orderUnique && Math.min(...sourceOrders) === 1 && Math.max(...sourceOrders) === results.length;
+  const htmlResidue = results.filter((x) => /<[a-z][\s\S]*?>/i.test([
+    x.official_efficacy, x.official_dosage, x.official_precautions, x.official_additives, x.official_kpic_atc,
+  ].filter(Boolean).join(' '))).length;
+  const headingOnly = results.filter((x) => /^(?:1\.\s*)?(?:경고|주효능.?효과|효능.?효과|주의사항|용법.?용량)$/u.test(String(x.official_precautions || x.official_efficacy || '').trim())).length;
+  const report = {
+    generated_at: nowSeoul(),
+    source: 'health.kr 약학정보원',
+    total_records: results.length,
+    input_core_sha256: originalHash,
+    output_core_sha256: resultHash,
+    core_fields_preserved: corePreserved,
+    source_order_unique: orderUnique,
+    source_order_contiguous_1_to_n: orderContiguous,
+    status_counts: statusCounts,
+    content_status_counts: contentCounts,
+    qc_flag_counts: qcCounts,
+    processing: stats,
+    quality_checks: {
+      html_residue_records: htmlResidue,
+      heading_only_records: headingOnly,
+      records_with_images: results.filter((x) => Boolean(x.image_url)).length,
+      records_with_official_code: results.filter((x) => Boolean(x.official_item_seq)).length,
+      records_with_full_core_detail: results.filter((x) => x.official_content_status === 'complete').length,
+    },
+    elapsed_seconds: Math.round((Date.now() - startedAt) / 100) / 10,
+  };
+
+  await fs.mkdir(OUTPUT_DIR, { recursive: true });
+  const pretty = Buffer.from(JSON.stringify(results, null, 2), 'utf8');
+  const compact = Buffer.from(JSON.stringify(results), 'utf8');
+  const gz = await gzip(compact, { level: 9 });
+  await fs.writeFile(path.join(OUTPUT_DIR, 'enrichment-queue.json'), pretty);
+  await fs.writeFile(path.join(OUTPUT_DIR, 'enrichment-queue.json.gz'), gz);
+  await fs.writeFile(path.join(OUTPUT_DIR, 'enrichment-report.json'), JSON.stringify(report, null, 2));
+  await fs.writeFile(path.join(OUTPUT_DIR, 'review-required.json'), JSON.stringify(results.filter((x) => x.official_match_status === 'review_required'), null, 2));
+  await fs.writeFile(path.join(OUTPUT_DIR, 'unmatched.json'), JSON.stringify(results.filter((x) => x.official_match_status === 'pending'), null, 2));
+  await fs.writeFile(path.join(OUTPUT_DIR, 'manifest.json'), JSON.stringify({
+    generated_at: report.generated_at,
+    result_sha256: sha256(compact),
+    gzip_sha256: sha256(gz),
+    result_bytes: compact.length,
+    pretty_bytes: pretty.length,
+    gzip_bytes: gz.length,
+    report,
+  }, null, 2));
+  console.log('FINAL_REPORT ' + JSON.stringify(report));
+  console.log('RESULT_SHA256 ' + sha256(compact));
+  console.log('GZIP_SHA256 ' + sha256(gz));
+}
+
+main().catch((error) => {
+  console.error(error?.stack || String(error));
+  process.exitCode = 1;
+});
