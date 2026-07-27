@@ -24,6 +24,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -43,6 +44,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -60,6 +62,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -79,6 +82,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -96,6 +100,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -113,6 +118,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -132,6 +138,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -149,6 +156,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -166,6 +174,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -183,6 +192,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -202,6 +212,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -219,6 +230,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -236,6 +248,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -253,6 +266,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -270,6 +284,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -289,6 +304,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -306,6 +322,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -323,6 +340,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -340,6 +358,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -357,6 +376,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -374,6 +394,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -393,6 +414,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -410,6 +432,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -427,6 +450,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -444,6 +468,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -461,6 +486,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -478,6 +504,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -495,6 +522,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -514,6 +542,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -531,6 +560,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -548,6 +578,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -565,6 +596,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -582,6 +614,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -599,6 +632,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -616,6 +650,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;
@@ -633,6 +668,7 @@ export interface ConsultationState {
           };
           asked_slots: string[];
           pending_question_slot: string | null;
+          pending_question_asks?: number;
           pending_question: null | {
             question: string;
             reason: string;

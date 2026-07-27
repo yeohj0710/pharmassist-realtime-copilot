@@ -42,7 +42,29 @@ export interface AiConversationInterpretation {
   readonly intent: string | null;
   readonly confidence: number;
   readonly topicChanged: boolean;
+  /** Whether the turn answers the counselor question that is still open. */
+  readonly answersPendingQuestion: boolean;
 }
+
+/** The counselor question the customer is replying to, if one is open. */
+export interface PendingCounselorQuestion {
+  readonly question: string;
+  readonly slot: string;
+}
+
+/**
+ * A pending question only survives into the next turn while the consultation
+ * is still on it, so the answer hint is derived from the visible question
+ * rather than from anything the model chooses.
+ */
+export const pendingCounselorQuestion = (
+  output: RuntimeOutput | undefined,
+): PendingCounselorQuestion | undefined => {
+  const question = output?.ask_next[0];
+  return question
+    ? { question: question.question, slot: question.slot }
+    : undefined;
+};
 
 export const shouldBypassAiInterpretation = (text: string): boolean => {
   return /(?:숨(?:이|쉬기).*(?:안|힘)|입술.*파래|가슴.*(?:짓눌|식은땀)|의식.*(?:없|흐려)|피를\s*(?:토|쌌|봄)|검은\s*변|마비|말이\s*안\s*나|119|과다\s*복용)/u.test(
@@ -60,6 +82,7 @@ export async function requestAiInterpretation(
   text: string,
   conversationHistory: readonly DialogueTurn[],
   previousIntent: string | null,
+  pendingQuestion: PendingCounselorQuestion | undefined,
   signal: AbortSignal,
 ): Promise<AiConversationInterpretation | undefined> {
   const response = await fetch(`${apiBaseUrl()}/v1/consult/interpret`, {
@@ -71,6 +94,9 @@ export async function requestAiInterpretation(
         conversationHistory.slice(-12),
       ),
       previous_intent: previousIntent,
+      ...(pendingQuestion
+        ? { pending_question: pendingQuestion.question }
+        : {}),
     }),
     signal,
   });
@@ -80,6 +106,7 @@ export async function requestAiInterpretation(
     intent?: unknown;
     confidence?: unknown;
     topic_changed?: unknown;
+    answers_pending_question?: unknown;
   }>;
   const dispositions = new Set([
     "clinical_intent",
@@ -104,8 +131,34 @@ export async function requestAiInterpretation(
     intent: typeof body.intent === "string" ? body.intent : null,
     confidence: body.confidence,
     topicChanged: body.topic_changed,
+    answersPendingQuestion: body.answers_pending_question === true,
   };
 }
+
+/**
+ * The model decides only that the customer answered the open question; which
+ * slot that is, what the value means, and every clinical consequence stay with
+ * the deterministic engine.
+ */
+export const answeredSlotFromInterpretation = (
+  interpretation: AiConversationInterpretation,
+  pendingQuestion: PendingCounselorQuestion | undefined,
+): string | undefined =>
+  pendingQuestion &&
+  interpretation.answersPendingQuestion &&
+  !interpretation.topicChanged &&
+  interpretation.confidence >= 0.45
+    ? pendingQuestion.slot
+    : undefined;
+
+export const interpretedIntent = (
+  interpretation: AiConversationInterpretation,
+): string | undefined =>
+  interpretation.disposition === "clinical_intent" &&
+  interpretation.intent &&
+  interpretation.confidence >= 0.45
+    ? interpretation.intent
+    : undefined;
 
 export async function requestAiReadiness(
   signal: AbortSignal,

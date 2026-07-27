@@ -76,6 +76,7 @@
             "items": { "type": "string" }
           },
           "pending_question_slot": { "type": ["string", "null"] },
+          "pending_question_asks": { "type": "integer", "minimum": 0 },
           "pending_question": {
             "oneOf": [
               { "type": "null" },

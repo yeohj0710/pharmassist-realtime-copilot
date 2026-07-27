@@ -1225,6 +1225,7 @@ export interface RuntimeInput {
   input_type: "typed" | "voice_partial" | "voice_final" | "card_action";
   text: string;
   intent_hint?: string;
+  answers_pending_slot?: string;
   is_partial: boolean;
   locale: "ko-KR";
   domain: "human_otc" | "prescription_counseling" | "supplement" | "animal_medicine";

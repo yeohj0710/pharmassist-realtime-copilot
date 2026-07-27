@@ -1,5 +1,5 @@
 {
-  "schemaHash": "4fb3ef9b15fcd78509a39ef8656fca8710673554cc0038783ea30b29fc60ebd1",
+  "schemaHash": "6f99141799de429f4f8703c84a44be469632ca1c95c224143bdece6a9ab7ee14",
   "generated": [
     {
       "file": "claim.ts",
@@ -19,7 +19,7 @@
     {
       "file": "consultation_state.ts",
       "title": "ConsultationState",
-      "sha256": "c056d6c15fab4c6500e39a53fff36b07da033ba3ce31c2b6a1dec4e839ad9219"
+      "sha256": "82c76ecd1e6aaca958f13a2dc2040c5d36223c8b2337103529b198ec1f2733cf"
     },
     {
       "file": "drug_product.ts",
@@ -79,12 +79,12 @@
     {
       "file": "refinement_request.ts",
       "title": "RefinementRequestEnvelope",
-      "sha256": "2176c9e49733b553db790bee2cb1aa511e93c7c078afdb589fc97714a92128f1"
+      "sha256": "42a02e496c480a1e5b8483dc56a646eb17904fb589ad97c69d31301a9019ee92"
     },
     {
       "file": "runtime_input.ts",
       "title": "RuntimeInput",
-      "sha256": "a1ab7507068ca6fc36afec507c06abe805adacb745d4373d5d7bdab802065533"
+      "sha256": "a05936763fe1c5f3a92d341d3be3444da197cc07a531cba2778f15e26126a6b0"
     },
     {
       "file": "runtime_output.ts",

@@ -21,7 +21,10 @@ import {
   lintDecisionPack,
   lintForPublication,
 } from "@pharmassist/knowledge";
-import { normalizeKorean } from "@pharmassist/normalizer";
+import {
+  koreanDurationExpression,
+  normalizeKorean,
+} from "@pharmassist/normalizer";
 import {
   assertDecisionInvariants,
   buildRecommendationDecision,
@@ -145,6 +148,60 @@ const protocolCandidateForIntent = (
     )[0];
 };
 
+/** How many times one topic question may be put to the customer. */
+const maxQuestionAsks = 2;
+
+const hangulSyllable = /[가-힣]/u;
+
+// A single-syllable accepted pattern (침, 물) is a substring of unrelated
+// words, so 아침부터요 used to register as "삼키기 힘든 정도" and store the
+// wrong answer. One syllable therefore only counts when it starts a word;
+// longer patterns keep plain containment so a prefixed 목이따갑 still matches.
+const containsAcceptedPattern = (text: string, pattern: string): boolean => {
+  if (pattern.length > 1) return text.includes(pattern);
+  for (
+    let index = text.indexOf(pattern);
+    index >= 0;
+    index = text.indexOf(pattern, index + 1)
+  ) {
+    const preceding = text[index - 1];
+    if (!preceding || !hangulSyllable.test(preceding)) return true;
+  }
+  return false;
+};
+
+const durationAnswer = new RegExp(
+  `${koreanDurationExpression}|부터|전에|시작(?:됐|했|한)|(?:된|한)\\s*지|지났|넘었`,
+  "u",
+);
+
+// A counter question is answered in the customer's own words, so each slot
+// lists the meanings an answer can carry, not the exact wording of the
+// question's options. A turn that matches nothing here leaves the question
+// open, which is why every gap shows up as the same question being repeated.
+const slotAnswerPatterns: Readonly<Record<string, RegExp>> = {
+  duration: durationAnswer,
+  onset: durationAnswer,
+  body_site:
+    /머리|목|가슴|명치|윗배|아랫배|배|허리|어깨|팔|다리|무릎|손|발|피부/u,
+  stool_pattern: /묽|물변|설사|변비|딱딱|무르|횟수|\d+\s*번|하루\s*에/u,
+  dyspepsia_pattern: /더부룩|체한|체했|소화|명치|속쓰림|쓰리|쓰려|신물|불편/u,
+  skin_alarm: /진물|통증|눈|입|얼굴|물집|가렵|간지|번지|없|아니/u,
+  injury_inflammation:
+    /다치|부딪|삐|접질|붓|부었|뜨겁|열감|움직|가만|예|네|아니|없/u,
+  pain_pattern:
+    /다치|부딪|붓|뜨겁|열감|움직|가만|쑤시|욱신|저리|예|네|아니|없/u,
+  musculoskeletal_pattern:
+    /다치|부딪|붓|뜨겁|열감|움직|가만|계속|쑤시|욱신|저리|둘\s*다|예|네|아니|없/u,
+  cough_pattern: /마른|건조|가래|끈적|젖은|간질|칼칼|컹컹|둘\s*다/u,
+  swallowing_severity:
+    /삼키|삼킬|삼켜|삼킴|넘어가|넘기|못\s*넘|따갑|따가|칼칼|쓰라|아픈\s*정도|정도(?:예|에|요)|힘들|어렵|심하|약간|살짝|조금/u,
+  // 차·배 only carry the motion-sickness meaning together with their verb;
+  // alone they are the customer's own 배(abdomen) or an unrelated noun.
+  phenotype:
+    /속쓰림|쓰려|신물|명치|위산|신트림|멀미|(?:차|배|비행기)\s*(?:를)?\s*타|이동\s*중|설사|묽은\s*변|물변|더부룩/u,
+};
+
 const plausibleSlotAnswer = (
   slot: string,
   text: string,
@@ -155,36 +212,25 @@ const plausibleSlotAnswer = (
   const normalizedText = text.normalize("NFKC").toLowerCase();
   if (
     acceptedPatterns.some((pattern) =>
-      normalizedText.includes(pattern.normalize("NFKC").toLowerCase()),
+      containsAcceptedPattern(
+        normalizedText,
+        pattern.normalize("NFKC").toLowerCase(),
+      ),
     )
   )
     return true;
   const semanticSlot = slot.split(".").at(-1) ?? slot;
-  switch (semanticSlot) {
-    case "duration":
-      return /오늘|어제|그제|부터|\d+\s*(?:분|시간|일|주|개월|달|년)/u.test(
-        text,
-      );
-    case "body_site":
-      return /머리|목|가슴|명치|윗배|아랫배|배|허리|어깨|팔|다리|피부/u.test(
-        text,
-      );
-    case "stool_pattern":
-      return /묽|물변|설사|변비|딱딱|횟수|\d+\s*번/u.test(text);
-    case "dyspepsia_pattern":
-      return /더부룩|체한|소화|명치|속쓰림|쓰리|불편/u.test(text);
-    case "skin_alarm":
-      return /진물|통증|눈|입|얼굴|물집|없|아니/u.test(text);
-    case "injury_inflammation":
-    case "pain_pattern":
-    case "musculoskeletal_pattern":
-      return /다치|부딪|붓|뜨겁|열감|움직|가만|예|네|아니|없/u.test(text);
-    case "swallowing_severity":
-      return /삼키|삼킬|침|물|따갑|아픈\s*정도|못\s*넘|힘들|어렵/u.test(text);
-    default:
-      return false;
-  }
+  return slotAnswerPatterns[semanticSlot]?.test(text) ?? false;
 };
+
+// The normalizer names slots by meaning (duration) while a protocol names them
+// by namespace (symptom.duration), so a pending protocol question has to look
+// the extracted value up under both names or it never sees its own answer.
+const extractedForSlot = (
+  normalized: NormalizedInput,
+  slot: string,
+): SlotEvidence | undefined =>
+  normalized.slots[slot] ?? normalized.slots[slot.split(".").at(-1) ?? slot];
 
 const pendingSlotPatterns = (
   pack: RuntimePack,
@@ -352,7 +398,7 @@ const withSlotsAndState = (
     pendingAnswer?.accepted &&
     !uncertainAnswer.test(normalized.normalizedText)
   ) {
-    const extracted = normalized.slots[pendingAnswer.slot];
+    const extracted = extractedForSlot(normalized, pendingAnswer.slot);
     slots[pendingAnswer.slot] = extracted
       ? {
           ...extracted,
@@ -696,18 +742,24 @@ export class LocalClinicalEngine {
             3,
             !prior?.pending_question_slot,
           );
+    // The conversation interpreter only ever reports which pending slot the
+    // customer just answered; the value, the rule matching, and every clinical
+    // consequence stay with this engine.
+    const modelAnsweredSlot = (slot: string): boolean =>
+      input.answers_pending_slot === slot;
     const answersPriorPendingQuestion = Boolean(
       prior?.pending_question_slot &&
-      plausibleSlotAnswer(
-        prior.pending_question_slot,
-        rawNormalized.normalizedText,
-        rawNormalized.slots[prior.pending_question_slot],
-        pendingSlotPatterns(
-          this.pack,
-          prior.active_protocol_id,
+      (modelAnsweredSlot(prior.pending_question_slot) ||
+        plausibleSlotAnswer(
           prior.pending_question_slot,
-        ),
-      ),
+          rawNormalized.normalizedText,
+          extractedForSlot(rawNormalized, prior.pending_question_slot),
+          pendingSlotPatterns(
+            this.pack,
+            prior.active_protocol_id,
+            prior.pending_question_slot,
+          ),
+        )),
     );
     const hintedProtocol = protocolCandidateForIntent(
       input.intent_hint,
@@ -756,16 +808,18 @@ export class LocalClinicalEngine {
         : undefined;
     const pendingAnswer = pendingAnswerSlot
       ? (() => {
-          const accepted = plausibleSlotAnswer(
-            pendingAnswerSlot,
-            rawNormalized.normalizedText,
-            rawNormalized.slots[pendingAnswerSlot],
-            pendingSlotPatterns(
-              this.pack,
-              focusPrior?.active_protocol_id,
+          const accepted =
+            modelAnsweredSlot(pendingAnswerSlot) ||
+            plausibleSlotAnswer(
               pendingAnswerSlot,
-            ),
-          );
+              rawNormalized.normalizedText,
+              extractedForSlot(rawNormalized, pendingAnswerSlot),
+              pendingSlotPatterns(
+                this.pack,
+                focusPrior?.active_protocol_id,
+                pendingAnswerSlot,
+              ),
+            );
           return {
             slot: pendingAnswerSlot,
             accepted,
@@ -1100,14 +1154,20 @@ export class LocalClinicalEngine {
           missing_slots: [],
         }
       : outputShape(decision, safety);
+    const pendingQuestionTopic = focusPrior?.topics.find(
+      (item) => item.protocol_id === focusPrior.active_protocol_id,
+    );
+    // No matcher understands every answer, and repeating one sentence at a
+    // customer who already replied twice reads as not listening. After the
+    // second unanswered attempt the question is retired: the slot stays in
+    // asked_slots, so questioning moves on instead of looping.
     const unansweredPriorQuestion =
       pendingAnswer &&
       !pendingAnswer.resolved &&
       !conversationReply &&
-      safety.mode === "continue"
-        ? (focusPrior?.topics.find(
-            (item) => item.protocol_id === focusPrior.active_protocol_id,
-          )?.pending_question ?? null)
+      safety.mode === "continue" &&
+      (pendingQuestionTopic?.pending_question_asks ?? 1) < maxQuestionAsks
+        ? (pendingQuestionTopic?.pending_question ?? null)
         : null;
     const primaryTopicQuestion =
       unansweredPriorQuestion ?? progressiveQuestion ?? null;
@@ -1300,6 +1360,11 @@ export class LocalClinicalEngine {
           ]),
         ],
         pending_question_slot: pending?.slot ?? null,
+        pending_question_asks: pending
+          ? previous?.pending_question_slot === pending.slot
+            ? (previous.pending_question_asks ?? 1) + 1
+            : 1
+          : 0,
         pending_question: pending
           ? {
               question: pending.question,

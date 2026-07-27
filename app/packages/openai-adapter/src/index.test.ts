@@ -29,8 +29,15 @@ it("allows non-catalog dialogue acts without forcing a clinical intent", () => {
   ]);
   expect(schema).toMatchObject({
     additionalProperties: false,
-    required: ["disposition", "intent", "confidence", "topic_changed"],
+    required: [
+      "disposition",
+      "intent",
+      "confidence",
+      "topic_changed",
+      "answers_pending_question",
+    ],
     properties: {
+      answers_pending_question: { type: "boolean" },
       disposition: {
         enum: [
           "clinical_intent",

@@ -96,6 +96,23 @@ describe("Korean normalizer", () => {
     },
   );
 
+  it.each([
+    ["이틀 됐어요", "이틀"],
+    ["한 사흘 됐어요", "사흘"],
+    ["일주일쯤 됐어요", "일주일"],
+    ["엊그제요", "엊그제"],
+    ["어젯밤부터요", "어젯밤부터"],
+    ["아침쯤이라고요", "아침"],
+    ["주말에 시작했어요", "주말"],
+    ["3일째예요", "3일째"],
+  ])("reads how long it has been going on: %s", (input, expected) => {
+    expect(normalizeKorean(input).slots["duration"]?.value).toBe(expected);
+  });
+
+  it("keeps a part of the day out of an unrelated word", () => {
+    expect(normalizeKorean("혈압이 낮아요").slots["duration"]).toBeUndefined();
+  });
+
   it("respects IME composition", () => {
     expect(shouldSearchDuringComposition(true, "input")).toBe(false);
     expect(shouldSearchDuringComposition(true, "compositionend")).toBe(true);

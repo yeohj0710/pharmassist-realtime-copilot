@@ -50,16 +50,19 @@ describe("API", () => {
     process.env["OPENAI_API_KEY"] = "test-only";
     let catalogSize = 0;
     let latestTurn = "";
+    let forwardedQuestion: string | null | undefined;
     const app = await buildApp({
       conversationInterpreter: {
         async interpret(context) {
           catalogSize = context.catalog.length;
           latestTurn = context.conversation.at(-1)?.content ?? "";
+          forwardedQuestion = context.pendingQuestion;
           return {
             disposition: "clinical_intent",
             intent: "cough_general",
             confidence: 0.91,
             topicChanged: true,
+            answersPendingQuestion: false,
           };
         },
       },
@@ -73,6 +76,7 @@ describe("API", () => {
           text: "계속 콜록대서 잠을 설쳤어요",
           conversation_history: ["환자: 배가 아파요"],
           previous_intent: "abdominal_pain_unknown",
+          pending_question: "배가 어떻게 불편한가요?",
         },
       });
       expect(response.statusCode).toBe(200);
@@ -81,7 +85,9 @@ describe("API", () => {
         intent: "cough_general",
         confidence: 0.91,
         topic_changed: true,
+        answers_pending_question: false,
       });
+      expect(forwardedQuestion).toBe("배가 어떻게 불편한가요?");
       expect(catalogSize).toBe(74);
       expect(latestTurn).toContain("콜록대서");
     } finally {

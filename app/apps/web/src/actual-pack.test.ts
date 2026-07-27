@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { RuntimeInput } from "@pharmassist/contracts";
+import type { ConsultationState, RuntimeInput } from "@pharmassist/contracts";
 import { validateContract } from "@pharmassist/contracts";
 import { productProtocolProfileIds } from "@pharmassist/domain";
 import type { RuntimePack } from "@pharmassist/runtime";
@@ -16,6 +16,114 @@ if (!validated.ok || !validated.value)
   throw new Error(JSON.stringify(validated.errors));
 const actualPack = validated.value;
 const previewFormulary = buildResearchPreviewFormulary(actualPack);
+
+const consultationTurns = (
+  turns: readonly (string | Readonly<{ text: string; answeredSlot: string }>)[],
+) => {
+  const engine = new LocalClinicalEngine(actualPack);
+  const sessionId = crypto.randomUUID();
+  let state: ConsultationState | undefined;
+  return turns.map((turn, index) => {
+    const spoken = typeof turn === "string" ? turn : turn.text;
+    const result = engine.run(
+      {
+        request_id: crypto.randomUUID(),
+        session_id: sessionId,
+        sequence: index + 1,
+        input_type: "typed",
+        text: spoken,
+        ...(typeof turn === "string"
+          ? {}
+          : { answers_pending_slot: turn.answeredSlot }),
+        is_partial: false,
+        locale: "ko-KR",
+        domain: "human_otc",
+        patient_context: {},
+        client_timestamp: new Date().toISOString(),
+      },
+      {
+        tenantId: "local-research-preview",
+        formulary: previewFormulary,
+        ...(state ? { consultationState: state } : {}),
+      },
+    );
+    state = result.consultationState;
+    return result;
+  });
+};
+
+const askedQuestions = (
+  result: ReturnType<typeof consultationTurns>[number],
+): readonly string[] => result.output.ask_next.map((item) => item.question);
+
+describe("answers the customer actually gives", () => {
+  // Every one of these repeated the identical question before the counter
+  // questions learned the wording customers really use.
+  it.each([
+    "아침쯤이라고요",
+    "아침부터요",
+    "어젯밤부터요",
+    "이틀 됐어요",
+    "한 사흘 됐어요",
+    "일주일쯤 됐어요",
+    "엊그제요",
+    "며칠 전부터요",
+    "주말에 시작했어요",
+    "어제 저녁부터 그랬어요",
+    "하루 지났어요",
+    "자고 일어나니까 아프더라고요",
+  ])("closes the duration question on: %s", (answer) => {
+    const [, swallowing, duration] = consultationTurns([
+      "목이 아파요",
+      "따갑고 아픈 정도예요",
+      answer,
+    ]);
+    expect(swallowing?.output.ask_next[0]?.slot).toBe("symptom.duration");
+    expect(duration && askedQuestions(duration)).toEqual([]);
+    // The stored answer is the customer's own wording, never a rewrite.
+    expect(answer).toContain(
+      String(duration?.consultationState.answered_slots["symptom.duration"]),
+    );
+  });
+
+  it("keeps 아침 out of the swallowing question's 침", () => {
+    const [, swallowing] = consultationTurns(["목이 아파요", "아침부터요"]);
+
+    expect(swallowing?.output.ask_next[0]?.slot).toBe(
+      "symptom.swallowing_severity",
+    );
+    expect(
+      swallowing?.consultationState.answered_slots[
+        "symptom.swallowing_severity"
+      ],
+    ).toBeUndefined();
+  });
+
+  it("accepts an answer only the conversation interpreter could recognize", () => {
+    const [, , wording] = consultationTurns([
+      "목이 아파요",
+      "따갑고 아픈 정도예요",
+      {
+        text: "친구 결혼식 다녀온 뒤로 계속 그래요",
+        answeredSlot: "symptom.duration",
+      },
+    ]);
+
+    expect(wording && askedQuestions(wording)).toEqual([]);
+  });
+
+  it("stops repeating a question the customer never answers", () => {
+    const turns = consultationTurns([
+      "목이 아파요",
+      "그건 잘 모르겠고요",
+      "아무튼 좀 그래요",
+    ]);
+    const questions = turns.map((turn) => askedQuestions(turn)[0]);
+
+    expect(questions[1]).toBe(questions[0]);
+    expect(questions[2]).not.toBe(questions[0]);
+  });
+});
 
 describe("actual research preview pack", () => {
   it("keeps a useful follow-up open while showing current musculoskeletal candidates", () => {

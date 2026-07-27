@@ -767,6 +767,10 @@
             "type": "string",
             "pattern": "^[a-z][a-z0-9_]{1,127}$"
           },
+          "answers_pending_slot": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.]{1,127}$"
+          },
           "is_partial": {
             "type": "boolean"
           },

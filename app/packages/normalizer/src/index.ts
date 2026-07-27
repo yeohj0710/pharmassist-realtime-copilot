@@ -84,6 +84,26 @@ function firstNumber(value: string): number | undefined {
   return undefined;
 }
 
+// A customer answers "언제부터요?" with a counted span, a calendar word, a part
+// of the day, or an event they woke up from — far more often than with the
+// digit-and-unit wording alone ("이틀 됐어요", "엊그제요", "자고 일어나니까").
+// The same source is used to extract the duration slot and to decide whether a
+// turn answered a pending duration question, so the two can never drift apart.
+const countedSpan =
+  "(?:\\d+(?:\\.\\d+)?|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|십|몇)\\s*(?:분|시간|일|주일|주|달|개월|년)(?:째|간|전|쯤|정도|여|남짓)?";
+const namedSpan =
+  "하루\\s*이틀|하루|이틀|사흘|나흘|닷새|엿새|이레|일주일|이주일|보름|한\\s*달|반나절";
+const calendarPoint =
+  "오늘|어제|어젯밤|엊저녁|엊그제|그저께|그끄저께|그제|지난주|저번\\s*주|이번\\s*주|주말|평일|작년|올해|며칠";
+// A part of the day is a whole word only when a particle or a boundary follows
+// it: without this guard 낮 matches 낮아요 and 밤 matches 밤새 unrelated turns.
+const dayPart =
+  "(?:새벽|아침|오전|점심|낮|오후|저녁|밤)(?=\\s|$|[에서부터쯤경엔때이가은는도만요])";
+const onsetEvent =
+  "방금|아까|조금\\s*전|자고\\s*일어나|일어나(?:니|서|보니)|자기\\s*전|먹고\\s*나서";
+
+export const koreanDurationExpression = `(?:${countedSpan}|${namedSpan}|${calendarPoint}|${dayPart}|${onsetEvent})`;
+
 function slot<T>(
   value: T,
   provenance: SlotEvidence["provenance"] = "derived",
@@ -158,7 +178,7 @@ function extractSlots(text: string): Readonly<Record<string, SlotEvidence>> {
   const temperature = text.match(/(\d{2}(?:\.\d+)?)\s*(?:도|℃)/u);
   if (temperature?.[1]) slots["temperature_c"] = slot(Number(temperature[1]));
   const duration = text.match(
-    /(?:(?:\d+(?:\.\d+)?|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|십)\s*(?:시간|일|주|개월)(?:째|간|전|부터)?|오늘|어제|그제|며칠|방금|아까|아침|저녁|밤(?:부터)?)/u,
+    new RegExp(`${koreanDurationExpression}(?:부터)?`, "u"),
   )?.[0];
   if (duration) slots["duration"] = slot(duration, "derived", 0.85, false);
   const concentration = text.match(

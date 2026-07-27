@@ -509,6 +509,7 @@ export async function buildApp(
             text?: unknown;
             conversation_history?: unknown;
             previous_intent?: unknown;
+            pending_question?: unknown;
           }>
         | undefined;
       const text = typeof body?.text === "string" ? body.text.trim() : "";
@@ -522,6 +523,14 @@ export async function buildApp(
         : [];
       const previousIntent =
         typeof body?.previous_intent === "string" ? body.previous_intent : null;
+      // The counselor question the customer is replying to. Only its wording
+      // is accepted; the slot it fills stays with the caller's engine.
+      const pendingQuestion =
+        typeof body?.pending_question === "string" &&
+        body.pending_question.length > 0 &&
+        body.pending_question.length <= 300
+          ? body.pending_question
+          : null;
       if (
         !text ||
         text.length > 2_000 ||
@@ -618,6 +627,7 @@ export async function buildApp(
               ...(typeof catalog)[number][],
             ],
             previousIntent,
+            pendingQuestion,
           },
           controller.signal,
         );
@@ -626,6 +636,7 @@ export async function buildApp(
           intent: result.intent,
           confidence: result.confidence,
           topic_changed: result.topicChanged,
+          answers_pending_question: result.answersPendingQuestion,
         };
       } catch (cause: unknown) {
         req.log.warn(

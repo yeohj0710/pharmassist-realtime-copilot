@@ -2,11 +2,30 @@ import { describe, expect, it } from "vitest";
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 import { customerTurn } from "@pharmassist/dialogue";
 import {
+  answeredSlotFromInterpretation,
   buildAiRefinementBody,
+  interpretedIntent,
+  pendingCounselorQuestion,
   shouldBypassAiInterpretation,
   shouldInterpretWithAi,
   shouldRequestAiRefinement,
+  type AiConversationInterpretation,
 } from "./ai-fallback.js";
+
+const openQuestion = {
+  question: "언제부터 그러셨나요?",
+  slot: "symptom.duration",
+};
+const interpretation = (
+  overrides: Partial<AiConversationInterpretation> = {},
+): AiConversationInterpretation => ({
+  disposition: "answer_or_detail",
+  intent: null,
+  confidence: 0.9,
+  topicChanged: false,
+  answersPendingQuestion: true,
+  ...overrides,
+});
 
 describe("AI refinement routing", () => {
   it("uses AI on a normal turn even when the local engine already chose an intent", () => {
@@ -50,5 +69,64 @@ describe("AI refinement routing", () => {
       "손님: 기침이 나요",
       "손님: 어제부터요",
     ]);
+  });
+});
+
+describe("answers to an open counselor question", () => {
+  it("takes the open question from the previous turn", () => {
+    expect(
+      pendingCounselorQuestion({
+        ask_next: [{ ...openQuestion, reason: "증상 기간 확인", priority: 1 }],
+      } as unknown as RuntimeOutput),
+    ).toEqual(openQuestion);
+    expect(
+      pendingCounselorQuestion({ ask_next: [] } as unknown as RuntimeOutput),
+    ).toBeUndefined();
+    expect(pendingCounselorQuestion(undefined)).toBeUndefined();
+  });
+
+  it("fills the slot the counselor asked about, never one the model picks", () => {
+    expect(answeredSlotFromInterpretation(interpretation(), openQuestion)).toBe(
+      "symptom.duration",
+    );
+  });
+
+  it("ignores a claimed answer when nothing was asked", () => {
+    expect(
+      answeredSlotFromInterpretation(interpretation(), undefined),
+    ).toBeUndefined();
+  });
+
+  it("leaves the question open on a topic change or a low-confidence read", () => {
+    expect(
+      answeredSlotFromInterpretation(
+        interpretation({ topicChanged: true }),
+        openQuestion,
+      ),
+    ).toBeUndefined();
+    expect(
+      answeredSlotFromInterpretation(
+        interpretation({ confidence: 0.3 }),
+        openQuestion,
+      ),
+    ).toBeUndefined();
+    expect(
+      answeredSlotFromInterpretation(
+        interpretation({ answersPendingQuestion: false }),
+        openQuestion,
+      ),
+    ).toBeUndefined();
+  });
+
+  it("keeps a new clinical intent separate from the answered slot", () => {
+    expect(
+      interpretedIntent(
+        interpretation({
+          disposition: "clinical_intent",
+          intent: "cough_general",
+        }),
+      ),
+    ).toBe("cough_general");
+    expect(interpretedIntent(interpretation())).toBeUndefined();
   });
 });

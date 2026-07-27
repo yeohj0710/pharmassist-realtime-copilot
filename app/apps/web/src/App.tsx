@@ -17,6 +17,9 @@ import {
   type TranscriptionPeer,
 } from "./realtime.js";
 import {
+  answeredSlotFromInterpretation,
+  interpretedIntent,
+  pendingCounselorQuestion,
   requestAiFallback,
   requestAiInterpretation,
   requestAiReadiness,
@@ -57,14 +60,17 @@ const newInput = (
   sequence: number,
   sessionId: string,
   inputType: RuntimeInput["input_type"] = "typed",
-  intentHint?: string,
+  interpreted: Readonly<{ intent?: string; answeredSlot?: string }> = {},
 ): RuntimeInput => ({
   request_id: crypto.randomUUID(),
   session_id: sessionId,
   sequence,
   input_type: inputType,
   text,
-  ...(intentHint ? { intent_hint: intentHint } : {}),
+  ...(interpreted.intent ? { intent_hint: interpreted.intent } : {}),
+  ...(interpreted.answeredSlot
+    ? { answers_pending_slot: interpreted.answeredSlot }
+    : {}),
   is_partial: inputType === "voice_partial",
   locale: "ko-KR",
   domain: "human_otc",
@@ -663,6 +669,9 @@ export function App() {
     const submittedSequence = sequenceRef.current;
     const submittedSession = sessionIdRef.current;
     const priorHistory = historyRef.current;
+    // Captured before this turn is processed: it is the question the customer
+    // is answering right now.
+    const pendingQuestion = pendingCounselorQuestion(result);
     const nextHistory = [
       ...priorHistory,
       customerTurn(normalized, submittedSequence),
@@ -700,13 +709,19 @@ export function App() {
           normalized,
           priorHistory,
           result?.intent ?? null,
+          pendingQuestion,
           controller.signal,
         );
-        if (
+        const intent = interpretation && interpretedIntent(interpretation);
+        const answeredSlot =
           interpretation &&
-          interpretation.disposition === "clinical_intent" &&
-          interpretation.intent &&
-          interpretation.confidence >= 0.45 &&
+          answeredSlotFromInterpretation(interpretation, pendingQuestion);
+        const interpreted = {
+          ...(intent ? { intent } : {}),
+          ...(answeredSlot ? { answeredSlot } : {}),
+        };
+        if (
+          (intent || answeredSlot) &&
           submittedSequence === sequenceRef.current &&
           submittedSession === sessionIdRef.current &&
           !(
@@ -719,7 +734,7 @@ export function App() {
             submittedSequence,
             submittedSession,
             inputType,
-            interpretation.intent,
+            interpreted,
           );
           inputsRef.current.set(interpretedInput.sequence, interpretedInput);
           if (workerRef.current)
