@@ -195,12 +195,25 @@ export default async function handler(request, response) {
       signal: controller.signal,
       body: JSON.stringify(requestBody),
     });
-    if (!openaiResponse.ok)
+    if (!openaiResponse.ok) {
+      // The customer-facing message stays generic, but a fail-closed path with
+      // no server-side detail is undebuggable in production: log the upstream
+      // status and its error message (never the request or the key).
+      const detail = await openaiResponse.text().catch(() => "");
+      console.error(
+        JSON.stringify({
+          event: "interpret_upstream_failed",
+          status: openaiResponse.status,
+          model,
+          detail: detail.slice(0, 500),
+        }),
+      );
       return response
         .status(503)
         .json(
           errorBody("INTERNAL_SAFE_FAILURE", "AI 해석 응답을 받지 못했습니다."),
         );
+    }
     const payload = await openaiResponse.json();
     if (payload.status !== "completed")
       return response
