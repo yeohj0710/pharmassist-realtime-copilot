@@ -214,9 +214,12 @@ export default async function handler(request, response) {
     role: turn.startsWith("상담자:") ? "assistant" : "user",
     content: turn.replace(/^(?:손님|상담자):\s*/u, ""),
   }));
-  // The official adapter interprets with its ambiguity model; nano is
-  // reserved for narration and misses colloquial symptom mappings.
-  const model = process.env["OPENAI_INTERPRET_MODEL"] ?? "gpt-5.4-mini";
+  // gpt-5.6-luna (2026-07 swap): matches gpt-5.4-mini on the interpret probe
+  // battery — multi-fact, ordinal references, honest-none — at $0.20/$1.20
+  // per 1M tokens versus $0.75/$4.50, ~3.75x cheaper both ways. The 5.6
+  // family is luna/sol/terra; luna is the economy tier. Nano-class models
+  // stay out: they miss colloquial symptom mappings.
+  const model = process.env["OPENAI_INTERPRET_MODEL"] ?? "gpt-5.6-luna";
   const requestBody = {
     model,
     store: false,
