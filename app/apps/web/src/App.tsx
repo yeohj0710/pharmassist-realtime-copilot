@@ -615,9 +615,15 @@ export function App() {
   const [processing, setProcessing] = useState(false);
   const [engineError, setEngineError] = useState("");
   const [aiInterpreting, setAiInterpreting] = useState(false);
+  // Configured (readiness probe) and actually answering (real calls) are two
+  // different facts. The probe cannot see an exhausted quota, so the badge is
+  // only allowed to claim a connection while both hold.
   const [aiStatus, setAiStatus] = useState<
     "checking" | "ready" | "unavailable"
   >("checking");
+  const [aiAnswering, setAiAnswering] = useState<boolean | undefined>(
+    undefined,
+  );
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
   const pendingWorkerInputsRef = useRef<RuntimeInput[]>([]);
@@ -703,15 +709,25 @@ export function App() {
       shouldInterpretWithAi(aiStatus === "ready", navigator.onLine, normalized)
     ) {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 3_500);
+      // Must outlast the server's own 8s upstream budget, or a cold serverless
+      // function is cut off mid-answer and the turn silently loses both the
+      // intent hint and answers_pending_slot — the repeated-question bug comes
+      // back. Waiting costs nothing visible: the deterministic answer is
+      // already committed, the badge tracks refinement rather than this call,
+      // and a result that arrives after the customer moved on is dropped by
+      // the sequence guard below.
+      const timeout = setTimeout(() => controller.abort(), 9_500);
       try {
-        const interpretation = await requestAiInterpretation(
+        const outcome = await requestAiInterpretation(
           normalized,
           priorHistory,
           result?.intent ?? null,
           pendingQuestion,
           controller.signal,
         );
+        setAiAnswering(outcome.status !== "unavailable");
+        const interpretation =
+          outcome.status === "interpreted" ? outcome.interpretation : undefined;
         const intent = interpretation && interpretedIntent(interpretation);
         const answeredSlot =
           interpretation &&
@@ -1223,9 +1239,9 @@ export function App() {
               ? "오프라인 · 로컬 사용 가능"
               : aiInterpreting
                 ? "AI 해석 중"
-                : aiStatus === "ready"
+                : aiStatus === "ready" && aiAnswering !== false
                   ? "AI 연결됨"
-                  : aiStatus === "unavailable"
+                  : aiStatus === "unavailable" || aiAnswering === false
                     ? "AI 미연결 · 로컬 분석"
                     : "AI 연결 확인 중"}
           </span>

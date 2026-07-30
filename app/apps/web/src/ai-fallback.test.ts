@@ -1,11 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 import { customerTurn } from "@pharmassist/dialogue";
 import {
   answeredSlotFromInterpretation,
   buildAiRefinementBody,
+  failureLeavesAiAvailable,
   interpretedIntent,
   pendingCounselorQuestion,
+  requestAiInterpretation,
   shouldBypassAiInterpretation,
   shouldInterpretWithAi,
   shouldRequestAiRefinement,
@@ -128,5 +130,129 @@ describe("answers to an open counselor question", () => {
       ),
     ).toBe("cough_general");
     expect(interpretedIntent(interpretation())).toBeUndefined();
+  });
+});
+
+describe("what a failed interpretation says about AI availability", () => {
+  it("blames the turn, not the service, for input and schema failures", () => {
+    // These recur only for this wording, so the badge must keep saying 연결됨.
+    expect(failureLeavesAiAvailable("INVALID_INPUT")).toBe(true);
+    expect(failureLeavesAiAvailable("PRIVACY_REDACTION_FAILED")).toBe(true);
+    expect(failureLeavesAiAvailable("MODEL_SCHEMA_INVALID")).toBe(true);
+  });
+
+  it("treats a safe failure as the service being unable to answer", () => {
+    // An exhausted quota surfaces here: the readiness probe still sees a key,
+    // so this is the only signal that stops the badge claiming a connection.
+    expect(failureLeavesAiAvailable("INTERNAL_SAFE_FAILURE")).toBe(false);
+  });
+
+  it("counts an unrecognized or missing error code against availability", () => {
+    // KNOWLEDGE_STALE and MODEL_TIMEOUT come from the Fastify API path.
+    expect(failureLeavesAiAvailable("KNOWLEDGE_STALE")).toBe(false);
+    expect(failureLeavesAiAvailable("MODEL_TIMEOUT")).toBe(false);
+    expect(failureLeavesAiAvailable("FORBIDDEN")).toBe(false);
+    expect(failureLeavesAiAvailable(undefined)).toBe(false);
+    expect(failureLeavesAiAvailable(null)).toBe(false);
+    expect(failureLeavesAiAvailable(503)).toBe(false);
+  });
+
+  it("matches the code exactly rather than by substring", () => {
+    expect(failureLeavesAiAvailable("INVALID_INPUT_LENGTH")).toBe(false);
+    expect(failureLeavesAiAvailable("invalid_input")).toBe(false);
+  });
+});
+
+describe("the outcome a real interpretation request reports", () => {
+  // The request builder reads the access passcode from session storage, which
+  // the node test environment does not provide.
+  const stubSessionStorage = (): void => {
+    vi.stubGlobal("sessionStorage", { getItem: () => "0903" });
+  };
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  const respondWith = (status: number, body: unknown): void => {
+    stubSessionStorage();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() =>
+        Promise.resolve({
+          ok: status >= 200 && status < 300,
+          status,
+          json: () => Promise.resolve(body),
+        }),
+      ),
+    );
+  };
+
+  const interpret = () =>
+    requestAiInterpretation(
+      "아침쯤이라고요",
+      [],
+      null,
+      openQuestion,
+      new AbortController().signal,
+    );
+
+  it("reports a usable interpretation", async () => {
+    respondWith(200, {
+      disposition: "answer_or_detail",
+      intent: null,
+      confidence: 0.9,
+      topic_changed: false,
+      answers_pending_question: true,
+    });
+    await expect(interpret()).resolves.toEqual({
+      status: "interpreted",
+      interpretation: interpretation(),
+    });
+  });
+
+  it("reports a safe failure as the service being unavailable", async () => {
+    // The quota-exhausted shape: this is what has to reach the badge.
+    respondWith(503, {
+      error: {
+        code: "INTERNAL_SAFE_FAILURE",
+        message: "AI 해석 응답을 받지 못했습니다.",
+      },
+    });
+    await expect(interpret()).resolves.toEqual({ status: "unavailable" });
+  });
+
+  it("keeps the service available when only this turn was rejected", async () => {
+    respondWith(422, {
+      error: {
+        code: "PRIVACY_REDACTION_FAILED",
+        message: "개인정보를 제외해 주세요.",
+      },
+    });
+    await expect(interpret()).resolves.toEqual({ status: "rejected" });
+  });
+
+  it("treats a failure with an unreadable body as unavailable", async () => {
+    stubSessionStorage();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() =>
+        Promise.resolve({
+          ok: false,
+          status: 502,
+          json: () => Promise.reject(new Error("not json")),
+        }),
+      ),
+    );
+    await expect(interpret()).resolves.toEqual({ status: "unavailable" });
+  });
+
+  it("rejects an answered-but-malformed payload without blaming availability", async () => {
+    respondWith(200, {
+      disposition: "nonsense",
+      intent: null,
+      confidence: 0.9,
+    });
+    await expect(interpret()).resolves.toEqual({ status: "rejected" });
   });
 });

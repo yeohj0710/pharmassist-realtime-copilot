@@ -53,6 +53,36 @@ export interface PendingCounselorQuestion {
 }
 
 /**
+ * What a single interpretation attempt proved about the service, kept apart
+ * from what it produced: the readiness probe only sees that a key is
+ * configured, so a real call is the only evidence that AI actually answers.
+ */
+export type AiInterpretationOutcome =
+  | {
+      readonly status: "interpreted";
+      readonly interpretation: AiConversationInterpretation;
+    }
+  /** Answered, but the answer was unusable — the service itself is alive. */
+  | { readonly status: "rejected" }
+  /** Could not answer at all: missing key, exhausted quota, dead function. */
+  | { readonly status: "unavailable" };
+
+// Rejections caused by this particular turn, and a model answer that missed
+// the schema, say nothing about whether AI is reachable. Every other failure
+// would repeat on the next turn too, so it counts against availability. Both
+// backends share these codes; the API adds KNOWLEDGE_STALE and MODEL_TIMEOUT,
+// which are deliberately left out — a turn that got no answer is reported as
+// no answer, and the badge recovers on the next call that does succeed.
+const turnSpecificFailures: ReadonlySet<string> = new Set([
+  "INVALID_INPUT",
+  "PRIVACY_REDACTION_FAILED",
+  "MODEL_SCHEMA_INVALID",
+]);
+
+export const failureLeavesAiAvailable = (errorCode: unknown): boolean =>
+  typeof errorCode === "string" && turnSpecificFailures.has(errorCode);
+
+/**
  * A pending question only survives into the next turn while the consultation
  * is still on it, so the answer hint is derived from the visible question
  * rather than from anything the model chooses.
@@ -84,7 +114,7 @@ export async function requestAiInterpretation(
   previousIntent: string | null,
   pendingQuestion: PendingCounselorQuestion | undefined,
   signal: AbortSignal,
-): Promise<AiConversationInterpretation | undefined> {
+): Promise<AiInterpretationOutcome> {
   const response = await fetch(`${apiBaseUrl()}/v1/consult/interpret`, {
     method: "POST",
     headers: authHeaders(),
@@ -100,7 +130,14 @@ export async function requestAiInterpretation(
     }),
     signal,
   });
-  if (!response.ok) return undefined;
+  if (!response.ok) {
+    const failure = (await response.json().catch(() => ({}))) as Readonly<{
+      error?: Readonly<{ code?: unknown }>;
+    }>;
+    return failureLeavesAiAvailable(failure.error?.code)
+      ? { status: "rejected" }
+      : { status: "unavailable" };
+  }
   const body = (await response.json()) as Readonly<{
     disposition?: unknown;
     intent?: unknown;
@@ -124,14 +161,17 @@ export async function requestAiInterpretation(
     body.confidence > 1 ||
     typeof body.topic_changed !== "boolean"
   )
-    return undefined;
+    return { status: "rejected" };
   return {
-    disposition:
-      body.disposition as AiConversationInterpretation["disposition"],
-    intent: typeof body.intent === "string" ? body.intent : null,
-    confidence: body.confidence,
-    topicChanged: body.topic_changed,
-    answersPendingQuestion: body.answers_pending_question === true,
+    status: "interpreted",
+    interpretation: {
+      disposition:
+        body.disposition as AiConversationInterpretation["disposition"],
+      intent: typeof body.intent === "string" ? body.intent : null,
+      confidence: body.confidence,
+      topicChanged: body.topic_changed,
+      answersPendingQuestion: body.answers_pending_question === true,
+    },
   };
 }
 
@@ -160,6 +200,11 @@ export const interpretedIntent = (
     ? interpretation.intent
     : undefined;
 
+/**
+ * Proves only that a key is configured and the feature is on — not that the
+ * upstream will answer. An exhausted quota reports ready here while failing
+ * every call, so the badge also needs the outcome of real interpretations.
+ */
 export async function requestAiReadiness(
   signal: AbortSignal,
 ): Promise<boolean> {
