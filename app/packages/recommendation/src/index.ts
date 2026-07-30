@@ -1383,7 +1383,12 @@ export function renderDecisionSentence(
         "제품 후보를 제시하지 말고 의료진 또는 약사의 직접 평가를 받으세요."
       );
     case "insufficient":
-      return "현재 활성 지식팩과 약국 데이터만으로는 검증된 후보를 결정할 수 없습니다.";
+      // Spoken to the customer, so no engine vocabulary (지식팩, 데이터,
+      // 검증된 후보) — and no deferred promise either: the golden gates
+      // forbid a no-suggestion state from ending on ~해 드릴게요. An open
+      // invitation keeps the counter moving, since any added detail
+      // re-enters matching on the next turn.
+      return "말씀해 주신 것만으로는 약을 바로 고르기가 어려워요. 어디가 어떻게 불편한지 조금만 더 자세히 말씀해 주시겠어요?";
   }
 }
 

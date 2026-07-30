@@ -383,7 +383,6 @@ const withSlotsAndState = (
     | Readonly<{
         readonly slot: string;
         readonly accepted: boolean;
-        readonly resolved: boolean;
       }>
     | undefined,
   activeIntentSeed: string | undefined,
@@ -820,16 +819,7 @@ export class LocalClinicalEngine {
                 pendingAnswerSlot,
               ),
             );
-          return {
-            slot: pendingAnswerSlot,
-            accepted,
-            resolved:
-              accepted ||
-              preliminaryProtocols.some(
-                (candidate) =>
-                  candidate.protocolId === focusPrior?.active_protocol_id,
-              ),
-          };
+          return { slot: pendingAnswerSlot, accepted };
         })()
       : undefined;
     const activeSeed =
@@ -1161,9 +1151,21 @@ export class LocalClinicalEngine {
     // customer who already replied twice reads as not listening. After the
     // second unanswered attempt the question is retired: the slot stays in
     // asked_slots, so questioning moves on instead of looping.
+    //
+    // Two replies count as not answering. A rejected one, obviously — but a
+    // turn that merely re-matches the same protocol by wording (그냥 속이
+    // 안좋아요 re-triggers the abdominal protocol) used to pass as resolution
+    // and retire the question after one ask. And an accepted answer whose
+    // stored value still selects no branch, which happens when the AI
+    // interpreter confirms the customer addressed the question but the words
+    // discriminate nothing: the decision then collapses through the
+    // already-asked gate exactly as if nothing had been said.
+    const priorQuestionStillBlocking =
+      decision.status === "insufficient" &&
+      decision.reason_codes.includes("QUESTION_ALREADY_ASKED");
     const unansweredPriorQuestion =
       pendingAnswer &&
-      !pendingAnswer.resolved &&
+      (!pendingAnswer.accepted || priorQuestionStillBlocking) &&
       !conversationReply &&
       safety.mode === "continue" &&
       (pendingQuestionTopic?.pending_question_asks ?? 1) < maxQuestionAsks
@@ -1198,13 +1200,46 @@ export class LocalClinicalEngine {
             missing_slots: [selectedTopicQuestion.slot],
           }
         : baseShape;
+    // A reply that neither answered the question nor changed topic collapses
+    // the decision to insufficient purely through the already-asked gate,
+    // while the retry budget is still unspent. That turn re-presents the open
+    // question — ending at 근거 부족 after a single ask reads as giving up on
+    // a customer who is still cooperating.
+    const retryPriorQuestion =
+      unansweredPriorQuestion &&
+      decision.status === "insufficient" &&
+      decision.reason_codes.includes("QUESTION_ALREADY_ASKED")
+        ? {
+            ...baseShape,
+            mode: "clarify" as const,
+            status: "blocked" as const,
+            say_now: ["죄송하지만 한 가지만 다시 여쭤볼게요."] as [string],
+            ask_next: [
+              {
+                question: unansweredPriorQuestion.question,
+                reason: unansweredPriorQuestion.reason,
+                priority: 1,
+                slot: unansweredPriorQuestion.slot,
+              },
+            ] as [
+              {
+                question: string;
+                reason: string;
+                priority: number;
+                slot: string;
+              },
+            ],
+            actions: [],
+            missing_slots: [unansweredPriorQuestion.slot],
+          }
+        : null;
     const shape =
       !conversationReply &&
       card?.cardId.startsWith("CARD-SEED-") &&
       !protocol &&
       decision.status === "ask"
         ? { ...baseShape, say_now: [card.sayNow[0] ?? card.title] as [string] }
-        : progressiveShape;
+        : (retryPriorQuestion ?? progressiveShape);
     const partial = input.is_partial || input.input_type === "voice_partial";
     const topScore = protocolCandidate?.score ?? cardCandidate?.score ?? 0;
     const topicResults: TopicResult[] = [

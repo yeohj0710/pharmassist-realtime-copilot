@@ -123,6 +123,48 @@ describe("answers the customer actually gives", () => {
     expect(questions[1]).toBe(questions[0]);
     expect(questions[2]).not.toBe(questions[0]);
   });
+
+  // 그냥 속이 안좋아요 answers the abdominal phenotype menu with none of its
+  // branches, while its wording re-matches the same protocol. That combination
+  // retired the question after a single ask and dead-ended the consultation at
+  // 근거 부족 — the production screenshot of 2026-07-30.
+  it("retries the phenotype menu once, then retires it in speakable words", () => {
+    const [first, retry, retired] = consultationTurns([
+      "배가 아파요",
+      "그냥 속이 안좋아요",
+      "그냥 계속 안좋아요",
+    ]);
+
+    expect(first?.output.ask_next[0]?.slot).toBe("symptom.phenotype");
+    expect(retry && askedQuestions(retry)).toEqual(askedQuestions(first!));
+    expect(retry?.output.say_now[0]).toContain("다시 여쭤볼게요");
+    // Retirement hands over to the pharmacist without engine vocabulary.
+    expect(retired && askedQuestions(retired)).toEqual([]);
+    expect(retired?.output.say_now[0]).not.toMatch(/지식팩|데이터|검증/u);
+    expect(retired?.output.say_now[0]).toContain("자세히 말씀해");
+  });
+
+  it("retries even when the interpreter accepted the vague reply as an answer", () => {
+    const [, accepted] = consultationTurns([
+      "배가 아파요",
+      { text: "그냥 속이 안좋아요", answeredSlot: "symptom.phenotype" },
+    ]);
+
+    expect(accepted?.output.ask_next[0]?.slot).toBe("symptom.phenotype");
+  });
+
+  it("recovers the moment the retry gets a discriminating keyword", () => {
+    const [, , keyword] = consultationTurns([
+      "배가 아파요",
+      "그냥 속이 안좋아요",
+      "속이 쓰려요",
+    ]);
+
+    expect(keyword?.output.decision.status).toBe("recommend");
+    expect(keyword?.output.decision.product_candidates.length).toBeGreaterThan(
+      0,
+    );
+  });
 });
 
 describe("actual research preview pack", () => {
