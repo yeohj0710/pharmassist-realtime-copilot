@@ -8,6 +8,10 @@ export interface RuntimeInput {
   text: string;
   intent_hint?: string;
   answers_pending_slot?: string;
+  /**
+   * Pack-defined select-rule id the interpreter chose as the meaning of the customer's answer to the pending question. The engine honors it only when it names a select rule of the open question's field in the active protocol.
+   */
+  answered_option_key?: string;
   is_partial: boolean;
   locale: "ko-KR";
   domain: "human_otc" | "prescription_counseling" | "supplement" | "animal_medicine";

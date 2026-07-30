@@ -813,9 +813,28 @@ export class LocalClinicalEngine {
       prior?.pending_question_slot && !startsNewIntent
         ? prior.pending_question_slot
         : undefined;
+    // The interpreter may also say WHICH pack-defined branch the answer
+    // means. The key is honored only when it names a select rule of the open
+    // question's field inside the protocol the customer is answering —
+    // anything else (stale keys, other protocols' rules, refer/exclude
+    // rules) is discarded, so the model can never flip a rule it was not
+    // offered.
+    const chosenOptionRuleId =
+      input.answered_option_key && pendingAnswerSlot
+        ? this.pack.protocolRules.find(
+            (rule) =>
+              rule.rule_id === input.answered_option_key &&
+              rule.effect === "select" &&
+              rule.protocol_id === prior?.active_protocol_id &&
+              (rule.field.startsWith("slot.")
+                ? rule.field.slice("slot.".length)
+                : rule.field) === pendingAnswerSlot,
+          )?.rule_id
+        : undefined;
     const pendingAnswer = pendingAnswerSlot
       ? (() => {
           const accepted =
+            Boolean(chosenOptionRuleId) ||
             modelAnsweredSlot(pendingAnswerSlot) ||
             plausibleSlotAnswer(
               pendingAnswerSlot,
@@ -1010,6 +1029,7 @@ export class LocalClinicalEngine {
       allowProgressiveCandidates,
       ...(focusPrior ? { consultationState: focusPrior } : {}),
       retiredSlots: retiredSlotsFor(focusTopic),
+      ...(chosenOptionRuleId ? { chosenOptionRuleId } : {}),
     };
     let decision = buildRecommendationDecision(recommendationRequest);
     // Counter reality: age/pregnancy context is not interrogated up front.
@@ -1324,11 +1344,47 @@ export class LocalClinicalEngine {
           ? `말씀하신 증상이 함께 있어서 많이 불편하셨겠어요. 현재 정보로는 ${combinedTopicCandidates.join(", ")} 각각 살펴볼게요.`
           : "말씀하신 증상이 함께 있어서 많이 불편하셨겠어요. 하나씩 차근차근 살펴볼게요."
         : null;
+    // The displayed question carries its pack-defined branches so the
+    // interpreter can be asked WHICH one the customer's next words mean. A
+    // branch is a select rule on the question's field; its phrases are the
+    // rule's own match wordings. Questions without select rules (seed cards,
+    // safety gates) ship no options and stay on the answered/not-answered
+    // boolean.
+    const askWithOptions = ((): RuntimeOutput["ask_next"] => {
+      const asked = shape.ask_next[0];
+      if (!asked) return shape.ask_next;
+      const optionProtocolId =
+        decision.protocol_id ??
+        protocol?.protocol_id ??
+        prior?.active_protocol_id ??
+        null;
+      if (!optionProtocolId) return shape.ask_next;
+      const options = this.pack.protocolRules
+        .filter(
+          (rule) =>
+            rule.protocol_id === optionProtocolId &&
+            rule.effect === "select" &&
+            (rule.field.startsWith("slot.")
+              ? rule.field.slice("slot.".length)
+              : rule.field) === asked.slot &&
+            Array.isArray(rule.value) &&
+            rule.value.length > 0,
+        )
+        .slice(0, 8)
+        .map((rule) => ({
+          key: rule.rule_id,
+          phrases: (rule.value as string[]).slice(0, 16),
+        })) as RuntimeOutput["ask_next"][number]["options"];
+      return options && options.length > 0
+        ? [{ ...asked, options }]
+        : shape.ask_next;
+    })();
     const output: RuntimeOutput = {
       request_id: input.request_id,
       session_id: input.session_id,
       sequence: input.sequence,
       ...shape,
+      ask_next: askWithOptions,
       say_now: combinedTopicNarration
         ? [combinedTopicNarration]
         : shape.say_now,

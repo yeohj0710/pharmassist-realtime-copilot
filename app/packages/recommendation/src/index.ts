@@ -53,6 +53,13 @@ export interface RecommendationRequest {
    * remaining rules decide what can be offered without the answer.
    */
   readonly retiredSlots?: readonly string[];
+  /**
+   * Select rule the interpreter chose as the meaning of the customer's
+   * answer to the open question. Validated by the runtime against the
+   * active protocol and the pending slot before it gets here; that rule
+   * counts as matched, and the ask rule on the same field as answered.
+   */
+  readonly chosenOptionRuleId?: string;
 }
 
 type SourceRef = RecommendationDecision["source_refs"][number];
@@ -1056,9 +1063,21 @@ export function buildRecommendationDecision(
   const selectionRules = rules.filter(
     (rule) => rule.effect === "select" && choiceFields.has(rule.field),
   );
+  // The interpreter's chosen branch: that select rule counts as matched, and
+  // the ask rule on the same field as answered. The runtime only forwards a
+  // key after validating it against the active protocol and the open slot,
+  // and this widening never applies to refer or exclude rules.
+  const chosenSelectRule = request.chosenOptionRuleId
+    ? selectionRules.find((rule) => rule.rule_id === request.chosenOptionRuleId)
+    : undefined;
+  const matchesRule = (rule: ProtocolRule): boolean =>
+    ruleMatches(rule, request) ||
+    (chosenSelectRule !== undefined &&
+      (rule.rule_id === chosenSelectRule.rule_id ||
+        (rule.effect === "ask" && rule.field === chosenSelectRule.field)));
   const exhaustedAskRules: string[] = [];
   for (const rule of rules) {
-    const matched = ruleMatches(rule, request);
+    const matched = matchesRule(rule);
     if (rule.effect === "refer" && matched)
       return {
         ...noDecision(request, [rule.rule_id], protocol),
@@ -1116,14 +1135,14 @@ export function buildRecommendationDecision(
   );
   const selectedOptionIds = new Set(
     selectionRules
-      .filter((rule) => ruleMatches(rule, request))
+      .filter((rule) => matchesRule(rule))
       .flatMap((rule) => rule.option_ids ?? []),
   );
   const unresolvedChoiceRule = rules.find(
     (rule) =>
       rule.effect === "ask" &&
       (rule.option_ids?.length ?? 0) > 0 &&
-      !ruleMatches(rule, request),
+      !matchesRule(rule),
   );
   const provisionalOptionId =
     request.allowProgressiveCandidates && selectedOptionIds.size === 0

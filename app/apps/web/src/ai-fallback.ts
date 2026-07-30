@@ -44,12 +44,24 @@ export interface AiConversationInterpretation {
   readonly topicChanged: boolean;
   /** Whether the turn answers the counselor question that is still open. */
   readonly answersPendingQuestion: boolean;
+  /**
+   * Which pack-defined branch the answer means, when the open question
+   * carried options — the select-rule key, or null when none fits.
+   */
+  readonly answerOptionKey: string | null;
+}
+
+/** A pack-defined branch of the open question the model may choose. */
+export interface PendingQuestionOption {
+  readonly key: string;
+  readonly phrases: readonly string[];
 }
 
 /** The counselor question the customer is replying to, if one is open. */
 export interface PendingCounselorQuestion {
   readonly question: string;
   readonly slot: string;
+  readonly options: readonly PendingQuestionOption[];
 }
 
 /**
@@ -92,7 +104,14 @@ export const pendingCounselorQuestion = (
 ): PendingCounselorQuestion | undefined => {
   const question = output?.ask_next[0];
   return question
-    ? { question: question.question, slot: question.slot }
+    ? {
+        question: question.question,
+        slot: question.slot,
+        options: (question.options ?? []).map((option) => ({
+          key: option.key,
+          phrases: [...option.phrases],
+        })),
+      }
     : undefined;
 };
 
@@ -125,7 +144,17 @@ export async function requestAiInterpretation(
       ),
       previous_intent: previousIntent,
       ...(pendingQuestion
-        ? { pending_question: pendingQuestion.question }
+        ? {
+            pending_question: pendingQuestion.question,
+            ...(pendingQuestion.options.length > 0
+              ? {
+                  pending_options: pendingQuestion.options.map((option) => ({
+                    key: option.key,
+                    phrases: [...option.phrases],
+                  })),
+                }
+              : {}),
+          }
         : {}),
     }),
     signal,
@@ -144,6 +173,7 @@ export async function requestAiInterpretation(
     confidence?: unknown;
     topic_changed?: unknown;
     answers_pending_question?: unknown;
+    answer_option_key?: unknown;
   }>;
   const dispositions = new Set([
     "clinical_intent",
@@ -162,6 +192,11 @@ export async function requestAiInterpretation(
     typeof body.topic_changed !== "boolean"
   )
     return { status: "rejected" };
+  // Only a key the engine offered for this very question is usable; the
+  // model cannot introduce one of its own.
+  const offeredKeys = new Set(
+    (pendingQuestion?.options ?? []).map((option) => option.key),
+  );
   return {
     status: "interpreted",
     interpretation: {
@@ -171,6 +206,11 @@ export async function requestAiInterpretation(
       confidence: body.confidence,
       topicChanged: body.topic_changed,
       answersPendingQuestion: body.answers_pending_question === true,
+      answerOptionKey:
+        typeof body.answer_option_key === "string" &&
+        offeredKeys.has(body.answer_option_key)
+          ? body.answer_option_key
+          : null,
     },
   };
 }
@@ -189,6 +229,20 @@ export const answeredSlotFromInterpretation = (
   !interpretation.topicChanged &&
   interpretation.confidence >= 0.45
     ? pendingQuestion.slot
+    : undefined;
+
+/**
+ * The branch the model picked, under the same gate as the answered slot.
+ * The value is a pack select-rule key the engine itself offered; the engine
+ * re-validates it against the active protocol before acting on it.
+ */
+export const answeredOptionFromInterpretation = (
+  interpretation: AiConversationInterpretation,
+  pendingQuestion: PendingCounselorQuestion | undefined,
+): string | undefined =>
+  answeredSlotFromInterpretation(interpretation, pendingQuestion) &&
+  interpretation.answerOptionKey
+    ? interpretation.answerOptionKey
     : undefined;
 
 export const interpretedIntent = (

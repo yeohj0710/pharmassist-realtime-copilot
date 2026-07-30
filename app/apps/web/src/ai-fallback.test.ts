@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 import { customerTurn } from "@pharmassist/dialogue";
 import {
+  answeredOptionFromInterpretation,
   answeredSlotFromInterpretation,
   buildAiRefinementBody,
   failureLeavesAiAvailable,
@@ -17,6 +18,7 @@ import {
 const openQuestion = {
   question: "언제부터 그러셨나요?",
   slot: "symptom.duration",
+  options: [],
 };
 const interpretation = (
   overrides: Partial<AiConversationInterpretation> = {},
@@ -26,6 +28,7 @@ const interpretation = (
   confidence: 0.9,
   topicChanged: false,
   answersPendingQuestion: true,
+  answerOptionKey: null,
   ...overrides,
 });
 
@@ -130,6 +133,39 @@ describe("answers to an open counselor question", () => {
       ),
     ).toBe("cough_general");
     expect(interpretedIntent(interpretation())).toBeUndefined();
+  });
+
+  it("passes the chosen branch only under the answered-slot gate", () => {
+    const menu = {
+      question: "배가 어떻게 불편한가요?",
+      slot: "symptom.phenotype",
+      options: [{ key: "RUL-X-SELECT-1", phrases: ["속쓰림"] }],
+    };
+    expect(
+      answeredOptionFromInterpretation(
+        interpretation({ answerOptionKey: "RUL-X-SELECT-1" }),
+        menu,
+      ),
+    ).toBe("RUL-X-SELECT-1");
+    // No key, a topic change, or no open question → no branch.
+    expect(
+      answeredOptionFromInterpretation(interpretation(), menu),
+    ).toBeUndefined();
+    expect(
+      answeredOptionFromInterpretation(
+        interpretation({
+          answerOptionKey: "RUL-X-SELECT-1",
+          topicChanged: true,
+        }),
+        menu,
+      ),
+    ).toBeUndefined();
+    expect(
+      answeredOptionFromInterpretation(
+        interpretation({ answerOptionKey: "RUL-X-SELECT-1" }),
+        undefined,
+      ),
+    ).toBeUndefined();
   });
 });
 
@@ -254,5 +290,46 @@ describe("the outcome a real interpretation request reports", () => {
       confidence: 0.9,
     });
     await expect(interpret()).resolves.toEqual({ status: "rejected" });
+  });
+
+  it("keeps only an answer option key this question actually offered", async () => {
+    const menuQuestion = {
+      question: "배가 어떻게 불편한가요?",
+      slot: "symptom.phenotype",
+      options: [{ key: "RUL-X-SELECT-1", phrases: ["속쓰림"] }],
+    };
+    const reply = (key: string) => ({
+      disposition: "answer_or_detail",
+      intent: null,
+      confidence: 0.9,
+      topic_changed: false,
+      answers_pending_question: true,
+      answer_option_key: key,
+    });
+    respondWith(200, reply("RUL-X-SELECT-1"));
+    const offered = await requestAiInterpretation(
+      "속이 쓰린 것 같아요",
+      [],
+      null,
+      menuQuestion,
+      new AbortController().signal,
+    );
+    expect(
+      offered.status === "interpreted" &&
+        offered.interpretation.answerOptionKey,
+    ).toBe("RUL-X-SELECT-1");
+
+    respondWith(200, reply("RUL-SOMETHING-ELSE"));
+    const foreign = await requestAiInterpretation(
+      "속이 쓰린 것 같아요",
+      [],
+      null,
+      menuQuestion,
+      new AbortController().signal,
+    );
+    expect(
+      foreign.status === "interpreted" &&
+        foreign.interpretation.answerOptionKey,
+    ).toBeNull();
   });
 });

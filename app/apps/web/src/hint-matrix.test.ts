@@ -124,6 +124,57 @@ describe("AI hint replays of the same turn", () => {
     expect(spent.output.decision.product_candidates.length).toBeGreaterThan(0);
   });
 
+  it("routes the interpreter's chosen branch without any keyword overlap", () => {
+    // 아까 말한 첫번째 같아요 shares not a syllable with 속쓰림/신물/명치 —
+    // no lexical matcher can ever branch on it. The interpreter returns the
+    // select-rule key the engine offered with the question, and the engine
+    // activates exactly that pack-defined branch.
+    const flow = new StatefulConsultFlow(actualPack, {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    });
+    const session = crypto.randomUUID();
+    const first = flow.run(makeInput(session, 1, "배가 아파요"));
+    expect(first.output.ask_next[0]?.options?.map((o) => o.key)).toEqual([
+      "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-1",
+      "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-2",
+      "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-3",
+    ]);
+    flow.run(makeInput(session, 2, "아까 말한 첫번째 같아요"));
+    const chosen = flow.run({
+      ...makeInput(session, 2, "아까 말한 첫번째 같아요", {
+        answeredSlot: "symptom.phenotype",
+      }),
+      answered_option_key: "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-1",
+    } as RuntimeInput);
+
+    expect(chosen.output.decision.status).toBe("recommend");
+    expect(
+      chosen.output.decision.ingredient_options.map(
+        (option) => option.option_id,
+      ),
+    ).toContain("OPT-ABDOMINAL_PAIN_VOMITING-ALUMINUM_PHOSPHATE_GEL");
+  });
+
+  it("discards a chosen key the engine never offered for this question", () => {
+    const flow = new StatefulConsultFlow(actualPack, {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    });
+    const session = crypto.randomUUID();
+    const first = flow.run(makeInput(session, 1, "배가 아파요"));
+    const foreign = flow.run({
+      ...makeInput(session, 2, "네", { answeredSlot: "symptom.phenotype" }),
+      // A select rule of a different protocol: validation must drop it, and
+      // the turn behaves like a keyless accepted answer (menu retries).
+      answered_option_key: "RUL-ABDOMINAL_PAIN_VOMITING-REFER-RED-FLAGS",
+    } as RuntimeInput);
+
+    expect(first.output.ask_next[0]?.slot).toBe("symptom.phenotype");
+    expect(foreign.output.decision.status).not.toBe("refer");
+    expect(foreign.output.ask_next[0]?.slot).toBe("symptom.phenotype");
+  });
+
   it("never ends a two-turn consultation without a question or candidates", () => {
     const variants: readonly Readonly<{
       intent?: string;

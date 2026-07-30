@@ -1,6 +1,6 @@
 {
-  "sha256": "cfb7187c43a480824436213093a51eefbaf927c1ade14e685bf3a8504ddb2083",
-  "sourceSchemaHash": "6f99141799de429f4f8703c84a44be469632ca1c95c224143bdece6a9ab7ee14",
+  "sha256": "35aed9d231f8ab7799bb84cf673705d8feef596085cc6d17b6f6cb115f21d490",
+  "sourceSchemaHash": "0e66660c1b71a23e83f53b846d999d0850e33e047a1c95858f9d485a0782e0bd",
   "paths": [
     "/v1/admin/cards",
     "/v1/admin/claims/import",

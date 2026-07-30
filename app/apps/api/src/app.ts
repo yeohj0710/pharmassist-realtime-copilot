@@ -510,6 +510,7 @@ export async function buildApp(
             conversation_history?: unknown;
             previous_intent?: unknown;
             pending_question?: unknown;
+            pending_options?: unknown;
           }>
         | undefined;
       const text = typeof body?.text === "string" ? body.text.trim() : "";
@@ -531,6 +532,33 @@ export async function buildApp(
         body.pending_question.length <= 300
           ? body.pending_question
           : null;
+      // Pack-defined branches of the pending question; the model may only
+      // echo one of these keys back.
+      const pendingOptions =
+        pendingQuestion && Array.isArray(body?.pending_options)
+          ? body.pending_options
+              .filter(
+                (option): option is { key: string; phrases: string[] } =>
+                  typeof option === "object" &&
+                  option !== null &&
+                  typeof (option as { key?: unknown }).key === "string" &&
+                  /^[A-Z][A-Z0-9_.-]{1,127}$/u.test(
+                    (option as { key: string }).key,
+                  ) &&
+                  Array.isArray((option as { phrases?: unknown }).phrases) &&
+                  (option as { phrases: unknown[] }).phrases.every(
+                    (phrase) =>
+                      typeof phrase === "string" &&
+                      phrase.length > 0 &&
+                      phrase.length <= 80,
+                  ),
+              )
+              .slice(0, 8)
+              .map((option) => ({
+                key: option.key,
+                phrases: option.phrases.slice(0, 16),
+              }))
+          : [];
       if (
         !text ||
         text.length > 2_000 ||
@@ -628,6 +656,7 @@ export async function buildApp(
             ],
             previousIntent,
             pendingQuestion,
+            pendingOptions,
           },
           controller.signal,
         );
@@ -637,6 +666,7 @@ export async function buildApp(
           confidence: result.confidence,
           topic_changed: result.topicChanged,
           answers_pending_question: result.answersPendingQuestion,
+          answer_option_key: result.answerOptionKey,
         };
       } catch (cause: unknown) {
         req.log.warn(

@@ -77,6 +77,30 @@
           },
           "slot": {
             "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "maxItems": 8,
+            "description": "Pack-defined answer branches for this question. key is the select-rule id; phrases are the rule's own match wordings, given to the interpreter as the meaning of each branch.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["key", "phrases"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "pattern": "^[A-Z][A-Z0-9_.-]{1,127}$"
+                },
+                "phrases": {
+                  "type": "array",
+                  "maxItems": 16,
+                  "items": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -261,9 +285,15 @@
           "ask_next"
         ],
         "properties": {
-          "protocol_id": { "type": "string" },
-          "intent": { "type": "string" },
-          "symptom_category": { "type": "string" },
+          "protocol_id": {
+            "type": "string"
+          },
+          "intent": {
+            "type": "string"
+          },
+          "symptom_category": {
+            "type": "string"
+          },
           "decision": {
             "$ref": "recommendation_decision.schema.json"
           },
@@ -275,14 +305,20 @@
               "additionalProperties": false,
               "required": ["question", "reason", "priority", "slot"],
               "properties": {
-                "question": { "type": "string" },
-                "reason": { "type": "string" },
+                "question": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
                 "priority": {
                   "type": "integer",
                   "minimum": 1,
                   "maximum": 5
                 },
-                "slot": { "type": "string" }
+                "slot": {
+                  "type": "string"
+                }
               }
             }
           }

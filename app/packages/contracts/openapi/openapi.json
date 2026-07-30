@@ -771,6 +771,11 @@
             "type": "string",
             "pattern": "^[a-z][a-z0-9_.]{1,127}$"
           },
+          "answered_option_key": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]{1,127}$",
+            "description": "Pack-defined select-rule id the interpreter chose as the meaning of the customer's answer to the pending question. The engine honors it only when it names a select rule of the open question's field in the active protocol."
+          },
           "is_partial": {
             "type": "boolean"
           },
@@ -1015,6 +1020,33 @@
                 },
                 "slot": {
                   "type": "string"
+                },
+                "options": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "description": "Pack-defined answer branches for this question. key is the select-rule id; phrases are the rule's own match wordings, given to the interpreter as the meaning of each branch.",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "key",
+                      "phrases"
+                    ],
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "pattern": "^[A-Z][A-Z0-9_.-]{1,127}$"
+                      },
+                      "phrases": {
+                        "type": "array",
+                        "maxItems": 16,
+                        "items": {
+                          "type": "string",
+                          "maxLength": 80
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }

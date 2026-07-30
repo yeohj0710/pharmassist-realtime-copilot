@@ -1,5 +1,5 @@
 {
-  "schemaHash": "6f99141799de429f4f8703c84a44be469632ca1c95c224143bdece6a9ab7ee14",
+  "schemaHash": "0e66660c1b71a23e83f53b846d999d0850e33e047a1c95858f9d485a0782e0bd",
   "generated": [
     {
       "file": "claim.ts",
@@ -79,17 +79,17 @@
     {
       "file": "refinement_request.ts",
       "title": "RefinementRequestEnvelope",
-      "sha256": "42a02e496c480a1e5b8483dc56a646eb17904fb589ad97c69d31301a9019ee92"
+      "sha256": "50a4fa57bdc48ec35dfd4f6069717d67a4420e45f3e68ac4c77f1f61d26910b3"
     },
     {
       "file": "runtime_input.ts",
       "title": "RuntimeInput",
-      "sha256": "a05936763fe1c5f3a92d341d3be3444da197cc07a531cba2778f15e26126a6b0"
+      "sha256": "c23d12dcb5b85973a2b0ca959e61ba9780a3ad143b3e784b9ee8a3704e6516eb"
     },
     {
       "file": "runtime_output.ts",
       "title": "RuntimeOutput",
-      "sha256": "5c30efd8339d5bfee492892ab2ff13dbcb669490b569d735314301cb4b266c82"
+      "sha256": "0299372a3c0f0a37be2e9530b9b3ecd858730259bf208a84140638d8fc882994"
     },
     {
       "file": "runtime_pack.ts",

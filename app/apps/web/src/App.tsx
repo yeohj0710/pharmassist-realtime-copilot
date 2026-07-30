@@ -17,6 +17,7 @@ import {
   type TranscriptionPeer,
 } from "./realtime.js";
 import {
+  answeredOptionFromInterpretation,
   answeredSlotFromInterpretation,
   interpretedIntent,
   pendingCounselorQuestion,
@@ -60,7 +61,11 @@ const newInput = (
   sequence: number,
   sessionId: string,
   inputType: RuntimeInput["input_type"] = "typed",
-  interpreted: Readonly<{ intent?: string; answeredSlot?: string }> = {},
+  interpreted: Readonly<{
+    intent?: string;
+    answeredSlot?: string;
+    answeredOptionKey?: string;
+  }> = {},
 ): RuntimeInput => ({
   request_id: crypto.randomUUID(),
   session_id: sessionId,
@@ -70,6 +75,9 @@ const newInput = (
   ...(interpreted.intent ? { intent_hint: interpreted.intent } : {}),
   ...(interpreted.answeredSlot
     ? { answers_pending_slot: interpreted.answeredSlot }
+    : {}),
+  ...(interpreted.answeredOptionKey
+    ? { answered_option_key: interpreted.answeredOptionKey }
     : {}),
   is_partial: inputType === "voice_partial",
   locale: "ko-KR",
@@ -733,9 +741,13 @@ export function App() {
         const answeredSlot =
           interpretation &&
           answeredSlotFromInterpretation(interpretation, pendingQuestion);
+        const answeredOptionKey =
+          interpretation &&
+          answeredOptionFromInterpretation(interpretation, pendingQuestion);
         const interpreted = {
           ...(intent ? { intent } : {}),
           ...(answeredSlot ? { answeredSlot } : {}),
+          ...(answeredOptionKey ? { answeredOptionKey } : {}),
         };
         if (
           (intent || answeredSlot) &&

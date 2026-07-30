@@ -1214,6 +1214,3125 @@ export interface RuntimeOutput {
           reason: string;
           priority: number;
           slot: string;
+          /**
+           * Pack-defined answer branches for this question. key is the select-rule id; phrases are the rule's own match wordings, given to the interpreter as the meaning of each branch.
+           *
+           * @maxItems 8
+           */
+          options?:
+            | []
+            | [
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                }
+              ]
+            | [
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                }
+              ]
+            | [
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                }
+              ]
+            | [
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                }
+              ]
+            | [
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                }
+              ]
+            | [
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                }
+              ]
+            | [
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                }
+              ]
+            | [
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                },
+                {
+                  key: string;
+                  /**
+                   * @maxItems 16
+                   */
+                  phrases:
+                    | []
+                    | [string]
+                    | [string, string]
+                    | [string, string, string]
+                    | [string, string, string, string]
+                    | [string, string, string, string, string]
+                    | [string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string]
+                    | [string, string, string, string, string, string, string, string, string, string, string, string]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ]
+                    | [
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string,
+                        string
+                      ];
+                }
+              ];
         }
       ];
   red_flags: {
