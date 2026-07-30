@@ -859,7 +859,19 @@ export class LocalClinicalEngine {
       uncertainReply || retraction
         ? []
         : retrieveProtocols(normalized, input.domain, this.decisionIndex);
-    const protocolCandidate = protocolCandidates[0];
+    // The interpreter's intent hint must reach final protocol selection, not
+    // just startsNewIntent: 속이 안좋아요 lexically matches no dyspepsia
+    // wording, so without this bridge the hint tears down the previous topic
+    // (new-intent handling suppresses both continuity and the retry path)
+    // while activating nothing, and the consultation drifts into 근거 부족.
+    // The mapped protocol is still pack data — the model only chose which
+    // catalog intent the customer's words meant. An answer to the open
+    // question never switches protocol this way.
+    const protocolCandidate =
+      protocolCandidates[0] ??
+      (!uncertainReply && !retraction && !answersPriorPendingQuestion
+        ? hintedProtocol
+        : undefined);
     const protocol = protocolCandidate
       ? this.decisionIndex.protocols.get(protocolCandidate.protocolId)
       : !startsNewIntent && !retraction
