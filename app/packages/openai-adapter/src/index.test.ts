@@ -35,7 +35,6 @@ it("allows non-catalog dialogue acts without forcing a clinical intent", () => {
       "confidence",
       "topic_changed",
       "answers_pending_question",
-      "answer_option",
     ],
     properties: {
       answers_pending_question: { type: "boolean" },

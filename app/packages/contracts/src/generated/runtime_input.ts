@@ -12,6 +12,12 @@ export interface RuntimeInput {
    * Pack-defined select-rule id the interpreter chose as the meaning of the customer's answer to the pending question. The engine honors it only when it names a select rule of the open question's field in the active protocol.
    */
   answered_option_key?: string;
+  /**
+   * Every pack-defined select-rule id the interpreter recognized in the customer's turn, across all offered fact targets. The engine honors each key only after validating it as a select rule of the active protocol.
+   *
+   * @maxItems 4
+   */
+  answered_option_keys?: [] | [string] | [string, string] | [string, string, string] | [string, string, string, string];
   is_partial: boolean;
   locale: "ko-KR";
   domain: "human_otc" | "prescription_counseling" | "supplement" | "animal_medicine";

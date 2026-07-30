@@ -39,14 +39,28 @@
     },
     "mode": {
       "type": "string",
-      "enum": ["instant", "refined", "escalate", "clarify", "no_match"]
+      "enum": [
+        "instant",
+        "refined",
+        "escalate",
+        "clarify",
+        "no_match"
+      ]
     },
     "status": {
       "type": "string",
-      "enum": ["provisional", "stable", "blocked", "final"]
+      "enum": [
+        "provisional",
+        "stable",
+        "blocked",
+        "final"
+      ]
     },
     "intent": {
-      "type": ["string", "null"]
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "say_now": {
       "type": "array",
@@ -62,7 +76,12 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["question", "reason", "priority", "slot"],
+        "required": [
+          "question",
+          "reason",
+          "priority",
+          "slot"
+        ],
         "properties": {
           "question": {
             "type": "string"
@@ -85,7 +104,10 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["key", "phrases"],
+              "required": [
+                "key",
+                "phrases"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -110,7 +132,12 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["flag_id", "label", "action", "matched"],
+        "required": [
+          "flag_id",
+          "label",
+          "action",
+          "matched"
+        ],
         "properties": {
           "flag_id": {
             "type": "string"
@@ -120,7 +147,12 @@
           },
           "action": {
             "type": "string",
-            "enum": ["emergency", "same_day", "doctor", "stop_and_verify"]
+            "enum": [
+              "emergency",
+              "same_day",
+              "doctor",
+              "stop_and_verify"
+            ]
           },
           "matched": {
             "type": "boolean"
@@ -136,7 +168,11 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["type", "text", "requires_confirmation"],
+        "required": [
+          "type",
+          "text",
+          "requires_confirmation"
+        ],
         "properties": {
           "type": {
             "type": "string"
@@ -173,7 +209,10 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["intent", "score"],
+        "required": [
+          "intent",
+          "score"
+        ],
         "properties": {
           "intent": {
             "type": "string"
@@ -259,7 +298,10 @@
       "type": "string"
     },
     "model": {
-      "type": ["string", "null"]
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "generated_at": {
       "type": "string",
@@ -303,7 +345,12 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["question", "reason", "priority", "slot"],
+              "required": [
+                "question",
+                "reason",
+                "priority",
+                "slot"
+              ],
               "properties": {
                 "question": {
                   "type": "string"
@@ -318,6 +365,54 @@
                 },
                 "slot": {
                   "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "fact_targets": {
+      "type": "array",
+      "maxItems": 4,
+      "description": "Every branch slot the active protocol can act on this turn — the open question's and the upcoming ones — with its pack-defined options. The interpreter listens for all of them at once, so one customer sentence can settle several.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "slot",
+          "question",
+          "options"
+        ],
+        "properties": {
+          "slot": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "key",
+                "phrases"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "pattern": "^[A-Z][A-Z0-9_.-]{1,127}$"
+                },
+                "phrases": {
+                  "type": "array",
+                  "maxItems": 16,
+                  "items": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
                 }
               }
             }

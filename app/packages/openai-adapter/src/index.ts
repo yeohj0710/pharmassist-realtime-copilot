@@ -112,6 +112,12 @@ export interface ConversationInterpretationContext {
     key: string;
     phrases: readonly string[];
   }>[];
+  /** Every branch question the consultation listens for, with options. */
+  readonly factTargets?: readonly Readonly<{
+    slot: string;
+    question: string;
+    options: readonly Readonly<{ key: string; phrases: readonly string[] }>[];
+  }>[];
 }
 
 export interface ConversationInterpretation {
@@ -123,6 +129,8 @@ export interface ConversationInterpretation {
   readonly answersPendingQuestion: boolean;
   /** Chosen branch key when the answer means one of pendingOptions. */
   readonly answerOptionKey: string | null;
+  /** Every offered branch, across fact targets, the turn's words state. */
+  readonly answerOptionKeys: readonly string[];
 }
 
 export interface ConversationInterpreter {
@@ -144,14 +152,22 @@ export const conversationInterpretationSchema = (
     "confidence",
     "topic_changed",
     "answers_pending_question",
-    "answer_option",
+    ...(optionKeys.length > 0 ? ["answer_option", "chosen_option_keys"] : []),
   ],
   properties: {
     answers_pending_question: { type: "boolean" },
-    answer_option: {
-      type: "string",
-      enum: ["none", ...optionKeys],
-    },
+    ...(optionKeys.length > 0
+      ? {
+          answer_option: {
+            type: "string",
+            enum: ["none", ...optionKeys],
+          },
+          chosen_option_keys: {
+            type: "array",
+            items: { type: "string", enum: [...optionKeys] },
+          },
+        }
+      : {}),
     disposition: {
       type: "string",
       enum: [
@@ -216,6 +232,7 @@ export class OfficialConversationInterpreter implements ConversationInterpreter 
               previous_intent: context.previousIntent,
               pending_question: context.pendingQuestion ?? null,
               pending_options: context.pendingOptions ?? [],
+              fact_targets: context.factTargets ?? [],
             }),
           },
           ...context.conversation.map((turn) => ({
@@ -228,10 +245,14 @@ export class OfficialConversationInterpreter implements ConversationInterpreter 
             type: "json_schema",
             name: "pharmacy_conversation_interpretation",
             strict: true,
-            schema: conversationInterpretationSchema(
-              context.catalog,
-              (context.pendingOptions ?? []).map((option) => option.key),
-            ),
+            schema: conversationInterpretationSchema(context.catalog, [
+              ...new Set([
+                ...(context.pendingOptions ?? []).map((option) => option.key),
+                ...(context.factTargets ?? []).flatMap((target) =>
+                  target.options.map((option) => option.key),
+                ),
+              ]),
+            ]),
           },
         },
       },
@@ -295,6 +316,13 @@ export class OfficialConversationInterpreter implements ConversationInterpreter 
       context.pendingQuestion && answersPendingQuestion,
     );
     const answerOption = value["answer_option"];
+    const offeredKeySet = new Set([
+      ...(context.pendingOptions ?? []).map((option) => option.key),
+      ...(context.factTargets ?? []).flatMap((target) =>
+        target.options.map((option) => option.key),
+      ),
+    ]);
+    const chosenKeys = value["chosen_option_keys"];
     return {
       disposition: disposition as ConversationInterpretation["disposition"],
       intent: definition?.intent ?? null,
@@ -302,7 +330,7 @@ export class OfficialConversationInterpreter implements ConversationInterpreter 
       topicChanged,
       // Without a question there is nothing to answer, whatever the model says.
       answersPendingQuestion: answersPending,
-      // Only a key offered by this very request survives.
+      // Only keys offered by this very request survive.
       answerOptionKey:
         answersPending &&
         typeof answerOption === "string" &&
@@ -311,6 +339,16 @@ export class OfficialConversationInterpreter implements ConversationInterpreter 
         )
           ? answerOption
           : null,
+      answerOptionKeys: Array.isArray(chosenKeys)
+        ? [
+            ...new Set(
+              chosenKeys.filter(
+                (key): key is string =>
+                  typeof key === "string" && offeredKeySet.has(key),
+              ),
+            ),
+          ].slice(0, 4)
+        : [],
     };
   }
 }

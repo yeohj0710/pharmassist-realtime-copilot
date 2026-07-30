@@ -31,7 +31,12 @@
     },
     "input_type": {
       "type": "string",
-      "enum": ["typed", "voice_partial", "voice_final", "card_action"]
+      "enum": [
+        "typed",
+        "voice_partial",
+        "voice_final",
+        "card_action"
+      ]
     },
     "text": {
       "type": "string",
@@ -49,6 +54,15 @@
       "type": "string",
       "pattern": "^[A-Z][A-Z0-9_.-]{1,127}$",
       "description": "Pack-defined select-rule id the interpreter chose as the meaning of the customer's answer to the pending question. The engine honors it only when it names a select rule of the open question's field in the active protocol."
+    },
+    "answered_option_keys": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9_.-]{1,127}$"
+      },
+      "description": "Every pack-defined select-rule id the interpreter recognized in the customer's turn, across all offered fact targets. The engine honors each key only after validating it as a select rule of the active protocol."
     },
     "is_partial": {
       "type": "boolean"
@@ -71,21 +85,39 @@
       "additionalProperties": false,
       "properties": {
         "age_years": {
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "minimum": 0,
           "maximum": 130
         },
         "weight_kg": {
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "minimum": 0.1,
           "maximum": 500
         },
         "sex_at_birth": {
-          "type": ["string", "null"],
-          "enum": ["female", "male", "intersex", "unknown", null]
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "female",
+            "male",
+            "intersex",
+            "unknown",
+            null
+          ]
         },
         "pregnancy_status": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "enum": [
             "not_pregnant",
             "pregnant",
@@ -96,15 +128,24 @@
           ]
         },
         "gestational_weeks": {
-          "type": ["integer", "null"],
+          "type": [
+            "integer",
+            "null"
+          ],
           "minimum": 0,
           "maximum": 45
         },
         "lactating": {
-          "type": ["boolean", "null"]
+          "type": [
+            "boolean",
+            "null"
+          ]
         },
         "symptom_duration_text": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "allergies": {
           "type": "array",
@@ -125,19 +166,31 @@
           }
         },
         "product_name": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "product_concentration": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         }
       }
     },
     "asr": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "additionalProperties": false,
       "properties": {
         "confidence": {
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "minimum": 0,
           "maximum": 1
         },

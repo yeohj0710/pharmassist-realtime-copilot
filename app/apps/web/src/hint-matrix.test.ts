@@ -156,6 +156,54 @@ describe("AI hint replays of the same turn", () => {
     ).toContain("OPT-ABDOMINAL_PAIN_VOMITING-ALUMINUM_PHOSPHATE_GEL");
   });
 
+  it("emits fact targets so the interpreter can listen for every branch", () => {
+    const flow = new StatefulConsultFlow(actualPack, {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    });
+    const first = flow.run(makeInput(crypto.randomUUID(), 1, "배가 아파요"));
+
+    const target = first.output.fact_targets?.find(
+      (item) => item.slot === "symptom.phenotype",
+    );
+    expect(target?.options.map((option) => option.key)).toEqual([
+      "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-1",
+      "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-2",
+      "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-3",
+    ]);
+  });
+
+  it("applies several stated facts from a single sentence", () => {
+    // 첫번째랑 세번째 둘 다요 states two branches with zero keyword overlap,
+    // so no lexical path can act on it — only the chosen keys. Both are
+    // honored, and both branches' options reach the decision together.
+    const flow = new StatefulConsultFlow(actualPack, {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    });
+    const session = crypto.randomUUID();
+    flow.run(makeInput(session, 1, "배가 아파요"));
+    flow.run(makeInput(session, 2, "아까 말한 첫번째랑 세번째 둘 다요"));
+    const multi = flow.run({
+      ...makeInput(session, 2, "아까 말한 첫번째랑 세번째 둘 다요", {
+        answeredSlot: "symptom.phenotype",
+      }),
+      answered_option_keys: [
+        "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-1",
+        "RUL-OVERLAY-PTC-ABDOMINAL_PAIN_VOMITING-SELECT-3",
+      ],
+    } as RuntimeInput);
+
+    expect(multi.output.decision.status).toBe("recommend");
+    const optionIds = multi.output.decision.ingredient_options.map(
+      (option) => option.option_id,
+    );
+    expect(optionIds).toContain(
+      "OPT-ABDOMINAL_PAIN_VOMITING-ALUMINUM_PHOSPHATE_GEL",
+    );
+    expect(optionIds).toContain("OPT-ABDOMINAL_PAIN_VOMITING-DIOSMECTITE");
+  });
+
   it("discards a chosen key the engine never offered for this question", () => {
     const flow = new StatefulConsultFlow(actualPack, {
       tenantId: "local-research-preview",

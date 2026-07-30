@@ -29,6 +29,7 @@ const interpretation = (
   topicChanged: false,
   answersPendingQuestion: true,
   answerOptionKey: null,
+  answerOptionKeys: [],
   ...overrides,
 });
 
@@ -230,6 +231,7 @@ describe("the outcome a real interpretation request reports", () => {
       [],
       null,
       openQuestion,
+      [],
       new AbortController().signal,
     );
 
@@ -312,6 +314,7 @@ describe("the outcome a real interpretation request reports", () => {
       [],
       null,
       menuQuestion,
+      [],
       new AbortController().signal,
     );
     expect(
@@ -325,6 +328,7 @@ describe("the outcome a real interpretation request reports", () => {
       [],
       null,
       menuQuestion,
+      [],
       new AbortController().signal,
     );
     expect(

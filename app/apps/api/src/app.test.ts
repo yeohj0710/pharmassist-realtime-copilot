@@ -64,6 +64,7 @@ describe("API", () => {
             topicChanged: true,
             answersPendingQuestion: false,
             answerOptionKey: null,
+            answerOptionKeys: [],
           };
         },
       },
@@ -88,6 +89,7 @@ describe("API", () => {
         topic_changed: true,
         answers_pending_question: false,
         answer_option_key: null,
+        chosen_option_keys: [],
       });
       expect(forwardedQuestion).toBe("배가 어떻게 불편한가요?");
       expect(catalogSize).toBe(74);

@@ -26,6 +26,8 @@ import {
   requestAiReadiness,
   shouldInterpretWithAi,
   shouldRequestAiRefinement,
+  statedFactKeysFromInterpretation,
+  type ConsultationFactTarget,
 } from "./ai-fallback.js";
 import { outputText, patientVisibleLines } from "./consult-memory.js";
 import productEnrichmentJson from "../../../data/actual-candidate-pack/product-enrichment.json" with { type: "json" };
@@ -65,6 +67,7 @@ const newInput = (
     intent?: string;
     answeredSlot?: string;
     answeredOptionKey?: string;
+    answeredOptionKeys?: readonly string[];
   }> = {},
 ): RuntimeInput => ({
   request_id: crypto.randomUUID(),
@@ -78,6 +81,14 @@ const newInput = (
     : {}),
   ...(interpreted.answeredOptionKey
     ? { answered_option_key: interpreted.answeredOptionKey }
+    : {}),
+  ...(interpreted.answeredOptionKeys &&
+  interpreted.answeredOptionKeys.length > 0
+    ? {
+        answered_option_keys: [
+          ...interpreted.answeredOptionKeys,
+        ] as NonNullable<RuntimeInput["answered_option_keys"]>,
+      }
     : {}),
   is_partial: inputType === "voice_partial",
   locale: "ko-KR",
@@ -685,8 +696,19 @@ export function App() {
     const submittedSession = sessionIdRef.current;
     const priorHistory = historyRef.current;
     // Captured before this turn is processed: it is the question the customer
-    // is answering right now.
+    // is answering right now, plus every branch fact the active protocol is
+    // listening for.
     const pendingQuestion = pendingCounselorQuestion(result);
+    const factTargets: readonly ConsultationFactTarget[] = (
+      result?.fact_targets ?? []
+    ).map((target) => ({
+      slot: target.slot,
+      question: target.question,
+      options: target.options.map((option) => ({
+        key: option.key,
+        phrases: [...option.phrases],
+      })),
+    }));
     const nextHistory = [
       ...priorHistory,
       customerTurn(normalized, submittedSequence),
@@ -732,6 +754,7 @@ export function App() {
           priorHistory,
           result?.intent ?? null,
           pendingQuestion,
+          factTargets,
           controller.signal,
         );
         setAiAnswering(outcome.status !== "unavailable");
@@ -744,13 +767,17 @@ export function App() {
         const answeredOptionKey =
           interpretation &&
           answeredOptionFromInterpretation(interpretation, pendingQuestion);
+        const answeredOptionKeys = interpretation
+          ? statedFactKeysFromInterpretation(interpretation)
+          : [];
         const interpreted = {
           ...(intent ? { intent } : {}),
           ...(answeredSlot ? { answeredSlot } : {}),
           ...(answeredOptionKey ? { answeredOptionKey } : {}),
+          ...(answeredOptionKeys.length > 0 ? { answeredOptionKeys } : {}),
         };
         if (
-          (intent || answeredSlot) &&
+          (intent || answeredSlot || answeredOptionKeys.length > 0) &&
           submittedSequence === sequenceRef.current &&
           submittedSession === sessionIdRef.current &&
           !(

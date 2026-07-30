@@ -813,28 +813,38 @@ export class LocalClinicalEngine {
       prior?.pending_question_slot && !startsNewIntent
         ? prior.pending_question_slot
         : undefined;
-    // The interpreter may also say WHICH pack-defined branch the answer
-    // means. The key is honored only when it names a select rule of the open
-    // question's field inside the protocol the customer is answering —
-    // anything else (stale keys, other protocols' rules, refer/exclude
-    // rules) is discarded, so the model can never flip a rule it was not
-    // offered.
-    const chosenOptionRuleId =
-      input.answered_option_key && pendingAnswerSlot
-        ? this.pack.protocolRules.find(
+    // The interpreter may also say WHICH pack-defined branches the customer's
+    // words state — for the open question and for any other fact target this
+    // protocol listens for, several in one turn (속도 쓰리고 설사도 해요).
+    // Each key is honored only when it names a select rule of the protocol
+    // the customer is talking about — anything else (stale keys, other
+    // protocols' rules, refer/exclude rules) is discarded, so the model can
+    // never flip a rule it was not offered.
+    const offeredKeys = [
+      ...(input.answered_option_keys ?? []),
+      ...(input.answered_option_key ? [input.answered_option_key] : []),
+    ];
+    const chosenOptionRules =
+      offeredKeys.length > 0 && !startsNewIntent
+        ? this.pack.protocolRules.filter(
             (rule) =>
-              rule.rule_id === input.answered_option_key &&
+              offeredKeys.includes(rule.rule_id) &&
               rule.effect === "select" &&
-              rule.protocol_id === prior?.active_protocol_id &&
-              (rule.field.startsWith("slot.")
-                ? rule.field.slice("slot.".length)
-                : rule.field) === pendingAnswerSlot,
-          )?.rule_id
-        : undefined;
+              rule.protocol_id === prior?.active_protocol_id,
+          )
+        : [];
+    const chosenOptionRuleIds = chosenOptionRules.map((rule) => rule.rule_id);
+    const chosenFieldSlots = new Set(
+      chosenOptionRules.map((rule) =>
+        rule.field.startsWith("slot.")
+          ? rule.field.slice("slot.".length)
+          : rule.field,
+      ),
+    );
     const pendingAnswer = pendingAnswerSlot
       ? (() => {
           const accepted =
-            Boolean(chosenOptionRuleId) ||
+            chosenFieldSlots.has(pendingAnswerSlot) ||
             modelAnsweredSlot(pendingAnswerSlot) ||
             plausibleSlotAnswer(
               pendingAnswerSlot,
@@ -1029,7 +1039,7 @@ export class LocalClinicalEngine {
       allowProgressiveCandidates,
       ...(focusPrior ? { consultationState: focusPrior } : {}),
       retiredSlots: retiredSlotsFor(focusTopic),
-      ...(chosenOptionRuleId ? { chosenOptionRuleId } : {}),
+      ...(chosenOptionRuleIds.length > 0 ? { chosenOptionRuleIds } : {}),
     };
     let decision = buildRecommendationDecision(recommendationRequest);
     // Counter reality: age/pregnancy context is not interrogated up front.
@@ -1379,12 +1389,63 @@ export class LocalClinicalEngine {
         ? [{ ...asked, options }]
         : shape.ask_next;
     })();
+    // Beyond the single displayed question, the interpreter listens for every
+    // branch fact the active protocol can act on — one customer sentence
+    // (속도 쓰리고 설사도 해요) may settle several at once. Targets are the
+    // protocol's ask rules with option branches; their select rules supply
+    // the pack-defined meanings.
+    const factTargets = (() => {
+      const protocolId =
+        decision.protocol_id ??
+        protocol?.protocol_id ??
+        prior?.active_protocol_id ??
+        null;
+      if (!protocolId || conversationReply || retraction) return [];
+      return this.pack.protocolRules
+        .filter(
+          (rule) =>
+            rule.protocol_id === protocolId &&
+            rule.effect === "ask" &&
+            (rule.option_ids?.length ?? 0) > 0 &&
+            typeof rule.question === "string",
+        )
+        .slice(0, 4)
+        .map((rule) => {
+          const slot = rule.field.startsWith("slot.")
+            ? rule.field.slice("slot.".length)
+            : rule.field;
+          return {
+            slot,
+            question: rule.question as string,
+            options: this.pack.protocolRules
+              .filter(
+                (optionRule) =>
+                  optionRule.protocol_id === protocolId &&
+                  optionRule.effect === "select" &&
+                  (optionRule.field.startsWith("slot.")
+                    ? optionRule.field.slice("slot.".length)
+                    : optionRule.field) === slot &&
+                  Array.isArray(optionRule.value) &&
+                  optionRule.value.length > 0,
+              )
+              .slice(0, 8)
+              .map((optionRule) => ({
+                key: optionRule.rule_id,
+                phrases: (optionRule.value as string[]).slice(0, 16),
+              })),
+          };
+        })
+        .filter((target) => target.options.length > 0);
+    })() as RuntimeOutput["fact_targets"];
     const output: RuntimeOutput = {
       request_id: input.request_id,
       session_id: input.session_id,
       sequence: input.sequence,
       ...shape,
       ask_next: askWithOptions,
+      ...(factTargets && factTargets.length > 0
+        ? { fact_targets: factTargets }
+        : {}),
       say_now: combinedTopicNarration
         ? [combinedTopicNarration]
         : shape.say_now,

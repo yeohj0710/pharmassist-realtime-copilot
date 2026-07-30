@@ -511,6 +511,7 @@ export async function buildApp(
             previous_intent?: unknown;
             pending_question?: unknown;
             pending_options?: unknown;
+            fact_targets?: unknown;
           }>
         | undefined;
       const text = typeof body?.text === "string" ? body.text.trim() : "";
@@ -657,6 +658,25 @@ export async function buildApp(
             previousIntent,
             pendingQuestion,
             pendingOptions,
+            factTargets: Array.isArray(body?.fact_targets)
+              ? body.fact_targets
+                  .filter(
+                    (
+                      target,
+                    ): target is {
+                      slot: string;
+                      question: string;
+                      options: { key: string; phrases: string[] }[];
+                    } =>
+                      typeof target === "object" &&
+                      target !== null &&
+                      typeof (target as { slot?: unknown }).slot === "string" &&
+                      typeof (target as { question?: unknown }).question ===
+                        "string" &&
+                      Array.isArray((target as { options?: unknown }).options),
+                  )
+                  .slice(0, 4)
+              : [],
           },
           controller.signal,
         );
@@ -667,6 +687,7 @@ export async function buildApp(
           topic_changed: result.topicChanged,
           answers_pending_question: result.answersPendingQuestion,
           answer_option_key: result.answerOptionKey,
+          chosen_option_keys: result.answerOptionKeys,
         };
       } catch (cause: unknown) {
         req.log.warn(

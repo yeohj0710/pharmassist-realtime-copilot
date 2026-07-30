@@ -54,12 +54,13 @@ export interface RecommendationRequest {
    */
   readonly retiredSlots?: readonly string[];
   /**
-   * Select rule the interpreter chose as the meaning of the customer's
-   * answer to the open question. Validated by the runtime against the
-   * active protocol and the pending slot before it gets here; that rule
-   * counts as matched, and the ask rule on the same field as answered.
+   * Select rules the interpreter recognized in the customer's turn — the
+   * open question's branch and any other fact target it stated, several at
+   * once. Validated by the runtime against the active protocol before they
+   * get here; each counts as matched, and the ask rule on a chosen rule's
+   * field as answered.
    */
-  readonly chosenOptionRuleId?: string;
+  readonly chosenOptionRuleIds?: readonly string[];
 }
 
 type SourceRef = RecommendationDecision["source_refs"][number];
@@ -1063,18 +1064,19 @@ export function buildRecommendationDecision(
   const selectionRules = rules.filter(
     (rule) => rule.effect === "select" && choiceFields.has(rule.field),
   );
-  // The interpreter's chosen branch: that select rule counts as matched, and
-  // the ask rule on the same field as answered. The runtime only forwards a
-  // key after validating it against the active protocol and the open slot,
-  // and this widening never applies to refer or exclude rules.
-  const chosenSelectRule = request.chosenOptionRuleId
-    ? selectionRules.find((rule) => rule.rule_id === request.chosenOptionRuleId)
-    : undefined;
+  // The interpreter's chosen branches: each select rule counts as matched,
+  // and the ask rule on a chosen rule's field as answered. The runtime only
+  // forwards keys after validating them against the active protocol, and
+  // this widening never applies to refer or exclude rules.
+  const chosenSelectRules = (request.chosenOptionRuleIds ?? [])
+    .map((ruleId) => selectionRules.find((rule) => rule.rule_id === ruleId))
+    .filter((rule): rule is ProtocolRule => rule !== undefined);
+  const chosenRuleIds = new Set(chosenSelectRules.map((rule) => rule.rule_id));
+  const chosenRuleFields = new Set(chosenSelectRules.map((rule) => rule.field));
   const matchesRule = (rule: ProtocolRule): boolean =>
     ruleMatches(rule, request) ||
-    (chosenSelectRule !== undefined &&
-      (rule.rule_id === chosenSelectRule.rule_id ||
-        (rule.effect === "ask" && rule.field === chosenSelectRule.field)));
+    chosenRuleIds.has(rule.rule_id) ||
+    (rule.effect === "ask" && chosenRuleFields.has(rule.field));
   const exhaustedAskRules: string[] = [];
   for (const rule of rules) {
     const matched = matchesRule(rule);

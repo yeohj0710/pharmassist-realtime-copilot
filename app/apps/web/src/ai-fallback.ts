@@ -49,6 +49,18 @@ export interface AiConversationInterpretation {
    * carried options — the select-rule key, or null when none fits.
    */
   readonly answerOptionKey: string | null;
+  /**
+   * Every offered branch — across all fact targets, not only the open
+   * question — whose meaning the customer's turn states.
+   */
+  readonly answerOptionKeys: readonly string[];
+}
+
+/** A branch question the consultation can act on, with its options. */
+export interface ConsultationFactTarget {
+  readonly slot: string;
+  readonly question: string;
+  readonly options: readonly PendingQuestionOption[];
 }
 
 /** A pack-defined branch of the open question the model may choose. */
@@ -132,6 +144,7 @@ export async function requestAiInterpretation(
   conversationHistory: readonly DialogueTurn[],
   previousIntent: string | null,
   pendingQuestion: PendingCounselorQuestion | undefined,
+  factTargets: readonly ConsultationFactTarget[],
   signal: AbortSignal,
 ): Promise<AiInterpretationOutcome> {
   const response = await fetch(`${apiBaseUrl()}/v1/consult/interpret`, {
@@ -156,6 +169,18 @@ export async function requestAiInterpretation(
               : {}),
           }
         : {}),
+      ...(factTargets.length > 0
+        ? {
+            fact_targets: factTargets.map((target) => ({
+              slot: target.slot,
+              question: target.question,
+              options: target.options.map((option) => ({
+                key: option.key,
+                phrases: [...option.phrases],
+              })),
+            })),
+          }
+        : {}),
     }),
     signal,
   });
@@ -174,6 +199,7 @@ export async function requestAiInterpretation(
     topic_changed?: unknown;
     answers_pending_question?: unknown;
     answer_option_key?: unknown;
+    chosen_option_keys?: unknown;
   }>;
   const dispositions = new Set([
     "clinical_intent",
@@ -192,11 +218,14 @@ export async function requestAiInterpretation(
     typeof body.topic_changed !== "boolean"
   )
     return { status: "rejected" };
-  // Only a key the engine offered for this very question is usable; the
-  // model cannot introduce one of its own.
-  const offeredKeys = new Set(
-    (pendingQuestion?.options ?? []).map((option) => option.key),
-  );
+  // Only keys the engine offered this very turn are usable; the model
+  // cannot introduce its own.
+  const offeredKeys = new Set([
+    ...(pendingQuestion?.options ?? []).map((option) => option.key),
+    ...factTargets.flatMap((target) =>
+      target.options.map((option) => option.key),
+    ),
+  ]);
   return {
     status: "interpreted",
     interpretation: {
@@ -211,6 +240,16 @@ export async function requestAiInterpretation(
         offeredKeys.has(body.answer_option_key)
           ? body.answer_option_key
           : null,
+      answerOptionKeys: Array.isArray(body.chosen_option_keys)
+        ? [
+            ...new Set(
+              body.chosen_option_keys.filter(
+                (key): key is string =>
+                  typeof key === "string" && offeredKeys.has(key),
+              ),
+            ),
+          ].slice(0, 4)
+        : [],
     },
   };
 }
@@ -244,6 +283,20 @@ export const answeredOptionFromInterpretation = (
   interpretation.answerOptionKey
     ? interpretation.answerOptionKey
     : undefined;
+
+/**
+ * All branches the customer's turn stated, under the fact gate: the turn
+ * stayed on topic and the read is confident. Unlike the answered slot this
+ * does not require the turn to answer the open question — a stated fact
+ * counts wherever it lands. The engine re-validates every key against the
+ * active protocol's select rules before acting.
+ */
+export const statedFactKeysFromInterpretation = (
+  interpretation: AiConversationInterpretation,
+): readonly string[] =>
+  !interpretation.topicChanged && interpretation.confidence >= 0.45
+    ? interpretation.answerOptionKeys
+    : [];
 
 export const interpretedIntent = (
   interpretation: AiConversationInterpretation,
