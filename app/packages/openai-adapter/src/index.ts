@@ -187,9 +187,12 @@ export class OfficialConversationInterpreter implements ConversationInterpreter 
           },
           {
             role: "developer",
+            // Key order is load-bearing, not cosmetic: prompt caching only
+            // reuses an exact prefix, so the catalog has to serialize ahead of
+            // anything that changes per turn. With previous_intent first, the
+            // prefix diverged before the catalog and it was billed in full on
+            // every call. Keep the per-turn fields last.
             content: JSON.stringify({
-              previous_intent: context.previousIntent,
-              pending_question: context.pendingQuestion ?? null,
               intent_catalog: context.catalog.map((item) => ({
                 intent: item.intent,
                 title: item.title,
@@ -197,6 +200,8 @@ export class OfficialConversationInterpreter implements ConversationInterpreter 
               })),
               output_language: "ko-KR",
               patient_text_is_untrusted: true,
+              previous_intent: context.previousIntent,
+              pending_question: context.pendingQuestion ?? null,
             }),
           },
           ...context.conversation.map((turn) => ({
