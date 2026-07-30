@@ -200,6 +200,10 @@ const slotAnswerPatterns: Readonly<Record<string, RegExp>> = {
   // alone they are the customer's own 배(abdomen) or an unrelated noun.
   phenotype:
     /속쓰림|쓰려|신물|명치|위산|신트림|멀미|(?:차|배|비행기)\s*(?:를)?\s*타|이동\s*중|설사|묽은\s*변|물변|더부룩/u,
+  // 배도 아프신가요, 아니면 변이 마려운 느낌만 있으신가요? — customers answer
+  // with either branch, its colloquial forms (똥), or a plain yes/no.
+  bowel_urgency_pattern:
+    /배도?\s*아(?:파|프)|안\s*아(?:파|프)|아프지\s*않|마렵|마려|배변|변이|변만|똥|느낌|둘\s*다|같이|함께|네|예|아니/u,
 };
 
 const plausibleSlotAnswer = (
@@ -801,9 +805,13 @@ export class LocalClinicalEngine {
       prior?.active_intent &&
       incomingIntent !== prior.active_intent,
     );
+    // The open question is the one the customer saw, which the top-level
+    // state records verbatim. A topic-projected view (focusPrior) may know a
+    // different question — a card question renders without any topic — and
+    // matching answers against that view discarded them.
     const pendingAnswerSlot =
-      focusPrior?.pending_question_slot && !startsNewIntent
-        ? focusPrior.pending_question_slot
+      prior?.pending_question_slot && !startsNewIntent
+        ? prior.pending_question_slot
         : undefined;
     const pendingAnswer = pendingAnswerSlot
       ? (() => {
@@ -815,7 +823,7 @@ export class LocalClinicalEngine {
               extractedForSlot(rawNormalized, pendingAnswerSlot),
               pendingSlotPatterns(
                 this.pack,
-                focusPrior?.active_protocol_id,
+                prior?.active_protocol_id,
                 pendingAnswerSlot,
               ),
             );
@@ -1479,7 +1487,14 @@ export class LocalClinicalEngine {
       intent: activeTopic?.intent ?? output.intent,
       symptomCategory: activeTopic?.symptom_category ?? null,
       decision,
-      pendingQuestion: selectedTopicQuestion,
+      // One source of truth: the pending question recorded here is exactly
+      // the question the customer saw (shape.ask_next), whatever produced it
+      // — protocol rule, seed card, safety gate, or a retry. The card path
+      // used to render a question the state never recorded, so the
+      // interpreter's answers_pending_slot pointed at a slot the engine did
+      // not consider open, every answer was discarded, and the question
+      // repeated outside the ask budget's reach.
+      pendingQuestion: shape.ask_next[0] ?? null,
       topicStates,
       answeredSlots: answeredSlotValues(normalized),
       now,
