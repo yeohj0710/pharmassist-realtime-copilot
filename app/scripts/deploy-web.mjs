@@ -84,5 +84,13 @@ writeFileSync(
 );
 cpSync(path.join(webDir, "vercel.json"), path.join(distDir, "vercel.json"));
 
+// Deploy stamp for long-lived tabs: the SPA keeps its loaded bundle until a
+// reload, so the app polls this file at safe moments (new consultation, tab
+// re-focus while idle) and reloads itself when the stamp changes.
+writeFileSync(
+  path.join(distDir, "version.json"),
+  `${JSON.stringify({ deployedAt: new Date().toISOString() })}\n`,
+);
+
 rmSync(path.join(distDir, ".env.local"), { force: true });
 run(["vercel", "deploy", "--prod", "--yes"], distDir);

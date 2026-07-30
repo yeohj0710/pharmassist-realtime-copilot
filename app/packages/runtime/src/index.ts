@@ -980,6 +980,16 @@ export class LocalClinicalEngine {
     };
     const allowProgressiveCandidates =
       this.pack.clinicalUseProhibited && !this.pack.synthetic;
+    // A slot is retired once its question consumed the whole ask budget.
+    // Only then may the recommendation skip the blocking ask rule and fall
+    // back to what the pack can offer without the answer.
+    const retiredSlotsFor = (
+      topic: ConsultationTopic | undefined,
+    ): readonly string[] =>
+      topic?.pending_question_slot &&
+      (topic.pending_question_asks ?? 1) >= maxQuestionAsks
+        ? [topic.pending_question_slot]
+        : [];
     const recommendationRequest = {
       sequence: input.sequence,
       sessionId: input.session_id,
@@ -991,6 +1001,7 @@ export class LocalClinicalEngine {
       tenant,
       allowProgressiveCandidates,
       ...(focusPrior ? { consultationState: focusPrior } : {}),
+      retiredSlots: retiredSlotsFor(focusTopic),
     };
     let decision = buildRecommendationDecision(recommendationRequest);
     // Counter reality: age/pregnancy context is not interrogated up front.
@@ -1042,6 +1053,7 @@ export class LocalClinicalEngine {
           tenant,
           allowProgressiveCandidates,
           ...(priorTopicState ? { consultationState: priorTopicState } : {}),
+          retiredSlots: retiredSlotsFor(priorTopic),
         };
         const topicDecision = buildRecommendationDecision(topicRequest);
         const nextQuestion =

@@ -128,8 +128,8 @@ describe("answers the customer actually gives", () => {
   // branches, while its wording re-matches the same protocol. That combination
   // retired the question after a single ask and dead-ended the consultation at
   // 근거 부족 — the production screenshot of 2026-07-30.
-  it("retries the phenotype menu once, then retires it in speakable words", () => {
-    const [first, retry, retired] = consultationTurns([
+  it("retries the phenotype menu once, then falls back to candidates", () => {
+    const [first, retry, fallback] = consultationTurns([
       "배가 아파요",
       "그냥 속이 안좋아요",
       "그냥 계속 안좋아요",
@@ -138,10 +138,14 @@ describe("answers the customer actually gives", () => {
     expect(first?.output.ask_next[0]?.slot).toBe("symptom.phenotype");
     expect(retry && askedQuestions(retry)).toEqual(askedQuestions(first!));
     expect(retry?.output.say_now[0]).toContain("다시 여쭤볼게요");
-    // Retirement hands over to the pharmacist without engine vocabulary.
-    expect(retired && askedQuestions(retired)).toEqual([]);
-    expect(retired?.output.say_now[0]).not.toMatch(/지식팩|데이터|검증/u);
-    expect(retired?.output.say_now[0]).toContain("자세히 말씀해");
+    // Once the menu is spent, the pack's designated first option surfaces as
+    // a conservative provisional candidate instead of a dead end, and the
+    // spoken line stays free of engine vocabulary.
+    expect(fallback?.output.decision.status).toBe("recommend");
+    expect(fallback?.output.decision.product_candidates.length).toBeGreaterThan(
+      0,
+    );
+    expect(fallback?.output.say_now[0]).not.toMatch(/지식팩|데이터|검증/u);
   });
 
   it("retries even when the interpreter accepted the vague reply as an answer", () => {

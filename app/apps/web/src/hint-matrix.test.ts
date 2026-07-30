@@ -93,6 +93,37 @@ describe("AI hint replays of the same turn", () => {
     expect(result.output.ask_next[0]?.slot).toBe("symptom.phenotype");
   });
 
+  it("falls back to the pack's first option once the menu is truly spent", () => {
+    // Third vague reply, again flagged by the interpreter as answering the
+    // menu, after the retry budget is gone. The exhausted question no longer
+    // blocks the decision: the phenotype rule's designated first option
+    // surfaces as the conservative provisional candidate.
+    const flow = new StatefulConsultFlow(actualPack, {
+      tenantId: "local-research-preview",
+      formulary: previewFormulary,
+    });
+    const session = crypto.randomUUID();
+    flow.run(makeInput(session, 1, "배아파요"));
+    flow.run(
+      makeInput(session, 1, "배아파요", { intent: "abdominal_pain_unknown" }),
+    );
+    flow.run(makeInput(session, 2, "그냥 속이 안좋아요"));
+    flow.run(
+      makeInput(session, 2, "그냥 속이 안좋아요", {
+        answeredSlot: "symptom.phenotype",
+      }),
+    );
+    flow.run(makeInput(session, 3, "속이 안 좋다고요"));
+    const spent = flow.run(
+      makeInput(session, 3, "속이 안 좋다고요", {
+        answeredSlot: "symptom.phenotype",
+      }),
+    );
+
+    expect(spent.output.decision.status).toBe("recommend");
+    expect(spent.output.decision.product_candidates.length).toBeGreaterThan(0);
+  });
+
   it("never ends a two-turn consultation without a question or candidates", () => {
     const variants: readonly Readonly<{
       intent?: string;

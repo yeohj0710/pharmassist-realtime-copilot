@@ -624,6 +624,7 @@ export function App() {
   const [aiAnswering, setAiAnswering] = useState<boolean | undefined>(
     undefined,
   );
+  const deployStampRef = useRef<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
   const pendingWorkerInputsRef = useRef<RuntimeInput[]>([]);
@@ -768,6 +769,21 @@ export function App() {
   useEffect(() => {
     statusRef.current = result?.status;
   }, [result?.status]);
+
+  useEffect(() => {
+    void fetchDeployStamp().then((stamp) => {
+      deployStampRef.current = stamp;
+    });
+    const onVisible = () => {
+      if (
+        document.visibilityState === "visible" &&
+        historyRef.current.length === 0
+      )
+        void reloadOnNewDeploy();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, []);
 
   useEffect(() => {
     // Readiness must resolve to a definite state: a failed or hung check shows
@@ -944,6 +960,29 @@ export function App() {
     submitText(query);
   };
 
+  // A long-lived tab keeps its loaded bundle across deploys, so fixes never
+  // reach it until someone reloads. The deploy stamp is fetched once at boot
+  // and re-checked at safe moments — starting a new consultation, or coming
+  // back to a tab with no consultation open — and the page reloads itself
+  // when the stamp changed. Absent stamp (dev server) disables the check.
+  const fetchDeployStamp = async (): Promise<string | null> => {
+    try {
+      const response = await fetch("/version.json", { cache: "no-store" });
+      if (!response.ok) return null;
+      const body = (await response.json()) as Readonly<{
+        deployedAt?: unknown;
+      }>;
+      return typeof body.deployedAt === "string" ? body.deployedAt : null;
+    } catch {
+      return null;
+    }
+  };
+  const reloadOnNewDeploy = async (): Promise<void> => {
+    const current = await fetchDeployStamp();
+    if (current && deployStampRef.current && current !== deployStampRef.current)
+      window.location.reload();
+  };
+
   const resetConsult = () => {
     const previousSessionId = sessionIdRef.current;
     workerRef.current?.postMessage({
@@ -975,6 +1014,7 @@ export function App() {
     setAiInterpreting(false);
     inputsRef.current.clear();
     inputRef.current?.focus();
+    void reloadOnNewDeploy();
   };
 
   const startPtt = async () => {

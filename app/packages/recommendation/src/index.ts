@@ -47,6 +47,12 @@ export interface RecommendationRequest {
   readonly consultationState?: ConsultationState;
   /** Local research-preview UI may retain candidates while asking one question. */
   readonly allowProgressiveCandidates?: boolean;
+  /**
+   * Slots whose question the runtime asked up to its budget and retired.
+   * An ask rule on one of these no longer blocks the decision; the pack's
+   * remaining rules decide what can be offered without the answer.
+   */
+  readonly retiredSlots?: readonly string[];
 }
 
 type SourceRef = RecommendationDecision["source_refs"][number];
@@ -1050,6 +1056,7 @@ export function buildRecommendationDecision(
   const selectionRules = rules.filter(
     (rule) => rule.effect === "select" && choiceFields.has(rule.field),
   );
+  const exhaustedAskRules: string[] = [];
   for (const rule of rules) {
     const matched = ruleMatches(rule, request);
     if (rule.effect === "refer" && matched)
@@ -1069,8 +1076,21 @@ export function buildRecommendationDecision(
         (rule.option_ids?.length ?? 0) > 1)
     ) {
       const slot = slotName(rule.field);
-      if (request.consultationState?.asked_slots.includes(slot))
+      if (request.consultationState?.asked_slots.includes(slot)) {
+        // An asked slot blocks re-asking here — the runtime re-presents the
+        // question while its retry budget lasts. Only once the runtime has
+        // retired the question (retiredSlots) does blocking the decision on
+        // an answer that is not coming turn a rambling consultation into a
+        // dead end; then the pack's remaining rules decide what can be
+        // offered without it — refer gates and exclusions still apply, and
+        // with progressive candidates the rule's designated first option
+        // surfaces as the conservative fallback.
+        if (request.retiredSlots?.includes(slot)) {
+          exhaustedAskRules.push(rule.rule_id);
+          continue;
+        }
         return noDecision(request, ["QUESTION_ALREADY_ASKED", rule.rule_id]);
+      }
       if (!rule.question)
         return noDecision(request, [
           "PROTOCOL_RULE_QUESTION_MISSING",
@@ -1126,7 +1146,20 @@ export function buildRecommendationDecision(
     )
     .sort((left, right) => compareProtocolOptions(left.option, right.option));
   if (options.length === 0)
-    return noDecision(request, ["NO_VERIFIED_INGREDIENT_OPTION"], protocol);
+    // The exhausted-ask codes keep the runtime's retry shape working: while
+    // its budget lasts it re-presents the retired question instead of showing
+    // this as a dead end.
+    return noDecision(
+      request,
+      exhaustedAskRules.length > 0
+        ? [
+            "QUESTION_ALREADY_ASKED",
+            ...exhaustedAskRules,
+            "NO_VERIFIED_INGREDIENT_OPTION",
+          ]
+        : ["NO_VERIFIED_INGREDIENT_OPTION"],
+      protocol,
+    );
 
   // Every verified option participates in product ranking; truncating options
   // before ranking would silently drop most officially linked products. Only
