@@ -21,6 +21,14 @@ export interface CounselorBoundary {
   readonly knownProducts: readonly string[];
   /** No product may be named: a referral, or no verified candidate yet. */
   readonly mustNotNameProduct: boolean;
+  /**
+   * The consultation must be handed to a person. Distinct from having no
+   * product to name yet — a turn still gathering information is an ordinary
+   * question, and telling that customer to see a doctor would be wrong.
+   */
+  readonly referralRequired: boolean;
+  /** The engine cannot proceed without an answer, whatever the model prefers. */
+  readonly questionRequired: boolean;
   /** Slots the counselor may put a question on. */
   readonly askableSlots: readonly string[];
 }
@@ -63,7 +71,12 @@ export const counselorBoundary = (
   );
   const factSlots = (output.fact_targets ?? []).map((target) => target.slot);
   const askedSlot = output.ask_next[0]?.slot;
+  const referralRequired =
+    output.mode === "escalate" || output.decision.status === "refer";
   return {
+    referralRequired,
+    questionRequired:
+      output.decision.status === "ask" && output.ask_next.length > 0,
     allowedProducts,
     allowedIngredients: output.decision.ingredient_options.map(
       (item) => item.ingredient_name,
@@ -71,10 +84,7 @@ export const counselorBoundary = (
     knownProducts: packProductNames,
     // A referral or an unresolved decision has no product to offer, whatever
     // candidates happen to be attached for the pharmacist's own review.
-    mustNotNameProduct:
-      output.mode === "escalate" ||
-      output.decision.status === "refer" ||
-      allowedProducts.length === 0,
+    mustNotNameProduct: referralRequired || allowedProducts.length === 0,
     askableSlots: [
       ...new Set([
         ...(askedSlot ? [askedSlot] : []),
@@ -154,7 +164,12 @@ export const deterministicCounselorTurn = (
   };
 };
 
-/** Applies an accepted turn to the output the pharmacist sees. */
+/**
+ * Applies an accepted turn to the output the pharmacist sees. The counselor
+ * chooses which question to ask and how to word it; whether one is needed at
+ * all stays with the engine, so a decision that cannot proceed without an
+ * answer keeps its question even when the model offered none.
+ */
 export const withCounselorTurn = (
   output: RuntimeOutput,
   turn: ComposedCounselorTurn,
@@ -170,5 +185,7 @@ export const withCounselorTurn = (
           slot: turn.askSlot,
         },
       ]
-    : []) as RuntimeOutput["ask_next"],
+    : output.decision.status === "ask"
+      ? output.ask_next
+      : []) as RuntimeOutput["ask_next"],
 });

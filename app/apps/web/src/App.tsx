@@ -971,7 +971,7 @@ export function App() {
               // ask again for something already said.
               knownFacts: buildCustomerSummary(composeHistory).facts,
               openQuestions: openCounselorQuestions(localOutput),
-              referralRequired: boundary.mustNotNameProduct,
+              referralRequired: boundary.referralRequired,
             },
             controller.signal,
           )

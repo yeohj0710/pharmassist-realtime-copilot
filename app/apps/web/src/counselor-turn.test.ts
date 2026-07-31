@@ -20,6 +20,8 @@ const boundary = (
   allowedIngredients: ["알마게이트"],
   knownProducts: ["겔포스엠", "포타겔현탁액", "이지엔6애니연질캡슐"],
   mustNotNameProduct: false,
+  referralRequired: false,
+  questionRequired: false,
   askableSlots: ["symptom.phenotype", openEndedSlot],
   ...overrides,
 });
@@ -185,6 +187,7 @@ describe("the boundary the engine publishes", () => {
 
     expect(result.allowedProducts).toEqual(["겔포스엠"]);
     expect(result.mustNotNameProduct).toBe(false);
+    expect(result.referralRequired).toBe(false);
     expect(result.askableSlots).toEqual([
       "symptom.phenotype",
       "symptom.duration",
@@ -205,13 +208,18 @@ describe("the boundary the engine publishes", () => {
     );
 
     expect(result.mustNotNameProduct).toBe(true);
+    // Nothing to offer yet is not the same as needing a doctor: this customer
+    // is mid-consultation and must not be sent away.
+    expect(result.referralRequired).toBe(false);
   });
 
   it("forbids naming a product on an escalation", () => {
-    expect(
-      counselorBoundary(output({ mode: "escalate" }), ["겔포스엠"])
-        .mustNotNameProduct,
-    ).toBe(true);
+    const result = counselorBoundary(output({ mode: "escalate" }), [
+      "겔포스엠",
+    ]);
+
+    expect(result.mustNotNameProduct).toBe(true);
+    expect(result.referralRequired).toBe(true);
   });
 });
 
@@ -230,6 +238,29 @@ describe("applying an accepted turn", () => {
     expect(applied.ask_next[0]?.slot).toBe("symptom.duration");
     expect(applied.ask_next[0]?.question).toBe("언제부터요?");
     expect(applied.decision).toEqual(output().decision);
+  });
+
+  it("keeps the engine's question when the decision cannot proceed without it", () => {
+    // The counselor may decide not to ask; it may not decide the engine has
+    // enough to go on.
+    const applied = withCounselorTurn(
+      output({
+        decision: {
+          status: "ask",
+          product_candidates: [],
+          ingredient_options: [],
+        },
+      }),
+      turn("어디가 불편하신지 조금만 더 말씀해 주시겠어요?"),
+    );
+
+    expect(applied.ask_next[0]?.slot).toBe("symptom.phenotype");
+  });
+
+  it("drops the question when the engine no longer needs one", () => {
+    expect(
+      withCounselorTurn(output(), turn("겔포스엠이 무난해요.")).ask_next,
+    ).toEqual([]);
   });
 
   it("falls back to exactly what the engine would have said", () => {
