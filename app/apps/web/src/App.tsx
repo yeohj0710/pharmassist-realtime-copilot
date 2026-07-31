@@ -44,7 +44,12 @@ interface EngineMessage {
   ruleIds: readonly string[];
   externalRefinementAllowed: boolean;
 }
-type WorkerMessage = EngineMessage | { readonly error: string };
+interface EngineReadyMessage {
+  readonly type: "ready";
+  readonly productNames: readonly string[];
+}
+type WorkerMessage =
+  EngineMessage | EngineReadyMessage | { readonly error: string };
 
 interface BrowserSpeechRecognitionEvent extends Event {
   readonly results: SpeechRecognitionResultList;
@@ -227,12 +232,6 @@ const productEnrichment = new Map(
     item.product_id,
     item,
   ]),
-);
-
-// Every product the pack can name. The referee uses it to tell a product the
-// engine chose from one belonging to some other decision entirely.
-const packProductNames = (productEnrichmentJson as ProductEnrichment[]).map(
-  (item) => item.display_name,
 );
 
 const fallbackHealthKrUrl = (productId: string, displayName: string): string =>
@@ -692,6 +691,8 @@ export function App() {
   const composedTurnRef = useRef(new Map<number, ComposedCounselorTurn>());
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
+  // Published by the worker as it starts, well before any turn can be composed.
+  const packProductNamesRef = useRef<readonly string[]>([]);
   const pendingWorkerInputsRef = useRef<RuntimeInput[]>([]);
   const processingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sequenceRef = useRef(0);
@@ -905,6 +906,10 @@ export function App() {
       { type: "module" },
     );
     worker.onmessage = (event: MessageEvent<WorkerMessage>) => {
+      if ("type" in event.data && event.data.type === "ready") {
+        packProductNamesRef.current = event.data.productNames;
+        return;
+      }
       if (!("output" in event.data)) {
         if (processingTimerRef.current)
           clearTimeout(processingTimerRef.current);
@@ -960,7 +965,10 @@ export function App() {
           const controller = new AbortController();
           aiAbortRef.current = controller;
           setAiInterpreting(true);
-          const boundary = counselorBoundary(localOutput, packProductNames);
+          const boundary = counselorBoundary(
+            localOutput,
+            packProductNamesRef.current,
+          );
           void requestComposedCounselorTurn(
             composeHistory,
             {

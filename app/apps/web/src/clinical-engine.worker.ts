@@ -23,6 +23,16 @@ const flow = new StatefulConsultFlow(previewPack, {
   formulary: previewFormulary,
 });
 
+// The referee needs every name this pack can put in front of a customer, to
+// tell a product the engine chose from one belonging to some other decision.
+// It is published from here because the pack is five megabytes and only the
+// worker carries it; sending the names from the very pack that decided the
+// turn also makes the two impossible to drift apart.
+self.postMessage({
+  type: "ready",
+  productNames: previewPack.products.map((product) => product.display_name),
+});
+
 self.addEventListener(
   "message",
   (

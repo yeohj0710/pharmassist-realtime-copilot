@@ -101,6 +101,89 @@ const namedProductsIn = (
 ): readonly string[] =>
   names.filter((name) => name.length > 1 && text.includes(name));
 
+// Korean dosage forms, longest first so 연질캡슐 is preferred over 캡슐 and
+// 현탁액 over 액. The single-syllable ones end a great many ordinary Korean
+// words, so they are kept apart and held to a longer stem below.
+const longDosageForms = [
+  "연질캡슐",
+  "경질캡슐",
+  "츄어블정",
+  "장용정",
+  "현탁액",
+  "점안액",
+  "트로키",
+  "서방정",
+  "과립",
+  "캡슐",
+  "시럽",
+  "연고",
+  "크림",
+  "로션",
+  "좌제",
+  "필름",
+] as const;
+const shortDosageForms = ["정", "액", "산", "겔"] as const;
+
+// Particles and copula endings that attach straight onto a noun, so that
+// "부스코판정을" is read as the name 부스코판정 rather than dismissed.
+const nounTail =
+  /^(?:을|를|이|가|은|는|도|만|과|와|랑|이랑|의|에|에서|에게|으로|로|보다|처럼|부터|까지|이나|나|이라도|라도|입니다|이에요|예요|이야|야|이라고|라고|요)?$/u;
+
+const wordsIn = (text: string): readonly string[] =>
+  text.split(/[^0-9A-Za-z가-힣%]+/u).filter(Boolean);
+
+/**
+ * The medicine name a single word carries, if any. A word counts as a name
+ * when a dosage form sits at its end under nothing but a particle, and enough
+ * stem precedes the form to rule out an ordinary word: 걱정, 정도, 안정을 and
+ * 재조정 all fall short, 부스코판정을 and 아나프록스시럽이 do not. A bare form
+ * word — 시럽, 현탁액 — names nothing.
+ */
+const medicineNameIn = (word: string): string | null => {
+  for (const form of [...longDosageForms, ...shortDosageForms]) {
+    const at = word.lastIndexOf(form);
+    if (at < 0) continue;
+    if (!nounTail.test(word.slice(at + form.length))) continue;
+    const stem = word.slice(0, at);
+    if (stem.length === 0) return null;
+    if (stem.length < (shortDosageForms.includes(form as never) ? 3 : 2))
+      continue;
+    return stem + form;
+  }
+  return null;
+};
+
+/**
+ * Long registered names carry a strength and an ingredient tail the counselor
+ * would never speak — 타세놀정500밀리그램(아세트아미노펜) is said as 타세놀정
+ * — so a supplied name is matched on its head as well as in full.
+ */
+const nameHead = (name: string): string =>
+  name.split(/[(\d]/u)[0]?.trim() || name;
+
+/**
+ * Medicine names in the turn that the engine never put on the table. This is
+ * what catches a name invented outright, which the pack-wide comparison cannot
+ * see. It reads names by shape, so it only finds those carrying a dosage form:
+ * a bare invented brand — 베나드릴, 판피린 — still passes, and closing that
+ * would take a morphological analyser or a dictionary this bundle does not
+ * carry.
+ */
+const unverifiedMedicineNames = (
+  text: string,
+  allowed: readonly string[],
+): readonly string[] => {
+  const permitted = new Set(allowed.flatMap((name) => [name, nameHead(name)]));
+  return [
+    ...new Set(
+      wordsIn(text)
+        .map(medicineNameIn)
+        .filter((name): name is string => name !== null)
+        .filter((name) => !permitted.has(name)),
+    ),
+  ];
+};
+
 /**
  * Decides whether the composed turn may be shown. Every rule is a fact the
  * engine already established, so a rejection means the model contradicted the
@@ -125,6 +208,15 @@ export const refereeCounselorTurn = (
     (name) => !boundary.allowedProducts.includes(name),
   );
   if (offList.length > 0) reasons.push("OFF_LIST_PRODUCT");
+  // A name the pack has never heard of cannot be checked against anything, so
+  // it is refused on sight rather than reasoned about.
+  if (
+    unverifiedMedicineNames(spoken, [
+      ...boundary.allowedProducts,
+      ...boundary.allowedIngredients,
+    ]).length > 0
+  )
+    reasons.push("UNVERIFIED_PRODUCT_NAME");
   if (
     boundary.mustNotNameProduct &&
     namedProductsIn(spoken, boundary.allowedProducts).length > 0

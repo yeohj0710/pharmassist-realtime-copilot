@@ -63,6 +63,63 @@ describe("what the counselor may say", () => {
     ).toContain("OFF_LIST_PRODUCT");
   });
 
+  it("refuses a medicine name the pack has never heard of", () => {
+    // The pack-wide comparison cannot see this one: it is not a product from
+    // another decision, it does not exist.
+    for (const line of [
+      "부스코판정을 한번 보셔도 좋아요.",
+      "타이레놀정 어떠세요.",
+      "이가탄에프캡슐을 권해드려요.",
+      "아나프록스시럽이 맞으실 거예요.",
+      "리엔프로연고를 발라보세요.",
+    ])
+      expect(reasons(refereeCounselorTurn(turn(line), boundary()))).toContain(
+        "UNVERIFIED_PRODUCT_NAME",
+      );
+  });
+
+  it("leaves ordinary counter speech alone", () => {
+    // Every one of these ends in a syllable a dosage form also ends in. A
+    // rejection here costs the customer a warm sentence for nothing, so the
+    // rule is written to need a real stem in front of the form.
+    for (const line of [
+      "너무 걱정하지 마세요.",
+      "정도가 심하면 알려주세요.",
+      "우선 안정을 취하시는 게 좋아요.",
+      "재조정이 필요할 수도 있어요.",
+      "현탁액 형태라 드시기 편하실 거예요.",
+      "연고를 발라보신 적 있으세요.",
+      "위산이 올라오는 느낌이시군요.",
+      "판정이 어려운 상태예요.",
+    ])
+      expect(
+        reasons(refereeCounselorTurn(turn(line), boundary())),
+      ).not.toContain("UNVERIFIED_PRODUCT_NAME");
+  });
+
+  it("speaks a long registered name by its head", () => {
+    // 타세놀정500밀리그램(아세트아미노펜) is said as 타세놀정; the strength and
+    // ingredient tail are for the record, not the counter.
+    const verdict = refereeCounselorTurn(
+      turn("타세놀정 한번 보시면 좋을 것 같아요."),
+      boundary({
+        allowedProducts: ["타세놀정500밀리그램(아세트아미노펜)"],
+        knownProducts: ["타세놀정500밀리그램(아세트아미노펜)"],
+      }),
+    );
+
+    expect(verdict.status).toBe("accepted");
+  });
+
+  it("lets the counselor name an ingredient the engine put forward", () => {
+    const verdict = refereeCounselorTurn(
+      turn("인산알루미늄겔이 들어간 쪽이 맞으실 것 같아요."),
+      boundary({ allowedIngredients: ["인산알루미늄겔"] }),
+    );
+
+    expect(verdict.status).toBe("accepted");
+  });
+
   it("refuses any product when a referral is in force", () => {
     expect(
       reasons(
