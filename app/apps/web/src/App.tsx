@@ -667,6 +667,8 @@ export function App() {
   const workerRef = useRef<Worker | null>(null);
   // Published by the worker as it starts, well before any turn can be composed.
   const packProductNamesRef = useRef<readonly string[]>([]);
+  /** Sequences whose engine run is going to happen again once AI reads them. */
+  const awaitingInterpretationRef = useRef(new Set<number>());
   const pendingWorkerInputsRef = useRef<RuntimeInput[]>([]);
   const processingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sequenceRef = useRef(0);
@@ -754,12 +756,18 @@ export function App() {
       inputType,
     );
     inputsRef.current.set(immediateInput.sequence, immediateInput);
+    const willInterpret = shouldInterpretWithAi(
+      aiStatus === "ready",
+      navigator.onLine,
+      normalized,
+    );
+    // Claimed before the engine can answer, so the first pass knows another
+    // one is coming and leaves the composing to it.
+    if (willInterpret) awaitingInterpretationRef.current.add(submittedSequence);
     if (workerRef.current) workerRef.current.postMessage(immediateInput);
     else pendingWorkerInputsRef.current.push(immediateInput);
 
-    if (
-      shouldInterpretWithAi(aiStatus === "ready", navigator.onLine, normalized)
-    ) {
+    if (willInterpret) {
       const controller = new AbortController();
       // Must outlast the server's own 8s upstream budget, or a cold serverless
       // function is cut off mid-answer and the turn silently loses both the
@@ -809,6 +817,8 @@ export function App() {
             interpreted,
           );
           inputsRef.current.set(interpretedInput.sequence, interpretedInput);
+          // Released first: this is the run that composes.
+          awaitingInterpretationRef.current.delete(submittedSequence);
           if (workerRef.current)
             workerRef.current.postMessage(interpretedInput);
           else pendingWorkerInputsRef.current.push(interpretedInput);
@@ -817,6 +827,23 @@ export function App() {
         // The original text remains the deterministic offline fallback.
       } finally {
         clearTimeout(timeout);
+        // The interpreter read nothing usable, or failed. Nothing else will
+        // reach the engine for this turn, so the run it already did has to be
+        // the one that composes — otherwise the customer is left with the
+        // engine's own sentence and no counselor turn at all.
+        if (awaitingInterpretationRef.current.delete(submittedSequence)) {
+          const base = inputsRef.current.get(submittedSequence);
+          if (
+            base &&
+            workerRef.current &&
+            submittedSequence === sequenceRef.current &&
+            submittedSession === sessionIdRef.current
+          )
+            workerRef.current.postMessage({
+              ...base,
+              request_id: crypto.randomUUID(),
+            });
+        }
       }
     }
   };
@@ -918,7 +945,15 @@ export function App() {
           historyRef.current = nextHistory;
           setHistory(nextHistory);
         };
-        if (shouldComposeCounselorTurn(navigator.onLine, localOutput)) {
+        // A turn the interpreter is still reading will come back through the
+        // engine once more with its intent and branch facts. Composing on
+        // this first pass would spend a second call to write a turn from a
+        // narrower candidate list, and the customer would watch one sentence
+        // be replaced by another — which reads as the counselor saying nearly
+        // the same thing twice.
+        if (awaitingInterpretationRef.current.has(localOutput.sequence)) {
+          commitOutput(localOutput);
+        } else if (shouldComposeCounselorTurn(navigator.onLine, localOutput)) {
           const composeHistory = historyRef.current;
           // Optimistic UI: render the deterministic local answer immediately.
           // The composed turn replaces this same sequence when it arrives and
@@ -1062,6 +1097,7 @@ export function App() {
     sessionIdRef.current = sessionId;
     sequenceRef.current = 0;
     pendingWorkerInputsRef.current = [];
+    awaitingInterpretationRef.current.clear();
     const next: SessionState = {
       sessionId,
       sequence: 0,
