@@ -101,28 +101,34 @@ const namedProductsIn = (
 ): readonly string[] =>
   names.filter((name) => name.length > 1 && text.includes(name));
 
-// Korean dosage forms, longest first so 연질캡슐 is preferred over 캡슐 and
-// 현탁액 over 액. The single-syllable ones end a great many ordinary Korean
-// words, so they are kept apart and held to a longer stem below.
-const longDosageForms = [
-  "연질캡슐",
-  "경질캡슐",
-  "츄어블정",
-  "장용정",
-  "현탁액",
-  "점안액",
-  "트로키",
-  "서방정",
-  "과립",
-  "캡슐",
-  "시럽",
-  "연고",
-  "크림",
-  "로션",
-  "좌제",
-  "필름",
-] as const;
-const shortDosageForms = ["정", "액", "산", "겔"] as const;
+// Korean dosage forms with the shortest stem that still reads as a brand,
+// longest form first so 연질캡슐 wins over 캡슐 and 현탁액 over 액. The
+// single-syllable forms end a great many ordinary Korean words — 걱정, 안정,
+// 재조정, 위산 — so they need a longer stem before a word is taken for a
+// medicine. Lowering these numbers is what makes the rule refuse ordinary
+// sentences; it was measured, not guessed.
+const dosageForms: readonly Readonly<{ form: string; minimumStem: number }>[] =
+  [
+    ...[
+      "연질캡슐",
+      "경질캡슐",
+      "츄어블정",
+      "장용정",
+      "현탁액",
+      "점안액",
+      "트로키",
+      "서방정",
+      "과립",
+      "캡슐",
+      "시럽",
+      "연고",
+      "크림",
+      "로션",
+      "좌제",
+      "필름",
+    ].map((form) => ({ form, minimumStem: 2 })),
+    ...["정", "액", "산", "겔"].map((form) => ({ form, minimumStem: 3 })),
+  ];
 
 // Particles and copula endings that attach straight onto a noun, so that
 // "부스코판정을" is read as the name 부스코판정 rather than dismissed.
@@ -140,14 +146,13 @@ const wordsIn = (text: string): readonly string[] =>
  * word — 시럽, 현탁액 — names nothing.
  */
 const medicineNameIn = (word: string): string | null => {
-  for (const form of [...longDosageForms, ...shortDosageForms]) {
+  for (const { form, minimumStem } of dosageForms) {
     const at = word.lastIndexOf(form);
     if (at < 0) continue;
     if (!nounTail.test(word.slice(at + form.length))) continue;
     const stem = word.slice(0, at);
     if (stem.length === 0) return null;
-    if (stem.length < (shortDosageForms.includes(form as never) ? 3 : 2))
-      continue;
+    if (stem.length < minimumStem) continue;
     return stem + form;
   }
   return null;
