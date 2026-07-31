@@ -1313,17 +1313,22 @@ export function App() {
   const topicLabels = result
     ? result.topic_results.map((topic) => topicLabel(topic.symptom_category))
     : [];
-  const provisionalCandidateTopics = result
-    ? result.ask_next.length > 0
+  // Whatever is best so far, shown every turn. This used to appear only while
+  // a question was outstanding, which meant the moment the counselor stopped
+  // asking — the moment it had the most information — the candidates vanished
+  // and the pharmacist was left to work it out alone. The panel is the whole
+  // point of the tool; it goes blank only when the engine genuinely has
+  // nothing, and never because of how the turn was worded.
+  const provisionalCandidateTopics =
+    result && result.decision.product_candidates.length === 0
       ? result.topic_results.filter(
           (topic) =>
             !isSyntheticDecision(topic.decision) &&
             topic.decision.product_candidates.length > 0,
         )
-      : []
-    : [];
+      : [];
   const visibleLines = result
-    ? provisionalCandidateTopics.length > 0
+    ? provisionalCandidateTopics.length > 0 && result.ask_next.length > 0
       ? result.ask_next.map((question) => question.question)
       : patientVisibleLines(result)
     : [];
