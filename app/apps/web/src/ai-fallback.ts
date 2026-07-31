@@ -255,36 +255,6 @@ export async function requestAiInterpretation(
 }
 
 /**
- * The model decides only that the customer answered the open question; which
- * slot that is, what the value means, and every clinical consequence stay with
- * the deterministic engine.
- */
-export const answeredSlotFromInterpretation = (
-  interpretation: AiConversationInterpretation,
-  pendingQuestion: PendingCounselorQuestion | undefined,
-): string | undefined =>
-  pendingQuestion &&
-  interpretation.answersPendingQuestion &&
-  !interpretation.topicChanged &&
-  interpretation.confidence >= 0.45
-    ? pendingQuestion.slot
-    : undefined;
-
-/**
- * The branch the model picked, under the same gate as the answered slot.
- * The value is a pack select-rule key the engine itself offered; the engine
- * re-validates it against the active protocol before acting on it.
- */
-export const answeredOptionFromInterpretation = (
-  interpretation: AiConversationInterpretation,
-  pendingQuestion: PendingCounselorQuestion | undefined,
-): string | undefined =>
-  answeredSlotFromInterpretation(interpretation, pendingQuestion) &&
-  interpretation.answerOptionKey
-    ? interpretation.answerOptionKey
-    : undefined;
-
-/**
  * All branches the customer's turn stated, under the fact gate: the turn
  * stayed on topic and the read is confident. Unlike the answered slot this
  * does not require the turn to answer the open question — a stated fact
@@ -319,14 +289,10 @@ export async function requestComposedCounselorTurn(
     verifiedProducts: readonly string[];
     verifiedIngredients: readonly string[];
     knownFacts: readonly string[];
-    openQuestions: readonly Readonly<{ slot: string; question: string }>[];
     referralRequired: boolean;
   }>,
   signal: AbortSignal,
-): Promise<
-  | Readonly<{ say: string; ask: string | null; askSlot: string | null }>
-  | undefined
-> {
+): Promise<Readonly<{ say: string; ask: string | null }> | undefined> {
   const response = await fetch(`${apiBaseUrl()}/v1/consult/compose`, {
     method: "POST",
     headers: authHeaders(),
@@ -338,10 +304,6 @@ export async function requestComposedCounselorTurn(
       verified_products: [...boundary.verifiedProducts],
       verified_ingredients: [...boundary.verifiedIngredients],
       known_facts: [...boundary.knownFacts],
-      open_questions: boundary.openQuestions.map((item) => ({
-        slot: item.slot,
-        question: item.question,
-      })),
       referral_required: boundary.referralRequired,
     }),
     signal,
@@ -350,13 +312,11 @@ export async function requestComposedCounselorTurn(
   const body = (await response.json()) as Readonly<{
     say?: unknown;
     ask?: unknown;
-    ask_slot?: unknown;
   }>;
   if (typeof body.say !== "string") return undefined;
   return {
     say: body.say,
     ask: typeof body.ask === "string" && body.ask ? body.ask : null,
-    askSlot: typeof body.ask_slot === "string" ? body.ask_slot : null,
   };
 }
 

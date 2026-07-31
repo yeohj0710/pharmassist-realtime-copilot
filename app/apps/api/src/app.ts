@@ -754,7 +754,6 @@ export async function buildApp(
             verified_products?: unknown;
             verified_ingredients?: unknown;
             known_facts?: unknown;
-            open_questions?: unknown;
             referral_required?: unknown;
           }>
         | undefined;
@@ -785,23 +784,6 @@ export async function buildApp(
               )
               .slice(0, limit)
           : [];
-      const openQuestions = Array.isArray(body?.open_questions)
-        ? body.open_questions
-            .filter(
-              (item): item is { slot: string; question: string } =>
-                typeof item === "object" &&
-                item !== null &&
-                typeof (item as { slot?: unknown }).slot === "string" &&
-                /^[a-z][a-z0-9_.]{1,127}$/u.test(
-                  (item as { slot: string }).slot,
-                ) &&
-                typeof (item as { question?: unknown }).question === "string" &&
-                (item as { question: string }).question.length > 0 &&
-                (item as { question: string }).question.length <= 300,
-            )
-            .slice(0, 5)
-            .map((item) => ({ slot: item.slot, question: item.question }))
-        : [];
       if (!history.length || !engineLine)
         return reply
           .code(400)
@@ -867,16 +849,11 @@ export async function buildApp(
             verifiedProducts: stringList(body?.verified_products, 120, 5),
             verifiedIngredients: stringList(body?.verified_ingredients, 120, 5),
             knownFacts: stringList(body?.known_facts, 200, 12),
-            openQuestions,
             referralRequired: body?.referral_required === true,
           },
           controller.signal,
         );
-        return {
-          say: result.say,
-          ask: result.ask,
-          ask_slot: result.askSlot,
-        };
+        return { say: result.say, ask: result.ask };
       } catch (cause: unknown) {
         req.log.warn(
           {

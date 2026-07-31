@@ -9,8 +9,13 @@ import { isPatientFacingText } from "./consult-memory.js";
  * the engine already produced is displayed instead.
  */
 
-/** Always offerable: the counselor may ask for the complaint in plain words. */
-export const openEndedSlot = "patient.detail";
+/**
+ * Every counselor question carries this slot. Nothing reads it back: what to
+ * ask is the counselor's judgement, and the engine no longer keeps a ledger of
+ * which question is outstanding. It exists because the runtime contract wants
+ * a slot on every question.
+ */
+export const counselorAskSlot = "counselor.followup";
 
 export interface CounselorBoundary {
   /** Products the engine chose this turn — the only ones nameable. */
@@ -27,16 +32,12 @@ export interface CounselorBoundary {
    * question, and telling that customer to see a doctor would be wrong.
    */
   readonly referralRequired: boolean;
-  /** The engine cannot proceed without an answer, whatever the model prefers. */
-  readonly questionRequired: boolean;
-  /** Slots the counselor may put a question on. */
-  readonly askableSlots: readonly string[];
 }
 
 export interface ComposedCounselorTurn {
   readonly say: string;
+  /** The counselor's own question, or null when it asks nothing this turn. */
   readonly ask: string | null;
-  readonly askSlot: string | null;
 }
 
 export type CounselorVerdict =
@@ -69,14 +70,10 @@ export const counselorBoundary = (
   const allowedProducts = output.decision.product_candidates.map(
     (item) => item.display_name,
   );
-  const factSlots = (output.fact_targets ?? []).map((target) => target.slot);
-  const askedSlot = output.ask_next[0]?.slot;
   const referralRequired =
     output.mode === "escalate" || output.decision.status === "refer";
   return {
     referralRequired,
-    questionRequired:
-      output.decision.status === "ask" && output.ask_next.length > 0,
     allowedProducts,
     allowedIngredients: output.decision.ingredient_options.map(
       (item) => item.ingredient_name,
@@ -85,13 +82,6 @@ export const counselorBoundary = (
     // A referral or an unresolved decision has no product to offer, whatever
     // candidates happen to be attached for the pharmacist's own review.
     mustNotNameProduct: referralRequired || allowedProducts.length === 0,
-    askableSlots: [
-      ...new Set([
-        ...(askedSlot ? [askedSlot] : []),
-        ...factSlots,
-        openEndedSlot,
-      ]),
-    ],
   };
 };
 
@@ -228,26 +218,15 @@ export const refereeCounselorTurn = (
   )
     reasons.push("PRODUCT_NAMED_WITHOUT_CANDIDATE");
 
-  // A question the engine cannot record is a question that repeats forever.
-  if (turn.askSlot && !boundary.askableSlots.includes(turn.askSlot))
-    reasons.push("ILLEGAL_ASK_SLOT");
-  if (ask && !turn.askSlot) reasons.push("ASK_WITHOUT_SLOT");
-  // The question belongs in ask, where it gets a slot and can be recorded. A
-  // question inside say is either a duplicate of ask or one the engine will
-  // never see the answer to.
+  // The question belongs in ask, where the pharmacist sees it as a question.
+  // One inside say is either a duplicate of ask or a second question in the
+  // same breath.
   if (/[?？]/u.test(say)) reasons.push("QUESTION_INSIDE_SAY");
   if (ask && !isPatientFacingText(ask)) reasons.push("ASK_NOT_PATIENT_FACING");
 
   return reasons.length > 0
     ? { status: "rejected", reasons }
-    : {
-        status: "accepted",
-        turn: {
-          say,
-          ask: ask || null,
-          askSlot: ask ? turn.askSlot : null,
-        },
-      };
+    : { status: "accepted", turn: { say, ask: ask || null } };
 };
 
 /**
@@ -256,20 +235,17 @@ export const refereeCounselorTurn = (
  */
 export const deterministicCounselorTurn = (
   output: RuntimeOutput,
-): ComposedCounselorTurn => {
-  const asked = output.ask_next[0];
-  return {
-    say: output.say_now[0] ?? "",
-    ask: asked?.question ?? null,
-    askSlot: asked?.slot ?? null,
-  };
-};
+): ComposedCounselorTurn => ({
+  say: output.say_now[0] ?? "",
+  ask: output.ask_next[0]?.question ?? null,
+});
 
 /**
- * Applies an accepted turn to the output the pharmacist sees. The counselor
- * chooses which question to ask and how to word it; whether one is needed at
- * all stays with the engine, so a decision that cannot proceed without an
- * answer keeps its question even when the model offered none.
+ * Applies an accepted turn to the output the pharmacist sees. Whether to ask
+ * anything is the counselor's call now: an accepted turn with no question
+ * leaves none on screen, rather than the engine's own question being restored
+ * behind it. That restoration is what made the consultation restate itself
+ * turn after turn.
  */
 export const withCounselorTurn = (
   output: RuntimeOutput,
@@ -277,16 +253,14 @@ export const withCounselorTurn = (
 ): RuntimeOutput => ({
   ...output,
   say_now: [turn.say] as RuntimeOutput["say_now"],
-  ask_next: (turn.ask && turn.askSlot
+  ask_next: (turn.ask
     ? [
         {
           question: turn.ask,
-          reason: output.ask_next[0]?.reason ?? "상담 진행에 필요한 확인",
+          reason: "상담자가 이어서 확인",
           priority: 1,
-          slot: turn.askSlot,
+          slot: counselorAskSlot,
         },
       ]
-    : output.decision.status === "ask"
-      ? output.ask_next
-      : []) as RuntimeOutput["ask_next"],
+    : []) as RuntimeOutput["ask_next"],
 });

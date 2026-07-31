@@ -197,18 +197,24 @@ describe("OpenAI boundaries", () => {
   });
   it("pins store false", () => expect(safeOpenAIConfig.store).toBe(false));
   it("drops the composition fields strict mode cannot leave empty", () => {
-    const offered = counselorCompositionSchema(["patient.onset"], ["겔포스엠"]);
+    const offered = counselorCompositionSchema(["겔포스엠"]);
     expect(offered["required"]).toContain("named_products");
-    expect(
-      (offered["properties"] as Record<string, Record<string, unknown>>)[
-        "ask_slot"
-      ]?.["enum"],
-    ).toEqual(["none", "patient.onset"]);
     // An empty enum is rejected by strict json_schema, so a turn with nothing
     // to name has to omit the property rather than offer an empty list.
-    const bare = counselorCompositionSchema([], []);
-    expect(bare["required"]).toEqual(["say", "ask", "ask_slot"]);
+    const bare = counselorCompositionSchema([]);
+    expect(bare["required"]).toEqual(["say", "ask"]);
     expect(bare["properties"]).not.toHaveProperty("named_products");
+  });
+
+  it("leaves the counselor's question unconstrained", () => {
+    // The question is the counselor's own judgement now: no enum of pack
+    // slots to choose from, which is what kept the consultation restating
+    // whatever the engine had already decided.
+    const schema = counselorCompositionSchema([]);
+    expect(schema["properties"]).not.toHaveProperty("ask_slot");
+    expect(
+      (schema["properties"] as Record<string, Record<string, unknown>>)["ask"],
+    ).not.toHaveProperty("enum");
   });
   it("uses a pharmacy-counter writing assistant role without impersonating a pharmacist", () => {
     expect(PHARMACY_COUNTER_NARRATION_PROMPT).toContain(

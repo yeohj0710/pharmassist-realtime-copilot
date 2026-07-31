@@ -17,8 +17,6 @@ import {
   type TranscriptionPeer,
 } from "./realtime.js";
 import {
-  answeredOptionFromInterpretation,
-  answeredSlotFromInterpretation,
   interpretedIntent,
   pendingCounselorQuestion,
   requestAiFallback,
@@ -34,7 +32,6 @@ import {
   deterministicCounselorTurn,
   refereeCounselorTurn,
   withCounselorTurn,
-  type ComposedCounselorTurn,
 } from "./counselor-turn.js";
 import { outputText, patientVisibleLines } from "./consult-memory.js";
 import productEnrichmentJson from "../../../data/actual-candidate-pack/product-enrichment.json" with { type: "json" };
@@ -118,25 +115,6 @@ const shouldComposeCounselorTurn = (
   online: boolean,
   output: RuntimeOutput,
 ): boolean => online && output.mode !== "escalate" && output.say_now.length > 0;
-
-/** The questions the counselor may choose between this turn. */
-const openCounselorQuestions = (
-  output: RuntimeOutput,
-): readonly Readonly<{ slot: string; question: string }>[] => {
-  const asked = output.ask_next[0];
-  const seen = new Set<string>();
-  return [
-    ...(asked ? [{ slot: asked.slot, question: asked.question }] : []),
-    ...(output.fact_targets ?? []).map((target) => ({
-      slot: target.slot,
-      question: target.question,
-    })),
-  ].filter((item) => {
-    if (seen.has(item.slot)) return false;
-    seen.add(item.slot);
-    return true;
-  });
-};
 
 const decisionLabel: Readonly<
   Record<RuntimeOutput["decision"]["status"], string>
@@ -685,10 +663,6 @@ export function App() {
     undefined,
   );
   const deployStampRef = useRef<string | null>(null);
-  // A composed turn whose question differs from the engine's own goes back
-  // through the engine so the ledger records what the customer will see; the
-  // words wait here for that run to come back.
-  const composedTurnRef = useRef(new Map<number, ComposedCounselorTurn>());
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
   // Published by the worker as it starts, well before any turn can be composed.
@@ -808,23 +782,18 @@ export function App() {
         const interpretation =
           outcome.status === "interpreted" ? outcome.interpretation : undefined;
         const intent = interpretation && interpretedIntent(interpretation);
-        const answeredSlot =
-          interpretation &&
-          answeredSlotFromInterpretation(interpretation, pendingQuestion);
-        const answeredOptionKey =
-          interpretation &&
-          answeredOptionFromInterpretation(interpretation, pendingQuestion);
+        // Only what narrows the search survives: the intent, and the pack
+        // branches this turn stated. The counselor's own question carries no
+        // pack slot, so there is no answered slot to record any more.
         const answeredOptionKeys = interpretation
           ? statedFactKeysFromInterpretation(interpretation)
           : [];
         const interpreted = {
           ...(intent ? { intent } : {}),
-          ...(answeredSlot ? { answeredSlot } : {}),
-          ...(answeredOptionKey ? { answeredOptionKey } : {}),
           ...(answeredOptionKeys.length > 0 ? { answeredOptionKeys } : {}),
         };
         if (
-          (intent || answeredSlot || answeredOptionKeys.length > 0) &&
+          (intent || answeredOptionKeys.length > 0) &&
           submittedSequence === sequenceRef.current &&
           submittedSession === sessionIdRef.current &&
           !(
@@ -949,13 +918,7 @@ export function App() {
           historyRef.current = nextHistory;
           setHistory(nextHistory);
         };
-        const alreadyComposed = composedTurnRef.current.get(
-          localOutput.sequence,
-        );
-        if (alreadyComposed) {
-          composedTurnRef.current.delete(localOutput.sequence);
-          commitOutput(withCounselorTurn(localOutput, alreadyComposed));
-        } else if (shouldComposeCounselorTurn(navigator.onLine, localOutput)) {
+        if (shouldComposeCounselorTurn(navigator.onLine, localOutput)) {
           const composeHistory = historyRef.current;
           // Optimistic UI: render the deterministic local answer immediately.
           // The composed turn replaces this same sequence when it arrives and
@@ -978,7 +941,6 @@ export function App() {
               // The customer's own statements, so the counselor does not
               // ask again for something already said.
               knownFacts: buildCustomerSummary(composeHistory).facts,
-              openQuestions: openCounselorQuestions(localOutput),
               referralRequired: boundary.referralRequired,
             },
             controller.signal,
@@ -990,35 +952,12 @@ export function App() {
                 localOutput.session_id !== sessionIdRef.current
               )
                 return;
-              // The engine has the last word: a composition that names an
-              // unchosen product, states a dose, or asks an unrecordable
-              // question is dropped and the engine's line stands.
+              // The engine has the last word on safety only: a composition
+              // that names an unchosen or invented product, states a dose, or
+              // speaks past a referral is dropped and the engine's line
+              // stands. What to ask is no longer its business.
               const verdict = refereeCounselorTurn(composed, boundary);
               if (verdict.status !== "accepted") return;
-              const engineSlot = localOutput.ask_next[0]?.slot ?? null;
-              if (
-                verdict.turn.askSlot &&
-                verdict.turn.askSlot !== engineSlot &&
-                workerRef.current
-              ) {
-                // The counselor chose a different question than the engine
-                // would have. Re-run so the ledger records that one instead.
-                composedTurnRef.current.set(localOutput.sequence, verdict.turn);
-                const base = inputsRef.current.get(localOutput.sequence);
-                if (base) {
-                  const preferred: RuntimeInput = {
-                    ...base,
-                    request_id: crypto.randomUUID(),
-                    preferred_ask_slot: verdict.turn.askSlot,
-                    ...(verdict.turn.ask
-                      ? { preferred_ask_question: verdict.turn.ask }
-                      : {}),
-                  };
-                  inputsRef.current.set(localOutput.sequence, preferred);
-                  workerRef.current.postMessage(preferred);
-                  return;
-                }
-              }
               commitOutput(withCounselorTurn(localOutput, verdict.turn));
             })
             .catch(() => undefined)

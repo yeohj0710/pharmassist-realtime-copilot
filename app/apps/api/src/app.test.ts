@@ -114,7 +114,6 @@ describe("API", () => {
           return {
             say: "속이 계속 불편하셨겠어요.",
             ask: "언제부터 그러셨어요?",
-            askSlot: "patient.onset",
           };
         },
       },
@@ -130,10 +129,6 @@ describe("API", () => {
           verified_products: ["겔포스엠"],
           verified_ingredients: ["수산화알루미늄"],
           known_facts: ["복부 통증"],
-          open_questions: [
-            { slot: "patient.onset", question: "언제부터 그러셨나요?" },
-            { slot: "BAD SLOT", question: "무시되어야 합니다" },
-          ],
           referral_required: false,
         },
       });
@@ -142,12 +137,7 @@ describe("API", () => {
       expect(response.json()).toEqual({
         say: "속이 계속 불편하셨겠어요.",
         ask: "언제부터 그러셨어요?",
-        ask_slot: "patient.onset",
       });
-      // A malformed slot never reaches the model, so it can never come back.
-      expect(seen?.openQuestions).toEqual([
-        { slot: "patient.onset", question: "언제부터 그러셨나요?" },
-      ]);
       expect(seen?.verifiedProducts).toEqual(["겔포스엠"]);
       expect(seen?.engineLine).toBe("아직 확인할 것이 남았습니다.");
       expect(seen?.referralRequired).toBe(false);

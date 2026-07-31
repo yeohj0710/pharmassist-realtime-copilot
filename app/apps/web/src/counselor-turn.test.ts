@@ -5,9 +5,9 @@
 import { describe, expect, it } from "vitest";
 import type { RuntimeOutput } from "@pharmassist/contracts";
 import {
+  counselorAskSlot,
   counselorBoundary,
   deterministicCounselorTurn,
-  openEndedSlot,
   refereeCounselorTurn,
   withCounselorTurn,
   type CounselorBoundary,
@@ -21,16 +21,10 @@ const boundary = (
   knownProducts: ["겔포스엠", "포타겔현탁액", "이지엔6애니연질캡슐"],
   mustNotNameProduct: false,
   referralRequired: false,
-  questionRequired: false,
-  askableSlots: ["symptom.phenotype", openEndedSlot],
   ...overrides,
 });
 
-const turn = (
-  say: string,
-  ask: string | null = null,
-  askSlot: string | null = null,
-) => ({ say, ask, askSlot });
+const turn = (say: string, ask: string | null = null) => ({ say, ask });
 
 const reasons = (
   verdict: ReturnType<typeof refereeCounselorTurn>,
@@ -42,7 +36,6 @@ describe("what the counselor may say", () => {
       turn(
         "많이 불편하셨겠어요. 겔포스엠 한번 보시면 좋을 것 같아요.",
         "언제부터 그러셨어요?",
-        "symptom.phenotype",
       ),
       boundary(),
     );
@@ -172,31 +165,28 @@ describe("what the counselor may say", () => {
     ).toContain("INTERNAL_VOCABULARY");
   });
 
-  it("refuses a question the engine cannot record", () => {
-    expect(
-      reasons(
-        refereeCounselorTurn(
-          turn("네 알겠습니다.", "혹시 혈압약 드세요?", "patient.medications"),
-          boundary(),
-        ),
-      ),
-    ).toContain("ILLEGAL_ASK_SLOT");
-    expect(
-      reasons(
-        refereeCounselorTurn(
-          turn("네 알겠습니다.", "혹시 혈압약 드세요?", null),
-          boundary(),
-        ),
-      ),
-    ).toContain("ASK_WITHOUT_SLOT");
+  it("lets the counselor ask whatever it judges worth asking", () => {
+    // Nothing in the pack offers this question. The counselor asks it anyway,
+    // because deciding what to ask is its job now — the referee only guards
+    // what may be said.
+    const verdict = refereeCounselorTurn(
+      turn("네 알겠습니다.", "혹시 지금 드시는 다른 약이 있으세요?"),
+      boundary(),
+    );
+
+    expect(verdict.status).toBe("accepted");
+    expect(verdict.status === "accepted" && verdict.turn.ask).toBe(
+      "혹시 지금 드시는 다른 약이 있으세요?",
+    );
   });
 
   it("refuses a question hidden inside the spoken line", () => {
-    // Asked there it carries no slot, so the engine could never record it.
+    // Two questions in one breath, and the pharmacist sees only one of them
+    // presented as a question.
     expect(
       reasons(
         refereeCounselorTurn(
-          turn("배가 어떻게 불편하세요?", "언제부터요?", "symptom.phenotype"),
+          turn("배가 어떻게 불편하세요?", "언제부터요?"),
           boundary(),
         ),
       ),
@@ -251,17 +241,12 @@ const output = (overrides: Record<string, unknown> = {}) =>
   }) as unknown as RuntimeOutput;
 
 describe("the boundary the engine publishes", () => {
-  it("allows only this turn's candidates and this turn's questions", () => {
+  it("allows only this turn's candidates", () => {
     const result = counselorBoundary(output(), ["겔포스엠", "포타겔현탁액"]);
 
     expect(result.allowedProducts).toEqual(["겔포스엠"]);
     expect(result.mustNotNameProduct).toBe(false);
     expect(result.referralRequired).toBe(false);
-    expect(result.askableSlots).toEqual([
-      "symptom.phenotype",
-      "symptom.duration",
-      openEndedSlot,
-    ]);
   });
 
   it("forbids naming a product when the engine has none to offer", () => {
@@ -296,22 +281,19 @@ describe("applying an accepted turn", () => {
   it("replaces the words and the question, keeping the decision intact", () => {
     const applied = withCounselorTurn(
       output(),
-      turn(
-        "속쓰림에는 겔포스엠이 무난해요.",
-        "언제부터요?",
-        "symptom.duration",
-      ),
+      turn("속쓰림에는 겔포스엠이 무난해요.", "언제부터요?"),
     );
 
     expect(applied.say_now).toEqual(["속쓰림에는 겔포스엠이 무난해요."]);
-    expect(applied.ask_next[0]?.slot).toBe("symptom.duration");
+    expect(applied.ask_next[0]?.slot).toBe(counselorAskSlot);
     expect(applied.ask_next[0]?.question).toBe("언제부터요?");
     expect(applied.decision).toEqual(output().decision);
   });
 
-  it("keeps the engine's question when the decision cannot proceed without it", () => {
-    // The counselor may decide not to ask; it may not decide the engine has
-    // enough to go on.
+  it("does not put the engine's question back when the counselor asked none", () => {
+    // This restoration is what made the consultation restate itself: the
+    // counselor moved on, the engine's own pending question reappeared, and
+    // the customer was asked the same thing again.
     const applied = withCounselorTurn(
       output({
         decision: {
@@ -320,13 +302,13 @@ describe("applying an accepted turn", () => {
           ingredient_options: [],
         },
       }),
-      turn("어디가 불편하신지 조금만 더 말씀해 주시겠어요?"),
+      turn("천천히 말씀해 주셔도 괜찮아요."),
     );
 
-    expect(applied.ask_next[0]?.slot).toBe("symptom.phenotype");
+    expect(applied.ask_next).toEqual([]);
   });
 
-  it("drops the question when the engine no longer needs one", () => {
+  it("drops the question when the counselor asks nothing", () => {
     expect(
       withCounselorTurn(output(), turn("겔포스엠이 무난해요.")).ask_next,
     ).toEqual([]);
@@ -336,7 +318,6 @@ describe("applying an accepted turn", () => {
     expect(deterministicCounselorTurn(output())).toEqual({
       say: "현재 정보로는 겔포스엠을 살펴볼게요.",
       ask: "배가 어떻게 불편한가요?",
-      askSlot: "symptom.phenotype",
     });
   });
 });

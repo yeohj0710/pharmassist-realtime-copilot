@@ -2,8 +2,6 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { RuntimeInput, RuntimeOutput } from "@pharmassist/contracts";
 import { customerTurn } from "@pharmassist/dialogue";
 import {
-  answeredOptionFromInterpretation,
-  answeredSlotFromInterpretation,
   buildAiRefinementBody,
   failureLeavesAiAvailable,
   interpretedIntent,
@@ -91,40 +89,7 @@ describe("answers to an open counselor question", () => {
     expect(pendingCounselorQuestion(undefined)).toBeUndefined();
   });
 
-  it("fills the slot the counselor asked about, never one the model picks", () => {
-    expect(answeredSlotFromInterpretation(interpretation(), openQuestion)).toBe(
-      "symptom.duration",
-    );
-  });
-
-  it("ignores a claimed answer when nothing was asked", () => {
-    expect(
-      answeredSlotFromInterpretation(interpretation(), undefined),
-    ).toBeUndefined();
-  });
-
-  it("leaves the question open on a topic change or a low-confidence read", () => {
-    expect(
-      answeredSlotFromInterpretation(
-        interpretation({ topicChanged: true }),
-        openQuestion,
-      ),
-    ).toBeUndefined();
-    expect(
-      answeredSlotFromInterpretation(
-        interpretation({ confidence: 0.3 }),
-        openQuestion,
-      ),
-    ).toBeUndefined();
-    expect(
-      answeredSlotFromInterpretation(
-        interpretation({ answersPendingQuestion: false }),
-        openQuestion,
-      ),
-    ).toBeUndefined();
-  });
-
-  it("keeps a new clinical intent separate from the answered slot", () => {
+  it("reads a clinical intent only from a confident clinical turn", () => {
     expect(
       interpretedIntent(
         interpretation({
@@ -134,39 +99,6 @@ describe("answers to an open counselor question", () => {
       ),
     ).toBe("cough_general");
     expect(interpretedIntent(interpretation())).toBeUndefined();
-  });
-
-  it("passes the chosen branch only under the answered-slot gate", () => {
-    const menu = {
-      question: "배가 어떻게 불편한가요?",
-      slot: "symptom.phenotype",
-      options: [{ key: "RUL-X-SELECT-1", phrases: ["속쓰림"] }],
-    };
-    expect(
-      answeredOptionFromInterpretation(
-        interpretation({ answerOptionKey: "RUL-X-SELECT-1" }),
-        menu,
-      ),
-    ).toBe("RUL-X-SELECT-1");
-    // No key, a topic change, or no open question → no branch.
-    expect(
-      answeredOptionFromInterpretation(interpretation(), menu),
-    ).toBeUndefined();
-    expect(
-      answeredOptionFromInterpretation(
-        interpretation({
-          answerOptionKey: "RUL-X-SELECT-1",
-          topicChanged: true,
-        }),
-        menu,
-      ),
-    ).toBeUndefined();
-    expect(
-      answeredOptionFromInterpretation(
-        interpretation({ answerOptionKey: "RUL-X-SELECT-1" }),
-        undefined,
-      ),
-    ).toBeUndefined();
   });
 });
 
