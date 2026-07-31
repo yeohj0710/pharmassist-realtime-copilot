@@ -1042,6 +1042,45 @@ export class LocalClinicalEngine {
       ...(chosenOptionRuleIds.length > 0 ? { chosenOptionRuleIds } : {}),
     };
     let decision = buildRecommendationDecision(recommendationRequest);
+    // A question with an empty panel beside it leaves the pharmacist to work
+    // the whole thing out alone, which is the opposite of what this tool is
+    // for. Ask the pack again with the blocking slot retired — the same
+    // fallback already used once a question's budget is spent — and borrow
+    // only its candidates. The question, the status and every reason code
+    // stay as they were.
+    //
+    // Scoped to an ask on purpose. Safety gates and referrals come back as
+    // refer, never ask, so nothing here can put a product in front of a
+    // customer who was told to see someone.
+    // Only an outstanding question is filled in here. The neighbouring case —
+    // insufficient with QUESTION_ALREADY_ASKED, the customer who answers 잘
+    // 모르겠어요 — looks identical on screen but drives the engine's
+    // ask-twice-then-fall-back contract, and borrowing candidates into it
+    // breaks that retry. It still shows an empty panel and still needs
+    // solving, separately.
+    if (decision.status === "ask" && decision.product_candidates.length === 0) {
+      const blockedSlot = decision.question?.slot;
+      const provisional = blockedSlot
+        ? buildRecommendationDecision({
+            ...recommendationRequest,
+            retiredSlots: [...retiredSlotsFor(focusTopic), blockedSlot],
+          })
+        : undefined;
+      if (
+        provisional?.status === "recommend" &&
+        provisional.product_candidates.length > 0
+      )
+        decision = {
+          ...decision,
+          ingredient_options: provisional.ingredient_options,
+          product_candidates: provisional.product_candidates,
+          source_refs: provisional.source_refs,
+          reason_codes: [
+            ...decision.reason_codes,
+            "PROVISIONAL_CANDIDATES",
+          ] as typeof decision.reason_codes,
+        };
+    }
     // Counter reality: age/pregnancy context is not interrogated up front.
     // Unknown safety context only demotes candidates in ranking; the engine
     // asks symptom-discriminating protocol questions and nothing more.
