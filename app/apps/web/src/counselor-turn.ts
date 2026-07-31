@@ -67,9 +67,18 @@ export const counselorBoundary = (
   output: RuntimeOutput,
   packProductNames: readonly string[],
 ): CounselorBoundary => {
-  const allowedProducts = output.decision.product_candidates.map(
-    (item) => item.display_name,
-  );
+  // A combination's supportive product is frequently outside the displayed
+  // five, and the referee would otherwise read it as a name the engine never
+  // chose — refusing every turn that offered the pair the engine itself built.
+  const allowedProducts = [
+    ...new Set([
+      ...output.decision.product_candidates.map((item) => item.display_name),
+      ...(output.decision.combination_candidates ?? []).flatMap((pair) => [
+        pair.primary_product_name,
+        pair.supportive_product_name,
+      ]),
+    ]),
+  ];
   const referralRequired =
     output.mode === "escalate" || output.decision.status === "refer";
   return {

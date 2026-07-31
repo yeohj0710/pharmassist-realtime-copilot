@@ -971,6 +971,9 @@ export function App() {
             composeHistory,
             {
               engineLine: deterministicCounselorTurn(localOutput).say,
+              // allowedProducts already folds in both halves of every pair,
+              // so the partner the counselor is told to offer is also a name it
+              // is permitted to say.
               verifiedProducts: boundary.allowedProducts,
               // The pack's own note on when each candidate is the right one.
               // Without it the counselor has names and no grounds to prefer
@@ -984,6 +987,18 @@ export function App() {
                     : [];
                 },
               ),
+              // The supportive half of a pair is often outside the top five
+              // candidates, so it has to be offered explicitly or the counselor
+              // has a pair it is not allowed to name.
+              combinationGuidance: (
+                localOutput.decision.combination_candidates ?? []
+              )
+                .slice(0, 2)
+                .map((pair) => ({
+                  primary: pair.primary_product_name,
+                  supportive: pair.supportive_product_name,
+                  rationale: pair.rationale,
+                })),
               verifiedIngredients: boundary.allowedIngredients,
               // The customer's own statements, so the counselor does not
               // ask again for something already said.

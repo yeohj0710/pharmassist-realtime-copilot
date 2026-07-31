@@ -288,6 +288,11 @@ export async function requestComposedCounselorTurn(
     engineLine: string;
     verifiedProducts: readonly string[];
     productGuidance: readonly Readonly<{ name: string; chooseWhen: string }>[];
+    combinationGuidance: readonly Readonly<{
+      primary: string;
+      supportive: string;
+      rationale: string;
+    }>[];
     verifiedIngredients: readonly string[];
     knownFacts: readonly string[];
     referralRequired: boolean;
@@ -307,6 +312,7 @@ export async function requestComposedCounselorTurn(
         name: item.name,
         choose_when: item.chooseWhen,
       })),
+      combination_guidance: [...boundary.combinationGuidance],
       verified_ingredients: [...boundary.verifiedIngredients],
       known_facts: [...boundary.knownFacts],
       referral_required: boundary.referralRequired,

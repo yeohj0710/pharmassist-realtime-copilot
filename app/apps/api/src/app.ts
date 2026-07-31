@@ -753,6 +753,7 @@ export async function buildApp(
             engine_line?: unknown;
             verified_products?: unknown;
             product_guidance?: unknown;
+            combination_guidance?: unknown;
             verified_ingredients?: unknown;
             known_facts?: unknown;
             referral_required?: unknown;
@@ -847,7 +848,7 @@ export async function buildApp(
               normalizedTurns.at(-1)!.redactedText,
             ),
             engineLine,
-            verifiedProducts: stringList(body?.verified_products, 120, 5),
+            verifiedProducts: stringList(body?.verified_products, 120, 8),
             productGuidance: Array.isArray(body?.product_guidance)
               ? body.product_guidance
                   .filter(
@@ -866,6 +867,27 @@ export async function buildApp(
               : [],
             verifiedIngredients: stringList(body?.verified_ingredients, 120, 5),
             knownFacts: stringList(body?.known_facts, 200, 12),
+            combinationGuidance: Array.isArray(body?.combination_guidance)
+              ? body.combination_guidance
+                  .filter(
+                    (
+                      item,
+                    ): item is {
+                      primary: string;
+                      supportive: string;
+                      rationale: string;
+                    } =>
+                      typeof item === "object" &&
+                      item !== null &&
+                      typeof (item as { primary?: unknown }).primary ===
+                        "string" &&
+                      typeof (item as { supportive?: unknown }).supportive ===
+                        "string" &&
+                      typeof (item as { rationale?: unknown }).rationale ===
+                        "string",
+                  )
+                  .slice(0, 2)
+              : [],
             referralRequired: body?.referral_required === true,
           },
           controller.signal,
