@@ -135,6 +135,10 @@ export const refereeCounselorTurn = (
   if (turn.askSlot && !boundary.askableSlots.includes(turn.askSlot))
     reasons.push("ILLEGAL_ASK_SLOT");
   if (ask && !turn.askSlot) reasons.push("ASK_WITHOUT_SLOT");
+  // The question belongs in ask, where it gets a slot and can be recorded. A
+  // question inside say is either a duplicate of ask or one the engine will
+  // never see the answer to.
+  if (/[?？]/u.test(say)) reasons.push("QUESTION_INSIDE_SAY");
   if (ask && !isPatientFacingText(ask)) reasons.push("ASK_NOT_PATIENT_FACING");
 
   return reasons.length > 0

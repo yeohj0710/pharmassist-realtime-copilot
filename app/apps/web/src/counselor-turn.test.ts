@@ -134,6 +134,18 @@ describe("what the counselor may say", () => {
     ).toContain("ASK_WITHOUT_SLOT");
   });
 
+  it("refuses a question hidden inside the spoken line", () => {
+    // Asked there it carries no slot, so the engine could never record it.
+    expect(
+      reasons(
+        refereeCounselorTurn(
+          turn("배가 어떻게 불편하세요?", "언제부터요?", "symptom.phenotype"),
+          boundary(),
+        ),
+      ),
+    ).toContain("QUESTION_INSIDE_SAY");
+  });
+
   it("lets the counselor ask nothing at all", () => {
     const verdict = refereeCounselorTurn(
       turn("말씀하신 증상에는 겔포스엠이 무난해요."),
