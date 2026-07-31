@@ -863,6 +863,18 @@ export async function buildApp(
                   .map((item) => ({
                     name: item.name,
                     chooseWhen: item.choose_when.slice(0, 400),
+                    differentiators: Array.isArray(
+                      (item as unknown as { differentiators?: unknown })
+                        .differentiators,
+                    )
+                      ? (
+                          item as unknown as { differentiators: unknown[] }
+                        ).differentiators
+                          .filter(
+                            (line): line is string => typeof line === "string",
+                          )
+                          .slice(0, 4)
+                      : [],
                   }))
               : [],
             verifiedIngredients: stringList(body?.verified_ingredients, 120, 5),

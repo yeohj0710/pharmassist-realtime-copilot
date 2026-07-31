@@ -980,10 +980,21 @@ export function App() {
               // any of them, so it hands over the first one every time.
               productGuidance: localOutput.decision.product_candidates.flatMap(
                 (candidate) => {
-                  const chooseWhen = (candidate as ProductCandidateDetails)
-                    .selection_guidance?.choose_when;
-                  return chooseWhen
-                    ? [{ name: candidate.display_name, chooseWhen }]
+                  const guidance = (candidate as ProductCandidateDetails)
+                    .selection_guidance;
+                  return guidance?.choose_when
+                    ? [
+                        {
+                          name: candidate.display_name,
+                          chooseWhen: guidance.choose_when,
+                          // Where a protocol gives every candidate the same
+                          // choose_when — gas is the worst, a laxative and an
+                          // antacid sharing one line — these are the only thing
+                          // that tells them apart, and they are plain fact:
+                          // what is in it and what form it takes.
+                          differentiators: [...guidance.differentiators],
+                        },
+                      ]
                     : [];
                 },
               ),
