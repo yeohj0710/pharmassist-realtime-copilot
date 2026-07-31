@@ -287,6 +287,7 @@ export async function requestComposedCounselorTurn(
   boundary: Readonly<{
     engineLine: string;
     verifiedProducts: readonly string[];
+    productGuidance: readonly Readonly<{ name: string; chooseWhen: string }>[];
     verifiedIngredients: readonly string[];
     knownFacts: readonly string[];
     referralRequired: boolean;
@@ -302,6 +303,10 @@ export async function requestComposedCounselorTurn(
       ),
       engine_line: boundary.engineLine,
       verified_products: [...boundary.verifiedProducts],
+      product_guidance: boundary.productGuidance.map((item) => ({
+        name: item.name,
+        choose_when: item.chooseWhen,
+      })),
       verified_ingredients: [...boundary.verifiedIngredients],
       known_facts: [...boundary.knownFacts],
       referral_required: boundary.referralRequired,

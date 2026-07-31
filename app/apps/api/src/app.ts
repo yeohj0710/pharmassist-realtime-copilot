@@ -752,6 +752,7 @@ export async function buildApp(
             conversation_history?: unknown;
             engine_line?: unknown;
             verified_products?: unknown;
+            product_guidance?: unknown;
             verified_ingredients?: unknown;
             known_facts?: unknown;
             referral_required?: unknown;
@@ -847,6 +848,22 @@ export async function buildApp(
             ),
             engineLine,
             verifiedProducts: stringList(body?.verified_products, 120, 5),
+            productGuidance: Array.isArray(body?.product_guidance)
+              ? body.product_guidance
+                  .filter(
+                    (item): item is { name: string; choose_when: string } =>
+                      typeof item === "object" &&
+                      item !== null &&
+                      typeof (item as { name?: unknown }).name === "string" &&
+                      typeof (item as { choose_when?: unknown }).choose_when ===
+                        "string",
+                  )
+                  .slice(0, 5)
+                  .map((item) => ({
+                    name: item.name,
+                    chooseWhen: item.choose_when.slice(0, 400),
+                  }))
+              : [],
             verifiedIngredients: stringList(body?.verified_ingredients, 120, 5),
             knownFacts: stringList(body?.known_facts, 200, 12),
             referralRequired: body?.referral_required === true,

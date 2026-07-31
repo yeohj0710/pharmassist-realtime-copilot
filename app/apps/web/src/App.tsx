@@ -972,6 +972,18 @@ export function App() {
             {
               engineLine: deterministicCounselorTurn(localOutput).say,
               verifiedProducts: boundary.allowedProducts,
+              // The pack's own note on when each candidate is the right one.
+              // Without it the counselor has names and no grounds to prefer
+              // any of them, so it hands over the first one every time.
+              productGuidance: localOutput.decision.product_candidates.flatMap(
+                (candidate) => {
+                  const chooseWhen = (candidate as ProductCandidateDetails)
+                    .selection_guidance?.choose_when;
+                  return chooseWhen
+                    ? [{ name: candidate.display_name, chooseWhen }]
+                    : [];
+                },
+              ),
               verifiedIngredients: boundary.allowedIngredients,
               // The customer's own statements, so the counselor does not
               // ask again for something already said.
