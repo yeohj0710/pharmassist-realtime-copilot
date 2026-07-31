@@ -113,3 +113,49 @@ describe("contract validators", () => {
     ).toBe(true);
   });
 });
+
+describe("what counts as a source URI", () => {
+  const snapshot = (source_url: string) => ({
+    source_snapshot_id: "SNAP-URI-TEST",
+    source_id: "SRC-URI-TEST",
+    provider: "other" as const,
+    official: false,
+    source_url,
+    fetched_at: "2026-07-31T00:00:00+09:00",
+    usage_rights: "unknown" as const,
+    commercial_use: "unknown" as const,
+    cache_policy: "unknown" as const,
+    redistribution: "unknown" as const,
+    ai_context_use: "unknown" as const,
+    http_status: 200,
+    content_sha256: "a".repeat(64),
+    content_type: "text/plain",
+    parser_version: "test-v1",
+    record_count: 1,
+    status: "parsed" as const,
+    raw_retention_policy: "none" as const,
+    uncertainty: "test",
+  });
+
+  it("still refuses a web source with no host to name", () => {
+    // A half-written URL must never be recorded as where material came from.
+    expect(validateContract("sourceSnapshot", snapshot("https://")).ok).toBe(
+      false,
+    );
+    expect(validateContract("sourceSnapshot", snapshot("not a url")).ok).toBe(
+      false,
+    );
+    expect(
+      validateContract("sourceSnapshot", snapshot("https://example.org/a.pdf"))
+        .ok,
+    ).toBe(true);
+  });
+
+  it("accepts the identifier a printed source actually has", () => {
+    // A book has an ISBN and no host. urn:isbn:… is a URI; demanding a
+    // hostname of it rejected the only identifier the book has.
+    expect(
+      validateContract("sourceSnapshot", snapshot("urn:isbn:9791199593046")).ok,
+    ).toBe(true);
+  });
+});

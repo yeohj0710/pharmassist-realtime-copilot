@@ -85,7 +85,16 @@ ajv.addFormat("uri", {
   validate: (value: string) => {
     try {
       const parsed = new URL(value);
-      return Boolean(parsed.protocol && parsed.hostname);
+      if (!parsed.protocol) return false;
+      // A web source still has to name a host — that check is what stops a
+      // half-written URL being recorded as somewhere the material came from.
+      // Sources that are not on the web have no host to name: a printed book
+      // is identified by its ISBN, and urn:isbn:… is a URI, not a malformed
+      // URL. Requiring a hostname of those rejected the identifier the book
+      // actually has.
+      if (parsed.protocol === "http:" || parsed.protocol === "https:")
+        return Boolean(parsed.hostname);
+      return parsed.pathname.length > 0 || Boolean(parsed.hostname);
     } catch {
       return false;
     }

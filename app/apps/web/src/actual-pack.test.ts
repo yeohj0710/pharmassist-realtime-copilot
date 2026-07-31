@@ -945,7 +945,16 @@ describe("actual research preview pack", () => {
     expect(actualPack.products.map((item) => item.display_name)).toContain(
       "액티피드정",
     );
-    expect(actualPack.sources.every((item) => item.official)).toBe(true);
+    // Every regulatory source stays official. One source deliberately is not:
+    // the pharmacists' book carries professional authority, not regulatory
+    // force, and must never be cited as a marketing authorisation. It is named
+    // here rather than waved through, so a second non-official source cannot
+    // arrive unnoticed.
+    expect(
+      actualPack.sources
+        .filter((item) => !item.official)
+        .map((item) => item.source_id),
+    ).toEqual(["SRC-BOOK1-BOGYAK"]);
   });
 
   it("uses the same therapeutic-role rule across unrelated protocols", () => {
