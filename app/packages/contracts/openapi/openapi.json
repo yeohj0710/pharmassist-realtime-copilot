@@ -1362,6 +1362,10 @@
                 }
               }
             }
+          },
+          "provisional_candidates": {
+            "$ref": "recommendation_decision.schema.json#/properties/product_candidates",
+            "description": "Best-so-far products for the pharmacist to see while the decision is still waiting on an answer. Display only: the decision itself is untouched, so the engine's ask-twice-then-fall-back retry keeps working. Empty on a referral or an escalation, where no product may be shown at all."
           }
         }
       },

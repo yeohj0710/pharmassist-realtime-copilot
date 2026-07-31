@@ -124,20 +124,26 @@ describe("answers the customer actually gives", () => {
     expect(questions[2]).not.toBe(questions[0]);
   });
 
-  // 그냥 속이 안좋아요 answers the abdominal phenotype menu with none of its
-  // branches, while its wording re-matches the same protocol. That combination
-  // retired the question after a single ask and dead-ended the consultation at
-  // 근거 부족 — the production screenshot of 2026-07-30.
+  // A vague answer leaves the abdominal phenotype menu unresolved. The
+  // decision must stay insufficient so the same question gets its second try,
+  // while display-only candidates keep the pharmacist's panel useful.
   it("retries the phenotype menu once, then falls back to candidates", () => {
     const [first, retry, fallback] = consultationTurns([
       "배가 아파요",
-      "그냥 속이 안좋아요",
+      "잘 모르겠어요",
       "그냥 계속 안좋아요",
     ]);
 
     expect(first?.output.ask_next[0]?.slot).toBe("symptom.phenotype");
     expect(retry && askedQuestions(retry)).toEqual(askedQuestions(first!));
     expect(retry?.output.say_now[0]).toContain("다시 여쭤볼게요");
+    expect(retry?.output.decision.status).toBe("insufficient");
+    expect(retry?.output.decision.product_candidates).toEqual([]);
+    expect(retry?.output.decision.reason_codes).toContain(
+      "QUESTION_ALREADY_ASKED",
+    );
+    expect(retry?.output.provisional_candidates?.length).toBeGreaterThan(0);
+    expect(validateContract("runtimeOutput", retry?.output).errors).toEqual([]);
     // Once the menu is spent, the pack's designated first option surfaces as
     // a conservative provisional candidate instead of a dead end, and the
     // spoken line stays free of engine vocabulary.
@@ -775,6 +781,7 @@ describe("actual research preview pack", () => {
 
     expect(result.output.decision.status).toBe("refer");
     expect(result.output.decision.product_candidates).toEqual([]);
+    expect(result.output.provisional_candidates).toEqual([]);
     expect(result.output.red_flags).not.toHaveLength(0);
   });
 

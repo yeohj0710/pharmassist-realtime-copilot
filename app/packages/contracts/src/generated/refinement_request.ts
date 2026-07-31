@@ -1191,6 +1191,923 @@ export type RecommendationDecision = {
    */
   reason_codes: [string, ...string[]];
 };
+/**
+ * Best-so-far products for the pharmacist to see while the decision is still waiting on an answer. Display only: the decision itself is untouched, so the engine's ask-twice-then-fall-back retry keeps working. Empty on a referral or an escalation, where no product may be shown at all.
+ *
+ * @maxItems 5
+ */
+export type ProductCandidates =
+  | []
+  | [
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      }
+    ]
+  | [
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      }
+    ]
+  | [
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      }
+    ]
+  | [
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      }
+    ]
+  | [
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      },
+      {
+        product_id: string;
+        display_name: string;
+        ingredient_id: string;
+        /**
+         * @minItems 1
+         */
+        claim_ids: [string, ...string[]];
+        /**
+         * @minItems 1
+         */
+        source_refs: [
+          {
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          },
+          ...{
+            claim_id: string;
+            source_id: string;
+            source_snapshot_id: string;
+            locator: string;
+            verified_at: string;
+          }[]
+        ];
+        formulary_active: boolean;
+        inventory_status: "in_stock" | "out_of_stock" | "not_connected" | "unknown";
+        available_quantity: number | null;
+        sales_rank: number | null;
+        manufacturer?: string | null;
+        specification?: string;
+        displayed_price_krw?: number | null;
+        price_recorded_at?: string | null;
+        image_url?: string | null;
+        image_source_url?: string | null;
+        image_rights_status?: string | null;
+        image_kind?: string | null;
+        image_checked_at?: string | null;
+        official_match_status?: "confirmed" | "review_required" | "not_found" | "not_applicable";
+        official_source_url?: string | null;
+        indication_summary?: string;
+        dosage_summary?: string;
+        precaution_summary?: string;
+        dosage_form?: string | null;
+        route?: string | null;
+        clinical_group_key?: string;
+        same_group_product_count?: number;
+        selection_guidance?: {
+          choose_when: string;
+          /**
+           * @minItems 1
+           */
+          differentiators: [string, ...string[]];
+          comparison_note: string;
+          practical_points: string[];
+          evidence_source: string;
+        };
+      }
+    ];
 
 export interface RefinementRequestEnvelope {
   runtime_input: RuntimeInput;
@@ -36410,4 +37327,5 @@ export interface RuntimeOutput {
               ];
         }
       ];
+  provisional_candidates?: ProductCandidates;
 }

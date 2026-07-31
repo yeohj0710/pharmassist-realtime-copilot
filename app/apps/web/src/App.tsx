@@ -1347,11 +1347,24 @@ export function App() {
   // nothing, and never because of how the turn was worded.
   const provisionalCandidateTopics =
     result && result.decision.product_candidates.length === 0
-      ? result.topic_results.filter(
-          (topic) =>
-            !isSyntheticDecision(topic.decision) &&
-            topic.decision.product_candidates.length > 0,
-        )
+      ? result.topic_results
+          .map((topic) =>
+            result.provisional_candidates?.length &&
+            topic.protocol_id === result.decision.protocol_id
+              ? {
+                  ...topic,
+                  decision: {
+                    ...topic.decision,
+                    product_candidates: result.provisional_candidates,
+                  },
+                }
+              : topic,
+          )
+          .filter(
+            (topic) =>
+              !isSyntheticDecision(topic.decision) &&
+              topic.decision.product_candidates.length > 0,
+          )
       : [];
   const visibleLines = result
     ? provisionalCandidateTopics.length > 0 && result.ask_next.length > 0

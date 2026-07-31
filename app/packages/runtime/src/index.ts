@@ -1081,6 +1081,30 @@ export class LocalClinicalEngine {
           ] as typeof decision.reason_codes,
         };
     }
+    // The neighbouring case: a question already put and answered with 잘
+    // 모르겠어요 comes back as insufficient, and the runtime re-presents the
+    // question while its retry budget lasts. Filling the decision there took
+    // the retry with it — the status is what drives the re-ask — so the
+    // candidates are carried outside the decision instead. Nothing reads this
+    // but the screen, and it is what stops the pharmacist being shown a
+    // question with an empty column beside it.
+    let displayCandidates: RecommendationDecision["product_candidates"] = [];
+    if (
+      decision.product_candidates.length === 0 &&
+      decision.status !== "refer" &&
+      safety.mode !== "escalate"
+    ) {
+      const waitingSlot =
+        decision.question?.slot ?? focusTopic?.pending_question_slot;
+      const shown = waitingSlot
+        ? buildRecommendationDecision({
+            ...recommendationRequest,
+            retiredSlots: [...retiredSlotsFor(focusTopic), waitingSlot],
+          })
+        : undefined;
+      if (shown?.status === "recommend")
+        displayCandidates = shown.product_candidates;
+    }
     // Counter reality: age/pregnancy context is not interrogated up front.
     // Unknown safety context only demotes candidates in ranking; the engine
     // asks symptom-discriminating protocol questions and nothing more.
@@ -1540,6 +1564,10 @@ export class LocalClinicalEngine {
         score: candidate.score,
       })) as NonNullable<RuntimeOutput["candidate_intents"]>,
       decision,
+      provisional_candidates:
+        decision.status === "refer" || safety.mode === "escalate"
+          ? []
+          : displayCandidates,
       topic_results: topicResults as RuntimeOutput["topic_results"],
       source_refs: [
         ...new Map(
