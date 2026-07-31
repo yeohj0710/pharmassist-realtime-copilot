@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   createRealtimeTranscriptionCall,
   conversationInterpretationSchema,
+  counselorCompositionSchema,
   emptyTranscriptState,
   isDeferredPharmacyAnswer,
   isReportStyleNarration,
@@ -195,6 +196,20 @@ describe("OpenAI boundaries", () => {
     ).toEqual(["optional"]);
   });
   it("pins store false", () => expect(safeOpenAIConfig.store).toBe(false));
+  it("drops the composition fields strict mode cannot leave empty", () => {
+    const offered = counselorCompositionSchema(["patient.onset"], ["겔포스엠"]);
+    expect(offered["required"]).toContain("named_products");
+    expect(
+      (offered["properties"] as Record<string, Record<string, unknown>>)[
+        "ask_slot"
+      ]?.["enum"],
+    ).toEqual(["none", "patient.onset"]);
+    // An empty enum is rejected by strict json_schema, so a turn with nothing
+    // to name has to omit the property rather than offer an empty list.
+    const bare = counselorCompositionSchema([], []);
+    expect(bare["required"]).toEqual(["say", "ask", "ask_slot"]);
+    expect(bare["properties"]).not.toHaveProperty("named_products");
+  });
   it("uses a pharmacy-counter writing assistant role without impersonating a pharmacist", () => {
     expect(PHARMACY_COUNTER_NARRATION_PROMPT).toContain(
       "상담 문장을 작성하는 어시스턴트",

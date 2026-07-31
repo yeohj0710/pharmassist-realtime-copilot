@@ -37,7 +37,9 @@ import { resolve } from "node:path";
 import {
   createRealtimeTranscriptionCall,
   type ConversationInterpreter,
+  type CounselorComposer,
   OfficialConversationInterpreter,
+  OfficialCounselorComposer,
   transcribeRecordedAudio,
   type ResponsesRefiner,
   OfficialResponsesRefiner,
@@ -188,6 +190,7 @@ export async function buildApp(
     authProvider?: AuthProvider;
     responsesRefiner?: ResponsesRefiner;
     conversationInterpreter?: ConversationInterpreter;
+    counselorComposer?: CounselorComposer;
   }> = {},
 ) {
   const profileValue = process.env["APP_PROFILE"] ?? "local-demo";
@@ -717,6 +720,191 @@ export async function buildApp(
     },
   );
 
+  // The serverless deploy has carried this route since the counselor started
+  // writing its own turns; without it here the local API answers 404 and the
+  // browser silently shows the engine's sentence, so nothing composed can be
+  // reviewed outside production. Same contract, same refusals.
+  app.post(
+    "/v1/consult/compose",
+    {
+      config: {
+        rateLimit: { max: refinementRequestsPerHour, timeWindow: "1 hour" },
+      },
+    },
+    async (req, reply) => {
+      reply.header("Cache-Control", "no-store");
+      if (
+        process.env["APP_PASSCODE"] &&
+        req.headers["x-app-passcode"] !== process.env["APP_PASSCODE"]
+      )
+        return reply
+          .code(403)
+          .send(
+            error("FORBIDDEN", "기능 사용 비밀번호를 확인해 주세요.", req.id),
+          );
+      const user = await identity(req, profile, options.authProvider);
+      if (!user)
+        return reply
+          .code(403)
+          .send(error("FORBIDDEN", "인증이 필요합니다.", req.id));
+      const body = req.body as
+        | Readonly<{
+            conversation_history?: unknown;
+            engine_line?: unknown;
+            verified_products?: unknown;
+            verified_ingredients?: unknown;
+            known_facts?: unknown;
+            open_questions?: unknown;
+            referral_required?: unknown;
+          }>
+        | undefined;
+      const history = Array.isArray(body?.conversation_history)
+        ? body.conversation_history.filter(
+            (item): item is string =>
+              typeof item === "string" &&
+              item.length > 0 &&
+              item.length <= 2_000,
+          )
+        : [];
+      const engineLine =
+        typeof body?.engine_line === "string" && body.engine_line.length <= 400
+          ? body.engine_line
+          : "";
+      const stringList = (
+        value: unknown,
+        max: number,
+        limit: number,
+      ): readonly string[] =>
+        Array.isArray(value)
+          ? value
+              .filter(
+                (item): item is string =>
+                  typeof item === "string" &&
+                  item.length > 0 &&
+                  item.length <= max,
+              )
+              .slice(0, limit)
+          : [];
+      const openQuestions = Array.isArray(body?.open_questions)
+        ? body.open_questions
+            .filter(
+              (item): item is { slot: string; question: string } =>
+                typeof item === "object" &&
+                item !== null &&
+                typeof (item as { slot?: unknown }).slot === "string" &&
+                /^[a-z][a-z0-9_.]{1,127}$/u.test(
+                  (item as { slot: string }).slot,
+                ) &&
+                typeof (item as { question?: unknown }).question === "string" &&
+                (item as { question: string }).question.length > 0 &&
+                (item as { question: string }).question.length <= 300,
+            )
+            .slice(0, 5)
+            .map((item) => ({ slot: item.slot, question: item.question }))
+        : [];
+      if (!history.length || !engineLine)
+        return reply
+          .code(400)
+          .send(
+            error("INVALID_INPUT", "상담 입력 형식을 확인해 주세요.", req.id),
+          );
+      const apiKey = process.env["OPENAI_API_KEY"];
+      if (!apiKey || process.env["FEATURE_AI_COMPOSITION"] === "false")
+        return reply
+          .code(503)
+          .send(
+            error(
+              "INTERNAL_SAFE_FAILURE",
+              "AI 상담 작성을 사용할 수 없습니다.",
+              req.id,
+              true,
+              "typed_input",
+            ),
+          );
+      const normalizedTurns = history.map((turn) => normalizeKorean(turn, []));
+      if (normalizedTurns.some((turn) => !turn.safeForExternal))
+        return reply
+          .code(422)
+          .send(
+            error(
+              "PRIVACY_REDACTION_FAILED",
+              "개인정보를 제외하고 다시 입력해 주세요.",
+              req.id,
+              false,
+              "typed_input",
+            ),
+          );
+      const timeoutMs = boundedEnvInt(
+        "OPENAI_RESPONSES_TIMEOUT_MS",
+        8_000,
+        500,
+        10_000,
+      );
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const composer =
+          options.counselorComposer ??
+          new OfficialCounselorComposer(apiKey, {
+            ...safeOpenAIConfig,
+            model:
+              process.env["OPENAI_COMPOSE_MODEL"] ?? safeOpenAIConfig.model,
+            timeoutMs,
+            maxOutputTokens: boundedEnvInt(
+              "OPENAI_COMPOSE_MAX_OUTPUT_TOKENS",
+              1_200,
+              400,
+              2_000,
+            ),
+          });
+        const result = await composer.compose(
+          {
+            conversation: conversationForModel(
+              normalizedTurns.map((turn) => turn.redactedText),
+              normalizedTurns.at(-1)!.redactedText,
+            ),
+            engineLine,
+            verifiedProducts: stringList(body?.verified_products, 120, 5),
+            verifiedIngredients: stringList(body?.verified_ingredients, 120, 5),
+            knownFacts: stringList(body?.known_facts, 200, 12),
+            openQuestions,
+            referralRequired: body?.referral_required === true,
+          },
+          controller.signal,
+        );
+        return {
+          say: result.say,
+          ask: result.ask,
+          ask_slot: result.askSlot,
+        };
+      } catch (cause: unknown) {
+        req.log.warn(
+          {
+            error_name: cause instanceof Error ? cause.name : "UnknownError",
+            error_message:
+              cause instanceof Error ? cause.message : "provider failure",
+          },
+          "OpenAI counselor composition failed",
+        );
+        return reply
+          .code(503)
+          .send(
+            error(
+              controller.signal.aborted
+                ? "MODEL_TIMEOUT"
+                : "INTERNAL_SAFE_FAILURE",
+              "AI 상담 작성에 실패했습니다.",
+              req.id,
+              true,
+              "typed_input",
+            ),
+          );
+      } finally {
+        clearTimeout(timeout);
+      }
+    },
+  );
+
   app.post(
     "/v1/consult/refine",
     {
@@ -855,7 +1043,7 @@ export async function buildApp(
             (useContextModel
               ? process.env["OPENAI_CONTEXT_MODEL"]
               : process.env["OPENAI_RESPONSES_MODEL"]) ??
-            (useContextModel ? "gpt-4.1-mini" : safeOpenAIConfig.model),
+            (useContextModel ? "gpt-5.6-luna" : safeOpenAIConfig.model),
           maxOutputTokens,
           timeoutMs,
         });

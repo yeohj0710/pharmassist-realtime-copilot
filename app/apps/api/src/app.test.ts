@@ -5,7 +5,10 @@ import {
   shouldUseContextModel,
 } from "./app.js";
 import { syntheticPack } from "@pharmassist/test-fixtures";
-import { MockResponsesRefiner } from "@pharmassist/openai-adapter";
+import {
+  type CounselorComposer,
+  MockResponsesRefiner,
+} from "@pharmassist/openai-adapter";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 process.env["AUTH_MODE"] = "mock-local";
@@ -94,6 +97,85 @@ describe("API", () => {
       expect(forwardedQuestion).toBe("배가 어떻게 불편한가요?");
       expect(catalogSize).toBe(74);
       expect(latestTurn).toContain("콜록대서");
+    } finally {
+      await app.close();
+      if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];
+      else process.env["OPENAI_API_KEY"] = priorKey;
+    }
+  });
+  it("composes the counselor turn from the engine's boundary", async () => {
+    const priorKey = process.env["OPENAI_API_KEY"];
+    process.env["OPENAI_API_KEY"] = "test-only";
+    let seen: Parameters<CounselorComposer["compose"]>[0] | undefined;
+    const app = await buildApp({
+      counselorComposer: {
+        async compose(context) {
+          seen = context;
+          return {
+            say: "속이 계속 불편하셨겠어요.",
+            ask: "언제부터 그러셨어요?",
+            askSlot: "patient.onset",
+          };
+        },
+      },
+    });
+    try {
+      const response = await app.inject({
+        method: "POST",
+        url: "/v1/consult/compose",
+        headers: { "x-role": "pharmacist", "x-tenant-id": "demo" },
+        payload: {
+          conversation_history: ["환자: 배가 아파요"],
+          engine_line: "아직 확인할 것이 남았습니다.",
+          verified_products: ["겔포스엠"],
+          verified_ingredients: ["수산화알루미늄"],
+          known_facts: ["복부 통증"],
+          open_questions: [
+            { slot: "patient.onset", question: "언제부터 그러셨나요?" },
+            { slot: "BAD SLOT", question: "무시되어야 합니다" },
+          ],
+          referral_required: false,
+        },
+      });
+      expect(response.statusCode).toBe(200);
+      expect(response.headers["cache-control"]).toBe("no-store");
+      expect(response.json()).toEqual({
+        say: "속이 계속 불편하셨겠어요.",
+        ask: "언제부터 그러셨어요?",
+        ask_slot: "patient.onset",
+      });
+      // A malformed slot never reaches the model, so it can never come back.
+      expect(seen?.openQuestions).toEqual([
+        { slot: "patient.onset", question: "언제부터 그러셨나요?" },
+      ]);
+      expect(seen?.verifiedProducts).toEqual(["겔포스엠"]);
+      expect(seen?.engineLine).toBe("아직 확인할 것이 남았습니다.");
+      expect(seen?.referralRequired).toBe(false);
+      expect(seen?.conversation.at(-1)?.content).toContain("배가 아파요");
+    } finally {
+      await app.close();
+      if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];
+      else process.env["OPENAI_API_KEY"] = priorKey;
+    }
+  });
+  it("refuses to compose without an engine line to work from", async () => {
+    const priorKey = process.env["OPENAI_API_KEY"];
+    process.env["OPENAI_API_KEY"] = "test-only";
+    const app = await buildApp({
+      counselorComposer: {
+        async compose() {
+          throw new Error("must not be called");
+        },
+      },
+    });
+    try {
+      const response = await app.inject({
+        method: "POST",
+        url: "/v1/consult/compose",
+        headers: { "x-role": "pharmacist", "x-tenant-id": "demo" },
+        payload: { conversation_history: ["환자: 배가 아파요"] },
+      });
+      expect(response.statusCode).toBe(400);
     } finally {
       await app.close();
       if (priorKey === undefined) delete process.env["OPENAI_API_KEY"];
