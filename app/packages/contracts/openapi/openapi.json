@@ -785,6 +785,16 @@
             },
             "description": "Every pack-defined select-rule id the interpreter recognized in the customer's turn, across all offered fact targets. The engine honors each key only after validating it as a select rule of the active protocol."
           },
+          "preferred_ask_slot": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.]{1,127}$",
+            "description": "Slot the composed counselor turn chose to ask about. Honored only when the active protocol is already offering that slot, so the recorded pending question is the one the customer saw."
+          },
+          "preferred_ask_question": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Wording of that question as the counselor actually asked it. Display text only; it carries no clinical meaning."
+          },
           "is_partial": {
             "type": "boolean"
           },

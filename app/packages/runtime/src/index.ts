@@ -1437,12 +1437,37 @@ export class LocalClinicalEngine {
         })
         .filter((target) => target.options.length > 0);
     })() as RuntimeOutput["fact_targets"];
+    // The composed counselor turn may pick which of the open questions to put
+    // to the customer. Honored only for a slot this protocol is already
+    // offering, and it flows through shape.ask_next so the ledger records the
+    // question the customer actually saw — the invariant the whole dialogue
+    // machinery keys on. The engine still decides whether a question is
+    // required at all; this only chooses among the ones it offers.
+    const preferredAsk = (() => {
+      const slot = input.preferred_ask_slot;
+      if (!slot || conversationReply || retraction) return null;
+      const offered = [
+        ...(askWithOptions[0] ? [askWithOptions[0]] : []),
+        ...(factTargets ?? []).map((target) => ({
+          question: target.question,
+          reason: "상담 진행에 필요한 확인",
+          priority: 1,
+          slot: target.slot,
+        })),
+      ];
+      const match = offered.find((item) => item.slot === slot);
+      if (!match) return null;
+      const wording = input.preferred_ask_question?.trim();
+      return [
+        { ...match, ...(wording ? { question: wording } : {}) },
+      ] as RuntimeOutput["ask_next"];
+    })();
     const output: RuntimeOutput = {
       request_id: input.request_id,
       session_id: input.session_id,
       sequence: input.sequence,
       ...shape,
-      ask_next: askWithOptions,
+      ask_next: preferredAsk ?? askWithOptions,
       ...(factTargets && factTargets.length > 0
         ? { fact_targets: factTargets }
         : {}),
@@ -1611,7 +1636,7 @@ export class LocalClinicalEngine {
       // interpreter's answers_pending_slot pointed at a slot the engine did
       // not consider open, every answer was discarded, and the question
       // repeated outside the ask budget's reach.
-      pendingQuestion: shape.ask_next[0] ?? null,
+      pendingQuestion: output.ask_next[0] ?? null,
       topicStates,
       answeredSlots: answeredSlotValues(normalized),
       now,

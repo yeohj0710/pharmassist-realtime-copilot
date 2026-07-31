@@ -308,6 +308,59 @@ export const interpretedIntent = (
     : undefined;
 
 /**
+ * Asks the model to write the counselor's next turn. Everything it may say is
+ * supplied by the engine and re-checked by the referee before display, so a
+ * missing or refused composition costs nothing but the engine's own wording.
+ */
+export async function requestComposedCounselorTurn(
+  conversationHistory: readonly DialogueTurn[],
+  boundary: Readonly<{
+    engineLine: string;
+    verifiedProducts: readonly string[];
+    verifiedIngredients: readonly string[];
+    knownFacts: readonly string[];
+    openQuestions: readonly Readonly<{ slot: string; question: string }>[];
+    referralRequired: boolean;
+  }>,
+  signal: AbortSignal,
+): Promise<
+  | Readonly<{ say: string; ask: string | null; askSlot: string | null }>
+  | undefined
+> {
+  const response = await fetch(`${apiBaseUrl()}/v1/consult/compose`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify({
+      conversation_history: serializeDialogueTurns(
+        conversationHistory.slice(-12),
+      ),
+      engine_line: boundary.engineLine,
+      verified_products: [...boundary.verifiedProducts],
+      verified_ingredients: [...boundary.verifiedIngredients],
+      known_facts: [...boundary.knownFacts],
+      open_questions: boundary.openQuestions.map((item) => ({
+        slot: item.slot,
+        question: item.question,
+      })),
+      referral_required: boundary.referralRequired,
+    }),
+    signal,
+  });
+  if (!response.ok) return undefined;
+  const body = (await response.json()) as Readonly<{
+    say?: unknown;
+    ask?: unknown;
+    ask_slot?: unknown;
+  }>;
+  if (typeof body.say !== "string") return undefined;
+  return {
+    say: body.say,
+    ask: typeof body.ask === "string" && body.ask ? body.ask : null,
+    askSlot: typeof body.ask_slot === "string" ? body.ask_slot : null,
+  };
+}
+
+/**
  * Proves only that a key is configured and the feature is on — not that the
  * upstream will answer. An exhausted quota reports ready here while failing
  * every call, so the badge also needs the outcome of real interpretations.

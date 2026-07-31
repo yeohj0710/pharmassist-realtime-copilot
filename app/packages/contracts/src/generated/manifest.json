@@ -1,5 +1,5 @@
 {
-  "schemaHash": "045507408ee138a2cb603859e25a1913f84ad2d3bcb7b05f6d3d1e3f060ecf16",
+  "schemaHash": "16654d4c8e15315e3a2a4eef1ef7e7945be0dc6a781892a3c9d477e054d95d07",
   "generated": [
     {
       "file": "claim.ts",
@@ -79,12 +79,12 @@
     {
       "file": "refinement_request.ts",
       "title": "RefinementRequestEnvelope",
-      "sha256": "8b999cbcf6cfff4e4f751551deddb4eba41e950edc32fbdd479751c9aa03ecdb"
+      "sha256": "7da62c1c87cb6be40267a818a9aab565989891dcf04de83e205ca30cd0fb5c95"
     },
     {
       "file": "runtime_input.ts",
       "title": "RuntimeInput",
-      "sha256": "1d4658742296d1640782e5d87b9c483f851215811ef1dcdcc94f8dc260ca2547"
+      "sha256": "fb7e27ade1d5c70209bf8e48e53ecddd8116ca3fdd9093ab4bdc9ee4fc870cf8"
     },
     {
       "file": "runtime_output.ts",

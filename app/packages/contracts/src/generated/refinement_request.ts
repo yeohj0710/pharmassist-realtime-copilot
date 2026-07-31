@@ -1236,6 +1236,14 @@ export interface RuntimeInput {
    * @maxItems 4
    */
   answered_option_keys?: [] | [string] | [string, string] | [string, string, string] | [string, string, string, string];
+  /**
+   * Slot the composed counselor turn chose to ask about. Honored only when the active protocol is already offering that slot, so the recorded pending question is the one the customer saw.
+   */
+  preferred_ask_slot?: string;
+  /**
+   * Wording of that question as the counselor actually asked it. Display text only; it carries no clinical meaning.
+   */
+  preferred_ask_question?: string;
   is_partial: boolean;
   locale: "ko-KR";
   domain: "human_otc" | "prescription_counseling" | "supplement" | "animal_medicine";

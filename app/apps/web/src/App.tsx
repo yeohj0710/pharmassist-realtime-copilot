@@ -24,11 +24,18 @@ import {
   requestAiFallback,
   requestAiInterpretation,
   requestAiReadiness,
+  requestComposedCounselorTurn,
   shouldInterpretWithAi,
-  shouldRequestAiRefinement,
   statedFactKeysFromInterpretation,
   type ConsultationFactTarget,
 } from "./ai-fallback.js";
+import {
+  counselorBoundary,
+  deterministicCounselorTurn,
+  refereeCounselorTurn,
+  withCounselorTurn,
+  type ComposedCounselorTurn,
+} from "./counselor-turn.js";
 import { outputText, patientVisibleLines } from "./consult-memory.js";
 import productEnrichmentJson from "../../../data/actual-candidate-pack/product-enrichment.json" with { type: "json" };
 
@@ -96,6 +103,35 @@ const newInput = (
   patient_context: {},
   client_timestamp: new Date().toISOString(),
 });
+
+/**
+ * The counselor's words are the model's; what may be said is the engine's.
+ * Composition is skipped for an emergency escalation — that line is a safety
+ * instruction, not conversation — and whenever the pharmacist is offline.
+ */
+const shouldComposeCounselorTurn = (
+  online: boolean,
+  output: RuntimeOutput,
+): boolean => online && output.mode !== "escalate" && output.say_now.length > 0;
+
+/** The questions the counselor may choose between this turn. */
+const openCounselorQuestions = (
+  output: RuntimeOutput,
+): readonly Readonly<{ slot: string; question: string }>[] => {
+  const asked = output.ask_next[0];
+  const seen = new Set<string>();
+  return [
+    ...(asked ? [{ slot: asked.slot, question: asked.question }] : []),
+    ...(output.fact_targets ?? []).map((target) => ({
+      slot: target.slot,
+      question: target.question,
+    })),
+  ].filter((item) => {
+    if (seen.has(item.slot)) return false;
+    seen.add(item.slot);
+    return true;
+  });
+};
 
 const decisionLabel: Readonly<
   Record<RuntimeOutput["decision"]["status"], string>
@@ -191,6 +227,12 @@ const productEnrichment = new Map(
     item.product_id,
     item,
   ]),
+);
+
+// Every product the pack can name. The referee uses it to tell a product the
+// engine chose from one belonging to some other decision entirely.
+const packProductNames = (productEnrichmentJson as ProductEnrichment[]).map(
+  (item) => item.display_name,
 );
 
 const fallbackHealthKrUrl = (productId: string, displayName: string): string =>
@@ -644,6 +686,10 @@ export function App() {
     undefined,
   );
   const deployStampRef = useRef<string | null>(null);
+  // A composed turn whose question differs from the engine's own goes back
+  // through the engine so the ledger records what the customer will see; the
+  // words wait here for that run to come back.
+  const composedTurnRef = useRef(new Map<number, ComposedCounselorTurn>());
   const inputRef = useRef<HTMLInputElement>(null);
   const workerRef = useRef<Worker | null>(null);
   const pendingWorkerInputsRef = useRef<RuntimeInput[]>([]);
@@ -898,45 +944,82 @@ export function App() {
           historyRef.current = nextHistory;
           setHistory(nextHistory);
         };
-        if (
-          shouldRequestAiRefinement(
-            navigator.onLine,
-            localOutput.mode,
-            localOutput.decision.status,
+        const alreadyComposed = composedTurnRef.current.get(
+          localOutput.sequence,
+        );
+        if (alreadyComposed) {
+          composedTurnRef.current.delete(localOutput.sequence);
+          commitOutput(withCounselorTurn(localOutput, alreadyComposed));
+        } else if (shouldComposeCounselorTurn(navigator.onLine, localOutput)) {
+          const composeHistory = historyRef.current;
+          // Optimistic UI: render the deterministic local answer immediately.
+          // The composed turn replaces this same sequence when it arrives and
+          // the referee accepts it.
+          commitOutput(localOutput);
+          aiAbortRef.current?.abort();
+          const controller = new AbortController();
+          aiAbortRef.current = controller;
+          setAiInterpreting(true);
+          const boundary = counselorBoundary(localOutput, packProductNames);
+          void requestComposedCounselorTurn(
+            composeHistory,
+            {
+              engineLine: deterministicCounselorTurn(localOutput).say,
+              verifiedProducts: boundary.allowedProducts,
+              verifiedIngredients: boundary.allowedIngredients,
+              // The customer's own statements, so the counselor does not
+              // ask again for something already said.
+              knownFacts: buildCustomerSummary(composeHistory).facts,
+              openQuestions: openCounselorQuestions(localOutput),
+              referralRequired: boundary.mustNotNameProduct,
+            },
+            controller.signal,
           )
-        ) {
-          const input = inputsRef.current.get(event.data.output.sequence);
-          if (input) {
-            const refinementHistory = historyRef.current;
-            // Optimistic UI: render the deterministic local answer immediately.
-            // The AI result replaces this same sequence when it arrives.
-            commitOutput(localOutput);
-            aiAbortRef.current?.abort();
-            const controller = new AbortController();
-            aiAbortRef.current = controller;
-            setAiInterpreting(true);
-            void requestAiFallback(
-              input,
-              localOutput,
-              refinementHistory,
-              controller.signal,
-            )
-              .then((refined) => {
-                if (
-                  refined?.sequence === sequenceRef.current &&
-                  refined.session_id === sessionIdRef.current
-                ) {
-                  commitOutput(refined);
+            .then((composed) => {
+              if (
+                !composed ||
+                localOutput.sequence !== sequenceRef.current ||
+                localOutput.session_id !== sessionIdRef.current
+              )
+                return;
+              // The engine has the last word: a composition that names an
+              // unchosen product, states a dose, or asks an unrecordable
+              // question is dropped and the engine's line stands.
+              const verdict = refereeCounselorTurn(composed, boundary);
+              if (verdict.status !== "accepted") return;
+              const engineSlot = localOutput.ask_next[0]?.slot ?? null;
+              if (
+                verdict.turn.askSlot &&
+                verdict.turn.askSlot !== engineSlot &&
+                workerRef.current
+              ) {
+                // The counselor chose a different question than the engine
+                // would have. Re-run so the ledger records that one instead.
+                composedTurnRef.current.set(localOutput.sequence, verdict.turn);
+                const base = inputsRef.current.get(localOutput.sequence);
+                if (base) {
+                  const preferred: RuntimeInput = {
+                    ...base,
+                    request_id: crypto.randomUUID(),
+                    preferred_ask_slot: verdict.turn.askSlot,
+                    ...(verdict.turn.ask
+                      ? { preferred_ask_question: verdict.turn.ask }
+                      : {}),
+                  };
+                  inputsRef.current.set(localOutput.sequence, preferred);
+                  workerRef.current.postMessage(preferred);
+                  return;
                 }
-              })
-              .catch(() => undefined)
-              .finally(() => {
-                if (aiAbortRef.current === controller) {
-                  aiAbortRef.current = null;
-                  setAiInterpreting(false);
-                }
-              });
-          } else commitOutput(localOutput);
+              }
+              commitOutput(withCounselorTurn(localOutput, verdict.turn));
+            })
+            .catch(() => undefined)
+            .finally(() => {
+              if (aiAbortRef.current === controller) {
+                aiAbortRef.current = null;
+                setAiInterpreting(false);
+              }
+            });
         } else commitOutput(localOutput);
         if (
           event.data.output.mode === "escalate" ||
