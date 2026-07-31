@@ -124,13 +124,38 @@ describe("what the counselor may say", () => {
     ).toContain("PRODUCT_NAMED_WITHOUT_CANDIDATE");
   });
 
-  it("accepts a referral line that names nothing", () => {
+  it("allows referral language only when the engine requires it", () => {
+    const referralLine = turn(
+      "지금은 맞는 약을 고르기 어려워서, 무리해서 약을 드시기보다 가까운 병원이나 약국에서 상태를 직접 확인받아 보세요.",
+    );
     const verdict = refereeCounselorTurn(
-      turn("이건 약으로 두고 보기보다 진료를 먼저 받아보시는 게 좋겠어요."),
-      boundary({ mustNotNameProduct: true, allowedProducts: [] }),
+      referralLine,
+      boundary({
+        mustNotNameProduct: true,
+        allowedProducts: [],
+        referralRequired: true,
+      }),
     );
 
     expect(verdict.status).toBe("accepted");
+    expect(
+      reasons(
+        refereeCounselorTurn(
+          referralLine,
+          boundary({
+            mustNotNameProduct: true,
+            allowedProducts: [],
+            referralRequired: false,
+          }),
+        ),
+      ),
+    ).toContain("REFERRAL_WITHOUT_REQUIREMENT");
+    expect(
+      refereeCounselorTurn(
+        turn("확인할 게 하나 있어요.", "병원에서 처방받은 약이 있으세요?"),
+        boundary(),
+      ).status,
+    ).toBe("accepted");
   });
 
   it("refuses a stated dose in any shape", () => {
@@ -249,22 +274,38 @@ describe("the boundary the engine publishes", () => {
     expect(result.referralRequired).toBe(false);
   });
 
-  it("forbids naming a product when the engine has none to offer", () => {
-    const result = counselorBoundary(
+  it("distinguishes a provisional candidate from no product at all", () => {
+    const provisional = counselorBoundary(
+      output({
+        decision: {
+          status: "insufficient",
+          product_candidates: [],
+          ingredient_options: [],
+        },
+        provisional_candidates: [{ display_name: "겔포스엠" }],
+      }),
+      ["겔포스엠"],
+    );
+
+    expect(provisional.allowedProducts).toEqual(["겔포스엠"]);
+    expect(provisional.mustNotNameProduct).toBe(false);
+
+    const empty = counselorBoundary(
       output({
         decision: {
           status: "ask",
           product_candidates: [],
           ingredient_options: [],
         },
+        provisional_candidates: [],
       }),
       ["겔포스엠"],
     );
 
-    expect(result.mustNotNameProduct).toBe(true);
+    expect(empty.mustNotNameProduct).toBe(true);
     // Nothing to offer yet is not the same as needing a doctor: this customer
     // is mid-consultation and must not be sent away.
-    expect(result.referralRequired).toBe(false);
+    expect(empty.referralRequired).toBe(false);
   });
 
   it("forbids naming a product on an escalation", () => {
@@ -272,6 +313,7 @@ describe("the boundary the engine publishes", () => {
       "겔포스엠",
     ]);
 
+    expect(result.allowedProducts).toEqual([]);
     expect(result.mustNotNameProduct).toBe(true);
     expect(result.referralRequired).toBe(true);
   });

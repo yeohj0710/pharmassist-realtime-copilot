@@ -57,6 +57,25 @@ const internalVocabulary =
 
 const maxSayLength = 220;
 const maxAskLength = 120;
+const referralLanguage =
+  /(?:병원|의원|응급실|의료진|약사|약국).{0,30}(?:가(?:세요|셔야|는\s*게)|방문(?:하세요|하셔야|해\s*보)|찾아가|확인받|상담받|보이세요|문의하세요)|(?:진료|검사|직접\s*평가).{0,12}(?:받|우선|필요)|119/u;
+
+/**
+ * Products the engine has cleared for this turn's counselor. A provisional
+ * candidate stays outside the decision so the retry contract remains intact,
+ * but it is still the engine's own safe fallback and must reach the counselor
+ * when the customer asks to stop questioning.
+ */
+export const counselorProductCandidates = (
+  output: RuntimeOutput,
+): RuntimeOutput["decision"]["product_candidates"] => {
+  const referralRequired =
+    output.mode === "escalate" || output.decision.status === "refer";
+  if (referralRequired) return [];
+  return output.decision.product_candidates.length > 0
+    ? output.decision.product_candidates
+    : (output.provisional_candidates ?? []);
+};
 
 /**
  * What the engine will allow this turn. `packProductNames` is every product
@@ -67,29 +86,32 @@ export const counselorBoundary = (
   output: RuntimeOutput,
   packProductNames: readonly string[],
 ): CounselorBoundary => {
+  const referralRequired =
+    output.mode === "escalate" || output.decision.status === "refer";
+  const candidates = counselorProductCandidates(output);
   // A combination's supportive product is frequently outside the displayed
   // five, and the referee would otherwise read it as a name the engine never
   // chose — refusing every turn that offered the pair the engine itself built.
   const allowedProducts = [
     ...new Set([
-      ...output.decision.product_candidates.map((item) => item.display_name),
-      ...(output.decision.combination_candidates ?? []).flatMap((pair) => [
-        pair.primary_product_name,
-        pair.supportive_product_name,
-      ]),
+      ...candidates.map((item) => item.display_name),
+      ...(referralRequired
+        ? []
+        : (output.decision.combination_candidates ?? []).flatMap((pair) => [
+            pair.primary_product_name,
+            pair.supportive_product_name,
+          ])),
     ]),
   ];
-  const referralRequired =
-    output.mode === "escalate" || output.decision.status === "refer";
   return {
     referralRequired,
     allowedProducts,
-    allowedIngredients: output.decision.ingredient_options.map(
-      (item) => item.ingredient_name,
-    ),
+    allowedIngredients: referralRequired
+      ? []
+      : output.decision.ingredient_options.map((item) => item.ingredient_name),
     knownProducts: packProductNames,
-    // A referral or an unresolved decision has no product to offer, whatever
-    // candidates happen to be attached for the pharmacist's own review.
+    // A referral has no product to offer. Otherwise, the counselor may name
+    // only a candidate published through the decision or provisional channel.
     mustNotNameProduct: referralRequired || allowedProducts.length === 0,
   };
 };
@@ -207,6 +229,8 @@ export const refereeCounselorTurn = (
   if (!isPatientFacingText(say)) reasons.push("NOT_PATIENT_FACING");
   if (dosagePattern.test(spoken)) reasons.push("DOSAGE_STATED");
   if (internalVocabulary.test(spoken)) reasons.push("INTERNAL_VOCABULARY");
+  if (!boundary.referralRequired && referralLanguage.test(spoken))
+    reasons.push("REFERRAL_WITHOUT_REQUIREMENT");
 
   const offList = namedProductsIn(spoken, boundary.knownProducts).filter(
     (name) => !boundary.allowedProducts.includes(name),

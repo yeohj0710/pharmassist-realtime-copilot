@@ -9,6 +9,7 @@ import dialogueSeedReport from "../../../data/actual-candidate-pack/dialogue-see
 import productEnrichment from "../../../data/actual-candidate-pack/product-enrichment.json" with { type: "json" };
 import healthKrLegacyMatchReport from "../../../data/actual-candidate-pack/healthkr-legacy-match-report.json" with { type: "json" };
 import clinicalPathwayMappings from "../../../data/clinical-pathways/product-mappings.json" with { type: "json" };
+import { counselorBoundary } from "./counselor-turn.js";
 import { buildResearchPreviewFormulary } from "./preview-formulary.js";
 
 const validated = validateContract<RuntimePack>("runtimePack", actualPackJson);
@@ -143,6 +144,14 @@ describe("answers the customer actually gives", () => {
       "QUESTION_ALREADY_ASKED",
     );
     expect(retry?.output.provisional_candidates?.length).toBeGreaterThan(0);
+    const provisionalNames =
+      retry?.output.provisional_candidates?.map(
+        (candidate) => candidate.display_name,
+      ) ?? [];
+    expect(
+      retry &&
+        counselorBoundary(retry.output, provisionalNames).allowedProducts,
+    ).toEqual(provisionalNames);
     expect(validateContract("runtimeOutput", retry?.output).errors).toEqual([]);
     // Once the menu is spent, the pack's designated first option surfaces as
     // a conservative provisional candidate instead of a dead end, and the

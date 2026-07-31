@@ -29,6 +29,7 @@ import {
 } from "./ai-fallback.js";
 import {
   counselorBoundary,
+  counselorProductCandidates,
   deterministicCounselorTurn,
   refereeCounselorTurn,
   withCounselorTurn,
@@ -967,6 +968,7 @@ export function App() {
             localOutput,
             packProductNamesRef.current,
           );
+          const counselorCandidates = counselorProductCandidates(localOutput);
           void requestComposedCounselorTurn(
             composeHistory,
             {
@@ -978,26 +980,24 @@ export function App() {
               // The pack's own note on when each candidate is the right one.
               // Without it the counselor has names and no grounds to prefer
               // any of them, so it hands over the first one every time.
-              productGuidance: localOutput.decision.product_candidates.flatMap(
-                (candidate) => {
-                  const guidance = (candidate as ProductCandidateDetails)
-                    .selection_guidance;
-                  return guidance?.choose_when
-                    ? [
-                        {
-                          name: candidate.display_name,
-                          chooseWhen: guidance.choose_when,
-                          // Where a protocol gives every candidate the same
-                          // choose_when — gas is the worst, a laxative and an
-                          // antacid sharing one line — these are the only thing
-                          // that tells them apart, and they are plain fact:
-                          // what is in it and what form it takes.
-                          differentiators: [...guidance.differentiators],
-                        },
-                      ]
-                    : [];
-                },
-              ),
+              productGuidance: counselorCandidates.flatMap((candidate) => {
+                const guidance = (candidate as ProductCandidateDetails)
+                  .selection_guidance;
+                return guidance?.choose_when
+                  ? [
+                      {
+                        name: candidate.display_name,
+                        chooseWhen: guidance.choose_when,
+                        // Where a protocol gives every candidate the same
+                        // choose_when — gas is the worst, a laxative and an
+                        // antacid sharing one line — these are the only thing
+                        // that tells them apart, and they are plain fact:
+                        // what is in it and what form it takes.
+                        differentiators: [...guidance.differentiators],
+                      },
+                    ]
+                  : [];
+              }),
               // The supportive half of a pair is often outside the top five
               // candidates, so it has to be offered explicitly or the counselor
               // has a pair it is not allowed to name.
