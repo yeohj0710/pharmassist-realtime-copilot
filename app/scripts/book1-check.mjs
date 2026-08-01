@@ -16,7 +16,11 @@ const pack = JSON.parse(
 // The sizes the pack had before book1 was added. A drop here means the merge
 // ate existing knowledge, which is the one failure that cannot be undone by
 // re-running anything.
-const BASELINE = { claims: 704, protocols: 26, protocolOptions: 558 };
+// The field-practice classifier removed 222 indication claims/options that
+// came only from secondary words in labels (for example, cold combinations as
+// standalone headache products and laxatives as gas products). Keep the new
+// safe pack counts exact so the book merge still cannot hide any later loss.
+const BASELINE = { claims: 478, protocols: 39, protocolOptions: 332 };
 
 const failures = [];
 const fail = (message) => failures.push(message);

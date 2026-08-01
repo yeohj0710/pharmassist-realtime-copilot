@@ -37,7 +37,26 @@
       "세틸피리디늄"
     ],
     "motility_reduction": ["로페라미드", "스코폴리아", "아트로핀"],
+    "herbal_antidiarrheal": [
+      "정로환",
+      "장편환",
+      "평위오령산",
+      "오령산",
+      "황련"
+    ],
     "central_analgesia": ["아세트아미노펜", "acetaminophen", "카페인"],
+    "antipyretic": [
+      "아세트아미노펜",
+      "acetaminophen",
+      "이부프로펜",
+      "ibuprofen",
+      "덱시부프로펜",
+      "dexibuprofen",
+      "나프록센",
+      "naproxen",
+      "아스피린",
+      "aspirin"
+    ],
     "peripheral_analgesia": [
       "이부프로펜",
       "덱시부프로펜",
@@ -121,6 +140,7 @@
       "세틸피리디늄",
       "살균소독"
     ],
+    "topical_antibiotic": ["퓨시드산", "fusidic", "무피로신", "mupirocin"],
     "wound_protection": ["산화아연", "드레싱", "창상보호", "연고"],
     "tissue_repair": ["덱스판테놀", "센텔라", "알란토인", "재생", "상처치료"],
     "antihistamine": [
@@ -178,7 +198,69 @@
       "비분비"
     ],
     "cough_support": ["덱스트로메토르판", "노스카핀", "티페피딘", "기침"],
-    "oral_antiseptic": ["클로르헥시딘", "세틸피리디늄", "포비돈", "구강살균"]
+    "oral_antiseptic": ["클로르헥시딘", "세틸피리디늄", "포비돈", "구강살균"],
+    "topical_antifungal": [
+      "클로트리마졸",
+      "테르비나핀",
+      "에코나졸",
+      "나프티핀",
+      "시클로피록스",
+      "케토코나졸"
+    ],
+    "acne_keratolytic": ["살리실산", "벤조일퍼옥사이드", "아젤라산"],
+    "acne_antimicrobial": ["이소프로필메틸페놀", "퓨시드산", "무피로신"],
+    "hemorrhoid_local": [
+      "리도카인",
+      "히드로코르티손",
+      "페닐레프린",
+      "알란토인",
+      "치핵",
+      "치열"
+    ],
+    "venous_support": ["디오스민", "포도엽", "정맥부전"],
+    "ocular_antihistamine": ["케토티펜", "페니라민", "크로모글리크산"],
+    "ocular_decongestant": ["나파졸린", "테트라히드로졸린", "비충혈제거"],
+    "burn_care": [
+      "구아야줄렌",
+      "트롤아민",
+      "베타시토스테롤",
+      "덱스판테놀",
+      "네오마이신",
+      "퓨시드산",
+      "포비돈"
+    ],
+    "scalp_antifungal": ["케토코나졸", "시클로피록스", "지루성피부염", "비듬"],
+    "antiperspirant": ["염화알루미늄", "글리코피롤레이트", "다한증"],
+    "sedating_antihistamine": ["디펜히드라민", "독실아민"],
+    "vaginal_antifungal": [
+      "클로트리마졸",
+      "니스타틴",
+      "니푸라텔",
+      "포비돈요오드"
+    ],
+    "nicotine_replacement": ["니코틴", "금연보조"],
+    "scar_care": ["실리콘", "헤파린", "양파엑스", "흉터", "반흔"],
+    "depigmenting": ["히드로퀴논", "아젤라산", "트라넥삼산", "기미"],
+    "antiviral_topical": ["아시클로버", "acyclovir", "구순포진"],
+    "oral_postblister_antimicrobial": ["티로트리신", "tyrothricin"],
+    "keratolytic_moisturizer": ["요소", "우레아", "헤파리노이드", "각질연화"],
+    "bruise_care": ["헤파린", "헤파리노이드", "멍", "타박상"],
+    "corn_keratolytic": ["살리실산", "콜로디온", "티눈", "사마귀"],
+    "oral_contraceptive": [
+      "레보노르게스트렐",
+      "데소게스트렐",
+      "게스토덴",
+      "에티닐에스트라디올",
+      "경구피임"
+    ],
+    "periodontal_support": [
+      "리소짐",
+      "아스코르브산",
+      "토코페롤",
+      "카르바조크롬",
+      "치은염",
+      "치주염"
+    ]
   },
   "sources": [
     {
@@ -203,6 +285,13 @@
       "protocolId": "PTC-ABDOMINAL_PAIN_VOMITING",
       "efficacyAny": ["복통", "구토", "구역", "오심"],
       "routeFormAny": ["경구", "내용"],
+      "officialCategoryNone": [
+        "최토제",
+        "진토제",
+        "통경제",
+        "자양강장",
+        "신경계"
+      ],
       "mechanisms": ["symptom_specific_gastrointestinal"],
       "combinationRole": "primary",
       "priority": 40,
@@ -235,6 +324,8 @@
       "protocolId": "PTC-BLOATING",
       "efficacyAny": ["복부팽만", "복부 팽만", "팽만감", "고창"],
       "routeFormAny": ["경구", "내용"],
+      "officialCategoryNone": ["\uD558\uC81C", "\uC644\uC7A5\uC81C"],
+      "requireMechanismEvidence": true,
       "mechanisms": ["gas_reduction", "digestion_support"],
       "combinationRole": "primary",
       "compatibleRoles": ["motility_support"],
@@ -246,6 +337,7 @@
       "protocolId": "PTC-CONSTIPATION",
       "efficacyAny": ["변비", "배변곤란"],
       "routeFormAny": ["경구", "내용", "항문", "직장", "좌제"],
+      "officialCategoryAny": ["하제", "완장제"],
       "mechanisms": [
         "osmotic_laxative",
         "bulk_laxative",
@@ -262,11 +354,13 @@
       "protocolId": "PTC-DIARRHEA",
       "efficacyAny": ["설사", "묽은 변"],
       "routeFormAny": ["경구", "내용"],
+      "requireMechanismEvidence": true,
       "mechanisms": [
         "adsorbent",
         "mucosal_protection",
         "antimicrobial",
-        "motility_reduction"
+        "motility_reduction",
+        "herbal_antidiarrheal"
       ],
       "combinationRole": "primary",
       "compatibleRoles": ["microbiome_support", "rehydration_support"],
@@ -306,6 +400,8 @@
       "protocolId": "PTC-FEVER",
       "efficacyAny": ["발열", "해열", "열을 내리"],
       "routeFormAny": ["경구", "내용", "항문", "직장", "좌제"],
+      "officialCategoryNone": ["자양강장"],
+      "requireMechanismEvidence": true,
       "mechanisms": ["antipyretic"],
       "combinationRole": "primary",
       "priority": 100,
@@ -314,8 +410,10 @@
     {
       "pathwayId": "gas",
       "protocolId": "PTC-GAS",
-      "efficacyAny": ["가스제거", "가스 제거", "고창", "복부팽만"],
+      "efficacyAny": ["가스제거", "가스 제거", "고창", "복부팽만", "위부팽만"],
       "routeFormAny": ["경구", "내용"],
+      "officialCategoryNone": ["\uD558\uC81C", "\uC644\uC7A5\uC81C"],
+      "requireMechanismEvidence": true,
       "mechanisms": ["gas_reduction"],
       "combinationRole": "supportive",
       "compatibleRoles": ["primary", "motility_support"],
@@ -327,6 +425,17 @@
       "protocolId": "PTC-HEADACHE",
       "efficacyAny": ["두통", "머리의 통증", "편두통"],
       "routeFormAny": ["경구", "내용"],
+      "officialCategoryNone": ["\uCD5C\uD1A0\uC81C", "\uC9C4\uD1A0\uC81C"],
+      "activeIngredientNone": [
+        "클로르페니라민",
+        "덱스트로메토르판",
+        "구아이페네신",
+        "슈도에페드린",
+        "메틸에페드린",
+        "티페피딘",
+        "디펜히드라민"
+      ],
+      "requireMechanismEvidence": true,
       "mechanisms": ["central_analgesia", "peripheral_analgesia"],
       "combinationRole": "primary",
       "compatibleRoles": ["muscle_relaxation", "local_support"],
@@ -338,6 +447,7 @@
       "protocolId": "PTC-HEARTBURN",
       "efficacyAny": ["속쓰림", "가슴쓰림", "위산과다"],
       "routeFormAny": ["경구", "내용"],
+      "requireMechanismEvidence": true,
       "mechanisms": [
         "acid_neutralization",
         "acid_suppression",
@@ -353,6 +463,13 @@
       "protocolId": "PTC-INDIGESTION",
       "efficacyAny": ["소화불량", "과식", "식욕감퇴", "소화촉진", "체함"],
       "routeFormAny": ["경구", "내용"],
+      "officialCategoryNone": [
+        "\uD558\uC81C",
+        "\uC644\uC7A5\uC81C",
+        "비타민제",
+        "자양강장"
+      ],
+      "requireMechanismEvidence": true,
       "mechanisms": ["digestive_enzyme", "motility_regulation", "bile_support"],
       "combinationRole": "primary",
       "compatibleRoles": ["motility_support", "herbal_support", "gas_support"],
@@ -374,6 +491,17 @@
       "protocolId": "PTC-JOINT_PAIN",
       "efficacyAny": ["관절통", "관절염", "염좌", "삠"],
       "routeFormAny": ["경구", "내용", "피부", "외용", "경피"],
+      "officialCategoryNone": ["비타민제", "자양강장"],
+      "activeIngredientNone": [
+        "클로르페니라민",
+        "덱스트로메토르판",
+        "구아이페네신",
+        "슈도에페드린",
+        "메틸에페드린",
+        "티페피딘",
+        "디펜히드라민"
+      ],
+      "requireMechanismEvidence": true,
       "mechanisms": ["antiinflammatory_analgesia", "local_analgesia"],
       "combinationRole": "primary",
       "compatibleRoles": ["local_support", "muscle_relaxation"],
@@ -385,6 +513,16 @@
       "protocolId": "PTC-MENSTRUAL_PAIN",
       "efficacyAny": ["생리통", "월경통"],
       "routeFormAny": ["경구", "내용"],
+      "itemNameNone": ["어린이", "키즈", "시럽", "현탁", "산160"],
+      "activeIngredientNone": [
+        "클로르페니라민",
+        "덱스트로메토르판",
+        "구아이페네신",
+        "슈도에페드린",
+        "메틸에페드린",
+        "티페피딘",
+        "디펜히드라민"
+      ],
       "mechanisms": [
         "antiinflammatory_analgesia",
         "antispasmodic",
@@ -399,6 +537,7 @@
       "protocolId": "PTC-MILD_DERMATITIS",
       "efficacyAny": ["피부염", "습진", "가려움", "소양"],
       "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
       "mechanisms": ["local_antiinflammatory", "antipruritic"],
       "combinationRole": "primary",
       "compatibleRoles": ["barrier_support"],
@@ -408,9 +547,23 @@
     {
       "pathwayId": "minor_wound",
       "protocolId": "PTC-MINOR_WOUND",
-      "efficacyAny": ["상처", "창상", "찰과상", "살균", "소독"],
+      "efficacyAny": [
+        "상처",
+        "창상",
+        "찰과상",
+        "외상",
+        "봉합창",
+        "화상",
+        "살균",
+        "소독"
+      ],
       "routeFormAny": ["피부", "외용", "경피"],
-      "mechanisms": ["antiseptic", "wound_protection", "tissue_repair"],
+      "mechanisms": [
+        "antiseptic",
+        "topical_antibiotic",
+        "wound_protection",
+        "tissue_repair"
+      ],
       "combinationRole": "primary",
       "compatibleRoles": ["barrier_support"],
       "priority": 100,
@@ -431,6 +584,17 @@
       "protocolId": "PTC-MUSCLE_PAIN",
       "efficacyAny": ["근육통", "요통", "신경통", "근육의 통증"],
       "routeFormAny": ["경구", "내용", "피부", "외용", "경피"],
+      "officialCategoryNone": ["비타민제", "자양강장"],
+      "activeIngredientNone": [
+        "클로르페니라민",
+        "덱스트로메토르판",
+        "구아이페네신",
+        "슈도에페드린",
+        "메틸에페드린",
+        "티페피딘",
+        "디펜히드라민"
+      ],
+      "requireMechanismEvidence": true,
       "mechanisms": ["analgesia", "muscle_relaxation", "local_analgesia"],
       "combinationRole": "primary",
       "compatibleRoles": ["local_support", "muscle_relaxation"],
@@ -501,10 +665,234 @@
       "protocolId": "PTC-URTICARIA_ITCH",
       "efficacyAny": ["두드러기", "소양", "가려움"],
       "routeFormAny": ["경구", "내용", "피부", "외용", "경피"],
+      "activeIngredientNone": [
+        "아세트아미노펜",
+        "슈도에페드린",
+        "메틸에페드린",
+        "덱스트로메토르판",
+        "구아이페네신",
+        "티페피딘"
+      ],
+      "officialCategoryNone": ["비타민제", "자양강장"],
+      "requireMechanismEvidence": true,
       "mechanisms": ["antihistamine", "antipruritic"],
       "combinationRole": "primary",
       "priority": 100,
       "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=11"
+    },
+    {
+      "pathwayId": "antifungal_skin_direct",
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "efficacyAny": [
+        "무좀",
+        "백선",
+        "완선",
+        "어루러기",
+        "피부진균",
+        "족부백선",
+        "체부백선",
+        "조갑진균"
+      ],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["topical_antifungal"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=7"
+    },
+    {
+      "pathwayId": "acne",
+      "protocolId": "PTC-ACNE",
+      "efficacyAny": ["여드름", "면포", "구진성 여드름", "농포성 여드름"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["acne_keratolytic", "acne_antimicrobial"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=10"
+    },
+    {
+      "pathwayId": "hemorrhoid",
+      "protocolId": "PTC-HEMORRHOID",
+      "efficacyAny": ["치질", "치핵", "치열", "항문 통증", "항문 가려움"],
+      "routeFormAny": ["항문", "외용", "경구", "내용"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["hemorrhoid_local", "venous_support"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=10"
+    },
+    {
+      "pathwayId": "eye_allergy",
+      "protocolId": "PTC-EYE_ALLERGY",
+      "efficacyAny": [
+        "알레르기성 결막염",
+        "알러지성 결막염",
+        "결막충혈",
+        "눈의 가려움",
+        "눈 가려움"
+      ],
+      "routeFormAny": ["눈", "점안"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["ocular_antihistamine", "ocular_decongestant"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=9"
+    },
+    {
+      "pathwayId": "minor_burn",
+      "protocolId": "PTC-MINOR_BURN",
+      "efficacyAny": ["화상", "1도 화상", "2도 화상"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["burn_care"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=9"
+    },
+    {
+      "pathwayId": "scalp_dandruff",
+      "protocolId": "PTC-SCALP_DANDRUFF",
+      "efficacyAny": ["비듬", "지루성 피부염", "지루피부염", "두피의 지루"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["scalp_antifungal"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=9"
+    },
+    {
+      "pathwayId": "hyperhidrosis",
+      "protocolId": "PTC-HYPERHIDROSIS",
+      "efficacyAny": ["다한증", "과도한 발한"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["antiperspirant"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=10"
+    },
+    {
+      "pathwayId": "sleep_aid",
+      "protocolId": "PTC-SLEEP_AID",
+      "efficacyAny": ["불면", "수면장애", "잠들기 어려움", "일시적 불면"],
+      "routeFormAny": ["경구", "내용"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["sedating_antihistamine"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=11"
+    },
+    {
+      "pathwayId": "vaginal_antifungal",
+      "protocolId": "PTC-VAGINAL_ANTIFUNGAL",
+      "efficacyAny": ["칸디다성 질염", "질칸디다", "질염", "외음부염"],
+      "routeFormAny": ["질액제", "질정", "질좌제", "외용", "피부"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["vaginal_antifungal"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=11"
+    },
+    {
+      "pathwayId": "smoking_cessation",
+      "protocolId": "PTC-SMOKING_CESSATION",
+      "efficacyAny": ["금연", "금연보조", "니코틴 의존"],
+      "routeFormAny": ["경구", "구강", "경피", "피부"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["nicotine_replacement"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=12"
+    },
+    {
+      "pathwayId": "scar_care",
+      "protocolId": "PTC-SCAR_CARE",
+      "efficacyAny": ["흉터", "반흔", "켈로이드"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["scar_care"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=10"
+    },
+    {
+      "pathwayId": "pigmentation",
+      "protocolId": "PTC-PIGMENTATION",
+      "efficacyAny": ["기미", "주근깨", "색소침착"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["depigmenting"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=10"
+    },
+    {
+      "pathwayId": "oral_herpes",
+      "protocolId": "PTC-ORAL_HERPES",
+      "efficacyAny": ["구순포진", "입술포진", "단순포진", "입술 물집"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["antiviral_topical", "oral_postblister_antimicrobial"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=8"
+    },
+    {
+      "pathwayId": "dry_skin",
+      "protocolId": "PTC-DRY_SKIN",
+      "efficacyAny": ["건피", "피부건조", "각질", "각화증", "피부 보습"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["keratolytic_moisturizer"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=8"
+    },
+    {
+      "pathwayId": "bruise",
+      "protocolId": "PTC-BRUISE",
+      "efficacyAny": ["멍", "타박상", "좌상", "피하출혈"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["bruise_care"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=9"
+    },
+    {
+      "pathwayId": "corn_wart",
+      "protocolId": "PTC-CORN_WART",
+      "efficacyAny": ["티눈", "사마귀", "각질용해"],
+      "routeFormAny": ["피부", "외용", "경피"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["corn_keratolytic"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=10"
+    },
+    {
+      "pathwayId": "oral_contraception",
+      "protocolId": "PTC-ORAL_CONTRACEPTION",
+      "efficacyAny": ["피임", "경구피임", "월경 주기 조절"],
+      "routeFormAny": ["경구", "내용"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["oral_contraceptive"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=11"
+    },
+    {
+      "pathwayId": "gum_inflammation",
+      "protocolId": "PTC-GUM_INFLAMMATION",
+      "efficacyAny": ["치은염", "치주염", "잇몸 염증", "잇몸 출혈"],
+      "routeFormAny": ["경구", "내용", "구강", "치아"],
+      "officialCategoryAny": ["치과구강용약"],
+      "requireMechanismEvidence": true,
+      "mechanisms": ["periodontal_support"],
+      "combinationRole": "primary",
+      "priority": 120,
+      "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
     }
   ],
   "supportiveDirectRules": [

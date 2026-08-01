@@ -575,7 +575,7 @@ describe("actual research preview pack", () => {
     },
   );
 
-  it.each(["잇몸에서 피나요", "하루종일 졸려요"])(
+  it.each(["하루종일 졸려요"])(
     "asks for the symptom in plain words instead of borrowing an unrelated card: %s",
     (text) => {
       const engine = new LocalClinicalEngine(actualPack);
@@ -610,6 +610,31 @@ describe("actual research preview pack", () => {
       expect(result.output.decision.product_candidates).toEqual([]);
     },
   );
+
+  it("routes gum bleeding to the field-practice gum protocol", () => {
+    const engine = new LocalClinicalEngine(actualPack);
+    const result = engine.run(
+      {
+        request_id: crypto.randomUUID(),
+        session_id: crypto.randomUUID(),
+        sequence: 1,
+        input_type: "typed",
+        text: "잇몸에서 피나요",
+        is_partial: false,
+        locale: "ko-KR",
+        domain: "human_otc",
+        patient_context: {},
+        client_timestamp: new Date().toISOString(),
+      },
+      {
+        tenantId: "local-research-preview",
+        formulary: previewFormulary,
+      },
+    );
+
+    expect(result.output.decision.protocol_id).toBe("PTC-GUM_INFLAMMATION");
+    expect(result.output.decision.product_candidates.length).toBeGreaterThan(0);
+  });
 
   it("drops the active topic on a retraction instead of storing it as a fact", () => {
     const engine = new LocalClinicalEngine(actualPack);
@@ -942,7 +967,7 @@ describe("actual research preview pack", () => {
         "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=2021111700001",
       image_url: "/product-images/202107495.jpg",
     });
-    expect(actualPack.protocols).toHaveLength(26);
+    expect(actualPack.protocols).toHaveLength(39);
     expect(productProtocolProfileIds).toEqual(
       actualPack.protocols.map((protocol) => protocol.protocol_id).sort(),
     );
@@ -961,16 +986,15 @@ describe("actual research preview pack", () => {
     expect(actualPack.products.map((item) => item.display_name)).toContain(
       "액티피드정",
     );
-    // Every regulatory source stays official. One source deliberately is not:
-    // the pharmacists' book carries professional authority, not regulatory
-    // force, and must never be cited as a marketing authorisation. It is named
-    // here rather than waved through, so a second non-official source cannot
-    // arrive unnoticed.
+    // Every regulatory source stays official. These two sources deliberately
+    // are not: a pharmacists' book and local field-practice notes carry
+    // educational authority, not regulatory force. Name both so another
+    // non-official source cannot arrive unnoticed.
     expect(
       actualPack.sources
         .filter((item) => !item.official)
         .map((item) => item.source_id),
-    ).toEqual(["SRC-BOOK1-BOGYAK"]);
+    ).toEqual(["SRC-CENTRALPARK-OTC-PRACTICE", "SRC-BOOK1-BOGYAK"]);
   });
 
   it("uses the same therapeutic-role rule across unrelated protocols", () => {
@@ -1120,32 +1144,25 @@ describe("actual research preview pack", () => {
     ).toBe(222);
     expect(dialogueSeedReport.intentCount).toBe(74);
     expect(dialogueSeedReport.aliasCount).toBe(222);
-    expect(dialogueSeedReport.mappedIntentIds).toHaveLength(29);
-    expect(dialogueSeedReport.conversationOnlyIntentIds).toHaveLength(45);
+    expect(dialogueSeedReport.mappedIntentIds).toHaveLength(34);
+    expect(dialogueSeedReport.conversationOnlyIntentIds).toHaveLength(40);
     expect(
       actualPack.cards.find((card) => card.intent === "tinea_foot")?.aliases,
     ).toContain("무좀약 주세요");
   });
 
-  it("uses an unsupported seed as a natural conversation branch without inventing products", () => {
-    const engine = new LocalClinicalEngine(actualPack);
-    const result = engine.run({
-      request_id: crypto.randomUUID(),
-      session_id: crypto.randomUUID(),
-      sequence: 1,
-      input_type: "typed",
-      text: "무좀약 주세요",
-      is_partial: false,
-      locale: "ko-KR",
-      domain: "human_otc",
-      patient_context: {},
-      client_timestamp: new Date().toISOString(),
-    });
-    expect(result.output.intent).toBe("tinea_foot");
-    expect(result.output.decision.status).toBe("ask");
-    expect(result.output.say_now[0]).toBe("무좀 문의로 확인해 볼게요.");
-    expect(result.output.ask_next).toHaveLength(1);
-    expect(result.output.decision.product_candidates).toEqual([]);
+  it("routes a newly supported field-practice seed to official products", () => {
+    const [first, second] = consultationTurns([
+      "무좀약 주세요",
+      { text: "발가락 사이 피부가 가렵고 벗겨져요", answeredSlot: "body_site" },
+    ]);
+    expect(first?.output.decision.protocol_id).toBe("PTC-ANTIFUNGAL_SKIN");
+    expect(first?.output.decision.status).toBe("ask");
+    expect(second?.output.decision.protocol_id).toBe("PTC-ANTIFUNGAL_SKIN");
+    expect(second?.output.decision.status).toBe("recommend");
+    expect(second?.output.decision.product_candidates.length).toBeGreaterThan(
+      0,
+    );
   });
 
   it("keeps the research preview blocked in production", () => {

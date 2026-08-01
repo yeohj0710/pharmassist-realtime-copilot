@@ -1,0 +1,238 @@
+{
+  "schemaVersion": "1.0.0",
+  "researchOnly": true,
+  "protocols": [
+    {
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "displayName": "무좀·백선 외용제 후보 선별",
+      "intent": "병변 위치와 양상을 확인해 피부·발·손발톱 항진균 후보를 구분",
+      "symptomCategory": "피부/무좀·백선",
+      "aliases": ["무좀약", "발가락 사이가 가렵고 벗겨짐", "고리 모양 발진"],
+      "anchors": ["무좀", "백선"],
+      "keywords": ["어루러기", "진균", "발가락", "사타구니"],
+      "negative": ["당뇨발", "고름", "심한 통증", "손발톱 전체 변형"],
+      "page": 7
+    },
+    {
+      "protocolId": "PTC-ACNE",
+      "displayName": "여드름 외용제 후보 선별",
+      "intent": "좁쌀·붉은·화농성·피지형 여드름을 구분해 외용 후보를 비교",
+      "symptomCategory": "피부/여드름",
+      "aliases": ["여드름약", "좁쌀 여드름", "빨간 여드름"],
+      "anchors": ["여드름"],
+      "keywords": ["좁쌀", "화농성", "피지", "면포"],
+      "negative": ["심한 흉터", "얼굴 전체", "결절 여드름", "고열"],
+      "page": 10
+    },
+    {
+      "protocolId": "PTC-HEMORRHOID",
+      "displayName": "치질 증상 OTC 후보 선별",
+      "intent": "출혈·통증·돌출 양상을 확인해 국소제와 정맥순환 보조 후보를 구분",
+      "symptomCategory": "항문/치질",
+      "aliases": ["치질약", "치핵", "항문이 아파요"],
+      "anchors": ["치질", "치핵"],
+      "keywords": ["항문 통증", "치열", "돌출"],
+      "negative": ["검은 변", "많은 출혈", "출혈이 많", "심한 복통", "실신"],
+      "page": 10
+    },
+    {
+      "protocolId": "PTC-EYE_ALLERGY",
+      "activationStatus": "inventory_gap",
+      "activationNote": "현재 공식 제품 레지스트리에 PDF의 케토티펜·나파졸린 점안제가 없어 후보를 노출하지 않음",
+      "displayName": "알레르기·충혈 점안제 후보 선별",
+      "intent": "건조감과 알레르기성 가려움·충혈을 구분해 점안 후보를 비교",
+      "symptomCategory": "눈/알레르기·충혈",
+      "aliases": ["눈이 가렵고 빨개요", "알레르기 안약", "눈 충혈"],
+      "anchors": ["알레르기 결막염", "눈 가려움"],
+      "keywords": ["충혈", "결막염", "눈 자극"],
+      "negative": ["시력 저하", "심한 눈 통증", "눈 외상", "빛을 못 봄"],
+      "page": 9
+    },
+    {
+      "protocolId": "PTC-MINOR_BURN",
+      "displayName": "가벼운 화상 외용제 후보 선별",
+      "intent": "화상 깊이와 물집 여부를 확인해 가벼운 화상 관리 후보를 구분",
+      "symptomCategory": "피부/가벼운 화상",
+      "aliases": ["살짝 데었어요", "가벼운 화상", "화상약"],
+      "anchors": ["화상", "데임"],
+      "keywords": ["1도 화상", "물집", "뜨거운 물"],
+      "negative": [
+        "넓은 화상",
+        "얼굴 화상",
+        "전기 화상",
+        "화학 화상",
+        "검게 탐"
+      ],
+      "page": 9
+    },
+    {
+      "protocolId": "PTC-SCALP_DANDRUFF",
+      "displayName": "비듬·두피 외용제 후보 선별",
+      "intent": "비듬·지루성 두피와 염증 양상을 확인해 샴푸·외용 후보를 구분",
+      "symptomCategory": "피부/비듬·두피",
+      "aliases": ["비듬약", "두피가 가려워요", "지루성 두피"],
+      "anchors": ["비듬", "두피"],
+      "keywords": ["지루성", "각질", "두피 가려움"],
+      "negative": ["원형 탈모", "고름", "진물", "넓은 출혈"],
+      "page": 9
+    },
+    {
+      "protocolId": "PTC-HYPERHIDROSIS",
+      "displayName": "다한증 외용제 후보 선별",
+      "intent": "겨드랑이·손발과 안면 다한증을 구분해 외용 후보를 비교",
+      "symptomCategory": "피부/다한증",
+      "aliases": ["땀이 너무 많이 나요", "다한증약", "겨드랑이 땀"],
+      "anchors": ["다한증"],
+      "keywords": ["땀", "겨드랑이", "손발", "안면"],
+      "negative": ["식은땀과 흉통", "실신", "야간 전신 발한"],
+      "page": 10
+    },
+    {
+      "protocolId": "PTC-SLEEP_AID",
+      "displayName": "단기 수면보조제 후보 선별",
+      "intent": "잠들기 어려움과 수면 유지 문제를 구분해 단기 수면보조 후보를 비교",
+      "symptomCategory": "수면/단기 불면",
+      "aliases": ["잠이 안 와요", "수면유도제", "잠들기 어려워요"],
+      "anchors": ["불면", "수면"],
+      "keywords": ["입면", "수면 유지", "잠"],
+      "negative": ["자해 생각", "숨이 멎는 느낌", "2주 이상 불면", "심한 우울"],
+      "page": 11
+    },
+    {
+      "protocolId": "PTC-VAGINAL_ANTIFUNGAL",
+      "displayName": "질 가려움·칸디다 OTC 후보 선별",
+      "intent": "칸디다 의심 증상과 다른 질염 위험 신호를 구분해 외용·질정 후보를 비교",
+      "symptomCategory": "여성/질 가려움·칸디다",
+      "aliases": ["질염약", "질이 가려워요", "칸디다 질염"],
+      "anchors": ["질염", "칸디다"],
+      "keywords": ["질 가려움", "질 분비물", "질정"],
+      "negative": [
+        "임신",
+        "발열",
+        "골반 통증",
+        "악취 나는 분비물",
+        "반복 재발"
+      ],
+      "page": 11
+    },
+    {
+      "protocolId": "PTC-SMOKING_CESSATION",
+      "displayName": "니코틴 대체제 후보 선별",
+      "intent": "흡연량과 사용 선호를 확인해 껌·패치 니코틴 대체제를 비교",
+      "symptomCategory": "금연/니코틴 대체",
+      "aliases": ["금연약", "담배 끊고 싶어요", "니코틴 패치"],
+      "anchors": ["금연"],
+      "keywords": ["니코틴 껌", "니코틴 패치", "흡연"],
+      "negative": ["임신 중 흡연", "최근 흉통", "심한 부정맥"],
+      "page": 12
+    },
+    {
+      "protocolId": "PTC-SCAR_CARE",
+      "displayName": "상처 회복 후 흉터 관리 후보 선별",
+      "intent": "상처가 닫힌 뒤 솟은 흉터와 패인 흉터를 구분해 흉터 외용 후보를 비교",
+      "symptomCategory": "피부/흉터 관리",
+      "aliases": ["흉터약", "수술 흉터", "여드름 흉터"],
+      "anchors": ["흉터"],
+      "keywords": ["켈로이드", "패인 흉터", "수술 자국"],
+      "negative": ["열린 상처", "고름", "붉은 선이 번짐"],
+      "page": 10
+    },
+    {
+      "protocolId": "PTC-PIGMENTATION",
+      "activationStatus": "inventory_gap",
+      "activationNote": "현재 공식 제품 레지스트리에 PDF의 히드로퀴논 외용제가 없어 후보를 노출하지 않음",
+      "displayName": "기미·색소침착 외용제 후보 선별",
+      "intent": "기미와 상처 후 색소침착을 구분해 농도·제형별 후보를 비교",
+      "symptomCategory": "피부/기미·색소침착",
+      "aliases": ["기미약", "색소침착", "검은 자국"],
+      "anchors": ["기미", "색소침착"],
+      "keywords": ["주근깨", "갈색 반점", "여드름 자국"],
+      "negative": ["빠르게 커지는 반점", "출혈하는 점", "모양이 불규칙한 점"],
+      "page": 10
+    },
+    {
+      "protocolId": "PTC-ORAL_HERPES",
+      "activationStatus": "inventory_gap",
+      "activationNote": "현재 공식 제품 레지스트리에 PDF의 아시클로버·티로트리신 외용제가 없어 후보를 노출하지 않음",
+      "displayName": "구순포진 단계별 외용제 후보 선별",
+      "intent": "물집 전후 단계를 확인해 항바이러스제와 상처 후 국소제를 구분",
+      "symptomCategory": "구강/구순포진",
+      "aliases": ["입술 포진", "입술에 물집", "헤르페스"],
+      "anchors": ["구순포진", "입술 물집"],
+      "keywords": ["포진", "따끔거림", "물집"],
+      "negative": ["눈 주변 포진", "면역저하", "고열", "처음 생긴 심한 포진"],
+      "page": 8
+    },
+    {
+      "protocolId": "PTC-DRY_SKIN",
+      "activationStatus": "inventory_gap",
+      "activationNote": "현재 공식 제품 레지스트리에 PDF의 우레아·헤파리노이드 건피 외용제가 없어 후보를 노출하지 않음",
+      "displayName": "건피·각질 외용제 후보 선별",
+      "intent": "단순 건조와 두꺼운 각질을 구분해 보습·각질연화 후보를 비교",
+      "symptomCategory": "피부/건피·각질",
+      "aliases": ["피부가 너무 건조해요", "건피", "각질이 두꺼워요"],
+      "anchors": ["건피", "피부 건조"],
+      "keywords": ["각질", "갈라짐", "주부습진"],
+      "negative": ["진물", "고름", "넓게 벗겨짐", "고열"],
+      "page": 8
+    },
+    {
+      "protocolId": "PTC-BRUISE",
+      "displayName": "멍·타박상 외용제 후보 선별",
+      "intent": "단순 멍과 심한 외상 신호를 구분해 헤파린계 외용 후보를 비교",
+      "symptomCategory": "피부/멍·타박상",
+      "aliases": ["멍약", "타박상", "시퍼렇게 멍들었어요"],
+      "anchors": ["멍", "타박상"],
+      "keywords": ["피하출혈", "부딪힘"],
+      "negative": [
+        "머리 외상",
+        "머리를 다치",
+        "심한 부종",
+        "움직일 수 없음",
+        "원인 없는 반복 멍"
+      ],
+      "page": 9
+    },
+    {
+      "protocolId": "PTC-CORN_WART",
+      "activationStatus": "inventory_gap",
+      "activationNote": "현재 공식 제품 레지스트리에 PDF의 살리실산 티눈·사마귀 외용제가 없어 후보를 노출하지 않음",
+      "displayName": "티눈·사마귀 외용제 후보 선별",
+      "intent": "반복 압박성 티눈과 감염성 사마귀를 구분해 각질용해 후보를 비교",
+      "symptomCategory": "피부/티눈·사마귀",
+      "aliases": ["티눈약", "사마귀약", "발바닥에 딱딱한 심"],
+      "anchors": ["티눈", "사마귀"],
+      "keywords": ["살리실산", "발바닥 심"],
+      "negative": ["당뇨", "혈액순환 장애", "감염", "얼굴 병변"],
+      "page": 10
+    },
+    {
+      "protocolId": "PTC-ORAL_CONTRACEPTION",
+      "displayName": "경구피임제 시작·선택 상담",
+      "intent": "복용 목적과 혈전 위험을 확인해 세대·호르몬 함량별 후보를 비교",
+      "symptomCategory": "여성/경구피임",
+      "aliases": ["피임약", "생리 미루는 약", "경구피임제"],
+      "anchors": ["피임", "생리 미루기"],
+      "keywords": ["경구피임제", "월경 지연", "피임약 복용"],
+      "negative": [
+        "임신",
+        "전조 편두통",
+        "혈전증 병력",
+        "35세 이상 흡연",
+        "조절되지 않는 고혈압"
+      ],
+      "page": 11
+    },
+    {
+      "protocolId": "PTC-GUM_INFLAMMATION",
+      "displayName": "잇몸 염증·치은염 보조제 후보 선별",
+      "intent": "통증·출혈·감염 신호를 확인해 국소제와 치주 보조 후보를 비교",
+      "symptomCategory": "구강/잇몸 염증",
+      "aliases": ["잇몸약", "잇몸이 붓고 피나요", "치은염"],
+      "anchors": ["잇몸", "잇몸 염증", "치은염"],
+      "keywords": ["잇몸 출혈", "치주염", "잇몸 붓기"],
+      "negative": ["얼굴 부종", "고열", "고름", "치아가 흔들림"],
+      "page": 3
+    }
+  ]
+}

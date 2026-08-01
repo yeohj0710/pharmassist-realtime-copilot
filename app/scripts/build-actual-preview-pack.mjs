@@ -88,6 +88,24 @@ const clinicalPathwayDefinitionSource = join(
   "clinical-pathways",
   "pathways.json",
 );
+const fieldPracticeGuidanceSource = join(
+  root,
+  "data",
+  "clinical-pathways",
+  "field-practice-guidance.json",
+);
+const fieldPracticeProtocolsSource = join(
+  root,
+  "data",
+  "clinical-pathways",
+  "field-practice-protocols.json",
+);
+const fieldPracticeGuidanceReportOutput = join(
+  root,
+  "data",
+  "actual-candidate-pack",
+  "field-practice-guidance-report.json",
+);
 const healthKrLegacyMatchReportOutput = join(
   root,
   "data",
@@ -176,6 +194,11 @@ const intentProtocolMap = {
   insect_bite: "PTC-INSECT_BITE",
   nasal_spray_use: "PTC-NASAL_CONGESTION",
   eye_drop_use: "PTC-DRY_EYE",
+  tinea_foot: "PTC-ANTIFUNGAL_SKIN",
+  acne: "PTC-ACNE",
+  hemorrhoid_symptom: "PTC-HEMORRHOID",
+  vaginal_symptom: "PTC-VAGINAL_ANTIFUNGAL",
+  menstrual_delay_request: "PTC-ORAL_CONTRACEPTION",
 };
 
 const dialogueFor = (intent, dialogueCopies) => {
@@ -273,6 +296,8 @@ const [
   healthKrProductCrosswalk,
   clinicalPathwayMappings,
   clinicalPathwayDefinitions,
+  fieldPracticeGuidance,
+  fieldPracticeProtocols,
 ] = await Promise.all([
   readJsonl("source_snapshots.jsonl"),
   readJsonl("ingredients.jsonl"),
@@ -295,6 +320,8 @@ const [
   readFile(healthKrProductCrosswalkSource, "utf8").then(JSON.parse),
   readFile(clinicalPathwayMappingSource, "utf8").then(JSON.parse),
   readFile(clinicalPathwayDefinitionSource, "utf8").then(JSON.parse),
+  readFile(fieldPracticeGuidanceSource, "utf8").then(JSON.parse),
+  readFile(fieldPracticeProtocolsSource, "utf8").then(JSON.parse),
 ]);
 
 const healthKrRegistry = JSON.parse(healthKrRegistryBody);
@@ -310,11 +337,192 @@ const clinicalPathwayByProtocolId = new Map(
     pathway,
   ]),
 );
+const directProtocolIdsByItemSeq = new Map();
+for (const record of healthKrRegistry.records) {
+  const mapping = clinicalPathwayByRegistryRecordId.get(
+    record.registryRecordId,
+  );
+  const itemSeq = record.officialProduct?.itemSeq;
+  if (!itemSeq || mapping?.mappingStatus !== "direct") continue;
+  directProtocolIdsByItemSeq.set(
+    itemSeq,
+    new Set(mapping.pathways.map((pathway) => pathway.protocolId)),
+  );
+}
 if (
   clinicalPathwayMappings.schemaVersion !== "1.0.0" ||
   clinicalPathwayMappings.records.length !== healthKrRegistry.records.length
 )
   throw new Error("Clinical pathway mappings are missing or inconsistent");
+if (
+  fieldPracticeGuidance.schemaVersion !== "1.0.0" ||
+  fieldPracticeGuidance.researchOnly !== true ||
+  !Array.isArray(fieldPracticeGuidance.profiles) ||
+  !Array.isArray(fieldPracticeGuidance.legacyProtocolAllowlist) ||
+  !Array.isArray(fieldPracticeGuidance.protocolDenylist) ||
+  fieldPracticeGuidance.source?.contentSha256 !==
+    "779e353077ad73871c97ce2cf7656a2b067c848a14d7abbf485d76992c36d9df"
+)
+  throw new Error("Field-practice guidance is missing or inconsistent");
+const fieldPracticeRuleIds = new Set();
+for (const rule of fieldPracticeGuidance.profiles) {
+  if (
+    typeof rule.ruleId !== "string" ||
+    fieldPracticeRuleIds.has(rule.ruleId) ||
+    !Array.isArray(rule.protocolIds) ||
+    rule.protocolIds.length === 0 ||
+    !rule.protocolIds.every((protocolId) =>
+      clinicalPathwayByProtocolId.has(protocolId),
+    ) ||
+    !Array.isArray(rule.productNameAny) ||
+    rule.productNameAny.length === 0 ||
+    typeof rule.chooseWhen !== "string" ||
+    !Array.isArray(rule.differentiators) ||
+    rule.differentiators.length < 2 ||
+    typeof rule.comparisonNote !== "string" ||
+    !Array.isArray(rule.practicalPoints) ||
+    !Number.isInteger(rule.page) ||
+    rule.page < 1 ||
+    rule.page > fieldPracticeGuidance.source.pageCount
+  )
+    throw new Error(`Invalid field-practice rule: ${rule.ruleId ?? "unknown"}`);
+  fieldPracticeRuleIds.add(rule.ruleId);
+}
+const legacyProtocolAllowlistByProductId = new Map();
+for (const entry of fieldPracticeGuidance.legacyProtocolAllowlist) {
+  if (
+    typeof entry.productId !== "string" ||
+    legacyProtocolAllowlistByProductId.has(entry.productId) ||
+    !Array.isArray(entry.protocolIds) ||
+    entry.protocolIds.length === 0 ||
+    !entry.protocolIds.every((protocolId) =>
+      clinicalPathwayByProtocolId.has(protocolId),
+    )
+  )
+    throw new Error(
+      `Invalid legacy protocol allowlist: ${entry.productId ?? "unknown"}`,
+    );
+  legacyProtocolAllowlistByProductId.set(
+    entry.productId,
+    new Set(entry.protocolIds),
+  );
+}
+const deniedProtocolIdsByProductId = new Map();
+for (const entry of fieldPracticeGuidance.protocolDenylist) {
+  if (
+    typeof entry.productId !== "string" ||
+    deniedProtocolIdsByProductId.has(entry.productId) ||
+    !Array.isArray(entry.protocolIds) ||
+    entry.protocolIds.length === 0 ||
+    !entry.protocolIds.every((protocolId) =>
+      clinicalPathwayByProtocolId.has(protocolId),
+    )
+  )
+    throw new Error(
+      `Invalid protocol denylist: ${entry.productId ?? "unknown"}`,
+    );
+  deniedProtocolIdsByProductId.set(entry.productId, new Set(entry.protocolIds));
+}
+
+if (
+  fieldPracticeProtocols.schemaVersion !== "1.0.0" ||
+  fieldPracticeProtocols.researchOnly !== true ||
+  !Array.isArray(fieldPracticeProtocols.protocols) ||
+  fieldPracticeProtocols.protocols.length === 0
+)
+  throw new Error(
+    "Field-practice protocol definitions are missing or inconsistent",
+  );
+const sourceProtocolIds = new Set(protocols.map((item) => item.protocol_id));
+const extensionProtocolIds = new Set();
+const fieldPracticeProtocolSourceRef = (
+  protocolId,
+  page,
+  claimId = protocolId,
+) => ({
+  claim_id: claimId,
+  source_id: fieldPracticeGuidance.source.sourceId,
+  source_snapshot_id: fieldPracticeGuidance.source.sourceSnapshotId,
+  locator: `일반의약품 정리_센트럴파크약국.pdf p.${page} > 현장실습 제품군 선택 기준`,
+  verified_at: fieldPracticeGuidance.source.fetchedAt,
+});
+for (const protocol of fieldPracticeProtocols.protocols) {
+  if (
+    typeof protocol.protocolId !== "string" ||
+    sourceProtocolIds.has(protocol.protocolId) ||
+    extensionProtocolIds.has(protocol.protocolId) ||
+    !clinicalPathwayByProtocolId.has(protocol.protocolId) ||
+    typeof protocol.displayName !== "string" ||
+    typeof protocol.intent !== "string" ||
+    typeof protocol.symptomCategory !== "string" ||
+    !Array.isArray(protocol.aliases) ||
+    protocol.aliases.length === 0 ||
+    !Array.isArray(protocol.anchors) ||
+    protocol.anchors.length === 0 ||
+    !Array.isArray(protocol.keywords) ||
+    !Array.isArray(protocol.negative) ||
+    protocol.negative.length === 0 ||
+    (protocol.activationStatus !== undefined &&
+      protocol.activationStatus !== "inventory_gap") ||
+    (protocol.activationStatus === "inventory_gap" &&
+      (typeof protocol.activationNote !== "string" ||
+        protocol.activationNote.length === 0)) ||
+    !Number.isInteger(protocol.page) ||
+    protocol.page < 1 ||
+    protocol.page > fieldPracticeGuidance.source.pageCount
+  )
+    throw new Error(
+      `Invalid field-practice protocol: ${protocol.protocolId ?? "unknown"}`,
+    );
+  extensionProtocolIds.add(protocol.protocolId);
+}
+const extensionProtocols = fieldPracticeProtocols.protocols
+  .filter((protocol) => protocol.activationStatus !== "inventory_gap")
+  .map((protocol) => {
+    const suffix = protocol.protocolId.replace(/^PTC-/u, "");
+    return {
+      pack_id: "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      protocol_id: protocol.protocolId,
+      display_name: protocol.displayName,
+      domain: "human_otc",
+      intent: protocol.intent,
+      symptom_category: protocol.symptomCategory,
+      triggers: {
+        aliases: protocol.aliases,
+        anchors: protocol.anchors,
+        keywords: protocol.keywords,
+        // These terms are referral signals, not retrieval exclusions. Keeping
+        // them only in the refer rule lets the protocol be retrieved so the
+        // safety gate can return zero candidates.
+        negative: [],
+      },
+      version: "1.0.0",
+      status: "candidate",
+      expires_at: "2027-01-13T00:00:00+09:00",
+      option_ids: [],
+      rule_ids: [
+        `RUL-${suffix}-REFER-RED-FLAGS`,
+        `RUL-${suffix}-SELECT-FALLBACK`,
+      ],
+      source_refs: [
+        fieldPracticeProtocolSourceRef(
+          protocol.protocolId,
+          protocol.page,
+          protocol.protocolId,
+        ),
+      ],
+      review: {
+        expires_at: "2027-01-13T00:00:00+09:00",
+        notes:
+          "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지.",
+        official_source_verified: false,
+        pharmacist_approved: false,
+        reviewed_at: null,
+        reviewer_ids: [],
+      },
+    };
+  });
+const allProtocolTemplates = [...protocols, ...extensionProtocols];
 
 const normalizedIngredientName = (value) =>
   value.toLocaleLowerCase("ko-KR").replace(/[^0-9a-z가-힣]/gu, "");
@@ -375,6 +583,32 @@ const enrichmentSource = (item) => {
 };
 
 const newSources = [];
+newSources.push({
+  source_snapshot_id: fieldPracticeGuidance.source.sourceSnapshotId,
+  source_id: fieldPracticeGuidance.source.sourceId,
+  provider: "other",
+  official: false,
+  source_url: fieldPracticeGuidance.source.sourceUrl,
+  fetched_at: fieldPracticeGuidance.source.fetchedAt,
+  effective_at: null,
+  terms_url: null,
+  usage_rights: "unknown",
+  commercial_use: "unknown",
+  cache_policy: "unknown",
+  redistribution: "unknown",
+  ai_context_use: "unknown",
+  http_status: 200,
+  content_sha256: fieldPracticeGuidance.source.contentSha256,
+  content_type: "application/pdf",
+  parser_version: "centralpark-field-practice-guidance-v1.0.0",
+  record_count: fieldPracticeGuidance.profiles.length,
+  page_count: fieldPracticeGuidance.source.pageCount,
+  next_cursor: null,
+  status: "parsed",
+  raw_retention_policy: "none",
+  uncertainty:
+    "지역약국 실무실습 정리자료에서 제품 간 선택 기준을 구조화한 연구 미리보기입니다. 규제 근거 또는 약사 승인으로 간주하지 않으며 저작권과 재배포 권리는 확인 전입니다.",
+});
 const newProducts = [];
 const newProductIngredients = [];
 const enrichmentIndex = [];
@@ -481,6 +715,8 @@ if (
 const compactClinicalText = (value, maxLength = 360) => {
   if (typeof value !== "string") return "";
   const compact = value
+    .replace(/<\/?(?:sub|sup|br)\s*>/giu, " ")
+    .replace(/<([^<>]+)>/gu, "$1")
     .replace(/\bbr\b/giu, "\n")
     .replace(/\s+/gu, " ")
     .trim();
@@ -587,6 +823,8 @@ const mechanismSelectionGuidance = {
   antipyretic: "발열과 몸살 통증을 함께 낮춰야 하는 경우",
   antipruritic: "가려움 완화가 가장 중요한 경우",
   antiseptic: "가벼운 상처나 구강 부위의 살균이 필요한 경우",
+  topical_antibiotic:
+    "화농·감염 소견이 있는 상처에서 국소 항생제 적응증을 확인한 경우",
   antispasmodic: "쥐어짜는 양상의 경련성 통증이 함께 있는 경우",
   bile_support: "지방식 뒤 더부룩함처럼 담즙 보조가 필요한 소화불량인 경우",
   bulk_laxative: "변의 부피와 수분을 늘리는 완만한 변비 관리가 필요한 경우",
@@ -600,6 +838,8 @@ const mechanismSelectionGuidance = {
   expectorant: "가래를 묽게 하거나 배출을 도와야 하는 경우",
   gas_reduction: "가스와 복부팽만이 주된 불편인 경우",
   herbal_support: "공식 적응증에 맞는 생약 복합 보조를 함께 검토하는 경우",
+  herbal_antidiarrheal:
+    "정로환·오령산 계열처럼 설사 적응증이 있는 생약 복합제를 검토하는 경우",
   local_analgesia: "통증 부위에 국소적으로 작용하는 제형이 필요한 경우",
   local_antiinflammatory:
     "피부·구강·인후의 국소 염증을 직접 완화해야 하는 경우",
@@ -660,6 +900,335 @@ const evidenceMechanismsFor = (pathway, evidenceValues) => {
   );
   return supported.length > 0 ? supported : ["official_indication_match"];
 };
+const contextualSelectionGuidance = ({
+  protocolId,
+  mechanisms,
+  productName,
+  ingredients,
+  ingredientEvidence = ingredients,
+  dosageForm,
+  route,
+  matchedTerms = [],
+}) => {
+  const evidence = selectionEvidenceIdentity(
+    [productName, ingredientEvidence.join(" "), dosageForm, route].join(" "),
+  );
+  const has = (...terms) =>
+    terms.some((term) => evidence.includes(selectionEvidenceIdentity(term)));
+  const pediatric = has("어린이", "키즈", "소아", "챔프", "시럽");
+  const coldCombination = has(
+    "클로르페니라민",
+    "덱스트로메토르판",
+    "구아이페네신",
+    "슈도에페드린",
+    "메틸에페드린",
+    "티페피딘",
+  );
+  const oralSolidOrLiquid = /정제|캡슐|시럽/u.test(
+    `${dosageForm ?? ""} ${route ?? ""}`,
+  );
+
+  if (protocolId === "PTC-FEVER") {
+    if (coldCombination)
+      return "발열과 함께 콧물·코막힘·기침 같은 감기 증상도 있어 복합제를 검토하는 경우";
+    if (pediatric)
+      return "소아의 발열·통증에서 연령과 체중에 맞춰 액상 해열진통제를 선택하는 경우";
+  }
+  if (protocolId === "PTC-HEADACHE") {
+    if (has("나프록센"))
+      return "한쪽으로 오래 지속되는 편두통처럼 지속력이 중요한 경우";
+    if (has("이부프로펜", "덱시부프로펜"))
+      return "근육 긴장이나 염증성 통증이 동반된 두통을 검토하는 경우";
+    if (pediatric)
+      return "소아 두통에서 연령·체중별 용량이 확인된 액상 진통제가 필요한 경우";
+    if (has("아세트아미노펜"))
+      return "염증 억제보다 두통·발열의 진통 효과를 우선하는 경우";
+  }
+  if (protocolId === "PTC-MENSTRUAL_PAIN") {
+    if (has("파마브롬"))
+      return "생리통과 함께 붓기·복부 팽만감이 있어 이뇨 보조 성분도 필요한 경우";
+    if (has("이부프로펜", "덱시부프로펜", "나프록센"))
+      return "염증성 생리통의 통증과 경련 완화를 우선하는 경우";
+  }
+  if (protocolId === "PTC-JOINT_PAIN") {
+    if (has("나프록센"))
+      return "오래 지속되는 허리·관절의 말초 염증성 통증에서 지속력을 우선하는 경우";
+    if (has("겔", "연고", "플라스타", "카타플라스마", "외용"))
+      return "관절 통증 부위에 먹는 약보다 국소 제형을 직접 적용하려는 경우";
+    return "붓기나 염증을 동반한 관절 통증에 소염진통 작용이 필요한 경우";
+  }
+  if (protocolId === "PTC-MUSCLE_PAIN") {
+    if (has("클로르족사존", "메토카르바몰"))
+      return "근육이 뭉치거나 경련성 통증이 있어 근이완 성분을 함께 검토하는 경우";
+    if (has("겔", "연고", "플라스타", "카타플라스마", "외용"))
+      return "한정된 근육 통증 부위에 국소 제형을 직접 적용하려는 경우";
+    return "몸살이 아니라 근육통 자체의 진통 완화가 필요한 경우";
+  }
+  if (protocolId === "PTC-RUNNY_NOSE") {
+    if (coldCombination && has("아세트아미노펜"))
+      return "콧물과 함께 발열·몸살·기침 등 여러 감기 증상이 같이 있는 경우";
+    if (has("슈도에페드린", "페닐레프린"))
+      return "콧물과 코막힘이 함께 있어 항히스타민과 비충혈제거 작용을 같이 검토하는 경우";
+    return "재채기·맑은 콧물·가려움이 두드러지는 알레르기성 콧물인 경우";
+  }
+  if (protocolId === "PTC-ALLERGIC_RHINITIS") {
+    if (has("펙소페나딘"))
+      return "운전·업무 때문에 졸림을 가장 줄여야 하는 알레르기 비염인 경우";
+    if (has("로라타딘"))
+      return "알레르기 비염에서 효과와 졸림 감소의 균형을 우선하는 경우";
+    if (has("세티리진"))
+      return pediatric
+        ? "소아 알레르기 비염에서 연령별 액상 용량이 확인된 세티리진이 필요한 경우"
+        : "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있는 경우";
+  }
+  if (protocolId === "PTC-NASAL_CONGESTION") {
+    if (has("자일로메타졸린"))
+      return "코막힘에 빠르게 작용하는 4~6시간 지속 국소 스프레이가 필요한 경우";
+    if (has("옥시메타졸린"))
+      return "코막힘에 빠르게 작용하고 약 12시간 지속하는 국소 스프레이가 필요한 경우";
+    if (coldCombination && has("아세트아미노펜"))
+      return "코막힘과 함께 발열·기침·콧물 등 여러 감기 증상이 같이 있는 경우";
+    if (has("슈도에페드린", "페닐레프린"))
+      return "먹는 약으로 코막힘을 줄이되 동반 성분과 졸림 가능성을 함께 확인하는 경우";
+  }
+  if (protocolId === "PTC-PRODUCTIVE_COUGH") {
+    if (has("아세틸시스테인", "암브록솔", "브롬헥신", "카르보시스테인"))
+      return "끈적하고 배출하기 어려운 가래를 묽게 하는 작용이 우선인 경우";
+    if (coldCombination)
+      return "기침과 가래에 콧물·코막힘·통증 같은 감기 증상도 함께 있는 경우";
+    return "가래를 묽게 하거나 배출을 도와야 하는 기침인 경우";
+  }
+  if (protocolId === "PTC-DRY_COUGH") {
+    if (coldCombination && has("아세트아미노펜"))
+      return "마른기침과 함께 발열·인후통·콧물 같은 감기 증상도 있는 경우";
+    return "가래보다 마른기침 억제가 우선인 경우";
+  }
+  if (protocolId === "PTC-SORE_THROAT") {
+    if (coldCombination && has("아세트아미노펜"))
+      return "인후통과 함께 발열·기침·콧물 같은 감기 증상도 있는 경우";
+    if (has("트로키", "스프레이", "가글", "액"))
+      return "인후의 국소 통증·염증 부위에 직접 사용하는 제형이 필요한 경우";
+  }
+  if (protocolId === "PTC-URTICARIA_ITCH") {
+    if (has("펙소페나딘"))
+      return "두드러기·전신 가려움에서 졸림을 가장 줄여야 하는 경우";
+    if (has("로라타딘"))
+      return "두드러기·전신 가려움에서 효과와 졸림 감소의 균형을 우선하는 경우";
+    if (has("세티리진"))
+      return pediatric
+        ? "소아 두드러기·가려움에 연령별 액상 용량이 확인된 세티리진이 필요한 경우"
+        : "두드러기·전신 가려움 완화 효과를 우선하고 졸림 가능성을 감수할 수 있는 경우";
+    return "두드러기와 전신 가려움에 먹는 항히스타민제가 필요한 경우";
+  }
+  if (protocolId === "PTC-INSECT_BITE") {
+    if (oralSolidOrLiquid)
+      return "벌레 물림 뒤 가려움이 넓게 퍼져 먹는 항히스타민제를 검토하는 경우";
+    return "벌레 물린 국소 부위의 가려움과 염증을 직접 완화하는 외용제가 필요한 경우";
+  }
+  if (protocolId === "PTC-MILD_DERMATITIS")
+    return "감염이나 진균 소견이 없는 가벼운 습진·피부염의 가려움과 염증을 줄이는 경우";
+  if (protocolId === "PTC-MINOR_WOUND") {
+    if (has("퓨시드산", "무피로신"))
+      return "화농·감염 소견이 있는 상처에서 국소 항생제 적응증을 확인한 경우";
+    if (has("포비돈", "클로르헥시딘", "세틸피리디늄"))
+      return "가벼운 상처를 넓은 범위로 소독해야 하는 경우";
+    return "감염 소견이 없는 가벼운 상처의 보호와 피부 회복을 보조하는 경우";
+  }
+  if (protocolId === "PTC-ABDOMINAL_PAIN_VOMITING") {
+    if (has("트리메부틴"))
+      return "소화불량과 함께 위장 운동이 불규칙해 복통·구역이 나타나는 경우";
+    if (has("로페라미드", "비스무트", "베르베린"))
+      return "설사와 함께 복통·구역이 나타나고 감염 위험 신호는 없는 경우";
+    if (has("소화효소", "디아스타제", "프로테아제"))
+      return "과식·체함 뒤 소화불량과 함께 복통·구역이 나타나는 경우";
+    if (has("디오스멕타이트", "스멕타이트"))
+      return "묽은 설사와 함께 복통이 있어 흡착·점막 보호가 필요한 경우";
+    if (has("인산알루미늄", "수산화마그네슘", "알긴산"))
+      return "속쓰림·신트림·위산과다와 함께 윗배 통증이나 구역이 나타나는 경우";
+    return "복통·구역·구토가 해당 제품의 공식 소화기 적응증과 함께 나타나는 경우";
+  }
+  if (protocolId === "PTC-CONSTIPATION")
+    return "배변이 어렵거나 딱딱한 변에서 하제 기전과 제형을 비교하는 경우";
+  if (protocolId === "PTC-DIARRHEA")
+    return "급성·만성 여부와 감염 위험 신호를 확인한 뒤 설사 기전에 맞춰 비교하는 경우";
+  if (protocolId === "PTC-MENSTRUAL_PAIN")
+    return "생리통 양상과 부종·경련 동반 여부에 맞춰 진통 성분을 비교하는 경우";
+  if (protocolId === "PTC-NASAL_CONGESTION")
+    return "코막힘의 주된 불편과 동반 감기·알레르기 증상에 맞춰 성분과 제형을 비교하는 경우";
+  if (protocolId === "PTC-SORE_THROAT")
+    return "인후통의 주된 불편과 기침·가래 동반 여부에 맞춰 국소제와 복합제를 비교하는 경우";
+  if (protocolId === "PTC-STOMATITIS")
+    return "구내염의 개수와 위치에 따라 바르는 제형·붙이는 제형·가글 제형을 비교하는 경우";
+  if (protocolId === "PTC-ANTIFUNGAL_SKIN") {
+    if (has("테르비나핀", "나프티핀"))
+      return "발가락 사이·발바닥의 전형적인 피부사상균성 무좀에서 짧은 치료 기간을 우선하는 경우";
+    if (has("클로트리마졸", "에코나졸"))
+      return "무좀뿐 아니라 완선·체부백선·어루러기처럼 병변 범위가 다양해 광범위 아졸계가 필요한 경우";
+    if (has("시클로피록스"))
+      return "두꺼운 각질이나 손발톱 주변 병변처럼 제형과 도포 부위에 맞춘 항진균제가 필요한 경우";
+    if (has("케토코나졸"))
+      return "지루성 피부염이나 어루러기와 함께 말라세지아 관련 병변을 의심하는 경우";
+    return "병변 위치와 진균 양상을 확인한 뒤 공식 백선·무좀 적응증에 맞는 외용제를 고르는 경우";
+  }
+  if (protocolId === "PTC-ACNE") {
+    if (has("벤조일퍼옥사이드"))
+      return "붉고 염증성인 여드름에서 면포 용해와 여드름균 감소를 함께 기대하는 경우";
+    if (has("살리실산"))
+      return "피지와 각질이 막힌 좁쌀·면포성 여드름에서 각질 용해를 우선하는 경우";
+    if (has("아젤라산"))
+      return "면포와 염증 뒤 색소침착을 함께 고려해 자극이 비교적 적은 성분을 원하는 경우";
+    if (has("퓨시드산", "무피로신"))
+      return "긁거나 터뜨린 여드름에 이차 세균감염 소견이 있어 국소 항생제 적응증을 확인한 경우";
+    return "면포·염증·화농 여부를 구분해 공식 여드름 적응증이 있는 외용제를 고르는 경우";
+  }
+  if (protocolId === "PTC-HEMORRHOID") {
+    if (has("디오스민"))
+      return "치핵의 붓기·출혈과 정맥 울혈을 안쪽에서 보조하는 경구제가 필요한 경우";
+    if (has("리도카인"))
+      return "치열·치핵의 국소 통증과 가려움이 두드러져 빠른 국소 마취 효과가 필요한 경우";
+    if (has("히드로코르티손"))
+      return "감염 소견 없이 치핵의 염증·가려움·부종이 두드러져 단기간 스테로이드 국소제를 검토하는 경우";
+    return "출혈·통증·돌출 양상과 제형 사용 가능 여부를 확인해 치질 국소제 또는 정맥순환 보조제를 고르는 경우";
+  }
+  if (protocolId === "PTC-EYE_ALLERGY") {
+    if (has("케토티펜", "크로모글리크산"))
+      return "양쪽 눈의 알레르기성 가려움이 반복되고 통증·시력저하가 없어 항알레르기 점안제가 필요한 경우";
+    if (has("나파졸린", "테트라히드로졸린"))
+      return "단순 충혈이 주증상이고 녹내장 위험·장기 사용을 피할 수 있어 혈관수축 점안제를 짧게 쓰는 경우";
+    if (has("페니라민"))
+      return "충혈과 알레르기성 가려움이 함께 있어 항히스타민·충혈 완화 복합 점안제를 검토하는 경우";
+    return "건조감이 아니라 알레르기성 가려움·충혈이 주증상이고 통증·시력저하가 없는 경우";
+  }
+  if (protocolId === "PTC-MINOR_BURN") {
+    if (has("구아야줄렌"))
+      return "물집이 없는 가벼운 1도 화상에서 냉각 뒤 염증과 화끈거림을 진정시키는 경우";
+    if (has("트롤아민", "베타시토스테롤"))
+      return "작은 물집이 생긴 얕은 2도 화상에서 피부 보호와 습윤 환경 유지가 필요한 경우";
+    if (has("퓨시드산", "네오마이신"))
+      return "가벼운 화상 자체가 아니라 화상 부위의 이차 세균감염이 확인되거나 강하게 의심되는 경우";
+    if (has("덱스판테놀"))
+      return "감염 소견이 없는 가벼운 화상에서 피부 장벽 회복을 보조하는 외용제가 필요한 경우";
+    if (has("포비돈요오드"))
+      return "화상 부위에 오염이 있어 살균소독이 필요하지만 조직 손상을 늘릴 반복 사용은 피하는 경우";
+    return "넓거나 깊지 않은 화상에서 충분히 식힌 뒤 공식 화상 적응증이 있는 외용제를 고르는 경우";
+  }
+  if (protocolId === "PTC-SCALP_DANDRUFF") {
+    if (has("케토코나졸"))
+      return "기름진 비듬과 가려움이 반복되는 지루성 두피에서 말라세지아 억제 샴푸가 필요한 경우";
+    if (has("시클로피록스"))
+      return "케토코나졸과 다른 항진균 기전의 지루성 두피 치료용 샴푸를 검토하는 경우";
+    return "두피의 비듬·지루성 피부염이 주증상이고 진물·고름·탈모 반점이 없는 경우";
+  }
+  if (protocolId === "PTC-HYPERHIDROSIS") {
+    if (has("글리코피롤레이트"))
+      return "안면 다한증에서 눈·입 주변을 피할 수 있고 항콜린성 국소제를 검토하는 경우";
+    if (has("염화알루미늄"))
+      return "겨드랑이·손·발의 국소 다한증에서 땀샘 관을 막는 외용제를 마른 피부에 쓰는 경우";
+    return "전신 식은땀 원인이 아니라 특정 부위 다한증에 공식 적응증이 있는 외용제를 고르는 경우";
+  }
+  if (protocolId === "PTC-SLEEP_AID") {
+    if (has("독실아민"))
+      return "다음 날까지 졸림이 이어질 수 있음을 감수하고 비교적 지속적인 단기 수면 보조가 필요한 경우";
+    if (has("디펜히드라민"))
+      return "일시적으로 잠들기 어려운 성인이 다음 날 운전·음주를 피할 수 있어 단기 수면 보조를 원하는 경우";
+    return "2주 미만의 일시적 입면 곤란이고 호흡·우울·약물 원인을 먼저 배제한 경우";
+  }
+  if (protocolId === "PTC-VAGINAL_ANTIFUNGAL") {
+    if (has("클로트리마졸"))
+      return "심한 냄새·발열·골반통 없이 흰 치즈양 분비물과 가려움이 있어 칸디다 질염을 의심하는 경우";
+    if (has("니푸라텔", "니스타틴"))
+      return "칸디다 외 혼합 감염 가능성을 진단받았거나 해당 복합제의 공식 적응증을 확인한 경우";
+    if (has("포비돈요오드"))
+      return "칸디다·트리코모나스·비특이성 또는 혼합 질염에 공식 적응증이 있는 광범위 질세정제를 검토하되 임신·갑상선 질환을 먼저 확인하는 경우";
+    return "처음이거나 반복되는 원인 불명 질염이 아니라 전형적인 칸디다 증상에 공식 질용 항진균제를 고르는 경우";
+  }
+  if (protocolId === "PTC-SMOKING_CESSATION") {
+    if (has("니코레트껌4mg"))
+      return "하루 20개비를 초과해 피우거나 2mg 니코틴껌으로 금연에 실패한 경우";
+    if (has("니코레트껌2mg", "니코틴엘껌2mg"))
+      return "하루 20개비 이하를 피우며 갑작스러운 흡연 욕구를 필요할 때 조절하려는 경우";
+    if (has("tts30"))
+      return "하루 20개비 이상 피우는 심한 흡연자가 패치 단계 감량을 시작하는 경우";
+    if (has("tts20"))
+      return "하루 20개비 이하 흡연자가 패치를 시작하거나 고용량 패치에서 감량하는 경우";
+    if (has("tts10"))
+      return "니코틴 패치 치료의 마지막 단계에서 보충량을 줄이는 경우";
+    if (has("껌", "로젠지", "트로키"))
+      return "갑자기 올라오는 흡연 욕구를 필요할 때 조절하고 씹기·구강 사용법을 지킬 수 있는 경우";
+    if (has("패치", "경피"))
+      return "하루 종일 일정한 니코틴 보충이 필요하고 피부 부착제를 매일 교체할 수 있는 경우";
+    return "하루 흡연량과 첫 흡연 시간을 확인해 적절한 강도의 니코틴 대체제를 고르는 경우";
+  }
+  if (protocolId === "PTC-SCAR_CARE") {
+    if (has("실리콘"))
+      return "상처가 완전히 닫힌 뒤 솟거나 붉은 수술·외상 흉터를 넓게 덮어 관리하는 경우";
+    if (has("헤파린", "양파"))
+      return "상처가 닫힌 뒤 단단하거나 당기는 흉터에 마사지 가능한 겔 제형을 원하는 경우";
+    return "열린 상처·감염이 없는 회복된 흉터에서 흉터 형태와 면적에 맞는 외용제를 고르는 경우";
+  }
+  if (protocolId === "PTC-PIGMENTATION") {
+    if (has("히드로퀴논"))
+      return "기미·주근깨·염증 후 색소침착에 자외선 차단을 병행하며 국소 탈색제를 제한된 기간 쓰는 경우";
+    if (has("아젤라산"))
+      return "여드름과 함께 남은 색소침착을 관리하면서 히드로퀴논보다 다른 기전을 원하는 경우";
+    return "빠르게 변하는 점이 아닌 기미·주근깨·염증 후 색소침착에 공식 외용 적응증을 확인한 경우";
+  }
+  if (protocolId === "PTC-ORAL_HERPES") {
+    if (has("아시클로버"))
+      return "입술이 따끔거리거나 작은 물집이 막 생긴 구순포진 초기라 항바이러스 외용제를 일찍 시작하는 경우";
+    if (has("티로트리신"))
+      return "구순포진 물집이 터진 뒤 작은 상처의 이차 세균감염 예방을 위한 국소 항균제를 검토하는 경우";
+    return "눈 주변이 아닌 재발성 구순포진에서 물집 전후 단계에 맞는 외용제를 고르는 경우";
+  }
+  if (protocolId === "PTC-DRY_SKIN") {
+    if (has("요소", "우레아"))
+      return "단순 보습만으로 부족한 두껍고 거친 각질·갈라짐에 각질연화와 보습이 함께 필요한 경우";
+    if (has("헤파리노이드"))
+      return "건조하고 거친 피부에 보습과 혈행 보조를 함께 기대하되 출혈 위험을 확인한 경우";
+    return "진물·고름이 없는 건조 피부에서 보습 또는 각질연화 기전에 맞는 외용제를 고르는 경우";
+  }
+  if (protocolId === "PTC-BRUISE") {
+    if (has("헤파린", "헤파리노이드"))
+      return "피부가 벗겨지지 않은 단순 멍·타박상에서 국소 혈종과 부종 완화를 보조하는 경우";
+    return "골절·머리 외상·원인 없는 반복 멍이 아닌 가벼운 타박상에 공식 외용 적응증을 확인한 경우";
+  }
+  if (protocolId === "PTC-CORN_WART") {
+    if (has("밴드", "플라스타"))
+      return "압박점이 분명한 작은 티눈을 정확히 덮어 살리실산을 제한된 부위에 적용하는 경우";
+    if (has("액", "콜로디온"))
+      return "티눈·사마귀 모양에 맞춰 정상 피부를 피하면서 액상 각질용해제를 바를 수 있는 경우";
+    return "당뇨·순환장애가 없고 티눈·사마귀가 얼굴이나 점막이 아닌 곳에 있는 경우";
+  }
+  if (protocolId === "PTC-ORAL_CONTRACEPTION") {
+    if (has("디어미순"))
+      return "게스토덴 0.06mg·에티닐에스트라디올 0.015mg의 24일 활성약+4일 위약 일정을 매일 이어서 복용할 수 있는 경우";
+    if (has("마이보라"))
+      return "게스토덴 0.075mg·에티닐에스트라디올 0.03mg의 21일 복용+7일 휴약 일정을 선택한 경우";
+    if (has("센스리베", "디어미정"))
+      return "게스토덴 0.075mg·에티닐에스트라디올 0.02mg의 21일 복용+7일 휴약 일정을 선택한 경우";
+    if (has("머시론", "센스데이"))
+      return "데소게스트렐 0.15mg·에티닐에스트라디올 0.02mg의 21일 복용+7일 휴약 일정을 선택한 경우";
+    if (has("레보노르게스트렐"))
+      return "경구피임을 처음 시작하며 혈전 위험을 확인한 뒤 레보노르게스트렐 함유 저용량 복합제를 우선 검토하는 경우";
+    if (has("데소게스트렐", "게스토덴"))
+      return "피임 효과 외 여드름·주기 증상도 고려하되 세대별 혈전 위험 차이를 설명한 경우";
+    return "임신 가능성과 혈전 위험을 먼저 배제하고 피임·월경 지연 목적에 맞춰 복용 일정을 정하는 경우";
+  }
+  if (protocolId === "PTC-GUM_INFLAMMATION") {
+    if (has("리소짐", "카르바조크롬"))
+      return "치과 치료를 대신하지 않고 경·중등도 치은염·치주염 치료 뒤 붓기와 출혈을 보조하는 경우";
+    return "얼굴 부종·고열·고름이 없고 치은염·치주염의 보조치료 적응증이 확인된 경우";
+  }
+
+  const statements = mechanisms
+    .map((mechanism) => mechanismSelectionGuidance[mechanism])
+    .filter(Boolean);
+  if (statements.length > 0) return [...new Set(statements)].join(" 또는 ");
+  const matched = [...new Set(matchedTerms)].join("·");
+  return matched
+    ? `공식 효능에 ${matched}가 포함된 ${dosageForm ?? "제품"}을 검토하는 경우`
+    : "제품의 공식 효능·효과와 현재 증상이 직접 맞는 경우";
+};
 const healthKrSelectionProfiles = (record, pathwayMapping) => {
   const official = record.officialProduct;
   const ingredients = pathwayMapping.ingredientMappings
@@ -672,9 +1241,6 @@ const healthKrSelectionProfiles = (record, pathwayMapping) => {
     .join(" · ");
   const population = dosagePopulationLabel(official.dosage, official.itemName);
   return pathwayMapping.pathways.map((pathway) => {
-    const fitStatements = pathway.mechanisms
-      .map((mechanism) => mechanismSelectionGuidance[mechanism])
-      .filter(Boolean);
     const differentiators = [
       ingredients.length > 0 ? `주요 성분: ${ingredients.join(", ")}` : null,
       form ? `제형·투여경로: ${form}` : null,
@@ -687,11 +1253,18 @@ const healthKrSelectionProfiles = (record, pathwayMapping) => {
     return {
       protocol_id: pathway.protocolId,
       fit_score: pathway.score,
-      choose_when: pathway.mechanisms.includes("official_indication_match")
-        ? `공식 효능에 ${pathway.matchedTerms.join("·")}가 포함된 ${official.dosageForm ?? "제품"}을 검토하는 경우`
-        : fitStatements.length > 0
-          ? [...new Set(fitStatements)].join(" 또는 ")
-          : "제품의 공식 효능·효과와 현재 증상이 직접 맞는 경우",
+      choose_when: contextualSelectionGuidance({
+        protocolId: pathway.protocolId,
+        mechanisms: pathway.mechanisms,
+        productName: official.itemName,
+        ingredients,
+        ingredientEvidence: pathwayMapping.ingredientMappings.map(
+          (mapping) => mapping.sourceText,
+        ),
+        dosageForm: official.dosageForm,
+        route: official.route,
+        matchedTerms: pathway.matchedTerms,
+      }),
       differentiators,
       comparison_note:
         pathway.combinationRole === "supportive"
@@ -946,17 +1519,18 @@ const generatedIngredients = [...generatedIngredientById.values()];
 const generatedProtocolOptions = [];
 const generatedClaims = [];
 for (const group of generatedOptionGroups.values()) {
-  const protocolTemplate = protocols.find(
+  const protocolTemplate = allProtocolTemplates.find(
     (protocol) => protocol.protocol_id === group.protocolId,
   );
   const optionTemplate = protocolOptions.find(
     (option) => option.protocol_id === group.protocolId,
   );
-  if (!protocolTemplate || !optionTemplate)
+  if (!protocolTemplate)
     throw new Error(
       `Clinical pathway protocol is missing: ${group.protocolId}`,
     );
   const suffix = `${group.protocolId.replace(/^PTC-/u, "")}-${group.ingredientId.replace(/^ING-/u, "")}`;
+  const protocolSuffix = group.protocolId.replace(/^PTC-/u, "");
   const optionId = `OPT-PATHWAY-${suffix}`;
   const claimId = `CLM-PATHWAY-${suffix}-INDICATION`;
   const supportive =
@@ -972,8 +1546,12 @@ for (const group of generatedOptionGroups.values()) {
     protocol_id: group.protocolId,
     ingredient_id: group.ingredientId,
     display_name: group.displayName,
-    eligibility_rule_ids: optionTemplate.eligibility_rule_ids,
-    exclusion_rule_ids: optionTemplate.exclusion_rule_ids,
+    eligibility_rule_ids: optionTemplate?.eligibility_rule_ids ?? [
+      `RUL-${protocolSuffix}-SELECT-FALLBACK`,
+    ],
+    exclusion_rule_ids: optionTemplate?.exclusion_rule_ids ?? [
+      `RUL-${protocolSuffix}-REFER-RED-FLAGS`,
+    ],
     claim_ids: [claimId],
     clinical_priority: Math.min(99, Math.max(50, group.score)),
     // Newly expanded options have official product safety text, but they have
@@ -1024,6 +1602,69 @@ for (const group of generatedOptionGroups.values()) {
     review: generatedReview,
   });
 }
+const extensionProtocolRules = extensionProtocols.flatMap((protocol) => {
+  const definition = fieldPracticeProtocols.protocols.find(
+    (item) => item.protocolId === protocol.protocol_id,
+  );
+  const optionIds = generatedProtocolOptions
+    .filter((option) => option.protocol_id === protocol.protocol_id)
+    .map((option) => option.option_id);
+  if (!definition || optionIds.length === 0)
+    throw new Error(
+      `Field-practice protocol has no official product candidates: ${protocol.protocol_id}`,
+    );
+  const suffix = protocol.protocol_id.replace(/^PTC-/u, "");
+  const referRuleId = `RUL-${suffix}-REFER-RED-FLAGS`;
+  const selectRuleId = `RUL-${suffix}-SELECT-FALLBACK`;
+  return [
+    {
+      rule_id: referRuleId,
+      protocol_id: protocol.protocol_id,
+      kind: "referral_pattern",
+      effect: "refer",
+      field: "normalized_text",
+      operator: "matches",
+      value: definition.negative,
+      option_ids: [],
+      question: null,
+      reason:
+        "현장실습 자료의 의뢰 신호가 있으면 제품 후보를 비우고 진료를 우선합니다.",
+      priority: 100,
+      status: "candidate",
+      review: protocol.review,
+      source_refs: [
+        fieldPracticeProtocolSourceRef(
+          protocol.protocol_id,
+          definition.page,
+          referRuleId,
+        ),
+      ],
+    },
+    {
+      rule_id: selectRuleId,
+      protocol_id: protocol.protocol_id,
+      kind: "selection_pattern",
+      effect: "select",
+      field: "triage.red_flags_absent_and_minimum_safety_known",
+      operator: "equals",
+      value: true,
+      option_ids: optionIds,
+      question: null,
+      reason:
+        "위험 신호가 없을 때 공식 효능과 제품별 현장 선택 기준이 있는 후보만 제공합니다.",
+      priority: 70,
+      status: "candidate",
+      review: protocol.review,
+      source_refs: [
+        fieldPracticeProtocolSourceRef(
+          protocol.protocol_id,
+          definition.page,
+          selectRuleId,
+        ),
+      ],
+    },
+  ];
+});
 const packComposition = (product) =>
   new Set(
     (product.active_ingredients ?? []).map((ingredient) =>
@@ -1164,7 +1805,30 @@ const healthKrEnrichmentProductIds = new Set(
     .filter((item) => item.healthkr_url.includes("/result_drug.asp"))
     .map((item) => item.product_id),
 );
+const explicitlyClaimedProtocolIdsFor = (productId) =>
+  new Set(
+    claims.flatMap((claim) => {
+      if (
+        claim.claim_type !== "indication" ||
+        typeof claim.object !== "object" ||
+        claim.object === null ||
+        Array.isArray(claim.object) ||
+        !claim.object.candidate_product_ids?.includes(productId)
+      )
+        return [];
+      const protocolId = claim.qualifiers?.protocol_id;
+      return typeof protocolId === "string" ? [protocolId] : [];
+    }),
+  );
 const legacySelectionProfilesFor = (product) => {
+  const directlyMappedProtocolIds = directProtocolIdsByItemSeq.get(
+    product.item_seq,
+  );
+  const explicitlyClaimedProtocolIds = explicitlyClaimedProtocolIdsFor(
+    product.product_id,
+  );
+  const allowedLegacyProtocolIds =
+    legacyProtocolAllowlistByProductId.get(product.product_id) ?? new Set();
   const ingredientIds = new Set(
     [...productIngredients, ...newProductIngredients]
       .filter(
@@ -1175,26 +1839,30 @@ const legacySelectionProfilesFor = (product) => {
       )
       .map((link) => link.ingredient_id),
   );
-  const protocolIds = new Set(
-    claims.flatMap((claim) => {
-      if (
-        claim.claim_type !== "indication" ||
-        typeof claim.object !== "object" ||
-        claim.object === null ||
-        Array.isArray(claim.object) ||
-        !claim.object.candidate_product_ids?.includes(product.product_id)
-      )
-        return [];
-      const protocolId = claim.qualifiers?.protocol_id;
-      return typeof protocolId === "string" ? [protocolId] : [];
-    }),
-  );
+  const protocolIds = new Set(explicitlyClaimedProtocolIds);
   for (const option of protocolOptions)
     if (ingredientIds.has(option.ingredient_id))
       protocolIds.add(option.protocol_id);
   return [...protocolIds].flatMap((protocolId) => {
+    if (
+      directlyMappedProtocolIds &&
+      !directlyMappedProtocolIds.has(protocolId) &&
+      !allowedLegacyProtocolIds.has(protocolId)
+    )
+      return [];
     const pathway = clinicalPathwayByProtocolId.get(protocolId);
     if (!pathway) return [];
+    const activeIngredientText = (product.active_ingredients ?? [])
+      .map((ingredient) => ingredient.name)
+      .join(" ");
+    if (
+      (pathway.activeIngredientNone ?? []).some((term) =>
+        selectionEvidenceIdentity(activeIngredientText).includes(
+          selectionEvidenceIdentity(term),
+        ),
+      )
+    )
+      return [];
     const fitScore = Math.max(
       pathway.priority ?? 0,
       ...protocolOptions
@@ -1222,17 +1890,27 @@ const legacySelectionProfilesFor = (product) => {
         (ingredient) => ingredient.name,
       ),
     ]);
+    if (
+      pathway.requireMechanismEvidence === true &&
+      mechanisms.includes("official_indication_match")
+    )
+      return [];
     const population = dosagePopulationLabel("", product.display_name);
     return [
       {
         protocol_id: protocolId,
         fit_score: Math.min(100, Math.max(0, fitScore)),
-        choose_when: mechanisms.includes("official_indication_match")
-          ? `공식 효능·효과와 현재 증상이 직접 맞는 ${product.dosage_form ?? "제품"}을 검토하는 경우`
-          : mechanisms
-              .map((mechanism) => mechanismSelectionGuidance[mechanism])
-              .filter(Boolean)
-              .join(" 또는 "),
+        choose_when: contextualSelectionGuidance({
+          protocolId,
+          mechanisms,
+          productName: product.display_name,
+          ingredients,
+          ingredientEvidence: (product.active_ingredients ?? []).map(
+            (ingredient) => ingredient.name,
+          ),
+          dosageForm: product.dosage_form,
+          route: product.route,
+        }),
         differentiators: [
           ingredients.length > 0
             ? `주요 성분: ${ingredients.join(", ")}`
@@ -1279,11 +1957,15 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
       record,
       clinicalPathwayByRegistryRecordId.get(record.registryRecordId),
     );
-    const legacySelectionProfiles = legacySelectionProfilesFor(product);
     const officialSelectionProfiles = officialMetadata.selection_profiles;
+    const allowedLegacyProtocolIds =
+      legacyProtocolAllowlistByProductId.get(product.product_id) ?? new Set();
+    const explicitLegacySelectionProfiles = legacySelectionProfilesFor(
+      product,
+    ).filter((profile) => allowedLegacyProtocolIds.has(profile.protocol_id));
     const mergedSelectionProfiles = [
       ...officialSelectionProfiles,
-      ...legacySelectionProfiles.filter(
+      ...explicitLegacySelectionProfiles.filter(
         (legacyProfile) =>
           !officialSelectionProfiles.some(
             (officialProfile) =>
@@ -1294,6 +1976,10 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
     return {
       ...product,
       ...officialMetadata,
+      // A confirmed official mapping is the protocol source of truth. Reusing
+      // profiles inferred from any shared ingredient reintroduced cold
+      // combinations into headache and menstrual-pain protocols, and vitamin
+      // combinations into primary musculoskeletal protocols.
       selection_profiles: mergedSelectionProfiles,
       source_snapshot_ids: [
         ...new Set([...product.source_snapshot_ids, healthKrSnapshotId]),
@@ -1305,7 +1991,78 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
 );
 
 const runtimeSources = [...sources, ...newSources];
-const runtimeProducts = [...productsWithHealthKrOverlays, ...healthKrProducts];
+const fieldPracticeApplications = [];
+const runtimeProducts = [
+  ...productsWithHealthKrOverlays,
+  ...healthKrProducts,
+].map((product) => {
+  const deniedProtocolIds =
+    deniedProtocolIdsByProductId.get(product.product_id) ?? new Set();
+  const selectionProfiles = (product.selection_profiles ?? [])
+    .filter((profile) => !deniedProtocolIds.has(profile.protocol_id))
+    .map((profile) => {
+      const matchingRules = fieldPracticeGuidance.profiles.filter(
+        (rule) =>
+          rule.protocolIds.includes(profile.protocol_id) &&
+          rule.productNameAny.some((name) =>
+            normalizedProductIdentity(product.display_name).includes(
+              normalizedProductIdentity(name),
+            ),
+          ),
+      );
+      if (matchingRules.length > 1)
+        throw new Error(
+          `Ambiguous field-practice guidance: ${product.display_name} ${profile.protocol_id}`,
+        );
+      const rule = matchingRules[0];
+      if (!rule) return profile;
+      fieldPracticeApplications.push({
+        ruleId: rule.ruleId,
+        productId: product.product_id,
+        productName: product.display_name,
+        protocolId: profile.protocol_id,
+        page: rule.page,
+      });
+      return {
+        ...profile,
+        choose_when: rule.chooseWhen,
+        differentiators: rule.differentiators,
+        comparison_note: rule.comparisonNote,
+        practical_points: rule.practicalPoints,
+        evidence_source: `${fieldPracticeGuidance.source.sourceId}#page=${rule.page}`,
+      };
+    });
+  const applied = selectionProfiles.some(
+    (profile, index) => profile !== (product.selection_profiles ?? [])[index],
+  );
+  if (!applied) return { ...product, selection_profiles: selectionProfiles };
+  return {
+    ...product,
+    selection_profiles: selectionProfiles,
+    source_snapshot_ids: [
+      ...new Set([
+        ...(product.source_snapshot_ids ?? []),
+        fieldPracticeGuidance.source.sourceSnapshotId,
+      ]),
+    ],
+    source_refs: [
+      ...(product.source_refs ?? []),
+      {
+        claim_id: `FIELD-PRACTICE-${product.product_id}`,
+        source_id: fieldPracticeGuidance.source.sourceId,
+        source_snapshot_id: fieldPracticeGuidance.source.sourceSnapshotId,
+        locator: `제품별 실무 선택 기준 (${[
+          ...new Set(
+            fieldPracticeApplications
+              .filter((item) => item.productId === product.product_id)
+              .map((item) => `p.${item.page}`),
+          ),
+        ].join(", ")})`,
+        verified_at: fieldPracticeGuidance.source.fetchedAt,
+      },
+    ],
+  };
+});
 const runtimeProductIngredients = [
   ...productIngredients,
   ...newProductIngredients,
@@ -1495,6 +2252,7 @@ const patientFacingProtocolRules = protocolRules.filter(
 const previewProtocolRules = [
   ...patientFacingProtocolRules,
   ...selectionOverlayRules,
+  ...extensionProtocolRules,
 ].filter(
   (rule) =>
     !(
@@ -1505,6 +2263,42 @@ const previewProtocolRules = [
 const previewRuleIds = new Set(
   previewProtocolRules.map((item) => item.rule_id),
 );
+const applyProtocolDenylistToClaim = (claim) => {
+  const protocolId = claim.qualifiers?.protocol_id;
+  if (
+    claim.claim_type !== "indication" ||
+    typeof protocolId !== "string" ||
+    typeof claim.object !== "object" ||
+    claim.object === null ||
+    Array.isArray(claim.object) ||
+    !Array.isArray(claim.object.candidate_product_ids)
+  )
+    return claim;
+  const keptIndexes = claim.object.candidate_product_ids.flatMap(
+    (productId, index) =>
+      deniedProtocolIdsByProductId.get(productId)?.has(protocolId)
+        ? []
+        : [index],
+  );
+  if (keptIndexes.length === claim.object.candidate_product_ids.length)
+    return claim;
+  return {
+    ...claim,
+    object: {
+      ...claim.object,
+      candidate_product_ids: keptIndexes.map(
+        (index) => claim.object.candidate_product_ids[index],
+      ),
+      ...(Array.isArray(claim.object.candidate_product_names)
+        ? {
+            candidate_product_names: keptIndexes
+              .map((index) => claim.object.candidate_product_names[index])
+              .filter((name) => typeof name === "string"),
+          }
+        : {}),
+    },
+  };
+};
 
 const pack = {
   packId: "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
@@ -1522,12 +2316,12 @@ const pack = {
   })),
   products: runtimeProducts,
   productIngredients: runtimeProductIngredients,
-  claims: [...claims, ...generatedClaims].map((item) => ({
-    ...item,
+  claims: [...claims, ...generatedClaims].map((sourceItem) => ({
+    ...applyProtocolDenylistToClaim(sourceItem),
     status: "published",
-    review: previewReview(item.review),
+    review: previewReview(sourceItem.review),
   })),
-  protocols: protocols.map((item) => ({
+  protocols: allProtocolTemplates.map((item) => ({
     ...item,
     status: "published",
     review: previewReview(item.review),
@@ -1639,6 +2433,31 @@ await writeFile(
   )}\n`,
   "utf8",
 );
+await writeFile(
+  fieldPracticeGuidanceReportOutput,
+  `${JSON.stringify(
+    {
+      schemaVersion: "1.0.0",
+      sourceId: fieldPracticeGuidance.source.sourceId,
+      sourceContentSha256: fieldPracticeGuidance.source.contentSha256,
+      ruleCount: fieldPracticeGuidance.profiles.length,
+      appliedRuleCount: new Set(
+        fieldPracticeApplications.map((item) => item.ruleId),
+      ).size,
+      applicationCount: fieldPracticeApplications.length,
+      unmatchedRuleIds: fieldPracticeGuidance.profiles
+        .map((rule) => rule.ruleId)
+        .filter(
+          (ruleId) =>
+            !fieldPracticeApplications.some((item) => item.ruleId === ruleId),
+        ),
+      applications: fieldPracticeApplications,
+    },
+    null,
+    2,
+  )}\n`,
+  "utf8",
+);
 process.stdout.write(
-  `built ${pack.version}: ${pack.ingredients.length} ingredients, ${runtimeProducts.length} products, ${protocols.length} protocols, ${pack.protocolOptions.length} options, ${enrichmentIndex.length} enriched products, ${dialogueCards.length} dialogue intents, ${aliasSeeds.length} aliases\n`,
+  `built ${pack.version}: ${pack.ingredients.length} ingredients, ${runtimeProducts.length} products, ${allProtocolTemplates.length} protocols, ${pack.protocolOptions.length} options, ${enrichmentIndex.length} enriched products, ${dialogueCards.length} dialogue intents, ${aliasSeeds.length} aliases\n`,
 );

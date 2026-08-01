@@ -735,8 +735,20 @@ export class LocalClinicalEngine {
       prior?.pending_question_slot &&
       uncertainAnswer.test(rawNormalized.normalizedText),
     );
+    // The conversation interpreter only ever reports which pending slot the
+    // customer just answered; the value, the rule matching, and every clinical
+    // consequence stay with this engine.
+    const modelAnsweredSlot = (slot: string): boolean =>
+      input.answers_pending_slot === slot;
+    const modelAnsweredPriorPendingQuestion = Boolean(
+      prior?.pending_question_slot &&
+        modelAnsweredSlot(prior.pending_question_slot),
+    );
+    // A model-confirmed answer belongs to the open protocol question. Do not
+    // let incidental body-site words (for example, 발가락 in a tinea answer)
+    // start an unrelated protocol before the answer is applied to that topic.
     const retrievedProtocols =
-      uncertainReply || retraction
+      uncertainReply || retraction || modelAnsweredPriorPendingQuestion
         ? []
         : retrieveProtocols(
             rawNormalized,
@@ -745,11 +757,6 @@ export class LocalClinicalEngine {
             3,
             !prior?.pending_question_slot,
           );
-    // The conversation interpreter only ever reports which pending slot the
-    // customer just answered; the value, the rule matching, and every clinical
-    // consequence stay with this engine.
-    const modelAnsweredSlot = (slot: string): boolean =>
-      input.answers_pending_slot === slot;
     const answersPriorPendingQuestion = Boolean(
       prior?.pending_question_slot &&
       (modelAnsweredSlot(prior.pending_question_slot) ||
@@ -893,7 +900,7 @@ export class LocalClinicalEngine {
 
     const retrievalStart = this.clock.monotonicMs();
     const protocolCandidates =
-      uncertainReply || retraction
+      uncertainReply || retraction || modelAnsweredPriorPendingQuestion
         ? []
         : retrieveProtocols(normalized, input.domain, this.decisionIndex);
     // The interpreter's intent hint must reach final protocol selection, not

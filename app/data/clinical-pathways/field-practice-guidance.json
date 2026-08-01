@@ -1,0 +1,431 @@
+{
+  "schemaVersion": "1.0.0",
+  "researchOnly": true,
+  "source": {
+    "sourceId": "SRC-CENTRALPARK-OTC-PRACTICE",
+    "sourceSnapshotId": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+    "contentSha256": "779e353077ad73871c97ce2cf7656a2b067c848a14d7abbf485d76992c36d9df",
+    "pageCount": 12,
+    "sourceUrl": "urn:sha256:779e353077ad73871c97ce2cf7656a2b067c848a14d7abbf485d76992c36d9df",
+    "title": "일반의약품 정리_센트럴파크약국",
+    "fetchedAt": "2026-07-31T00:00:00+09:00"
+  },
+  "legacyProtocolAllowlist": [
+    {
+      "productId": "PRD-HAESOCOPU_S_201900312",
+      "protocolIds": ["PTC-DRY_COUGH"]
+    }
+  ],
+  "protocolDenylist": [
+    {
+      "productId": "PRD-BONALING_A_197000076",
+      "protocolIds": ["PTC-ABDOMINAL_PAIN_VOMITING"]
+    },
+    {
+      "productId": "PRD-ZYRTEC_200610765",
+      "protocolIds": ["PTC-MILD_DERMATITIS"]
+    }
+  ],
+  "profiles": [
+    {
+      "ruleId": "FP-RHINITIS-ACTIFED",
+      "protocolIds": [
+        "PTC-ALLERGIC_RHINITIS",
+        "PTC-RUNNY_NOSE",
+        "PTC-NASAL_CONGESTION"
+      ],
+      "productNameAny": ["액티피드"],
+      "chooseWhen": "알레르기성 콧물과 코막힘이 함께 있고 졸림보다 강한 증상 완화를 우선할 때 검토합니다.",
+      "differentiators": [
+        "슈도에페드린과 트리프롤리딘 복합제",
+        "코막힘과 알레르기성 콧물을 함께 겨냥",
+        "졸림 가능성을 확인"
+      ],
+      "comparisonNote": "졸림을 줄여야 하면 덜 진정적인 항히스타민 후보와 구분하고, 코막힘이 없으면 단일 항히스타민제를 우선 비교합니다.",
+      "practicalPoints": [
+        "자료에는 12세 이상, 하루 3회 복용 제품으로 정리되어 있습니다."
+      ],
+      "page": 1
+    },
+    {
+      "ruleId": "FP-RHINITIS-CETIRIZINE",
+      "protocolIds": [
+        "PTC-ALLERGIC_RHINITIS",
+        "PTC-RUNNY_NOSE",
+        "PTC-URTICARIA_ITCH"
+      ],
+      "productNameAny": ["지르텍", "코나진", "알러샷"],
+      "chooseWhen": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때 검토합니다.",
+      "differentiators": [
+        "세티리진 계열",
+        "로라타딘·펙소페나딘보다 진정 가능성이 큰 쪽으로 정리",
+        "콧물·가려움 등 알레르기 증상에 사용"
+      ],
+      "comparisonNote": "운전이나 업무 때문에 졸림을 피해야 하면 로라타딘 또는 펙소페나딘 계열과 비교합니다.",
+      "practicalPoints": [],
+      "page": 11
+    },
+    {
+      "ruleId": "FP-COUGH-KOPU-SYRUP",
+      "protocolIds": ["PTC-PRODUCTIVE_COUGH"],
+      "productNameAny": ["코푸시럽에스", "해소코푸에스시럽"],
+      "chooseWhen": "기침과 가래가 함께 있고 정제보다 시럽 제형이 편할 때 검토합니다.",
+      "differentiators": [
+        "기침 억제 성분과 가래를 묽게 하는 성분의 복합제",
+        "시럽 제형",
+        "항히스타민 성분에 따른 졸림 가능성"
+      ],
+      "comparisonNote": "끈적한 가래 배출이 주된 문제면 아세틸시스테인·암브록솔 같은 점액용해 후보와 구분합니다.",
+      "practicalPoints": [],
+      "page": 2
+    },
+    {
+      "ruleId": "FP-COUGH-KOPU-DRY",
+      "protocolIds": ["PTC-DRY_COUGH"],
+      "productNameAny": ["코푸시럽에스", "해소코푸에스시럽"],
+      "chooseWhen": "가래보다 마른기침 억제가 우선인 경우",
+      "differentiators": [
+        "덱스트로메토르판 등 기침 억제 성분을 포함한 복합제",
+        "시럽 제형",
+        "항히스타민 성분에 따른 졸림 가능성"
+      ],
+      "comparisonNote": "가래가 뚜렷하면 거담·점액용해 성분을 중심으로 다시 비교합니다.",
+      "practicalPoints": [],
+      "page": 2
+    },
+    {
+      "ruleId": "FP-THROAT-STREPSILS",
+      "protocolIds": ["PTC-SORE_THROAT"],
+      "productNameAny": ["스트렙실"],
+      "chooseWhen": "기침·가래보다 인후염의 국소 통증을 단기간 줄이는 것이 우선일 때 검토합니다.",
+      "differentiators": [
+        "플루르비프로펜 트로키",
+        "입안에서 녹여 국소적으로 사용",
+        "감염 치료제가 아니라 소염진통 목적"
+      ],
+      "comparisonNote": "살균이 목적이면 포비돈요오드 스프레이와, 기침·가래가 중심이면 진해거담제와 구분합니다.",
+      "practicalPoints": [
+        "자료에는 3~6시간 간격, 하루 5개 이하의 단기 사용으로 정리되어 있습니다."
+      ],
+      "page": 2
+    },
+    {
+      "ruleId": "FP-THROAT-MOKAND",
+      "protocolIds": ["PTC-SORE_THROAT", "PTC-STOMATITIS"],
+      "productNameAny": ["목앤스프레이"],
+      "chooseWhen": "목 통증이나 구내염 부위에 항균·항염 성분을 스프레이로 직접 적용하고 싶을 때 검토합니다.",
+      "differentiators": [
+        "세틸피리디늄 항균 작용",
+        "아줄렌 항염 작용",
+        "스프레이 제형"
+      ],
+      "comparisonNote": "강한 살균 목적의 포비돈요오드 스프레이와 달리 항균과 항염을 함께 노리는 제품입니다.",
+      "practicalPoints": [
+        "자료에는 한 번에 3~4회 분사하는 제품으로 정리되어 있습니다."
+      ],
+      "page": 2
+    },
+    {
+      "ruleId": "FP-THROAT-BETADINE",
+      "protocolIds": ["PTC-SORE_THROAT", "PTC-STOMATITIS"],
+      "productNameAny": ["베타딘인후스프레이"],
+      "chooseWhen": "통증 억제보다 구강·인후 부위의 넓은 범위 살균이 우선일 때 검토합니다.",
+      "differentiators": [
+        "포비돈요오드 살균제",
+        "구강·인후 스프레이",
+        "소염진통제가 아님"
+      ],
+      "comparisonNote": "통증만 두드러지면 플루르비프로펜 트로키와, 항균과 항염을 함께 원하면 세틸피리디늄·아줄렌 스프레이와 구분합니다.",
+      "practicalPoints": [],
+      "page": 2
+    },
+    {
+      "ruleId": "FP-PAIN-IBUPROFEN-SOFT",
+      "protocolIds": ["PTC-HEADACHE", "PTC-JOINT_PAIN", "PTC-MUSCLE_PAIN"],
+      "productNameAny": ["이지엔6애니"],
+      "chooseWhen": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐형 이부프로펜을 원할 때 검토합니다.",
+      "differentiators": [
+        "이부프로펜 200mg 계열",
+        "연질캡슐 제형",
+        "해열과 소염진통을 함께 고려"
+      ],
+      "comparisonNote": "편두통처럼 지속력이 중요하면 나프록센과, 부종을 동반한 생리통이면 파마브롬 복합제와 비교합니다.",
+      "practicalPoints": [],
+      "page": 3
+    },
+    {
+      "ruleId": "FP-FEVER-IBUPROFEN-SOFT",
+      "protocolIds": ["PTC-FEVER"],
+      "productNameAny": ["이지엔6애니"],
+      "chooseWhen": "발열과 몸살 통증을 함께 낮추는 이부프로펜 연질캡슐이 적합할 때 검토합니다.",
+      "differentiators": [
+        "이부프로펜 200mg 계열",
+        "연질캡슐 제형",
+        "해열과 소염진통을 함께 고려"
+      ],
+      "comparisonNote": "염증성 통증보다 단순한 해열이 목적이거나 위장관 위험을 줄여야 하면 아세트아미노펜과 비교합니다.",
+      "practicalPoints": [],
+      "page": 3
+    },
+    {
+      "ruleId": "FP-PAIN-IBUPROFEN-EVE",
+      "protocolIds": ["PTC-MENSTRUAL_PAIN"],
+      "productNameAny": ["이지엔6이브"],
+      "chooseWhen": "생리통에 붓기나 복부 팽만감이 함께 있어 이부프로펜과 이뇨 보조 성분을 함께 고려할 때 검토합니다.",
+      "differentiators": [
+        "이부프로펜과 파마브롬 복합제",
+        "파마브롬은 부종·팽만감 완화 보조",
+        "연질캡슐 제형"
+      ],
+      "comparisonNote": "일반 두통·발열만 있으면 단일 이부프로펜과 비교하고, 지속적인 편두통이면 나프록센과 구분합니다.",
+      "practicalPoints": [],
+      "page": 3
+    },
+    {
+      "ruleId": "FP-PAIN-NAPROXEN",
+      "protocolIds": ["PTC-HEADACHE", "PTC-JOINT_PAIN", "PTC-MUSCLE_PAIN"],
+      "productNameAny": ["탁센(나프록센)", "파인큐나프록센"],
+      "chooseWhen": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다.",
+      "differentiators": [
+        "나프록센 계열",
+        "이부프로펜보다 지속 시간이 긴 쪽으로 정리",
+        "말초 염증성 통증·편두통에 비교"
+      ],
+      "comparisonNote": "짧게 빠른 해열·몸살 완화가 목적이면 이부프로펜 또는 아세트아미노펜과 비교합니다.",
+      "practicalPoints": [],
+      "page": 3
+    },
+    {
+      "ruleId": "FP-HEARTBURN-GAVISCON",
+      "protocolIds": ["PTC-ACID_REFLUX", "PTC-HEARTBURN"],
+      "productNameAny": ["개비스콘"],
+      "chooseWhen": "신물이 올라오는 역류 증상에서 위산 중화와 물리적 역류 차단을 함께 원할 때 검토합니다.",
+      "differentiators": [
+        "알긴산 겔 장벽 형성",
+        "탄산칼슘·탄산수소염의 위산 중화",
+        "역류 증상에 초점"
+      ],
+      "comparisonNote": "반복되는 위산 분비 자체를 줄이려면 파모티딘과, 단순한 빠른 중화가 목적이면 제산 현탁액과 구분합니다.",
+      "practicalPoints": [
+        "자료에는 12세 이상, 하루 4회 복용 제품으로 정리되어 있습니다."
+      ],
+      "page": 4
+    },
+    {
+      "ruleId": "FP-HEARTBURN-FAMOTIDINE",
+      "protocolIds": ["PTC-ACID_REFLUX", "PTC-HEARTBURN"],
+      "productNameAny": ["파미딘"],
+      "chooseWhen": "위산과다와 속쓰림이 반복되어 이미 나온 산을 중화하기보다 위산 분비를 줄여야 할 때 검토합니다.",
+      "differentiators": [
+        "파모티딘 H2 차단제",
+        "위산 분비 억제",
+        "제산제·알긴산제와 다른 기전"
+      ],
+      "comparisonNote": "즉시 중화가 필요하면 제산제와, 신물 역류에 물리적 장벽이 필요하면 알긴산 복합제와 구분합니다.",
+      "practicalPoints": [
+        "자료에는 16세 이상, 하루 1회 복용 제품으로 정리되어 있습니다."
+      ],
+      "page": 4
+    },
+    {
+      "ruleId": "FP-HEARTBURN-GELFOS-M",
+      "protocolIds": ["PTC-HEARTBURN", "PTC-GAS"],
+      "productNameAny": ["겔포스엠"],
+      "chooseWhen": "위산과다·속쓰림에 가스와 복부 팽만이 함께 있어 제산과 기포 제거를 같이 원할 때 검토합니다.",
+      "differentiators": [
+        "인산알루미늄·수산화마그네슘 제산 성분",
+        "시메티콘 기포 제거",
+        "겔포스엘과 달리 카르니틴이 없는 구성"
+      ],
+      "comparisonNote": "지방 소화 보조까지 고려하면 카르니틴이 든 겔포스엘과 구분합니다.",
+      "practicalPoints": [
+        "자료에는 성인, 식간에 하루 3회 복용 제품으로 정리되어 있습니다."
+      ],
+      "page": 4
+    },
+    {
+      "ruleId": "FP-HEARTBURN-GELFOS-L",
+      "protocolIds": ["PTC-HEARTBURN", "PTC-GAS"],
+      "productNameAny": ["겔포스엘"],
+      "chooseWhen": "위산과다·속쓰림과 가스에 더해 지방 소화 보조까지 함께 고려할 때 검토합니다.",
+      "differentiators": [
+        "제산 성분과 시메티콘",
+        "카르니틴을 추가한 구성",
+        "현탁액 제형"
+      ],
+      "comparisonNote": "지방 소화 보조가 필요하지 않으면 겔포스엠과 비교합니다.",
+      "practicalPoints": [
+        "자료에는 15세 이상, 식간에 하루 1~3회 복용 제품으로 정리되어 있습니다."
+      ],
+      "page": 4
+    },
+    {
+      "ruleId": "FP-MOTION-DIMENHYDRINATE-TABLET",
+      "protocolIds": ["PTC-MOTION_SICKNESS"],
+      "productNameAny": ["보나링에이정"],
+      "chooseWhen": "짧은 이동에서 4~6시간 정도의 멀미 예방·완화가 필요하고 일반 정제를 복용할 수 있을 때 검토합니다.",
+      "differentiators": [
+        "디멘히드리네이트 계열",
+        "메클리진보다 작용 시간이 짧음",
+        "졸림 가능성"
+      ],
+      "comparisonNote": "장거리 왕복이면 12~24시간 지속하는 메클리진, 3일 지속이 필요하면 스코폴라민 패치와 구분합니다.",
+      "practicalPoints": [
+        "이동 15~30분 전에 복용하는 계열로 정리되어 있습니다."
+      ],
+      "page": 4
+    },
+    {
+      "ruleId": "FP-MOTION-DIMENHYDRINATE-CHEWABLE",
+      "protocolIds": ["PTC-MOTION_SICKNESS"],
+      "productNameAny": ["보나링츄어블"],
+      "chooseWhen": "짧은 이동에서 4~6시간 정도의 멀미 예방이 필요하고 물 없이 씹어 먹는 제형이 편할 때 검토합니다.",
+      "differentiators": [
+        "디멘히드리네이트와 스코폴라민 구성으로 정리",
+        "츄어블 제형",
+        "졸림 가능성"
+      ],
+      "comparisonNote": "오래 지속해야 하거나 왕복 이동이면 메클리진 구강용해필름과 비교합니다.",
+      "practicalPoints": [
+        "자료에는 이동 15~30분 전 복용, 3~6시간 지속으로 정리되어 있습니다."
+      ],
+      "page": 4
+    },
+    {
+      "ruleId": "FP-MOTION-MECLIZINE-FILM",
+      "protocolIds": ["PTC-MOTION_SICKNESS"],
+      "productNameAny": ["멀스토"],
+      "chooseWhen": "장거리나 왕복 이동에서 12~24시간 지속이 필요하고 물 없이 녹여 먹는 제형이 편할 때 검토합니다.",
+      "differentiators": [
+        "메클리진 계열",
+        "디멘히드리네이트보다 긴 지속 시간",
+        "구강용해필름 제형"
+      ],
+      "comparisonNote": "짧은 이동이면 디멘히드리네이트 제형과, 3일 지속이 필요하면 스코폴라민 패치와 구분합니다.",
+      "practicalPoints": [],
+      "page": 4
+    },
+    {
+      "ruleId": "FP-DIARRHEA-SMECTITE",
+      "protocolIds": ["PTC-DIARRHEA"],
+      "productNameAny": ["스타빅", "포타겔"],
+      "chooseWhen": "급성·만성 설사에서 장운동을 억제하기보다 장내 흡착과 점막 보호를 우선할 때 검토합니다.",
+      "differentiators": [
+        "디옥타헤드랄스멕타이트",
+        "흡착·점막 보호 기전",
+        "다른 약과 복용 간격 필요"
+      ],
+      "comparisonNote": "비감염성 설사에서 장운동 억제가 필요하면 로페라미드와, 감염성 단서가 있으면 일반 지사제 추천보다 진료 필요성을 먼저 봅니다.",
+      "practicalPoints": [
+        "자료에는 다른 약과 2시간 간격을 두는 것으로 정리되어 있습니다."
+      ],
+      "page": 5
+    },
+    {
+      "ruleId": "FP-DIARRHEA-NIFUROXAZIDE",
+      "protocolIds": ["PTC-DIARRHEA"],
+      "productNameAny": ["레피즈"],
+      "chooseWhen": "성인의 급성 설사에서 장내 유해균 억제 기전을 검토할 근거가 있을 때 후보로 비교합니다.",
+      "differentiators": [
+        "니푸록사지드",
+        "급성 설사 쪽으로 정리",
+        "성인용으로 구분"
+      ],
+      "comparisonNote": "발열·심한 복통·구토·혈변 같은 감염 위험 신호가 있으면 제품 선택보다 진료 의뢰가 우선입니다.",
+      "practicalPoints": ["자료에는 18세 이상 제품으로 정리되어 있습니다."],
+      "page": 5
+    },
+    {
+      "ruleId": "FP-DIARRHEA-JEONGROHWAN",
+      "protocolIds": ["PTC-DIARRHEA"],
+      "productNameAny": ["정로환"],
+      "chooseWhen": "급성 설사에서 항균·지사·진경 성분이 함께 든 복합 생약제를 검토할 때 비교합니다.",
+      "differentiators": [
+        "진피·황련·구아야콜 등을 포함한 복합제",
+        "급성 설사 쪽으로 정리",
+        "정제와 환 제형"
+      ],
+      "comparisonNote": "가장 무난한 흡착·점막 보호가 목적이면 스멕타이트와 구분합니다.",
+      "practicalPoints": ["자료에는 8세 이상 제품으로 정리되어 있습니다."],
+      "page": 5
+    },
+    {
+      "ruleId": "FP-CONSTIPATION-MAYKINQ",
+      "protocolIds": ["PTC-CONSTIPATION"],
+      "productNameAny": ["메이킨큐"],
+      "chooseWhen": "단기간에 강한 자극성 배변 효과가 필요하고 장기 복용 계획이 아닐 때 검토합니다.",
+      "differentiators": [
+        "비사코딜·카산트라놀 자극성 성분",
+        "도큐세이트 연변 보조",
+        "장기 사용 시 내성·간 장애 우려를 확인"
+      ],
+      "comparisonNote": "부피형성 하제나 삼투성 하제보다 자극이 강한 단기 후보로 구분합니다.",
+      "practicalPoints": [
+        "자료에는 11세 이상, 자기 전 하루 1회 복용 제품으로 정리되어 있습니다."
+      ],
+      "page": 5
+    },
+    {
+      "ruleId": "FP-CONSTIPATION-MT",
+      "protocolIds": ["PTC-CONSTIPATION"],
+      "productNameAny": ["변비약 엠티", "엠티정"],
+      "chooseWhen": "단기간 자극성 배변 효과와 대변을 부드럽게 하는 작용을 함께 원할 때 검토합니다.",
+      "differentiators": [
+        "비사코딜과 도큐세이트 복합제",
+        "메이킨큐보다 단순한 자극성·연변 구성",
+        "장기 복용은 피하는 쪽으로 정리"
+      ],
+      "comparisonNote": "강한 복합 자극이 필요하면 메이킨큐와, 장기 관리가 필요하면 비자극성 후보와 구분합니다.",
+      "practicalPoints": [
+        "자료에는 15세 이상, 자기 전 하루 1회 복용 제품으로 정리되어 있습니다."
+      ],
+      "page": 5
+    },
+    {
+      "ruleId": "FP-DERMATITIS-HYDROCORTISONE-LOTION",
+      "protocolIds": ["PTC-MILD_DERMATITIS", "PTC-URTICARIA_ITCH"],
+      "productNameAny": ["하티손로션", "락티케어"],
+      "chooseWhen": "넓은 부위의 가벼운 습진·피부염에 약한 국소 스테로이드 로션이 적합할 때 검토합니다.",
+      "differentiators": [
+        "히드로코르티손 약한 등급",
+        "넓게 바르기 쉬운 로션 제형",
+        "진균 감염에는 단독 사용하지 않음"
+      ],
+      "comparisonNote": "고리 모양의 무좀·백선 소견이면 항진균제와, 감염이 의심되면 일반 피부염 치료와 구분합니다.",
+      "practicalPoints": [],
+      "page": 7
+    },
+    {
+      "ruleId": "FP-STOMATITIS-ORAMEDI",
+      "protocolIds": ["PTC-STOMATITIS"],
+      "productNameAny": ["오라메디"],
+      "chooseWhen": "손이 닿는 국소 구내염·잇몸 염증 부위에 점착성 스테로이드 연고를 바를 수 있을 때 검토합니다.",
+      "differentiators": [
+        "트리암시놀론 국소 항염",
+        "연고 제형",
+        "건조한 뒤 병변에 직접 적용"
+      ],
+      "comparisonNote": "다발성이거나 목 안쪽처럼 바르기 어려운 병변이면 디클로페낙 가글과 구분합니다.",
+      "practicalPoints": [
+        "자료에는 병변을 건조한 뒤 사용하는 것으로 정리되어 있습니다."
+      ],
+      "page": 8
+    },
+    {
+      "ruleId": "FP-STOMATITIS-APNIBEN",
+      "protocolIds": ["PTC-STOMATITIS", "PTC-SORE_THROAT"],
+      "productNameAny": ["아프니벤큐"],
+      "chooseWhen": "구내염이 여러 곳이거나 목 안쪽처럼 연고가 닿기 어려워 가글형 소염제가 편할 때 검토합니다.",
+      "differentiators": [
+        "디클로페낙 국소 소염",
+        "가글 제형",
+        "다발성·접근하기 어려운 병변에 비교"
+      ],
+      "comparisonNote": "한두 곳의 병변에 직접 바를 수 있으면 점착성 스테로이드 연고와 구분합니다.",
+      "practicalPoints": [
+        "자료에는 하루 2~3회 가글하는 제품으로 정리되어 있습니다."
+      ],
+      "page": 8
+    }
+  ]
+}

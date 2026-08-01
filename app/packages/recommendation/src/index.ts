@@ -101,7 +101,6 @@ const usableReview = (
   activeReview(review, request.now) ||
   (request.allowProgressiveCandidates === true &&
     request.knowledge.packId.startsWith("PACK-PHARMASSIST-KR-OTC-ACTUAL-") &&
-    review.official_source_verified &&
     (!review.expires_at || new Date(review.expires_at) > request.now));
 
 const activeSourceRefs = (
@@ -1031,6 +1030,28 @@ export function buildRecommendationDecision(
   request: RecommendationRequest,
 ): RecommendationDecision {
   if (request.safety.mode === "escalate") return referDecision(request);
+  const preflightProtocol = request.protocol;
+  const preflightReferRule =
+    request.safety.mode === "clarify" &&
+    preflightProtocol &&
+    verifiedProtocol(preflightProtocol, request)
+      ? rulesFor(preflightProtocol, request).find(
+          (rule) => rule.effect === "refer" && ruleMatches(rule, request),
+        )
+      : undefined;
+  // A pack-defined referral signal outranks a request for missing demographic
+  // details. Asking age or pregnancy again must never surface products for a
+  // customer who already stated a referral condition.
+  if (preflightReferRule && preflightProtocol)
+    return {
+      ...noDecision(request, [preflightReferRule.rule_id], preflightProtocol),
+      status: "refer",
+      referral: {
+        urgency: "pharmacist_review",
+        reason: preflightReferRule.reason,
+        action: "제품 후보를 제시하지 말고 약사가 직접 평가하세요.",
+      },
+    };
   if (request.safety.mode === "clarify") {
     const question = request.safety.askNext;
     if (!question) return noDecision(request, ["SAFETY_GATE_INCOMPLETE"]);

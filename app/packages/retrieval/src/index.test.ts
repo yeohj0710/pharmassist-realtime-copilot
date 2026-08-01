@@ -214,5 +214,44 @@ describe("local retrieval", () => {
         false,
       ),
     ).toEqual([]);
+
+    const published = decisionIndex.protocols.get("PTC-COUGH");
+    expect(published).toBeDefined();
+    const researchProtocol = {
+      ...published!,
+      protocol_id: "PTC-RESEARCH",
+      intent: "research_cough",
+      triggers: {
+        anchors: ["연구기침"],
+        aliases: ["연구기침약"],
+        keywords: ["연구기침"],
+        negative: [],
+      },
+      review: {
+        ...published!.review,
+        pharmacist_approved: false,
+        official_source_verified: false,
+        reviewer_ids: [],
+        reviewed_at: null,
+      },
+    };
+    const researchIndex = buildDecisionIndex(
+      { protocols: [researchProtocol], ingredients: [], products: [] },
+      new Date("2026-07-13T00:00:00Z"),
+      true,
+    );
+    expect(
+      retrieveProtocols(
+        input("연구기침약 주세요"),
+        "human_otc",
+        researchIndex,
+      ).map((item) => item.protocolId),
+    ).toEqual(["PTC-RESEARCH"]);
+    expect(
+      buildDecisionIndex(
+        { protocols: [researchProtocol], ingredients: [], products: [] },
+        new Date("2026-07-13T00:00:00Z"),
+      ).protocols.size,
+    ).toBe(0);
   });
 });

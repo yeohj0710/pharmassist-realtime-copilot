@@ -331,7 +331,7 @@ export function buildDecisionIndex(
       protocol.domain === "human_otc" &&
       protocol.status === "published" &&
       (protocol.review.pharmacist_approved || allowUnapprovedResearch) &&
-      protocol.review.official_source_verified &&
+      (protocol.review.official_source_verified || allowUnapprovedResearch) &&
       (!protocol.review.expires_at ||
         new Date(protocol.review.expires_at) > now) &&
       new Date(protocol.expires_at) > now,

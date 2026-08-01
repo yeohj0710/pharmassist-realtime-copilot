@@ -145,6 +145,138 @@ describe("clinical pathway classifier", () => {
     ).toEqual(expect.objectContaining({ pathwayId: "vitamin_support" }));
   });
 
+  it("does not turn a secondary symptom in an antiemetic indication into a headache pathway", () => {
+    const guardedDataset = parseClinicalPathwayDataset({
+      schemaVersion: "1.0.0",
+      researchOnly: true,
+      mechanismEvidence: {
+        analgesia: [
+          "\uC544\uC138\uD2B8\uC544\uBBF8\uB178\uD39C",
+          "acetaminophen",
+        ],
+      },
+      pathways: [
+        {
+          pathwayId: "headache",
+          protocolId: "PTC-HEADACHE",
+          efficacyAny: ["\uB450\uD1B5"],
+          routeFormAny: ["\uACBD\uAD6C"],
+          officialCategoryNone: ["\uCD5C\uD1A0\uC81C", "\uC9C4\uD1A0\uC81C"],
+          activeIngredientNone: [
+            "\uB371\uC2A4\uD2B8\uB85C\uBA54\uD1A0\uB974\uD310",
+            "dextromethorphan",
+          ],
+          requireMechanismEvidence: true,
+          mechanisms: ["analgesia"],
+          combinationRole: "primary",
+          priority: 80,
+          source: "SRC-PRACTICE#page=3-4",
+        },
+      ],
+      supportiveClassifications: [],
+    });
+
+    expect(
+      classifyOfficialProduct(
+        {
+          efficacy:
+            "\uBA40\uBBF8\uC5D0 \uC758\uD55C \uC5B4\uC9C0\uB7EC\uC6C0, \uAD6C\uD1A0, \uB450\uD1B5\uC758 \uC608\uBC29 \uBC0F \uC644\uD654",
+          route: "\uACBD\uAD6C",
+          dosageForm: "\uC800\uC791\uC815",
+          officialCategory: "\uCD5C\uD1A0\uC81C, \uC9C4\uD1A0\uC81C",
+          activeIngredientTexts: [
+            "Dimenhydrinate \uB514\uBA58\uD788\uB4DC\uB9AC\uB124\uC774\uD2B8 20mg",
+          ],
+        },
+        guardedDataset,
+      ),
+    ).toEqual([]);
+
+    expect(
+      classifyOfficialProduct(
+        {
+          efficacy:
+            "\uAC10\uAE30\uC758 \uBC1C\uC5F4, \uB450\uD1B5, \uAE30\uCE68\uC758 \uC644\uD654",
+          route: "\uACBD\uAD6C",
+          dosageForm: "\uCEA1\uC290",
+          officialCategory: "\uD574\uC5F4, \uC9C4\uD1B5, \uC18C\uC5FC\uC81C",
+          activeIngredientTexts: [
+            "Acetaminophen \uC544\uC138\uD2B8\uC544\uBBF8\uB178\uD39C 200mg",
+            "Dextromethorphan \uB371\uC2A4\uD2B8\uB85C\uBA54\uD1A0\uB974\uD310 8mg",
+          ],
+        },
+        guardedDataset,
+      ),
+    ).toEqual([]);
+
+    expect(
+      classifyOfficialProduct(
+        {
+          efficacy: "\uB450\uD1B5\uC758 \uC644\uD654",
+          route: "\uACBD\uAD6C",
+          dosageForm: "\uC815\uC81C",
+          officialCategory: "\uD574\uC5F4\uC9C4\uD1B5\uC81C",
+          activeIngredientTexts: [
+            "Acetaminophen \uC544\uC138\uD2B8\uC544\uBBF8\uB178\uD39C 500mg",
+          ],
+        },
+        guardedDataset,
+      )[0],
+    ).toEqual(expect.objectContaining({ pathwayId: "headache" }));
+  });
+
+  it("requires direct gas-treatment evidence instead of matching laxative side symptoms", () => {
+    const guardedDataset = parseClinicalPathwayDataset({
+      schemaVersion: "1.0.0",
+      researchOnly: true,
+      mechanismEvidence: {
+        gas_reduction: ["\uC2DC\uBA54\uD2F0\uCF58", "simethicone"],
+      },
+      pathways: [
+        {
+          pathwayId: "gas",
+          protocolId: "PTC-GAS",
+          efficacyAny: ["\uBCF5\uBD80\uD33D\uB9CC", "\uAC00\uC2A4\uC81C\uAC70"],
+          routeFormAny: ["\uACBD\uAD6C"],
+          officialCategoryNone: ["\uD558\uC81C", "\uC644\uC7A5\uC81C"],
+          requireMechanismEvidence: true,
+          mechanisms: ["gas_reduction"],
+          combinationRole: "supportive",
+          priority: 80,
+          source: "SRC-PRACTICE#page=4-5",
+        },
+      ],
+      supportiveClassifications: [],
+    });
+
+    expect(
+      classifyOfficialProduct(
+        {
+          efficacy:
+            "\uBCC0\uBE44\uC640 \uBCC0\uBE44\uC5D0 \uB530\uB978 \uBCF5\uBD80\uD33D\uB9CC\uC758 \uC644\uD654",
+          route: "\uACBD\uAD6C",
+          dosageForm: "\uC7A5\uC6A9\uC815",
+          officialCategory: "\uD558\uC81C, \uC644\uC7A5\uC81C",
+          activeIngredientTexts: ["Bisacodyl \uBE44\uC0AC\uCF54\uB51C 5mg"],
+        },
+        guardedDataset,
+      ),
+    ).toEqual([]);
+
+    expect(
+      classifyOfficialProduct(
+        {
+          efficacy: "\uBCF5\uBD80\uD33D\uB9CC\uACFC \uAC00\uC2A4\uC81C\uAC70",
+          route: "\uACBD\uAD6C",
+          dosageForm: "\uD604\uD0C1\uC561",
+          officialCategory: "\uC81C\uC0B0\uC81C",
+          activeIngredientTexts: ["Simethicone \uC2DC\uBA54\uD2F0\uCF58 40mg"],
+        },
+        guardedDataset,
+      )[0],
+    ).toEqual(expect.objectContaining({ pathwayId: "gas" }));
+  });
+
   it("creates stable but distinct canonical ingredient IDs", () => {
     expect(canonicalIngredientId("Acetaminophen 아세트아미노펜 500mg")).toBe(
       canonicalIngredientId("Acetaminophen 아세트아미노펜 500 mg"),

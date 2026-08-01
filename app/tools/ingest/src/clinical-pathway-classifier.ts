@@ -5,8 +5,17 @@ export interface ClinicalPathwayDefinition {
   readonly protocolId: string;
   readonly efficacyAny: readonly string[];
   readonly efficacyNone?: readonly string[];
+  readonly officialCategoryAny?: readonly string[];
+  readonly officialCategoryNone?: readonly string[];
+  readonly itemNameAny?: readonly string[];
+  readonly itemNameNone?: readonly string[];
+  readonly kpicAny?: readonly string[];
+  readonly kpicNone?: readonly string[];
+  readonly activeIngredientAny?: readonly string[];
+  readonly activeIngredientNone?: readonly string[];
   readonly routeFormAny: readonly string[];
   readonly mechanisms: readonly string[];
+  readonly requireMechanismEvidence?: boolean;
   readonly combinationRole: string;
   readonly compatibleRoles?: readonly string[];
   readonly priority: number;
@@ -110,8 +119,28 @@ export function parseClinicalPathwayDataset(
       !Number.isFinite(pathway.priority)
     )
       throw new Error(`invalid direct clinical pathway: ${pathway.pathwayId}`);
+  for (const pathway of pathways)
+    for (const [field, terms] of [
+      ["officialCategoryAny", pathway.officialCategoryAny],
+      ["officialCategoryNone", pathway.officialCategoryNone],
+      ["itemNameAny", pathway.itemNameAny],
+      ["itemNameNone", pathway.itemNameNone],
+      ["kpicAny", pathway.kpicAny],
+      ["kpicNone", pathway.kpicNone],
+      ["activeIngredientAny", pathway.activeIngredientAny],
+      ["activeIngredientNone", pathway.activeIngredientNone],
+    ] as const)
+      if (
+        terms !== undefined &&
+        (!Array.isArray(terms) ||
+          terms.length === 0 ||
+          terms.some((term) => typeof term !== "string" || term.length === 0))
+      )
+        throw new Error(`invalid ${field}: ${pathway.pathwayId}`);
   for (const pathway of pathways.filter(
-    (candidate) => candidate.mechanisms.length > 1,
+    (candidate) =>
+      candidate.mechanisms.length > 1 ||
+      candidate.requireMechanismEvidence === true,
   ))
     for (const mechanism of pathway.mechanisms)
       if (!mechanismEvidence[mechanism]?.length)
@@ -182,6 +211,28 @@ export function classifyOfficialProduct(
       if (
         matchedTerms.length === 0 ||
         !pathway.routeFormAny.some((term) => includesTerm(routeForm, term)) ||
+        (pathway.officialCategoryAny?.length &&
+          !pathway.officialCategoryAny.some((term) =>
+            includesTerm(category, term),
+          )) ||
+        (pathway.officialCategoryNone ?? []).some((term) =>
+          includesTerm(category, term),
+        ) ||
+        (pathway.itemNameAny?.length &&
+          !pathway.itemNameAny.some((term) => includesTerm(itemName, term))) ||
+        (pathway.itemNameNone ?? []).some((term) =>
+          includesTerm(itemName, term),
+        ) ||
+        (pathway.kpicAny?.length &&
+          !pathway.kpicAny.some((term) => includesTerm(kpic, term))) ||
+        (pathway.kpicNone ?? []).some((term) => includesTerm(kpic, term)) ||
+        (pathway.activeIngredientAny?.length &&
+          !pathway.activeIngredientAny.some((term) =>
+            ingredientTexts.some((text) => includesTerm(text, term)),
+          )) ||
+        (pathway.activeIngredientNone ?? []).some((term) =>
+          ingredientTexts.some((text) => includesTerm(text, term)),
+        ) ||
         (pathway.efficacyNone ?? []).some((term) =>
           includesTerm(efficacy, term),
         )
@@ -190,14 +241,21 @@ export function classifyOfficialProduct(
       const specificity = Math.max(
         ...matchedTerms.map((term) => normalized(term).length),
       );
+      const evidenceBackedMechanisms = pathway.mechanisms.filter((mechanism) =>
+        dataset.mechanismEvidence[mechanism]?.some((term) =>
+          includesTerm(mechanismEvidenceText, term),
+        ),
+      );
+      if (
+        pathway.requireMechanismEvidence === true &&
+        evidenceBackedMechanisms.length === 0
+      )
+        return [];
       const supportedMechanisms =
-        pathway.mechanisms.length === 1
+        pathway.mechanisms.length === 1 &&
+        pathway.requireMechanismEvidence !== true
           ? pathway.mechanisms
-          : pathway.mechanisms.filter((mechanism) =>
-              dataset.mechanismEvidence[mechanism]?.some((term) =>
-                includesTerm(mechanismEvidenceText, term),
-              ),
-            );
+          : evidenceBackedMechanisms;
       const resolvedMechanisms =
         supportedMechanisms.length > 0
           ? supportedMechanisms

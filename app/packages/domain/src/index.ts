@@ -107,6 +107,58 @@ const productProtocolProfiles: Readonly<
     indication: /두드러기|소양|가려움/u,
     routeForm: /경구|내용|피부|외용|경피/u,
   },
+  "PTC-ANTIFUNGAL_SKIN": {
+    indication: /무좀|백선|완선|어루러기|피부진균|조갑.*진균/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-ACNE": {
+    indication: /여드름|면포|농포/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-HEMORRHOID": {
+    indication: /치질|치핵|치열|항문.*(?:통증|가려움)/u,
+    routeForm: /항문|외용|경구|내용/u,
+  },
+  "PTC-MINOR_BURN": {
+    indication: /화상/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-SCALP_DANDRUFF": {
+    indication: /비듬|지루성?\s*피부염|두피/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-HYPERHIDROSIS": {
+    indication: /다한증|과도한\s*발한/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-SLEEP_AID": {
+    indication: /불면|수면장애|잠들기/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-VAGINAL_ANTIFUNGAL": {
+    indication: /칸디다성?\s*질염|질염|외음부염/u,
+    routeForm: /질정|질좌제|질액제|외용|피부/u,
+  },
+  "PTC-SMOKING_CESSATION": {
+    indication: /금연|니코틴\s*의존/u,
+    routeForm: /경구|구강|경피|피부|트로키|껌/u,
+  },
+  "PTC-SCAR_CARE": {
+    indication: /흉터|반흔|켈로이드/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-BRUISE": {
+    indication: /멍|타박상|좌상|피하출혈/u,
+    routeForm: /피부|외용|경피/u,
+  },
+  "PTC-ORAL_CONTRACEPTION": {
+    indication: /피임|월경\s*주기\s*조절/u,
+    routeForm: /경구|내용/u,
+  },
+  "PTC-GUM_INFLAMMATION": {
+    indication: /치은염|치주염|잇몸.*(?:염증|출혈)/u,
+    routeForm: /경구|내용|구강|치아/u,
+  },
 };
 
 export const productProtocolProfileIds = Object.freeze(
