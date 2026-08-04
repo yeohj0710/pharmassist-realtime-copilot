@@ -34,6 +34,12 @@ const selectionOverlaySource = join(
   "actual-research-overlays",
   "option-selection.json",
 );
+const selectionCopySource = join(
+  root,
+  "data",
+  "actual-research-overlays",
+  "selection-copy.json",
+);
 const generatedSelectionOverlaySource = join(
   root,
   "data",
@@ -293,6 +299,7 @@ const [
   intentSeeds,
   aliasSeeds,
   selectionOverlays,
+  selectionCopy,
   triggerSupplements,
   dialogueCopies,
   therapeuticFit,
@@ -328,6 +335,7 @@ const [
         throw error;
       }),
   ]).then(([curated, generated]) => [...curated, ...generated]),
+  readFile(selectionCopySource, "utf8").then(JSON.parse),
   readFile(triggerSupplementSource, "utf8").then(JSON.parse),
   readFile(dialogueCopySource, "utf8").then(JSON.parse),
   readFile(therapeuticFitSource, "utf8").then(JSON.parse),
@@ -2027,6 +2035,96 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
 
 const runtimeSources = [...sources, ...newSources];
 const fieldPracticeApplications = [];
+// The generated pipeline gave every profile the same comparison note — "성분
+// 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다" — which is circular and
+// told the pharmacist nothing about which candidate to pick. These replace it
+// with an actual contrast against the protocol's other candidates, and drop the
+// engine phrase that leaked into the differentiator list. Curated text, so it
+// is refereed the same way a composed line is: no dose, no engine vocabulary,
+// no product the pack does not carry.
+// Both lists: the pathway expansion adds the health.kr ingredients that most of
+// these notes are written against, and they only exist in generatedIngredients.
+const ingredientIdByDisplayName = new Map();
+for (const item of [...ingredients, ...generatedIngredients]) {
+  const name = item.display_name_ko;
+  if (ingredientIdByDisplayName.has(name))
+    ingredientIdByDisplayName.set(name, "AMBIGUOUS");
+  else ingredientIdByDisplayName.set(name, item.ingredient_id);
+}
+const emptyComparisonNote =
+  "성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다.";
+const engineVocabulary =
+  /지식팩|데이터베이스|스키마|슬롯|프로토콜|규칙\s*id|엔진|옵션|option|rule_id|1차 역할로 검토/iu;
+const dosageText = /\d+\s*(?:mg|g|mL|ml|정|알|캡슐|포|회|일)\b|하루\s*\d+/iu;
+const selectionCopyByKey = new Map();
+if (
+  selectionCopy.schemaVersion !== "1.0.0" ||
+  !Array.isArray(selectionCopy.entries)
+)
+  throw new Error("selection-copy.json is invalid");
+for (const entry of selectionCopy.entries) {
+  const note = entry.comparisonNote;
+  if (typeof note !== "string" || note.length === 0 || note.length > 140)
+    throw new Error(
+      `Selection copy note is missing or too long: ${entry.protocolId}/${entry.ingredient}`,
+    );
+  if (note === emptyComparisonNote)
+    throw new Error(
+      `Selection copy repeats the empty note: ${entry.protocolId}/${entry.ingredient}`,
+    );
+  if (engineVocabulary.test(note))
+    throw new Error(
+      `Selection copy uses engine vocabulary: ${entry.protocolId}/${entry.ingredient}`,
+    );
+  if (dosageText.test(note))
+    throw new Error(
+      `Selection copy states a dose: ${entry.protocolId}/${entry.ingredient}`,
+    );
+  let key = entry.ingredient;
+  if (key !== "COMBO") {
+    const resolved = ingredientIdByDisplayName.get(entry.ingredient);
+    if (!resolved || resolved === "AMBIGUOUS")
+      throw new Error(
+        `Selection copy names an unknown or ambiguous ingredient: ${entry.ingredient}`,
+      );
+    key = resolved;
+  }
+  // A protocol whose candidates are all combination products lands them in one
+  // ingredient group, so an ingredient-keyed note would say the same thing for
+  // all of them. Such an entry may narrow on the choose_when cluster instead,
+  // and the narrower entry wins.
+  const mapKey = `${entry.protocolId}|${key}|${entry.chooseWhenContains ?? ""}`;
+  if (selectionCopyByKey.has(mapKey))
+    throw new Error(`Duplicate selection copy entry: ${mapKey}`);
+  selectionCopyByKey.set(mapKey, {
+    note,
+    used: false,
+    protocolId: entry.protocolId,
+    ingredientKey: key,
+    chooseWhenContains: entry.chooseWhenContains ?? null,
+  });
+}
+const selectionCopyFor = (product, profile) => {
+  const active = (product.active_ingredients ?? []).map(
+    (item) => item.ingredient_id,
+  );
+  const ingredientKey = active.length === 1 ? active[0] : "COMBO";
+  const candidates = [...selectionCopyByKey.values()].filter(
+    (entry) =>
+      entry.protocolId === profile.protocol_id &&
+      entry.ingredientKey === ingredientKey &&
+      (entry.chooseWhenContains === null ||
+        (profile.choose_when ?? "").includes(entry.chooseWhenContains)),
+  );
+  // Longest cluster match first, so the specific note beats the general one.
+  candidates.sort(
+    (left, right) =>
+      (right.chooseWhenContains?.length ?? 0) -
+      (left.chooseWhenContains?.length ?? 0),
+  );
+  return candidates[0];
+};
+
 const runtimeProducts = [
   ...productsWithHealthKrOverlays,
   ...healthKrProducts,
@@ -2050,7 +2148,21 @@ const runtimeProducts = [
           `Ambiguous field-practice guidance: ${product.display_name} ${profile.protocol_id}`,
         );
       const rule = matchingRules[0];
-      if (!rule) return profile;
+      if (!rule) {
+        // Field-practice wording wins where it exists; this only fills the
+        // profiles the pipeline left with the circular note.
+        const copy = selectionCopyFor(product, profile);
+        const differentiators = (profile.differentiators ?? []).filter(
+          (text) => !/현재 증상 경로에서 직접 작용하는/.test(text),
+        );
+        if (!copy) return { ...profile, differentiators };
+        copy.used = true;
+        return {
+          ...profile,
+          differentiators,
+          comparison_note: copy.note,
+        };
+      }
       fieldPracticeApplications.push({
         ruleId: rule.ruleId,
         productId: product.product_id,
@@ -2098,6 +2210,15 @@ const runtimeProducts = [
     ],
   };
 });
+
+// A curated note that matches no profile is a typo or wording the pack dropped.
+const unusedSelectionCopy = [...selectionCopyByKey.entries()]
+  .filter(([, value]) => !value.used)
+  .map(([key]) => key);
+if (unusedSelectionCopy.length > 0)
+  throw new Error(
+    `Selection copy matched no profile: ${unusedSelectionCopy.join(", ")}`,
+  );
 const runtimeProductIngredients = [
   ...productIngredients,
   ...newProductIngredients,

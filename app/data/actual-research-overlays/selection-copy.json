@@ -1,0 +1,528 @@
+{
+  "schemaVersion": "1.0.0",
+  "researchOnly": true,
+  "intent": "제품 카드의 '비교 기준'을 실제 대조 문장으로 채운다. 생성 파이프라인이 붙이던 '성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다'는 동어반복이라 약사에게 아무 정보를 주지 않았다. 여기 문구는 같은 프로토콜의 다른 후보와 무엇이 갈리는지만 말한다. 용량·용법은 쓰지 않는다. 팩에 없는 성분이나 제품을 가리키면 빌드가 실패한다.",
+  "entries": [
+    {
+      "protocolId": "PTC-ALLERGIC_RHINITIS",
+      "ingredient": "로라타딘",
+      "comparisonNote": "세티리진보다 졸림이 덜한 편이라 운전·업무 중 복용에 맞춥니다. 효과가 약하면 세티리진 쪽을 비교합니다."
+    },
+    {
+      "protocolId": "PTC-ALLERGIC_RHINITIS",
+      "ingredient": "세티리진염산염",
+      "comparisonNote": "로라타딘보다 증상 억제가 확실한 대신 졸림이 올 수 있습니다. 액상이 있어 소아에게도 씁니다."
+    },
+    {
+      "protocolId": "PTC-NASAL_CONGESTION",
+      "ingredient": "로라타딘",
+      "comparisonNote": "알레르기성 코막힘에 쓰고 졸림을 피해야 할 때 고릅니다. 코막힘 자체가 심하면 비충혈제거 성분이 든 복합제와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-NASAL_CONGESTION",
+      "ingredient": "세티리진염산염",
+      "comparisonNote": "알레르기성 코막힘에 쓰되 졸림을 감수할 수 있을 때 고릅니다. 감기 동반이면 복합제 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-NASAL_CONGESTION",
+      "ingredient": "COMBO",
+      "comparisonNote": "열·기침·인후통이 함께 있는 감기성 코막힘에 씁니다. 알레르기만 있으면 단일 항히스타민제가 성분이 겹치지 않아 낫습니다."
+    },
+    {
+      "protocolId": "PTC-RUNNY_NOSE",
+      "ingredient": "로라타딘",
+      "comparisonNote": "맑은 콧물·재채기 위주이고 낮에 활동해야 할 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-RUNNY_NOSE",
+      "ingredient": "세티리진염산염",
+      "comparisonNote": "증상이 심해 확실한 억제가 필요할 때 고릅니다. 졸림이 곤란하면 로라타딘이나 펙소페나딘과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-RUNNY_NOSE",
+      "ingredient": "펙소페나딘염산염",
+      "comparisonNote": "졸림을 가장 피해야 할 때 고릅니다. 대신 액상이 없어 소아에게는 다른 후보를 봅니다."
+    },
+    {
+      "protocolId": "PTC-RUNNY_NOSE",
+      "ingredient": "COMBO",
+      "comparisonNote": "콧물에 열·몸살·기침이 겹친 감기일 때 씁니다. 알레르기성 단독이면 항히스타민 단일제가 낫습니다."
+    },
+    {
+      "protocolId": "PTC-URTICARIA_ITCH",
+      "ingredient": "로라타딘",
+      "comparisonNote": "낮 동안 두드러기를 눌러야 하고 졸림이 곤란할 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-URTICARIA_ITCH",
+      "ingredient": "세티리진염산염",
+      "comparisonNote": "가려움이 심해 잠을 못 잘 정도면 고릅니다. 졸림이 오히려 도움이 되는 밤 시간대에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-URTICARIA_ITCH",
+      "ingredient": "펙소페나딘염산염",
+      "comparisonNote": "졸림을 가장 줄여야 할 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-INDIGESTION",
+      "ingredient": "COMBO",
+      "comparisonNote": "과식·기름진 식사 뒤 소화가 더딜 때 씁니다. 속이 잘 안 내려가는 느낌이 중심이면 위장 운동을 조절하는 트리메부틴과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-INDIGESTION",
+      "ingredient": "트리메부틴말레산염",
+      "comparisonNote": "먹은 양보다 위장 운동이 문제일 때 씁니다. 과식 뒤 더부룩함이면 소화효소가 든 복합제 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-BLOATING",
+      "ingredient": "COMBO",
+      "comparisonNote": "가스가 차는 쪽이면 소화효소·소포제 계열을, 속쓰림이 같이 있으면 제산 성분이 든 쪽을 봅니다."
+    },
+    {
+      "protocolId": "PTC-BLOATING",
+      "ingredient": "COMBO",
+      "chooseWhenContains": "가스와 복부팽만이 주된 불편인 경우 또는 체함",
+      "comparisonNote": "소화효소로 음식 분해를 돕는 쪽입니다. 속쓰림이 같이 있으면 제산 성분이 든 후보와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-BLOATING",
+      "ingredient": "COMBO",
+      "chooseWhenContains": "체함과 더부룩함을 함께 완화",
+      "comparisonNote": "체한 느낌과 더부룩함을 함께 다루는 쪽입니다. 가스가 주된 불편이면 소포제가 든 후보를 봅니다."
+    },
+    {
+      "protocolId": "PTC-CONSTIPATION",
+      "ingredient": "COMBO",
+      "comparisonNote": "먹는 약으로 며칠 안에 배변을 유도할 때 씁니다. 지금 당장 배변이 필요하면 좌제와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-CONSTIPATION",
+      "ingredient": "비사코딜",
+      "comparisonNote": "좌제라 경구제보다 빨리 작용합니다. 삼키기 어렵거나 즉시 배변이 필요할 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-MENSTRUAL_PAIN",
+      "ingredient": "이부프로펜",
+      "comparisonNote": "생리통의 경련·염증까지 겨냥합니다. 위가 약하면 아세트아미노펜과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-MENSTRUAL_PAIN",
+      "ingredient": "아세트아미노펜",
+      "comparisonNote": "위 자극이 적어 속이 불편한 경우에 맞습니다. 경련이 심하면 소염 작용이 있는 이부프로펜 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-MENSTRUAL_PAIN",
+      "ingredient": "이부프로펜아르기닌",
+      "comparisonNote": "일반 이부프로펜보다 흡수가 빨라 통증이 급할 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-MENSTRUAL_PAIN",
+      "ingredient": "COMBO",
+      "comparisonNote": "붓기·복부 팽만이 함께 있어 이뇨 보조 성분까지 필요할 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-SORE_THROAT",
+      "ingredient": "이부프로펜",
+      "comparisonNote": "인후통을 전신 진통제로 누를 때 씁니다. 통증 부위가 좁고 국소로 끝내고 싶으면 트로키·가글과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-SORE_THROAT",
+      "ingredient": "아세트아미노펜",
+      "comparisonNote": "위 자극이 적어 속이 약한 경우에 맞습니다. 염증이 두드러지면 소염 작용이 있는 후보를 봅니다."
+    },
+    {
+      "protocolId": "PTC-SORE_THROAT",
+      "ingredient": "디클로페낙",
+      "comparisonNote": "가글이라 삼키지 않고 인후 점막에 직접 작용합니다. 전신 복용을 피하고 싶을 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-SORE_THROAT",
+      "ingredient": "벤지다민염산염",
+      "comparisonNote": "가글형 국소 소염진통제입니다. 구내염처럼 병변이 여러 곳이라 연고가 닿기 어려울 때도 씁니다."
+    },
+    {
+      "protocolId": "PTC-SORE_THROAT",
+      "ingredient": "COMBO",
+      "comparisonNote": "인후통에 열·기침·콧물이 겹친 감기일 때 씁니다. 목만 아프면 성분이 겹치지 않는 국소제나 단일 진통제가 낫습니다."
+    },
+    {
+      "protocolId": "PTC-ABDOMINAL_PAIN_VOMITING",
+      "ingredient": "COMBO",
+      "comparisonNote": "속쓰림·위산이 동반된 복통이면 제산 성분이 든 쪽을, 소화가 안 되는 쪽이면 효소가 든 쪽을 봅니다."
+    },
+    {
+      "protocolId": "PTC-ABDOMINAL_PAIN_VOMITING",
+      "ingredient": "디오스멕타이트",
+      "comparisonNote": "설사가 동반된 복통에서 장운동을 억제하지 않고 흡착·점막 보호로 접근합니다."
+    },
+    {
+      "protocolId": "PTC-ABDOMINAL_PAIN_VOMITING",
+      "ingredient": "트리메부틴말레산염",
+      "comparisonNote": "위장 운동이 불규칙해 생기는 복통·구역에 맞습니다. 위산이 문제면 제산 계열과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-ABDOMINAL_PAIN_VOMITING",
+      "ingredient": "반하사심탕연조엑스(4.50→1)",
+      "comparisonNote": "명치 답답함과 구역이 함께 있는 생약 계열 후보입니다. 위산 과다가 뚜렷하면 제산제 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-FEVER",
+      "ingredient": "아세트아미노펜",
+      "comparisonNote": "위 자극이 적어 속이 약하거나 소염이 필요 없는 발열에 맞습니다. 몸살·염증이 두드러지면 이부프로펜과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-FEVER",
+      "ingredient": "이부프로펜",
+      "comparisonNote": "해열에 소염 작용까지 겹칠 때 고릅니다. 공복이나 위가 약한 경우에는 아세트아미노펜이 낫습니다."
+    },
+    {
+      "protocolId": "PTC-FEVER",
+      "ingredient": "이부프로펜아르기닌",
+      "comparisonNote": "일반 이부프로펜보다 흡수가 빨라 해열을 서둘러야 할 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-FEVER",
+      "ingredient": "아세트아미노펜(미분화)",
+      "comparisonNote": "소아용 현탁액이라 정제를 삼키기 어려운 연령에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-FEVER",
+      "ingredient": "아세트아미노펜과립",
+      "comparisonNote": "산제라 물 없이도 먹기 쉬워 시럽 계량이 번거로운 경우에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-FEVER",
+      "ingredient": "COMBO",
+      "comparisonNote": "발열에 콧물·기침·인후통이 함께 있을 때 씁니다. 열만 있으면 단일 해열제가 성분이 겹치지 않아 낫습니다."
+    },
+    {
+      "protocolId": "PTC-HEADACHE",
+      "ingredient": "아세트아미노펜",
+      "comparisonNote": "염증보다 두통 자체를 눌러야 하고 위가 약할 때 맞습니다."
+    },
+    {
+      "protocolId": "PTC-HEADACHE",
+      "ingredient": "이부프로펜",
+      "comparisonNote": "뒷목·어깨 뭉침이나 염증이 동반된 두통에 맞습니다. 공복이면 아세트아미노펜과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-HEADACHE",
+      "ingredient": "이부프로펜아르기닌",
+      "comparisonNote": "흡수가 빨라 두통이 급하게 올라올 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-HEADACHE",
+      "ingredient": "아세트아미노펜(미분화)",
+      "comparisonNote": "소아용 현탁액이라 정제를 못 삼키는 연령에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-HEADACHE",
+      "ingredient": "아세트아미노펜과립",
+      "comparisonNote": "산제라 물 없이 먹기 쉽습니다."
+    },
+    {
+      "protocolId": "PTC-HEADACHE",
+      "ingredient": "COMBO",
+      "comparisonNote": "두통에 붓기나 생리 관련 불편이 겹칠 때 보는 복합 후보입니다. 두통만이면 단일 진통제가 낫습니다."
+    },
+    {
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "ingredient": "아세트아미노펜",
+      "comparisonNote": "위 자극이 적어 속이 약할 때 맞습니다. 부기·염증이 있으면 이부프로펜 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "ingredient": "이부프로펜",
+      "comparisonNote": "근육 염증·부기가 동반될 때 맞습니다."
+    },
+    {
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "ingredient": "아세트아미노펜(미분화)",
+      "comparisonNote": "소아용 현탁액이라 정제를 못 삼키는 연령에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "ingredient": "아세트아미노펜과립",
+      "comparisonNote": "산제라 물 없이 먹기 쉽습니다."
+    },
+    {
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "ingredient": "COMBO",
+      "comparisonNote": "근육통에 붓기가 겹칠 때 보는 복합 후보입니다."
+    },
+    {
+      "protocolId": "PTC-INSECT_BITE",
+      "ingredient": "히드로코르티손",
+      "comparisonNote": "물린 자리에 직접 발라 국소 염증만 잡을 때 고릅니다. 가려움이 넓게 퍼졌으면 먹는 항히스타민제와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-INSECT_BITE",
+      "ingredient": "세티리진염산염",
+      "comparisonNote": "가려움이 여러 곳으로 번져 바르는 약으로 감당이 안 될 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-PRODUCTIVE_COUGH",
+      "ingredient": "아세틸시스테인",
+      "comparisonNote": "끈적한 가래를 묽게 하는 데 집중합니다. 기침 자체가 힘들면 진해 성분이 든 복합제와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-PRODUCTIVE_COUGH",
+      "ingredient": "COMBO",
+      "comparisonNote": "가래 기침에 콧물·인후통이 겹친 감기일 때 씁니다. 가래만 문제면 거담 단일제가 성분이 겹치지 않아 낫습니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_WOUND",
+      "ingredient": "포비돈요오드",
+      "comparisonNote": "넓은 면을 소독할 때 씁니다. 상처를 아물게 하는 작용은 없어 소독 뒤 재생 보조제나 항생 연고와 나눠 봅니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_WOUND",
+      "ingredient": "퓨시드산나트륨",
+      "comparisonNote": "고름·발적처럼 세균감염이 확인될 때 씁니다. 감염 소견이 없으면 항생제 대신 재생 보조 연고가 맞습니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_WOUND",
+      "ingredient": "퓨시드산수화물",
+      "comparisonNote": "같은 항생 성분의 겔이라 연고보다 덜 번들거립니다. 진물이 있거나 옷에 닿는 부위에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_WOUND",
+      "ingredient": "헤파리노이드",
+      "comparisonNote": "아문 뒤 흉터·멍의 회복을 돕는 쪽이라 열린 상처의 1차 처치와는 목적이 다릅니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_WOUND",
+      "ingredient": "덱스판테놀",
+      "comparisonNote": "감염 소견이 없는 상처의 피부 장벽 회복을 돕습니다. 곪은 상처에는 항생 연고 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_WOUND",
+      "ingredient": "COMBO",
+      "comparisonNote": "감염 소견이 없는 가벼운 상처를 보호하고 아물게 할 때 씁니다. 고름이 보이면 항생 연고와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-DRY_COUGH",
+      "ingredient": "COMBO",
+      "comparisonNote": "마른기침에 열·인후통이 겹친 감기일 때 씁니다. 기침만이면 진해 단일제가 낫습니다."
+    },
+    {
+      "protocolId": "PTC-ACID_REFLUX",
+      "ingredient": "COMBO",
+      "comparisonNote": "신물이 올라오는 역류에는 물리적으로 덮어주는 쪽을, 속이 따가운 쪽이면 점막 보호 성분이 든 쪽을 봅니다."
+    },
+    {
+      "protocolId": "PTC-GUM_INFLAMMATION",
+      "ingredient": "COMBO",
+      "comparisonNote": "잇몸 염증을 먹는 약으로 관리할 때 씁니다. 통증 부위가 좁으면 국소 도포제와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-JOINT_PAIN",
+      "ingredient": "이부프로펜",
+      "comparisonNote": "관절이 붓거나 열감이 있을 때 맞습니다. 위가 약하면 국소 제형과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-JOINT_PAIN",
+      "ingredient": "이부프로펜아르기닌",
+      "comparisonNote": "흡수가 빨라 통증이 급할 때 고릅니다."
+    },
+    {
+      "protocolId": "PTC-JOINT_PAIN",
+      "ingredient": "COMBO",
+      "comparisonNote": "아픈 관절이 한 곳이면 바르는 쪽을, 여러 관절이면 먹는 쪽을 봅니다."
+    },
+    {
+      "protocolId": "PTC-DRY_EYE",
+      "ingredient": "카르복시메틸셀룰로오스나트륨",
+      "comparisonNote": "점도가 있어 건조감이 오래갈 때 맞습니다."
+    },
+    {
+      "protocolId": "PTC-DRY_EYE",
+      "ingredient": "COMBO",
+      "comparisonNote": "일회용 낱개 포장이라 보존제 접촉을 줄이고 싶거나 렌즈를 자주 쓰는 경우에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-HEARTBURN",
+      "ingredient": "COMBO",
+      "comparisonNote": "지금 쓰린 속을 바로 중화하는 쪽입니다. 속쓰림이 매주 반복되면 위산 분비를 줄이는 파모티딘과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-HEARTBURN",
+      "ingredient": "파모티딘",
+      "comparisonNote": "이미 나온 산을 중화하는 대신 분비 자체를 줄여 반복되는 속쓰림에 맞습니다. 지금 당장 쓰릴 때는 제산제가 빠릅니다."
+    },
+    {
+      "protocolId": "PTC-HEMORRHOID",
+      "ingredient": "디오스민",
+      "comparisonNote": "먹는 약으로 정맥 울혈과 붓기를 안쪽에서 다룹니다. 국소 통증·가려움이 급하면 연고와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-HEMORRHOID",
+      "ingredient": "COMBO",
+      "comparisonNote": "환부에 직접 발라 통증·가려움을 빠르게 줄입니다. 붓기와 출혈이 반복되면 먹는 정맥순환 보조제 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-SLEEP_AID",
+      "ingredient": "디펜히드라민염산염",
+      "comparisonNote": "단기 불면에 쓰는 항히스타민 계열이라 고령자에서는 항콜린 부작용과 낙상 위험을 먼저 확인합니다."
+    },
+    {
+      "protocolId": "PTC-ACNE",
+      "ingredient": "퓨시드산나트륨",
+      "comparisonNote": "화농성 여드름처럼 세균감염이 뚜렷할 때 씁니다. 좁쌀·면포 위주면 항생제 대상이 아닙니다."
+    },
+    {
+      "protocolId": "PTC-ACNE",
+      "ingredient": "퓨시드산수화물",
+      "comparisonNote": "같은 항생 성분의 겔이라 번들거림이 적어 낮 시간대나 넓은 부위에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_BURN",
+      "ingredient": "퓨시드산나트륨",
+      "comparisonNote": "화상 부위에 이차 세균감염이 확인될 때 씁니다. 감염이 없으면 장벽 회복 연고 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_BURN",
+      "ingredient": "퓨시드산수화물",
+      "comparisonNote": "같은 항생 성분의 겔이라 진물이 있는 부위에 덜 답답합니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_BURN",
+      "ingredient": "덱스판테놀",
+      "comparisonNote": "감염 소견이 없는 화상에서 피부 장벽 회복을 돕습니다. 곪으면 항생 연고와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_BURN",
+      "ingredient": "포비돈요오드",
+      "comparisonNote": "오염된 화상면을 소독할 때만 씁니다. 반복 사용은 조직 회복을 늦출 수 있어 소독 뒤에는 회복 보조제로 넘어갑니다."
+    },
+    {
+      "protocolId": "PTC-MINOR_BURN",
+      "ingredient": "COMBO",
+      "comparisonNote": "감염 소견이 없는 화상의 보호와 회복을 함께 볼 때 씁니다."
+    },
+    {
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "ingredient": "테르비나핀염산염",
+      "comparisonNote": "발가락 사이 전형적인 무좀에 치료 기간이 짧은 편입니다. 어루러기처럼 병변이 넓으면 아졸계와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "ingredient": "시클로피록스",
+      "comparisonNote": "네일라카라 손발톱 병변에 씁니다. 피부면 무좀에는 크림·액제 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "ingredient": "나프티핀염산염",
+      "comparisonNote": "피부사상균 무좀에 쓰며 크림과 액제 중 병변 습윤도에 맞춰 고릅니다."
+    },
+    {
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "ingredient": "케토코나졸",
+      "comparisonNote": "어루러기·지루성처럼 말라세지아가 의심될 때 맞습니다. 발가락 사이 무좀은 테르비나핀 쪽이 기간이 짧습니다."
+    },
+    {
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "ingredient": "클로트리마졸",
+      "comparisonNote": "무좀·완선·어루러기까지 범위가 넓을 때 쓰는 아졸계입니다. 산제는 습한 부위, 크림은 건조한 병변에 맞춥니다."
+    },
+    {
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "ingredient": "COMBO",
+      "comparisonNote": "가려움·염증이 심해 항진균 단독으로 버티기 어려울 때 보는 복합 후보입니다."
+    },
+    {
+      "protocolId": "PTC-MILD_DERMATITIS",
+      "ingredient": "COMBO",
+      "comparisonNote": "감염·진균 소견이 없는 가벼운 습진에 씁니다. 부위가 넓으면 로션 제형과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-BRUISE",
+      "ingredient": "헤파리노이드",
+      "comparisonNote": "멍의 흡수를 돕는 겔이라 열린 상처에는 쓰지 않습니다."
+    },
+    {
+      "protocolId": "PTC-SCAR_CARE",
+      "ingredient": "헤파리노이드",
+      "comparisonNote": "흉터와 멍을 함께 볼 때 씁니다. 단단하게 굳은 흉터면 전용 겔과 비교합니다."
+    },
+    {
+      "protocolId": "PTC-SCAR_CARE",
+      "ingredient": "COMBO",
+      "comparisonNote": "상처가 닫힌 뒤 단단하거나 당기는 흉터를 마사지하며 쓸 때 맞습니다. 열린 상처에는 쓰지 않습니다."
+    },
+    {
+      "protocolId": "PTC-HYPERHIDROSIS",
+      "ingredient": "염화알루미늄수화물",
+      "comparisonNote": "잠들기 전 건조한 피부에 바르는 국소 발한 억제제입니다. 자극이 생기면 사용 간격을 늘려 확인합니다."
+    },
+    {
+      "protocolId": "PTC-SCALP_DANDRUFF",
+      "ingredient": "케토코나졸",
+      "comparisonNote": "말라세지아 관련 비듬에 맞습니다. 두피에 고름·진물이 있으면 제품 상담 대상이 아닙니다."
+    },
+    {
+      "protocolId": "PTC-ORAL_CONTRACEPTION",
+      "ingredient": "COMBO",
+      "chooseWhenContains": "게스토덴 0.075mg·에티닐에스트라디올 0.03mg",
+      "comparisonNote": "에스트로겐 함량이 높은 쪽이라 저용량에서 부정출혈이 잦았던 경우에 검토합니다."
+    },
+    {
+      "protocolId": "PTC-ORAL_CONTRACEPTION",
+      "ingredient": "COMBO",
+      "chooseWhenContains": "게스토덴 0.075mg·에티닐에스트라디올 0.02mg",
+      "comparisonNote": "저용량 게스토덴 조합입니다. 같은 저용량이라도 프로게스틴 계열이 다르면 양상이 달라 이전에 쓰던 성분을 확인합니다."
+    },
+    {
+      "protocolId": "PTC-ORAL_CONTRACEPTION",
+      "ingredient": "COMBO",
+      "chooseWhenContains": "데소게스트렐",
+      "comparisonNote": "프로게스틴이 데소게스트렐이라 게스토덴 제품과 갈립니다. 이전에 맞았던 성분으로 잇는 것이 우선입니다."
+    },
+    {
+      "protocolId": "PTC-ORAL_CONTRACEPTION",
+      "ingredient": "COMBO",
+      "chooseWhenContains": "활성약",
+      "comparisonNote": "휴약 기간 없이 매일 이어서 먹는 일정이라 쉬는 주에 복용을 놓치기 쉬운 경우에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-SMOKING_CESSATION",
+      "ingredient": "니코틴폴라크릴렉스",
+      "comparisonNote": "갑자기 오는 흡연 욕구를 그때그때 눌러야 할 때 맞습니다. 하루 종일 일정하게 유지하려면 패치와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-SMOKING_CESSATION",
+      "ingredient": "니코틴",
+      "comparisonNote": "패치는 하루 동안 일정하게 유지하는 쪽이고, 껌·트로키는 순간 욕구를 다루는 쪽입니다. 흡연량에 따라 시작 강도가 갈립니다."
+    },
+    {
+      "protocolId": "PTC-SMOKING_CESSATION",
+      "ingredient": "니코틴타르타르산염수화물",
+      "comparisonNote": "입안에서 녹이는 트로키라 껌을 씹기 어렵거나 턱이 불편한 경우에 맞습니다."
+    },
+    {
+      "protocolId": "PTC-DIARRHEA",
+      "ingredient": "COMBO",
+      "comparisonNote": "급성 설사에 지사·정장 성분을 함께 볼 때 씁니다. 물설사로 탈수가 걱정되면 흡착·점막 보호 쪽을 먼저 봅니다."
+    },
+    {
+      "protocolId": "PTC-STOMATITIS",
+      "ingredient": "디클로페낙",
+      "comparisonNote": "가글이라 병변이 여러 곳이거나 손이 닿지 않는 안쪽까지 닿습니다. 한 군데면 점착 연고가 더 오래 붙어 있습니다."
+    },
+    {
+      "protocolId": "PTC-STOMATITIS",
+      "ingredient": "벤지다민염산염",
+      "comparisonNote": "가글형 국소 소염진통제라 삼키는 부담 없이 넓게 씁니다. 통증 부위가 좁으면 연고와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-STOMATITIS",
+      "ingredient": "COMBO",
+      "comparisonNote": "스프레이라 목 안쪽처럼 연고나 가글이 닿기 어려운 부위에 직접 뿌립니다."
+    },
+    {
+      "protocolId": "PTC-VAGINAL_ANTIFUNGAL",
+      "ingredient": "포비돈요오드",
+      "comparisonNote": "외음부 세정·소독용이라 질정과는 사용 부위와 목적이 다릅니다. 칸디다 치료를 대신하지 않습니다."
+    }
+  ]
+}

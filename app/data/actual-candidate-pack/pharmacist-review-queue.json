@@ -57,7 +57,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "에스트로겐 함량이 높은 쪽이라 저용량에서 부정출혈이 잦았던 경우에 검토합니다."
         },
         {
           "field": "differentiators[0]",
@@ -70,10 +70,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 소아 연령별 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -115,7 +111,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "저용량 게스토덴 조합입니다. 같은 저용량이라도 프로게스틴 계열이 다르면 양상이 달라 이전에 쓰던 성분을 확인합니다."
         },
         {
           "field": "differentiators[0]",
@@ -128,10 +124,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 소아 연령별 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -173,7 +165,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "프로게스틴이 데소게스트렐이라 게스토덴 제품과 갈립니다. 이전에 맞았던 성분으로 잇는 것이 우선입니다."
         },
         {
           "field": "differentiators[0]",
@@ -186,10 +178,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 소아 연령별 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -231,7 +219,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "프로게스틴이 데소게스트렐이라 게스토덴 제품과 갈립니다. 이전에 맞았던 성분으로 잇는 것이 우선입니다."
         },
         {
           "field": "differentiators[0]",
@@ -244,10 +232,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 소아 연령별 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -289,7 +273,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "저용량 게스토덴 조합입니다. 같은 저용량이라도 프로게스틴 계열이 다르면 양상이 달라 이전에 쓰던 성분을 확인합니다."
         },
         {
           "field": "differentiators[0]",
@@ -302,10 +286,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 소아 연령별 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -347,7 +327,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "휴약 기간 없이 매일 이어서 먹는 일정이라 쉬는 주에 복용을 놓치기 쉬운 경우에 맞습니다."
         },
         {
           "field": "differentiators[0]",
@@ -360,10 +340,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 소아 연령별 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -405,7 +381,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "단기 불면에 쓰는 항히스타민 계열이라 고령자에서는 항콜린 부작용과 낙상 위험을 먼저 확인합니다."
         },
         {
           "field": "differentiators[0]",
@@ -418,10 +394,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -462,7 +434,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "단기 불면에 쓰는 항히스타민 계열이라 고령자에서는 항콜린 부작용과 낙상 위험을 먼저 확인합니다."
         },
         {
           "field": "differentiators[0]",
@@ -475,10 +447,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -519,7 +487,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "단기 불면에 쓰는 항히스타민 계열이라 고령자에서는 항콜린 부작용과 낙상 위험을 먼저 확인합니다."
         },
         {
           "field": "differentiators[0]",
@@ -532,10 +500,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -576,7 +540,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "단기 불면에 쓰는 항히스타민 계열이라 고령자에서는 항콜린 부작용과 낙상 위험을 먼저 확인합니다."
         },
         {
           "field": "differentiators[0]",
@@ -589,10 +553,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -633,7 +593,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "갑자기 오는 흡연 욕구를 그때그때 눌러야 할 때 맞습니다. 하루 종일 일정하게 유지하려면 패치와 비교합니다."
         },
         {
           "field": "differentiators[0]",
@@ -646,10 +606,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인·소아 연령별 용량이 구분된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -689,7 +645,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "갑자기 오는 흡연 욕구를 그때그때 눌러야 할 때 맞습니다. 하루 종일 일정하게 유지하려면 패치와 비교합니다."
         },
         {
           "field": "differentiators[0]",
@@ -702,10 +658,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인·소아 연령별 용량이 구분된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -745,7 +697,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "패치는 하루 동안 일정하게 유지하는 쪽이고, 껌·트로키는 순간 욕구를 다루는 쪽입니다. 흡연량에 따라 시작 강도가 갈립니다."
         },
         {
           "field": "differentiators[0]",
@@ -758,10 +710,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인·소아 연령별 용량이 구분된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -801,7 +749,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "패치는 하루 동안 일정하게 유지하는 쪽이고, 껌·트로키는 순간 욕구를 다루는 쪽입니다. 흡연량에 따라 시작 강도가 갈립니다."
         },
         {
           "field": "differentiators[0]",
@@ -814,10 +762,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인·소아 연령별 용량이 구분된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -857,7 +801,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "패치는 하루 동안 일정하게 유지하는 쪽이고, 껌·트로키는 순간 욕구를 다루는 쪽입니다. 흡연량에 따라 시작 강도가 갈립니다."
         },
         {
           "field": "differentiators[0]",
@@ -870,10 +814,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인·소아 연령별 용량이 구분된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -913,7 +853,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "입안에서 녹이는 트로키라 껌을 씹기 어렵거나 턱이 불편한 경우에 맞습니다."
         },
         {
           "field": "differentiators[0]",
@@ -926,10 +866,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인·소아 연령별 용량이 구분된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -969,7 +905,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "패치는 하루 동안 일정하게 유지하는 쪽이고, 껌·트로키는 순간 욕구를 다루는 쪽입니다. 흡연량에 따라 시작 강도가 갈립니다."
         },
         {
           "field": "differentiators[0]",
@@ -982,10 +918,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인·소아 연령별 용량이 구분된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1025,7 +957,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "외음부 세정·소독용이라 질정과는 사용 부위와 목적이 다릅니다. 칸디다 치료를 대신하지 않습니다."
         },
         {
           "field": "differentiators[0]",
@@ -1034,10 +966,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 액제 · 질"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1079,7 +1007,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "먹는 약으로 정맥 울혈과 붓기를 안쪽에서 다룹니다. 국소 통증·가려움이 급하면 연고와 비교합니다."
         },
         {
           "field": "differentiators[0]",
@@ -1092,10 +1020,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인 용량이 확인된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1137,7 +1061,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "먹는 약으로 정맥 울혈과 붓기를 안쪽에서 다룹니다. 국소 통증·가려움이 급하면 연고와 비교합니다."
         },
         {
           "field": "differentiators[0]",
@@ -1146,10 +1070,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 정제 · 경구(내용고형)"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1191,7 +1111,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "먹는 약으로 정맥 울혈과 붓기를 안쪽에서 다룹니다. 국소 통증·가려움이 급하면 연고와 비교합니다."
         },
         {
           "field": "differentiators[0]",
@@ -1200,10 +1120,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 산제 · 경구(내용산제)"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1245,7 +1161,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "환부에 직접 발라 통증·가려움을 빠르게 줄입니다. 붓기와 출혈이 반복되면 먹는 정맥순환 보조제 쪽입니다."
         },
         {
           "field": "differentiators[0]",
@@ -1258,10 +1174,6 @@
         {
           "field": "differentiators[2]",
           "text": "복용 대상: 성인·소아 연령별 용량이 구분된 제품"
-        },
-        {
-          "field": "differentiators[3]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1303,7 +1215,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "먹는 약으로 정맥 울혈과 붓기를 안쪽에서 다룹니다. 국소 통증·가려움이 급하면 연고와 비교합니다."
         },
         {
           "field": "differentiators[0]",
@@ -1312,10 +1224,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 정제 · 경구(내용고형)"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1357,7 +1265,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "화상 부위에 이차 세균감염이 확인될 때 씁니다. 감염이 없으면 장벽 회복 연고 쪽입니다."
         },
         {
           "field": "differentiators[0]",
@@ -1366,10 +1274,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 연고 · 피부"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1411,7 +1315,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "화상 부위에 이차 세균감염이 확인될 때 씁니다. 감염이 없으면 장벽 회복 연고 쪽입니다."
         },
         {
           "field": "differentiators[0]",
@@ -1420,10 +1324,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 연고 · 피부"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1465,7 +1365,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "같은 항생 성분의 겔이라 진물이 있는 부위에 덜 답답합니다."
         },
         {
           "field": "differentiators[0]",
@@ -1474,10 +1374,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 겔제 · 피부"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1519,7 +1415,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "감염 소견이 없는 화상의 보호와 회복을 함께 볼 때 씁니다."
         },
         {
           "field": "differentiators[0]",
@@ -1528,10 +1424,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 연고 · 피부"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1573,7 +1465,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "감염 소견이 없는 화상의 보호와 회복을 함께 볼 때 씁니다."
         },
         {
           "field": "differentiators[0]",
@@ -1582,10 +1474,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 연고 · 피부"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1627,7 +1515,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "감염 소견이 없는 화상에서 피부 장벽 회복을 돕습니다. 곪으면 항생 연고와 비교합니다."
         },
         {
           "field": "differentiators[0]",
@@ -1636,10 +1524,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 연고 · 피부"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1681,7 +1565,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "오염된 화상면을 소독할 때만 씁니다. 반복 사용은 조직 회복을 늦출 수 있어 소독 뒤에는 회복 보조제로 넘어갑니다."
         },
         {
           "field": "differentiators[0]",
@@ -1690,10 +1574,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 액제 · 피부"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
@@ -1735,7 +1615,7 @@
         },
         {
           "field": "comparison_note",
-          "text": "같은 증상 후보 중 성분 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다."
+          "text": "오염된 화상면을 소독할 때만 씁니다. 반복 사용은 조직 회복을 늦출 수 있어 소독 뒤에는 회복 보조제로 넘어갑니다."
         },
         {
           "field": "differentiators[0]",
@@ -1744,10 +1624,6 @@
         {
           "field": "differentiators[1]",
           "text": "제형·투여경로: 약물이 포함된 위생용품 · 피부"
-        },
-        {
-          "field": "differentiators[2]",
-          "text": "현재 증상 경로에서 직접 작용하는 1차 역할로 검토"
         },
         {
           "field": "practical_points[0]",
