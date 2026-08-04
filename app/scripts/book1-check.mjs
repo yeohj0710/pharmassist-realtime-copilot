@@ -24,7 +24,11 @@ const pack = JSON.parse(
 // shipping instead of being dropped from the pack. They carry zero options and
 // zero products, which is why claims and protocolOptions are unchanged: that
 // pair staying fixed is the evidence no product was invented to fill the gap.
-const BASELINE = { claims: 478, protocols: 44, protocolOptions: 332 };
+// 478 -> 483 and 332 -> 337 when two official indication terms were added to
+// pathways.json: 월경곤란증 and 골격근장애, both taken from naproxen's own
+// 효능·효과. The classifier had been missing the official synonym, so the
+// growth is a link that should always have existed, not a new claim.
+const BASELINE = { claims: 483, protocols: 44, protocolOptions: 337 };
 
 const failures = [];
 const fail = (message) => failures.push(message);

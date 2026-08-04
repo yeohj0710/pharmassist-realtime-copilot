@@ -4,7 +4,7 @@
   "researchOnly": true,
   "source": {
     "registrySha256": "f4dd27581e3823853f944f7e5657cdf285bcb024afd16798639487c98c5c7d14",
-    "pathwaysSha256": "4acddae55be2b2aabbb12766c852324fd6c52b495befb9f898de5d4de065ccc2"
+    "pathwaysSha256": "fa5dcff6b275dad15f1ddb133ee0dab7711aee4989fd7fa59def0202e433cde7"
   },
   "records": [
     {
@@ -7820,12 +7820,34 @@
           "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         },
         {
+          "pathwayId": "menstrual_pain",
+          "protocolId": "PTC-MENSTRUAL_PAIN",
+          "matchType": "direct",
+          "score": 100,
+          "matchedTerms": ["월경곤란증"],
+          "mechanisms": ["antiinflammatory_analgesia"],
+          "combinationRole": "primary",
+          "compatibleRoles": [],
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        },
+        {
           "pathwayId": "joint_pain",
           "protocolId": "PTC-JOINT_PAIN",
           "matchType": "direct",
           "score": 93,
           "matchedTerms": ["관절염", "염좌"],
           "mechanisms": ["antiinflammatory_analgesia"],
+          "combinationRole": "primary",
+          "compatibleRoles": ["local_support", "muscle_relaxation"],
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
+        },
+        {
+          "pathwayId": "muscle_pain",
+          "protocolId": "PTC-MUSCLE_PAIN",
+          "matchType": "direct",
+          "score": 90,
+          "matchedTerms": ["골격근장애"],
+          "mechanisms": ["analgesia"],
           "combinationRole": "primary",
           "compatibleRoles": ["local_support", "muscle_relaxation"],
           "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
@@ -12034,6 +12056,17 @@
           "combinationRole": "primary",
           "compatibleRoles": ["local_support", "muscle_relaxation"],
           "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
+        },
+        {
+          "pathwayId": "muscle_pain",
+          "protocolId": "PTC-MUSCLE_PAIN",
+          "matchType": "direct",
+          "score": 90,
+          "matchedTerms": ["골격근장애"],
+          "mechanisms": ["analgesia"],
+          "combinationRole": "primary",
+          "compatibleRoles": ["local_support", "muscle_relaxation"],
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
         }
       ],
       "ingredientMappings": [
@@ -15655,18 +15688,18 @@
       "productId": "PRD-HEALTHKR-57B57CA2F11AEB9E",
       "officialMatchStatus": "confirmed",
       "officialProductKey": "A11AOOOOO2522",
-      "mappingStatus": "supportive",
+      "mappingStatus": "direct",
       "pathways": [
         {
-          "pathwayId": "gastrointestinal_support",
-          "protocolId": null,
-          "matchType": "supportive",
-          "score": 10,
-          "matchedTerms": ["진경제"],
-          "mechanisms": [],
-          "combinationRole": null,
+          "pathwayId": "menstrual_pain",
+          "protocolId": "PTC-MENSTRUAL_PAIN",
+          "matchType": "direct",
+          "score": 100,
+          "matchedTerms": ["월경곤란증"],
+          "mechanisms": ["antispasmodic"],
+          "combinationRole": "primary",
           "compatibleRoles": [],
-          "source": null
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         }
       ],
       "ingredientMappings": [
@@ -15681,7 +15714,7 @@
           "identitySource": "official_text_hash"
         }
       ],
-      "exclusionReasons": ["supportive_only"]
+      "exclusionReasons": []
     },
     {
       "registryRecordId": "REG-HEALTHKR-B44BA54B5B328782",
@@ -15689,18 +15722,18 @@
       "productId": "PRD-HEALTHKR-8575EB0E4B67705E",
       "officialMatchStatus": "confirmed",
       "officialProductKey": "A11AHHHHH0014",
-      "mappingStatus": "supportive",
+      "mappingStatus": "direct",
       "pathways": [
         {
-          "pathwayId": "gastrointestinal_support",
-          "protocolId": null,
-          "matchType": "supportive",
-          "score": 10,
-          "matchedTerms": ["진경제"],
-          "mechanisms": [],
-          "combinationRole": null,
+          "pathwayId": "menstrual_pain",
+          "protocolId": "PTC-MENSTRUAL_PAIN",
+          "matchType": "direct",
+          "score": 100,
+          "matchedTerms": ["월경곤란증"],
+          "mechanisms": ["antispasmodic"],
+          "combinationRole": "primary",
           "compatibleRoles": [],
-          "source": null
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         }
       ],
       "ingredientMappings": [
@@ -15715,7 +15748,7 @@
           "identitySource": "official_text_hash"
         }
       ],
-      "exclusionReasons": ["supportive_only"]
+      "exclusionReasons": []
     },
     {
       "registryRecordId": "REG-HEALTHKR-6DB4C5F198A3764F",
@@ -15723,18 +15756,18 @@
       "productId": "PRD-HEALTHKR-E80E93033D1E5D7C",
       "officialMatchStatus": "confirmed",
       "officialProductKey": "2009071505474",
-      "mappingStatus": "supportive",
+      "mappingStatus": "direct",
       "pathways": [
         {
-          "pathwayId": "gastrointestinal_support",
-          "protocolId": null,
-          "matchType": "supportive",
-          "score": 10,
-          "matchedTerms": ["진경제"],
-          "mechanisms": [],
-          "combinationRole": null,
+          "pathwayId": "menstrual_pain",
+          "protocolId": "PTC-MENSTRUAL_PAIN",
+          "matchType": "direct",
+          "score": 100,
+          "matchedTerms": ["월경곤란증"],
+          "mechanisms": ["antispasmodic"],
+          "combinationRole": "primary",
           "compatibleRoles": [],
-          "source": null
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         }
       ],
       "ingredientMappings": [
@@ -15749,7 +15782,7 @@
           "identitySource": "official_text_hash"
         }
       ],
-      "exclusionReasons": ["supportive_only"]
+      "exclusionReasons": []
     },
     {
       "registryRecordId": "REG-HEALTHKR-0B89A7D3E2D58B2B",

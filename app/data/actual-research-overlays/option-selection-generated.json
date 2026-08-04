@@ -2149,11 +2149,27 @@
         "patterns": ["몸이 부", "손발이 부", "배가 빵빵"]
       },
       {
+        "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206",
+        "patterns": ["생리통", "아랫배", "속이 약"]
+      },
+      {
         "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-3F14A5A15AE0EBD9",
         "patterns": ["부었", "붓기", "빵빵"]
       },
       {
+        "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899",
+        "patterns": ["생리통", "아랫배", "속이 약"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3",
+        "patterns": ["생리통", "아랫배", "속이 약"]
+      },
+      {
         "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-21C0E2C953EA2235",
+        "patterns": ["쥐어짜", "쥐어짜듯", "많이 불편", "허리도"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209",
         "patterns": ["쥐어짜", "쥐어짜듯", "많이 불편", "허리도"]
       },
       {

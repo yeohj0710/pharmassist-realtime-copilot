@@ -324,7 +324,7 @@
       "protocolId": "PTC-BLOATING",
       "efficacyAny": ["복부팽만", "복부 팽만", "팽만감", "고창"],
       "routeFormAny": ["경구", "내용"],
-      "officialCategoryNone": ["\uD558\uC81C", "\uC644\uC7A5\uC81C"],
+      "officialCategoryNone": ["하제", "완장제"],
       "requireMechanismEvidence": true,
       "mechanisms": ["gas_reduction", "digestion_support"],
       "combinationRole": "primary",
@@ -412,7 +412,7 @@
       "protocolId": "PTC-GAS",
       "efficacyAny": ["가스제거", "가스 제거", "고창", "복부팽만", "위부팽만"],
       "routeFormAny": ["경구", "내용"],
-      "officialCategoryNone": ["\uD558\uC81C", "\uC644\uC7A5\uC81C"],
+      "officialCategoryNone": ["하제", "완장제"],
       "requireMechanismEvidence": true,
       "mechanisms": ["gas_reduction"],
       "combinationRole": "supportive",
@@ -425,7 +425,7 @@
       "protocolId": "PTC-HEADACHE",
       "efficacyAny": ["두통", "머리의 통증", "편두통"],
       "routeFormAny": ["경구", "내용"],
-      "officialCategoryNone": ["\uCD5C\uD1A0\uC81C", "\uC9C4\uD1A0\uC81C"],
+      "officialCategoryNone": ["최토제", "진토제"],
       "activeIngredientNone": [
         "클로르페니라민",
         "덱스트로메토르판",
@@ -463,12 +463,7 @@
       "protocolId": "PTC-INDIGESTION",
       "efficacyAny": ["소화불량", "과식", "식욕감퇴", "소화촉진", "체함"],
       "routeFormAny": ["경구", "내용"],
-      "officialCategoryNone": [
-        "\uD558\uC81C",
-        "\uC644\uC7A5\uC81C",
-        "비타민제",
-        "자양강장"
-      ],
+      "officialCategoryNone": ["하제", "완장제", "비타민제", "자양강장"],
       "requireMechanismEvidence": true,
       "mechanisms": ["digestive_enzyme", "motility_regulation", "bile_support"],
       "combinationRole": "primary",
@@ -511,7 +506,7 @@
     {
       "pathwayId": "menstrual_pain",
       "protocolId": "PTC-MENSTRUAL_PAIN",
-      "efficacyAny": ["생리통", "월경통"],
+      "efficacyAny": ["생리통", "월경통", "월경곤란증"],
       "routeFormAny": ["경구", "내용"],
       "itemNameNone": ["어린이", "키즈", "시럽", "현탁", "산160"],
       "activeIngredientNone": [
@@ -582,7 +577,7 @@
     {
       "pathwayId": "muscle_pain",
       "protocolId": "PTC-MUSCLE_PAIN",
-      "efficacyAny": ["근육통", "요통", "신경통", "근육의 통증"],
+      "efficacyAny": ["근육통", "요통", "신경통", "근육의 통증", "골격근장애"],
       "routeFormAny": ["경구", "내용", "피부", "외용", "경피"],
       "officialCategoryNone": ["비타민제", "자양강장"],
       "activeIngredientNone": [

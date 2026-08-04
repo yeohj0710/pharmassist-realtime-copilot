@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "generatedFrom": "data/actual-research-overlays/situation-branches.json",
   "protocolCount": 32,
-  "optionRuleCount": 386,
+  "optionRuleCount": 390,
   "protocols": [
     {
       "protocolId": "PTC-FEVER",
@@ -682,14 +682,14 @@
         {
           "branchId": "inflammatory",
           "chooseWhenContains": "염증성 생리통의 통증과 경련 완화를 우선",
-          "products": 2,
-          "options": 2
+          "products": 3,
+          "options": 3
         },
         {
           "branchId": "general",
           "chooseWhenContains": "생리통이 주된 불편이고",
-          "products": 3,
-          "options": 2
+          "products": 6,
+          "options": 5
         },
         {
           "branchId": "edema-ibuprofen",
@@ -704,7 +704,7 @@
           "options": 1
         }
       ],
-      "optionRules": 6
+      "optionRules": 10
     },
     {
       "protocolId": "PTC-STOMATITIS",

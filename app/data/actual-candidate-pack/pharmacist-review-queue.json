@@ -31,17 +31,17 @@
     "note": "이 파일에 적은 결정만 큐에 반영된다. 생성기는 어떤 항목도 스스로 승인하지 않고, items에 없는 itemId가 남아 있으면 빌드를 실패시킨다."
   },
   "areaCount": 6,
-  "itemCount": 176,
+  "itemCount": 178,
   "countByKind": {
     "clinical_area": 31,
-    "selection_copy": 145
+    "selection_copy": 147
   },
   "originLegend": {
     "field_practice_pdf": "현장실습 PDF에서 인용한 문구. sourceLocator의 페이지와 대조할 수 있다.",
     "authored_contrast": "출처 문서 없이 작성한 대조 문장. 근거는 팩의 성분·제형 기록뿐이라 임상 판단은 검토가 필요하다."
   },
   "countByStatus": {
-    "pending": 176
+    "pending": 178
   },
   "items": [
     {
@@ -3025,7 +3025,10 @@
       "ingredientGroup": "COMBO",
       "affectedProducts": [
         "퓨어펜연질캡슐",
-        "게리단"
+        "게리단",
+        "포나민",
+        "샤이닝",
+        "부스코판플러스"
       ],
       "reviewTargets": [
         {
@@ -6835,6 +6838,49 @@
       "reviewerNote": null
     },
     {
+      "itemId": "PRQ-COPY-PTC-MENSTRUAL_PAIN-ING-HEALTHKR-6BC91FEFECC5D209",
+      "kind": "selection_copy",
+      "origin": "authored_contrast",
+      "areaId": "selection-card-copy",
+      "areaTitle": "제품 카드 비교 문구",
+      "whyReviewNeeded": "약사가 후보를 고를 때 읽는 문장이다. 출처 문서가 없고 팩의 성분·제형 기록만 근거로 작성했으므로, 임상적으로 틀린 대조가 있으면 그대로 상담에 나간다.",
+      "mustConfirm": [
+        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
+        "성분·제형 서술이 허가사항과 어긋나지 않는지",
+        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
+      ],
+      "protocolId": "PTC-MENSTRUAL_PAIN",
+      "protocolName": "생리통 OTC 후보 선별",
+      "ingredientGroup": "나프록센",
+      "affectedProducts": [
+        "탁센(나프록센)"
+      ],
+      "reviewTargets": [
+        {
+          "field": "comparison_note",
+          "text": "작용이 오래가서 통증이 하루 종일 이어질 때 맞습니다. 짧고 급하게 올라오는 통증이면 흡수가 빠른 이부프로펜 쪽입니다."
+        },
+        {
+          "field": "choose_when",
+          "text": "염증성 생리통의 통증과 경련 완화를 우선하는 경우"
+        }
+      ],
+      "sourceLocator": null,
+      "referRedFlags": [
+        "임신 가능성 또는 생리 지연과 심한 통증",
+        "실신·어지럼을 동반한 과다출혈",
+        "새롭게 발생한 매우 심한 통증",
+        "발열·악취 분비물",
+        "생리 사이 출혈 또는 성교통"
+      ],
+      "status": "pending",
+      "decision": null,
+      "reviewerId": null,
+      "reviewedAt": null,
+      "reviewerNote": null
+    },
+    {
       "itemId": "PRQ-PIPE-PTC-NASAL_CONGESTION-33e7ccb9",
       "kind": "selection_copy",
       "origin": "field_practice_pdf",
@@ -7106,8 +7152,7 @@
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
         "손님에게 그대로 옮겨도 오해를 만들지 않는지",
-        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지",
-        "이 문구가 나프록센과 비교하라고 하는데 이 상담의 후보 목록에는 없다. 문구를 고칠지, 그 후보를 목록에 넣을지 판단이 필요하다."
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
       ],
       "protocolId": "PTC-MUSCLE_PAIN",
       "protocolName": "근육통 OTC 후보 선별",
@@ -7900,8 +7945,7 @@
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
         "손님에게 그대로 옮겨도 오해를 만들지 않는지",
-        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지",
-        "이 문구가 나프록센과 비교하라고 하는데 이 상담의 후보 목록에는 없다. 문구를 고칠지, 그 후보를 목록에 넣을지 판단이 필요하다."
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
       ],
       "protocolId": "PTC-MENSTRUAL_PAIN",
       "protocolName": "생리통 OTC 후보 선별",
@@ -8016,6 +8060,50 @@
         "갑작스러운 극심한 통증",
         "전신 발진·호흡곤란",
         "지속적인 야간통·체중감소"
+      ],
+      "status": "pending",
+      "decision": null,
+      "reviewerId": null,
+      "reviewedAt": null,
+      "reviewerNote": null
+    },
+    {
+      "itemId": "PRQ-PIPE-PTC-MUSCLE_PAIN-eff076c4",
+      "kind": "selection_copy",
+      "origin": "field_practice_pdf",
+      "areaId": "selection-card-copy",
+      "areaTitle": "제품 카드 비교 문구",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "mustConfirm": [
+        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
+        "성분·제형 서술이 허가사항과 어긋나지 않는지",
+        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
+      ],
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "protocolName": "근육통 OTC 후보 선별",
+      "ingredientGroup": null,
+      "affectedProducts": [
+        "탁센(나프록센)",
+        "파인큐나프록센현탁액"
+      ],
+      "reviewTargets": [
+        {
+          "field": "comparison_note",
+          "text": "짧게 빠른 해열·몸살 완화가 목적이면 이부프로펜 또는 아세트아미노펜과 비교합니다."
+        },
+        {
+          "field": "choose_when",
+          "text": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다."
+        }
+      ],
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
+      "referRedFlags": [
+        "심한 외상·변형",
+        "근력저하·감각저하",
+        "짙은 갈색 소변 또는 심한 전신 근육통",
+        "고열·의식저하",
+        "흉통·호흡곤란"
       ],
       "status": "pending",
       "decision": null,

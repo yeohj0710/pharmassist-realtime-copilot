@@ -5271,6 +5271,90 @@
       }
     },
     {
+      "ingredient_id": "ING-FORMULA-162EA63E6B8E8206",
+      "display_name_ko": "포나민정 복합성분",
+      "display_name_en": "포나민정 복합성분",
+      "normalized_name": "포나민정복합성분",
+      "mfds_ingredient_code": null,
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-ING-FORMULA-162EA63E6B8E8206",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO2522",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-FORMULA-467069284C4CC899",
+      "display_name_ko": "샤이닝정 복합성분",
+      "display_name_en": "샤이닝정 복합성분",
+      "normalized_name": "샤이닝정복합성분",
+      "mfds_ingredient_code": null,
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-ING-FORMULA-467069284C4CC899",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AHHHHH0014",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-FORMULA-C164F99EC70580C3",
+      "display_name_ko": "부스코판플러스정 복합성분",
+      "display_name_en": "부스코판플러스정 복합성분",
+      "normalized_name": "부스코판플러스정복합성분",
+      "mfds_ingredient_code": null,
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-ING-FORMULA-C164F99EC70580C3",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2009071505474",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
       "ingredient_id": "ING-FORMULA-48C7385E19C8900B",
       "display_name_ko": "백초시럽플러스 복합성분",
       "display_name_en": "백초시럽플러스 복합성분",
@@ -22583,6 +22667,16 @@
           "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         },
         {
+          "protocol_id": "PTC-MENSTRUAL_PAIN",
+          "mechanisms": [
+            "antiinflammatory_analgesia"
+          ],
+          "combination_role": "primary",
+          "compatible_roles": [],
+          "score": 100,
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        },
+        {
           "protocol_id": "PTC-JOINT_PAIN",
           "mechanisms": [
             "antiinflammatory_analgesia"
@@ -22593,6 +22687,19 @@
             "muscle_relaxation"
           ],
           "score": 93,
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
+        },
+        {
+          "protocol_id": "PTC-MUSCLE_PAIN",
+          "mechanisms": [
+            "analgesia"
+          ],
+          "combination_role": "primary",
+          "compatible_roles": [
+            "local_support",
+            "muscle_relaxation"
+          ],
+          "score": 90,
           "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
         }
       ],
@@ -22611,8 +22718,36 @@
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         },
         {
+          "protocol_id": "PTC-MENSTRUAL_PAIN",
+          "fit_score": 100,
+          "choose_when": "염증성 생리통의 통증과 경련 완화를 우선하는 경우",
+          "differentiators": [
+            "주요 성분: 나프록센",
+            "제형·투여경로: 연질캡슐 · 경구(내용고형)",
+            "복용 대상: 성인 용량이 확인된 제품"
+          ],
+          "comparison_note": "작용이 오래가서 통증이 하루 종일 이어질 때 맞습니다. 짧고 급하게 올라오는 통증이면 흡수가 빠른 이부프로펜 쪽입니다.",
+          "practical_points": [
+            "1. 류마티양 관절염, 골관절염, 강직성 척추염 성인: 나프록센으로서 1회 250~500㎎ 1일 2회(12시간마다) 경구투여하십시오.[복용하십시오.] 2. 급성통풍 성인: 나프록센으로서 초회량[처음 복용량]으로 750㎎을 경구투여하고 발작이 소실[없어짐]될 때까지 8시간간격으로 250㎎을 경구 투여하십시오.…"
+          ],
+          "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        },
+        {
           "protocol_id": "PTC-JOINT_PAIN",
           "fit_score": 93,
+          "choose_when": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다.",
+          "differentiators": [
+            "나프록센 계열",
+            "이부프로펜보다 지속 시간이 긴 쪽으로 정리",
+            "말초 염증성 통증·편두통에 비교"
+          ],
+          "comparison_note": "짧게 빠른 해열·몸살 완화가 목적이면 이부프로펜 또는 아세트아미노펜과 비교합니다.",
+          "practical_points": [],
+          "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        },
+        {
+          "protocol_id": "PTC-MUSCLE_PAIN",
+          "fit_score": 90,
           "choose_when": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다.",
           "differentiators": [
             "나프록센 계열",
@@ -22875,7 +23010,9 @@
       ],
       "protocol_ids": [
         "PTC-HEADACHE",
-        "PTC-JOINT_PAIN"
+        "PTC-MENSTRUAL_PAIN",
+        "PTC-JOINT_PAIN",
+        "PTC-MUSCLE_PAIN"
       ],
       "status": "active",
       "source_snapshot_ids": [
@@ -30331,6 +30468,19 @@
           ],
           "score": 93,
           "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
+        },
+        {
+          "protocol_id": "PTC-MUSCLE_PAIN",
+          "mechanisms": [
+            "analgesia"
+          ],
+          "combination_role": "primary",
+          "compatible_roles": [
+            "local_support",
+            "muscle_relaxation"
+          ],
+          "score": 90,
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
         }
       ],
       "selection_profiles": [
@@ -30350,6 +30500,19 @@
         {
           "protocol_id": "PTC-JOINT_PAIN",
           "fit_score": 93,
+          "choose_when": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다.",
+          "differentiators": [
+            "나프록센 계열",
+            "이부프로펜보다 지속 시간이 긴 쪽으로 정리",
+            "말초 염증성 통증·편두통에 비교"
+          ],
+          "comparison_note": "짧게 빠른 해열·몸살 완화가 목적이면 이부프로펜 또는 아세트아미노펜과 비교합니다.",
+          "practical_points": [],
+          "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        },
+        {
+          "protocol_id": "PTC-MUSCLE_PAIN",
+          "fit_score": 90,
           "choose_when": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다.",
           "differentiators": [
             "나프록센 계열",
@@ -30571,7 +30734,8 @@
       ],
       "protocol_ids": [
         "PTC-HEADACHE",
-        "PTC-JOINT_PAIN"
+        "PTC-JOINT_PAIN",
+        "PTC-MUSCLE_PAIN"
       ],
       "status": "active",
       "source_snapshot_ids": [
@@ -39930,6 +40094,402 @@
         }
       ],
       "dur_flags": []
+    },
+    {
+      "product_id": "PRD-HEALTHKR-57B57CA2F11AEB9E",
+      "display_name": "포나민",
+      "manufacturer": "삼진제약",
+      "dosage_form": "정제",
+      "route": "경구(내용고형)",
+      "official_match_status": "confirmed",
+      "official_product_key": "A11AOOOOO2522",
+      "official_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO2522",
+      "retail_offer": {
+        "sku_id": "20250812_114001",
+        "display_name": "포나민",
+        "specification": "10정",
+        "displayed_price_krw": 3000,
+        "recorded_at": "2026-07-15",
+        "price_status": "2026-07-15 조회 당시 앱 데이터값",
+        "image_url": "https://common.health.kr/shared/images/ext_images/pack_img/P_A11AOOOOO2522_01.bmp",
+        "image_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO2522",
+        "image_rights_status": "official_source_preview",
+        "image_kind": "package",
+        "image_checked_at": "2026-07-16T13:51:57+09:00"
+      },
+      "clinical_group_key": "ING-ACETAMINOPHEN|ING-HEALTHKR-002696637B977D91|경구(내용고형)|정제",
+      "pathway_profiles": [
+        {
+          "protocol_id": "PTC-MENSTRUAL_PAIN",
+          "mechanisms": [
+            "antispasmodic"
+          ],
+          "combination_role": "primary",
+          "compatible_roles": [],
+          "score": 100,
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        }
+      ],
+      "selection_profiles": [
+        {
+          "protocol_id": "PTC-MENSTRUAL_PAIN",
+          "fit_score": 100,
+          "choose_when": "생리통이 주된 불편이고 먹는 진통제로 다루는 경우",
+          "differentiators": [
+            "주요 성분: 아세트아미노펜, 부틸스코폴라민브롬화물",
+            "제형·투여경로: 정제 · 경구(내용고형)",
+            "복용 대상: 성인 용량이 확인된 제품"
+          ],
+          "comparison_note": "붓기·복부 팽만이 함께 있어 이뇨 보조 성분까지 필요할 때 고릅니다.",
+          "practical_points": [
+            "성인 1회 1-2정 1일 3회 경구투여한다(복용한다). 1일 최대용량은 6정을 초과하지 않는다."
+          ],
+          "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        }
+      ],
+      "indication_summary": "위장관계 질환의 발작성 동통(통증) 또는 담도(쓸개길)계, 비뇨기계, 월경곤란증 등 여성 생식기계의 기능장애 및 경련성 동통(통증)",
+      "dosage_summary": "성인 1회 1-2정 1일 3회 경구투여한다(복용한다). 1일 최대용량은 6정을 초과하지 않는다.",
+      "precaution_summary": "1. 경고 매일 세잔이상 정기적으로 술을 마시는 사람이 이 약이나 다른 해열진통제를 복용해야 할 경우 반드시 의사 또는 약사와 상의해야 한다. 이러한 사람이 이 약을 복용하면 간손상이 유발될 수 있다. 2. 이 약을 복용하는 동안 다음과 같은 행위를 하지 말 것. 이 약에는 아세트아미노펜이 함유되어 있다. 다른 아세트아미노펜 제품과 함께 복용하여 일일 최대용량(4,000mg)을 초과할 경우 간손상을 일으킬 수 있으므로 아세트아미노펜을 포함하는 다른 제품과 함께 복용해서는 안 된다. 3. 다음 환자에는 투여하지 말 것.…",
+      "medication_guide": "- 녹내장 환자나 그 병력이 있는 경우 전문가에게 미리 알리세요. - 입안이 건조하면 얼음조각을 물고 있거나, 무가당 껌, 사탕을 드세요. - 심한 변비, 소변저류, 시야장애 등이 나타날 경우 전문가와 상의하세요. - 사우나를 하거나, 더운 날씨에 격렬한 운동을 하는 것은 삼가세요.",
+      "classification_code": "124",
+      "atc_code": "A03DB04|BUTYLSCOPOLAMINE AND ANALGESICS|부틸스코폴라민과 진통제",
+      "kpic_atc": "Acetaminophen : 통증 질환 > 비마약성 진통제 > 중추성 진통제 > p-aminophenol 유도체|Scopolamine Butylbromide : 소화기계질환 > 진토제 > 항콜린제|Scopolamine Butylbromide : 소화기계질환 > 진경제 > 항콜린제",
+      "storage": "밀폐용기, 실온보관(1-30도씨)",
+      "valid_term": "",
+      "insurance": "비급여",
+      "interactions": [
+        "Acetaminophen",
+        "Scopolamine Butylbromide"
+      ],
+      "same_ingredient_products": [
+        "무스판정",
+        "부스코판플러스정",
+        "샤이닝정",
+        "스카이정",
+        "카이로정",
+        "포나민정"
+      ],
+      "permit_cancelled": false,
+      "jurisdiction": "KR",
+      "item_seq": "A11AOOOOO2522",
+      "permit_number": null,
+      "product_code": null,
+      "otc_status": "otc",
+      "permit_status": "active",
+      "supply_performance": false,
+      "active_ingredients": [
+        {
+          "ingredient_id": "ING-ACETAMINOPHEN",
+          "name": "Acetaminophen 아세트아미노펜 500mg",
+          "strength_text": "Acetaminophen 아세트아미노펜 500mg",
+          "normalized_amount": null,
+          "normalized_unit": null
+        },
+        {
+          "ingredient_id": "ING-HEALTHKR-002696637B977D91",
+          "name": "Scopolamine Butylbromide 부틸스코폴라민브롬화물 10mg",
+          "strength_text": "Scopolamine Butylbromide 부틸스코폴라민브롬화물 10mg",
+          "normalized_amount": null,
+          "normalized_unit": null
+        }
+      ],
+      "protocol_ids": [
+        "PTC-MENSTRUAL_PAIN"
+      ],
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+        "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "CLM-HEALTHKR-C1FB2BBEFAE3D6B2",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO2522",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        },
+        {
+          "claim_id": "FIELD-PRACTICE-PRD-HEALTHKR-57B57CA2F11AEB9E",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "제품별 실무 선택 기준 ()",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ],
+      "dur_flags": [
+        {
+          "type": "dose",
+          "code": "HEALTHKR_DUR_MAX_DOSE",
+          "description": "Acetaminophen : 1일 최대 투여량 - 아세트아미노펜 4,000mg",
+          "effective_date": null,
+          "blocking": false
+        }
+      ]
+    },
+    {
+      "product_id": "PRD-HEALTHKR-8575EB0E4B67705E",
+      "display_name": "샤이닝",
+      "manufacturer": "동화약품",
+      "dosage_form": "정제",
+      "route": "경구(내용고형)",
+      "official_match_status": "confirmed",
+      "official_product_key": "A11AHHHHH0014",
+      "official_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AHHHHH0014",
+      "retail_offer": {
+        "sku_id": "20250812_114004",
+        "display_name": "샤이닝",
+        "specification": "10T",
+        "displayed_price_krw": 2500,
+        "recorded_at": "2026-07-15",
+        "price_status": "2026-07-15 조회 당시 앱 데이터값",
+        "image_url": "https://common.health.kr/shared/images/ext_images/pack_img/P_A11AHHHHH0014_02.jpg",
+        "image_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AHHHHH0014",
+        "image_rights_status": "official_source_preview",
+        "image_kind": "package",
+        "image_checked_at": "2026-07-16T13:51:57+09:00"
+      },
+      "clinical_group_key": "ING-ACETAMINOPHEN|ING-HEALTHKR-002696637B977D91|경구(내용고형)|정제",
+      "pathway_profiles": [
+        {
+          "protocol_id": "PTC-MENSTRUAL_PAIN",
+          "mechanisms": [
+            "antispasmodic"
+          ],
+          "combination_role": "primary",
+          "compatible_roles": [],
+          "score": 100,
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        }
+      ],
+      "selection_profiles": [
+        {
+          "protocol_id": "PTC-MENSTRUAL_PAIN",
+          "fit_score": 100,
+          "choose_when": "생리통이 주된 불편이고 먹는 진통제로 다루는 경우",
+          "differentiators": [
+            "주요 성분: 아세트아미노펜, 부틸스코폴라민브롬화물",
+            "제형·투여경로: 정제 · 경구(내용고형)",
+            "복용 대상: 성인 용량이 확인된 제품"
+          ],
+          "comparison_note": "붓기·복부 팽만이 함께 있어 이뇨 보조 성분까지 필요할 때 고릅니다.",
+          "practical_points": [
+            "성인 1회 1-2정 1일 3회 경구투여(복용)한다. 1일 최대용량은 6정을 초과하지 않는다."
+          ],
+          "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        }
+      ],
+      "indication_summary": "위장관계 질환의 발작성 동통(통증) 또는 담도(쓸개길)계, 비뇨기계, 월경곤란증 등 여성 생식기계의 기능장애 및 경련성 동통(통증)",
+      "dosage_summary": "성인 1회 1-2정 1일 3회 경구투여(복용)한다. 1일 최대용량은 6정을 초과하지 않는다.",
+      "precaution_summary": "1. 경고 매일 세잔이상 정기적으로 술을 마시는 사람이 이 약이나 다른 해열진통제를 복용해야 할 경우 반드시 의사 또는 약사와 상의해야 한다. 이러한 사람이 이 약을 복용하면 간손상이 유발될 수 있다. 2. 다음 환자에는 투여하지 말 것.…",
+      "medication_guide": "- 녹내장 환자나 그 병력이 있는 경우 전문가에게 미리 알리세요. - 입안이 건조하면 얼음조각을 물고 있거나, 무가당 껌, 사탕을 드세요. - 심한 변비, 소변저류, 시야장애 등이 나타날 경우 전문가와 상의하세요. - 사우나를 하거나, 더운 날씨에 격렬한 운동을 하는 것은 삼가세요.",
+      "classification_code": "124",
+      "atc_code": "A03DB04|BUTYLSCOPOLAMINE AND ANALGESICS|부틸스코폴라민과 진통제",
+      "kpic_atc": "Acetaminophen : 통증 질환 > 비마약성 진통제 > 중추성 진통제 > p-aminophenol 유도체|Scopolamine Butylbromide : 소화기계질환 > 진토제 > 항콜린제|Scopolamine Butylbromide : 소화기계질환 > 진경제 > 항콜린제",
+      "storage": "밀폐용기 실온(1 ~ 30℃)보관",
+      "valid_term": "",
+      "insurance": "비급여",
+      "interactions": [
+        "Acetaminophen",
+        "Scopolamine Butylbromide"
+      ],
+      "same_ingredient_products": [
+        "무스판정",
+        "부스코판플러스정",
+        "샤이닝정",
+        "스카이정",
+        "카이로정",
+        "포나민정"
+      ],
+      "permit_cancelled": false,
+      "jurisdiction": "KR",
+      "item_seq": "A11AHHHHH0014",
+      "permit_number": null,
+      "product_code": null,
+      "otc_status": "otc",
+      "permit_status": "active",
+      "supply_performance": false,
+      "active_ingredients": [
+        {
+          "ingredient_id": "ING-ACETAMINOPHEN",
+          "name": "Acetaminophen 아세트아미노펜 500mg",
+          "strength_text": "Acetaminophen 아세트아미노펜 500mg",
+          "normalized_amount": null,
+          "normalized_unit": null
+        },
+        {
+          "ingredient_id": "ING-HEALTHKR-002696637B977D91",
+          "name": "Scopolamine Butylbromide 부틸스코폴라민브롬화물 10mg",
+          "strength_text": "Scopolamine Butylbromide 부틸스코폴라민브롬화물 10mg",
+          "normalized_amount": null,
+          "normalized_unit": null
+        }
+      ],
+      "protocol_ids": [
+        "PTC-MENSTRUAL_PAIN"
+      ],
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+        "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "CLM-HEALTHKR-B44BA54B5B328782",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AHHHHH0014",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        },
+        {
+          "claim_id": "FIELD-PRACTICE-PRD-HEALTHKR-8575EB0E4B67705E",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "제품별 실무 선택 기준 ()",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ],
+      "dur_flags": [
+        {
+          "type": "dose",
+          "code": "HEALTHKR_DUR_MAX_DOSE",
+          "description": "Acetaminophen : 1일 최대 투여량 - 아세트아미노펜 4,000mg",
+          "effective_date": null,
+          "blocking": false
+        }
+      ]
+    },
+    {
+      "product_id": "PRD-HEALTHKR-E80E93033D1E5D7C",
+      "display_name": "부스코판플러스",
+      "manufacturer": "오펠라헬스케어코리아",
+      "dosage_form": "정제",
+      "route": "경구(내용고형)",
+      "official_match_status": "confirmed",
+      "official_product_key": "2009071505474",
+      "official_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2009071505474",
+      "retail_offer": {
+        "sku_id": "20250812_114007",
+        "display_name": "부스코판플러스",
+        "specification": "10T",
+        "displayed_price_krw": 3000,
+        "recorded_at": "2026-07-15",
+        "price_status": "2026-07-15 조회 당시 앱 데이터값",
+        "image_url": "https://common.health.kr/shared/images/ext_images/pack_img/P_2009071505474_03.jpg",
+        "image_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2009071505474",
+        "image_rights_status": "official_source_preview",
+        "image_kind": "package",
+        "image_checked_at": "2026-07-16T13:51:57+09:00"
+      },
+      "clinical_group_key": "ING-ACETAMINOPHEN|ING-HEALTHKR-002696637B977D91|경구(내용고형)|정제",
+      "pathway_profiles": [
+        {
+          "protocol_id": "PTC-MENSTRUAL_PAIN",
+          "mechanisms": [
+            "antispasmodic"
+          ],
+          "combination_role": "primary",
+          "compatible_roles": [],
+          "score": 100,
+          "source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        }
+      ],
+      "selection_profiles": [
+        {
+          "protocol_id": "PTC-MENSTRUAL_PAIN",
+          "fit_score": 100,
+          "choose_when": "생리통이 주된 불편이고 먹는 진통제로 다루는 경우",
+          "differentiators": [
+            "주요 성분: 아세트아미노펜, 부틸스코폴라민브롬화물",
+            "제형·투여경로: 정제 · 경구(내용고형)",
+            "복용 대상: 성인 용량이 확인된 제품"
+          ],
+          "comparison_note": "붓기·복부 팽만이 함께 있어 이뇨 보조 성분까지 필요할 때 고릅니다.",
+          "practical_points": [
+            "성인 1회 1-2정씩 1일 3회 경구투여(복용)한다. 1일 최대용량은 6정을 초과해서는 안 된다."
+          ],
+          "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
+        }
+      ],
+      "indication_summary": "위장관계 질환의 발작성 동통 또는 담도계, 비뇨기계, 월경곤란증 등 여성생식기계의 기능장애 및 경련성 동통",
+      "dosage_summary": "성인 1회 1-2정씩 1일 3회 경구투여(복용)한다. 1일 최대용량은 6정을 초과해서는 안 된다.",
+      "precaution_summary": "1. 경고 매일 세잔 이상 정기적으로 술을 마시는 사람이 이 약이나 다른 해열진통제를 복용해야 할 경우 반드시 의사 또는 약사와 상의해야 한다. 이러한 사람이 이 약을 복용하면 간손상이 유발될 수 있다. 2.…",
+      "medication_guide": "- 녹내장 환자나 그 병력이 있는 경우 전문가에게 미리 알리세요. - 입안이 건조하면 얼음조각을 물고 있거나, 무가당 껌, 사탕을 드세요. - 심한 변비, 소변저류, 시야장애 등이 나타날 경우 전문가와 상의하세요. - 사우나를 하거나, 더운 날씨에 격렬한 운동을 하는 것은 삼가세요.",
+      "classification_code": "124",
+      "atc_code": "A03DB04|BUTYLSCOPOLAMINE AND ANALGESICS|부틸스코폴라민과 진통제",
+      "kpic_atc": "Acetaminophen : 통증 질환 > 비마약성 진통제 > 중추성 진통제 > p-aminophenol 유도체|Scopolamine Butylbromide : 소화기계질환 > 진토제 > 항콜린제|Scopolamine Butylbromide : 소화기계질환 > 진경제 > 항콜린제",
+      "storage": "밀폐용기, 실온보관",
+      "valid_term": "",
+      "insurance": "비급여",
+      "interactions": [
+        "Acetaminophen",
+        "Scopolamine Butylbromide"
+      ],
+      "same_ingredient_products": [
+        "무스판정",
+        "부스코판플러스정",
+        "샤이닝정",
+        "스카이정",
+        "카이로정",
+        "포나민정"
+      ],
+      "permit_cancelled": false,
+      "jurisdiction": "KR",
+      "item_seq": "2009071505474",
+      "permit_number": null,
+      "product_code": null,
+      "otc_status": "otc",
+      "permit_status": "active",
+      "supply_performance": false,
+      "active_ingredients": [
+        {
+          "ingredient_id": "ING-ACETAMINOPHEN",
+          "name": "Acetaminophen 아세트아미노펜 500mg",
+          "strength_text": "Acetaminophen 아세트아미노펜 500mg",
+          "normalized_amount": null,
+          "normalized_unit": null
+        },
+        {
+          "ingredient_id": "ING-HEALTHKR-002696637B977D91",
+          "name": "Scopolamine Butylbromide 부틸스코폴라민브롬화물 10mg",
+          "strength_text": "Scopolamine Butylbromide 부틸스코폴라민브롬화물 10mg",
+          "normalized_amount": null,
+          "normalized_unit": null
+        }
+      ],
+      "protocol_ids": [
+        "PTC-MENSTRUAL_PAIN"
+      ],
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+        "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "CLM-HEALTHKR-6DB4C5F198A3764F",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2009071505474",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        },
+        {
+          "claim_id": "FIELD-PRACTICE-PRD-HEALTHKR-E80E93033D1E5D7C",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "제품별 실무 선택 기준 ()",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ],
+      "dur_flags": [
+        {
+          "type": "dose",
+          "code": "HEALTHKR_DUR_MAX_DOSE",
+          "description": "Acetaminophen : 1일 최대 투여량 - 아세트아미노펜 4,000mg",
+          "effective_date": null,
+          "blocking": false
+        }
+      ]
     },
     {
       "product_id": "PRD-HEALTHKR-01BC372E2D787244",
@@ -52986,6 +53546,63 @@
           "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
           "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
           "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11A2060A0084",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ]
+    },
+    {
+      "product_ingredient_id": "PRI-HEALTHKR-57B57CA2F11AEB9E-FORMULA-162EA63E6B8E8206",
+      "product_id": "PRD-HEALTHKR-57B57CA2F11AEB9E",
+      "ingredient_id": "ING-FORMULA-162EA63E6B8E8206",
+      "strength_text": "포나민정 복합성분",
+      "normalized_amount": null,
+      "normalized_unit": null,
+      "role": "active",
+      "is_active": true,
+      "source_refs": [
+        {
+          "claim_id": "CLM-HEALTHKR-C1FB2BBEFAE3D6B2",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO2522",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ]
+    },
+    {
+      "product_ingredient_id": "PRI-HEALTHKR-8575EB0E4B67705E-FORMULA-467069284C4CC899",
+      "product_id": "PRD-HEALTHKR-8575EB0E4B67705E",
+      "ingredient_id": "ING-FORMULA-467069284C4CC899",
+      "strength_text": "샤이닝정 복합성분",
+      "normalized_amount": null,
+      "normalized_unit": null,
+      "role": "active",
+      "is_active": true,
+      "source_refs": [
+        {
+          "claim_id": "CLM-HEALTHKR-B44BA54B5B328782",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AHHHHH0014",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ]
+    },
+    {
+      "product_ingredient_id": "PRI-HEALTHKR-E80E93033D1E5D7C-FORMULA-C164F99EC70580C3",
+      "product_id": "PRD-HEALTHKR-E80E93033D1E5D7C",
+      "ingredient_id": "ING-FORMULA-C164F99EC70580C3",
+      "strength_text": "부스코판플러스정 복합성분",
+      "normalized_amount": null,
+      "normalized_unit": null,
+      "role": "active",
+      "is_active": true,
+      "source_refs": [
+        {
+          "claim_id": "CLM-HEALTHKR-6DB4C5F198A3764F",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2009071505474",
           "verified_at": "2026-07-16T13:51:57+09:00"
         }
       ]
@@ -67775,6 +68392,49 @@
       }
     },
     {
+      "claim_id": "CLM-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION",
+      "claim_type": "indication",
+      "subject_type": "option",
+      "subject_id": "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209",
+      "predicate": "candidate_for_symptom",
+      "object": {
+        "candidate_product_ids": [
+          "PRD-HEALTHKR-4439271C6252B39D"
+        ],
+        "candidate_product_names": [],
+        "ingredient_id": "ING-HEALTHKR-6BC91FEFECC5D209",
+        "symptom_category": "통증/생리통",
+        "inventory_gate": true,
+        "tenant_formulary_gate": true,
+        "selection_basis": "공식 효능·효과, 성분, 제형, 투여경로를 모두 확인한 연구 미리보기 후보",
+        "rationale": "공식 품목 효능·효과와 약국 실습자료에서 정리한 증상별 사용 경로가 일치"
+      },
+      "qualifiers": {
+        "protocol_id": "PTC-MENSTRUAL_PAIN"
+      },
+      "risk_level": "moderate",
+      "conflict_claim_ids": [],
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "CLM-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=4mmn5udgx7cjw",
+          "verified_at": "2026-07-16T13:51:49+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
       "claim_id": "CLM-PATHWAY-JOINT_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION",
       "claim_type": "indication",
       "subject_type": "option",
@@ -67810,6 +68470,57 @@
         },
         {
           "claim_id": "CLM-PATHWAY-JOINT_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2024111400001",
+          "verified_at": "2026-07-16T13:51:53+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "claim_id": "CLM-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION",
+      "claim_type": "indication",
+      "subject_type": "option",
+      "subject_id": "OPT-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209",
+      "predicate": "candidate_for_symptom",
+      "object": {
+        "candidate_product_ids": [
+          "PRD-HEALTHKR-4439271C6252B39D",
+          "PRD-HEALTHKR-DB666C2B6B0398CE"
+        ],
+        "candidate_product_names": [],
+        "ingredient_id": "ING-HEALTHKR-6BC91FEFECC5D209",
+        "symptom_category": "통증/근육통",
+        "inventory_gate": true,
+        "tenant_formulary_gate": true,
+        "selection_basis": "공식 효능·효과, 성분, 제형, 투여경로를 모두 확인한 연구 미리보기 후보",
+        "rationale": "공식 품목 효능·효과와 약국 실습자료에서 정리한 증상별 사용 경로가 일치"
+      },
+      "qualifiers": {
+        "protocol_id": "PTC-MUSCLE_PAIN"
+      },
+      "risk_level": "moderate",
+      "conflict_claim_ids": [],
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "CLM-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=4mmn5udgx7cjw",
+          "verified_at": "2026-07-16T13:51:49+09:00"
+        },
+        {
+          "claim_id": "CLM-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION",
           "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
           "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
           "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2024111400001",
@@ -72635,6 +73346,135 @@
       }
     },
     {
+      "claim_id": "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206-INDICATION",
+      "claim_type": "indication",
+      "subject_type": "option",
+      "subject_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206",
+      "predicate": "candidate_for_symptom",
+      "object": {
+        "candidate_product_ids": [
+          "PRD-HEALTHKR-57B57CA2F11AEB9E"
+        ],
+        "candidate_product_names": [],
+        "ingredient_id": "ING-FORMULA-162EA63E6B8E8206",
+        "symptom_category": "통증/생리통",
+        "inventory_gate": true,
+        "tenant_formulary_gate": true,
+        "selection_basis": "공식 효능·효과, 성분, 제형, 투여경로를 모두 확인한 연구 미리보기 후보",
+        "rationale": "공식 품목 효능·효과와 약국 실습자료에서 정리한 증상별 사용 경로가 일치"
+      },
+      "qualifiers": {
+        "protocol_id": "PTC-MENSTRUAL_PAIN"
+      },
+      "risk_level": "moderate",
+      "conflict_claim_ids": [],
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206-INDICATION",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO2522",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "claim_id": "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899-INDICATION",
+      "claim_type": "indication",
+      "subject_type": "option",
+      "subject_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899",
+      "predicate": "candidate_for_symptom",
+      "object": {
+        "candidate_product_ids": [
+          "PRD-HEALTHKR-8575EB0E4B67705E"
+        ],
+        "candidate_product_names": [],
+        "ingredient_id": "ING-FORMULA-467069284C4CC899",
+        "symptom_category": "통증/생리통",
+        "inventory_gate": true,
+        "tenant_formulary_gate": true,
+        "selection_basis": "공식 효능·효과, 성분, 제형, 투여경로를 모두 확인한 연구 미리보기 후보",
+        "rationale": "공식 품목 효능·효과와 약국 실습자료에서 정리한 증상별 사용 경로가 일치"
+      },
+      "qualifiers": {
+        "protocol_id": "PTC-MENSTRUAL_PAIN"
+      },
+      "risk_level": "moderate",
+      "conflict_claim_ids": [],
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899-INDICATION",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AHHHHH0014",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "claim_id": "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3-INDICATION",
+      "claim_type": "indication",
+      "subject_type": "option",
+      "subject_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3",
+      "predicate": "candidate_for_symptom",
+      "object": {
+        "candidate_product_ids": [
+          "PRD-HEALTHKR-E80E93033D1E5D7C"
+        ],
+        "candidate_product_names": [],
+        "ingredient_id": "ING-FORMULA-C164F99EC70580C3",
+        "symptom_category": "통증/생리통",
+        "inventory_gate": true,
+        "tenant_formulary_gate": true,
+        "selection_basis": "공식 효능·효과, 성분, 제형, 투여경로를 모두 확인한 연구 미리보기 후보",
+        "rationale": "공식 품목 효능·효과와 약국 실습자료에서 정리한 증상별 사용 경로가 일치"
+      },
+      "qualifiers": {
+        "protocol_id": "PTC-MENSTRUAL_PAIN"
+      },
+      "risk_level": "moderate",
+      "conflict_claim_ids": [],
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3-INDICATION",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2009071505474",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
       "claim_id": "CLM-PATHWAY-DIARRHEA-FORMULA-48C7385E19C8900B-INDICATION",
       "claim_type": "indication",
       "subject_type": "option",
@@ -77190,8 +78030,12 @@
         "OPT-MENSTRUAL_PAIN-ACETAMINOPHEN",
         "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-21C0E2C953EA2235",
         "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-3F14A5A15AE0EBD9",
+        "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209",
         "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-10761324287041A9",
-        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-5AC140B80C3E4BEE"
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-5AC140B80C3E4BEE",
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206",
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899",
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3"
       ],
       "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
       "protocol_id": "PTC-MENSTRUAL_PAIN",
@@ -77215,7 +78059,11 @@
         "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-3",
         "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-4",
         "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-5",
-        "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-6"
+        "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-6",
+        "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-7",
+        "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-8",
+        "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-9",
+        "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-10"
       ],
       "source_refs": [
         {
@@ -77544,6 +78392,7 @@
         "OPT-MUSCLE_PAIN-IBUPROFEN",
         "OPT-PATHWAY-MUSCLE_PAIN-HEALTHKR-380DCFEDE5638A22",
         "OPT-PATHWAY-MUSCLE_PAIN-FORMULA-3F14A5A15AE0EBD9",
+        "OPT-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209",
         "OPT-PATHWAY-MUSCLE_PAIN-FORMULA-10761324287041A9",
         "OPT-PATHWAY-MUSCLE_PAIN-FORMULA-7251CAF3B9674458",
         "OPT-PATHWAY-MUSCLE_PAIN-FORMULA-C1388567AA75F7A6",
@@ -87415,6 +88264,55 @@
       }
     },
     {
+      "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209",
+      "protocol_id": "PTC-MENSTRUAL_PAIN",
+      "ingredient_id": "ING-HEALTHKR-6BC91FEFECC5D209",
+      "display_name": "나프록센",
+      "eligibility_rule_ids": [
+        "RUL-MENSTRUAL_PAIN-ASK-MINIMUM-SAFETY",
+        "RUL-MENSTRUAL_PAIN-ASK-RED-FLAGS",
+        "RUL-MENSTRUAL_PAIN-SELECT-FALLBACK"
+      ],
+      "exclusion_rule_ids": [
+        "RUL-MENSTRUAL_PAIN-EXCLUDE-ACETAMINOPHEN",
+        "RUL-MENSTRUAL_PAIN-REFER-RED-FLAGS",
+        "RUL-MENSTRUAL_PAIN-REFER-DURATION"
+      ],
+      "claim_ids": [
+        "CLM-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION"
+      ],
+      "clinical_priority": 99,
+      "safety_priority": 1,
+      "therapeutic_role": "alternative",
+      "evidence_scope": "direct",
+      "fit_rationale": "공식 품목 효능·효과와 투여경로가 증상 경로에 직접 일치합니다.",
+      "pathway_mechanisms": [
+        "antiinflammatory_analgesia"
+      ],
+      "combination_roles": [
+        "primary"
+      ],
+      "compatible_roles": [],
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=4mmn5udgx7cjw",
+          "verified_at": "2026-07-16T13:51:49+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
       "option_id": "OPT-PATHWAY-JOINT_PAIN-HEALTHKR-6BC91FEFECC5D209",
       "protocol_id": "PTC-JOINT_PAIN",
       "ingredient_id": "ING-HEALTHKR-6BC91FEFECC5D209",
@@ -87458,6 +88356,65 @@
         },
         {
           "claim_id": "OPT-PATHWAY-JOINT_PAIN-HEALTHKR-6BC91FEFECC5D209",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2024111400001",
+          "verified_at": "2026-07-16T13:51:53+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "option_id": "OPT-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209",
+      "protocol_id": "PTC-MUSCLE_PAIN",
+      "ingredient_id": "ING-HEALTHKR-6BC91FEFECC5D209",
+      "display_name": "나프록센",
+      "eligibility_rule_ids": [
+        "RUL-MUSCLE_PAIN-ASK-MINIMUM-SAFETY",
+        "RUL-MUSCLE_PAIN-ASK-RED-FLAGS",
+        "RUL-MUSCLE_PAIN-SELECT-FALLBACK"
+      ],
+      "exclusion_rule_ids": [
+        "RUL-MUSCLE_PAIN-EXCLUDE-ACETAMINOPHEN",
+        "RUL-MUSCLE_PAIN-REFER-RED-FLAGS",
+        "RUL-MUSCLE_PAIN-REFER-DURATION"
+      ],
+      "claim_ids": [
+        "CLM-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209-INDICATION"
+      ],
+      "clinical_priority": 90,
+      "safety_priority": 1,
+      "therapeutic_role": "alternative",
+      "evidence_scope": "direct",
+      "fit_rationale": "공식 품목 효능·효과와 투여경로가 증상 경로에 직접 일치합니다.",
+      "pathway_mechanisms": [
+        "analgesia"
+      ],
+      "combination_roles": [
+        "primary"
+      ],
+      "compatible_roles": [
+        "local_support",
+        "muscle_relaxation"
+      ],
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "OPT-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=4mmn5udgx7cjw",
+          "verified_at": "2026-07-16T13:51:49+09:00"
+        },
+        {
+          "claim_id": "OPT-PATHWAY-MUSCLE_PAIN-HEALTHKR-6BC91FEFECC5D209",
           "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
           "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
           "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2024111400001",
@@ -93129,6 +94086,153 @@
           "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
           "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
           "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11A2060A0084",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206",
+      "protocol_id": "PTC-MENSTRUAL_PAIN",
+      "ingredient_id": "ING-FORMULA-162EA63E6B8E8206",
+      "display_name": "포나민정 복합성분",
+      "eligibility_rule_ids": [
+        "RUL-MENSTRUAL_PAIN-ASK-MINIMUM-SAFETY",
+        "RUL-MENSTRUAL_PAIN-ASK-RED-FLAGS",
+        "RUL-MENSTRUAL_PAIN-SELECT-FALLBACK"
+      ],
+      "exclusion_rule_ids": [
+        "RUL-MENSTRUAL_PAIN-EXCLUDE-ACETAMINOPHEN",
+        "RUL-MENSTRUAL_PAIN-REFER-RED-FLAGS",
+        "RUL-MENSTRUAL_PAIN-REFER-DURATION"
+      ],
+      "claim_ids": [
+        "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206-INDICATION"
+      ],
+      "clinical_priority": 99,
+      "safety_priority": 1,
+      "therapeutic_role": "alternative",
+      "evidence_scope": "direct",
+      "fit_rationale": "공식 품목 효능·효과와 투여경로가 증상 경로에 직접 일치합니다.",
+      "pathway_mechanisms": [
+        "antispasmodic"
+      ],
+      "combination_roles": [
+        "primary"
+      ],
+      "compatible_roles": [],
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO2522",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899",
+      "protocol_id": "PTC-MENSTRUAL_PAIN",
+      "ingredient_id": "ING-FORMULA-467069284C4CC899",
+      "display_name": "샤이닝정 복합성분",
+      "eligibility_rule_ids": [
+        "RUL-MENSTRUAL_PAIN-ASK-MINIMUM-SAFETY",
+        "RUL-MENSTRUAL_PAIN-ASK-RED-FLAGS",
+        "RUL-MENSTRUAL_PAIN-SELECT-FALLBACK"
+      ],
+      "exclusion_rule_ids": [
+        "RUL-MENSTRUAL_PAIN-EXCLUDE-ACETAMINOPHEN",
+        "RUL-MENSTRUAL_PAIN-REFER-RED-FLAGS",
+        "RUL-MENSTRUAL_PAIN-REFER-DURATION"
+      ],
+      "claim_ids": [
+        "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899-INDICATION"
+      ],
+      "clinical_priority": 99,
+      "safety_priority": 1,
+      "therapeutic_role": "alternative",
+      "evidence_scope": "direct",
+      "fit_rationale": "공식 품목 효능·효과와 투여경로가 증상 경로에 직접 일치합니다.",
+      "pathway_mechanisms": [
+        "antispasmodic"
+      ],
+      "combination_roles": [
+        "primary"
+      ],
+      "compatible_roles": [],
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AHHHHH0014",
+          "verified_at": "2026-07-16T13:51:57+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "공식 품목 성분·효능과 약국 실습자료의 증상 경로를 연결한 연구 미리보기 후보. 약사 승인 전 운영 추천 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3",
+      "protocol_id": "PTC-MENSTRUAL_PAIN",
+      "ingredient_id": "ING-FORMULA-C164F99EC70580C3",
+      "display_name": "부스코판플러스정 복합성분",
+      "eligibility_rule_ids": [
+        "RUL-MENSTRUAL_PAIN-ASK-MINIMUM-SAFETY",
+        "RUL-MENSTRUAL_PAIN-ASK-RED-FLAGS",
+        "RUL-MENSTRUAL_PAIN-SELECT-FALLBACK"
+      ],
+      "exclusion_rule_ids": [
+        "RUL-MENSTRUAL_PAIN-EXCLUDE-ACETAMINOPHEN",
+        "RUL-MENSTRUAL_PAIN-REFER-RED-FLAGS",
+        "RUL-MENSTRUAL_PAIN-REFER-DURATION"
+      ],
+      "claim_ids": [
+        "CLM-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3-INDICATION"
+      ],
+      "clinical_priority": 99,
+      "safety_priority": 1,
+      "therapeutic_role": "alternative",
+      "evidence_scope": "direct",
+      "fit_rationale": "공식 품목 효능·효과와 투여경로가 증상 경로에 직접 일치합니다.",
+      "pathway_mechanisms": [
+        "antispasmodic"
+      ],
+      "combination_roles": [
+        "primary"
+      ],
+      "compatible_roles": [],
+      "status": "published",
+      "source_refs": [
+        {
+          "claim_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3",
+          "source_id": "SRC-HEALTHKR-LOCAL-REGISTRY",
+          "source_snapshot_id": "SNAP-HEALTHKR-REGISTRY-21FB053C276E7D60",
+          "locator": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2009071505474",
           "verified_at": "2026-07-16T13:51:57+09:00"
         }
       ],
@@ -124384,9 +125488,22 @@
         "몸이 부",
         "손발이 부",
         "배가 빵빵",
+        "생리통",
+        "아랫배",
+        "속이 약",
         "부었",
         "붓기",
         "빵빵",
+        "생리통",
+        "아랫배",
+        "속이 약",
+        "생리통",
+        "아랫배",
+        "속이 약",
+        "쥐어짜",
+        "쥐어짜듯",
+        "많이 불편",
+        "허리도",
         "쥐어짜",
         "쥐어짜듯",
         "많이 불편",
@@ -124399,8 +125516,12 @@
         "OPT-MENSTRUAL_PAIN-IBUPROFEN",
         "OPT-MENSTRUAL_PAIN-ACETAMINOPHEN",
         "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-10761324287041A9",
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206",
         "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-3F14A5A15AE0EBD9",
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899",
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3",
         "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-21C0E2C953EA2235",
+        "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209",
         "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-5AC140B80C3E4BEE"
       ],
       "question": "붓기나 배가 빵빵한 느낌이 같이 있나요?",
@@ -124602,12 +125723,12 @@
       "field": "symptom.dysmenorrhea_context",
       "operator": "matches",
       "value": [
-        "부었",
-        "붓기",
-        "빵빵"
+        "생리통",
+        "아랫배",
+        "속이 약"
       ],
       "option_ids": [
-        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-3F14A5A15AE0EBD9"
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-162EA63E6B8E8206"
       ],
       "question": null,
       "reason": "부종·경련 동반 여부에 따라 진통 성분과 이뇨 보조가 갈립니다. 입력된 증상 표현형과 일치하는 선택지만 유지합니다.",
@@ -124653,13 +125774,12 @@
       "field": "symptom.dysmenorrhea_context",
       "operator": "matches",
       "value": [
-        "쥐어짜",
-        "쥐어짜듯",
-        "많이 불편",
-        "허리도"
+        "부었",
+        "붓기",
+        "빵빵"
       ],
       "option_ids": [
-        "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-21C0E2C953EA2235"
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-3F14A5A15AE0EBD9"
       ],
       "question": null,
       "reason": "부종·경련 동반 여부에 따라 진통 성분과 이뇨 보조가 갈립니다. 입력된 증상 표현형과 일치하는 선택지만 유지합니다.",
@@ -124710,11 +125830,217 @@
         "속이 약"
       ],
       "option_ids": [
-        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-5AC140B80C3E4BEE"
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-467069284C4CC899"
       ],
       "question": null,
       "reason": "부종·경련 동반 여부에 따라 진통 성분과 이뇨 보조가 갈립니다. 입력된 증상 표현형과 일치하는 선택지만 유지합니다.",
       "priority": 7,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "자동 조사 후보. 약사 검토 및 운영 배포 승인 전 published/approved로 승격 금지. Local research preview activation only; production approval remains pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "MFDS 의약품안전나라 품목상세 - 이지엔6애니연질캡슐 > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-MFDS_EZ6_ANI",
+          "source_snapshot_id": "SNAP-MFDS_EZ6_ANI-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "MFDS 의약품안전나라 품목상세 - 게보린브이정(아세트아미노펜) > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-MFDS_GEVORIN_V",
+          "source_snapshot_id": "SNAP-MFDS_GEVORIN_V-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "질병관리청 국가건강정보포털 - 복통 > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-KDCA_ABDOMINAL_PAIN",
+          "source_snapshot_id": "SNAP-KDCA_ABDOMINAL_PAIN-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        }
+      ]
+    },
+    {
+      "rule_id": "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-7",
+      "protocol_id": "PTC-MENSTRUAL_PAIN",
+      "kind": "selection_pattern",
+      "effect": "select",
+      "field": "symptom.dysmenorrhea_context",
+      "operator": "matches",
+      "value": [
+        "생리통",
+        "아랫배",
+        "속이 약"
+      ],
+      "option_ids": [
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-C164F99EC70580C3"
+      ],
+      "question": null,
+      "reason": "부종·경련 동반 여부에 따라 진통 성분과 이뇨 보조가 갈립니다. 입력된 증상 표현형과 일치하는 선택지만 유지합니다.",
+      "priority": 8,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "자동 조사 후보. 약사 검토 및 운영 배포 승인 전 published/approved로 승격 금지. Local research preview activation only; production approval remains pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "MFDS 의약품안전나라 품목상세 - 이지엔6애니연질캡슐 > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-MFDS_EZ6_ANI",
+          "source_snapshot_id": "SNAP-MFDS_EZ6_ANI-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "MFDS 의약품안전나라 품목상세 - 게보린브이정(아세트아미노펜) > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-MFDS_GEVORIN_V",
+          "source_snapshot_id": "SNAP-MFDS_GEVORIN_V-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "질병관리청 국가건강정보포털 - 복통 > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-KDCA_ABDOMINAL_PAIN",
+          "source_snapshot_id": "SNAP-KDCA_ABDOMINAL_PAIN-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        }
+      ]
+    },
+    {
+      "rule_id": "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-8",
+      "protocol_id": "PTC-MENSTRUAL_PAIN",
+      "kind": "selection_pattern",
+      "effect": "select",
+      "field": "symptom.dysmenorrhea_context",
+      "operator": "matches",
+      "value": [
+        "쥐어짜",
+        "쥐어짜듯",
+        "많이 불편",
+        "허리도"
+      ],
+      "option_ids": [
+        "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-21C0E2C953EA2235"
+      ],
+      "question": null,
+      "reason": "부종·경련 동반 여부에 따라 진통 성분과 이뇨 보조가 갈립니다. 입력된 증상 표현형과 일치하는 선택지만 유지합니다.",
+      "priority": 9,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "자동 조사 후보. 약사 검토 및 운영 배포 승인 전 published/approved로 승격 금지. Local research preview activation only; production approval remains pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "MFDS 의약품안전나라 품목상세 - 이지엔6애니연질캡슐 > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-MFDS_EZ6_ANI",
+          "source_snapshot_id": "SNAP-MFDS_EZ6_ANI-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "MFDS 의약품안전나라 품목상세 - 게보린브이정(아세트아미노펜) > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-MFDS_GEVORIN_V",
+          "source_snapshot_id": "SNAP-MFDS_GEVORIN_V-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "질병관리청 국가건강정보포털 - 복통 > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-KDCA_ABDOMINAL_PAIN",
+          "source_snapshot_id": "SNAP-KDCA_ABDOMINAL_PAIN-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        }
+      ]
+    },
+    {
+      "rule_id": "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-9",
+      "protocol_id": "PTC-MENSTRUAL_PAIN",
+      "kind": "selection_pattern",
+      "effect": "select",
+      "field": "symptom.dysmenorrhea_context",
+      "operator": "matches",
+      "value": [
+        "쥐어짜",
+        "쥐어짜듯",
+        "많이 불편",
+        "허리도"
+      ],
+      "option_ids": [
+        "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-6BC91FEFECC5D209"
+      ],
+      "question": null,
+      "reason": "부종·경련 동반 여부에 따라 진통 성분과 이뇨 보조가 갈립니다. 입력된 증상 표현형과 일치하는 선택지만 유지합니다.",
+      "priority": 10,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "자동 조사 후보. 약사 검토 및 운영 배포 승인 전 published/approved로 승격 금지. Local research preview activation only; production approval remains pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "MFDS 의약품안전나라 품목상세 - 이지엔6애니연질캡슐 > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-MFDS_EZ6_ANI",
+          "source_snapshot_id": "SNAP-MFDS_EZ6_ANI-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "MFDS 의약품안전나라 품목상세 - 게보린브이정(아세트아미노펜) > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-MFDS_GEVORIN_V",
+          "source_snapshot_id": "SNAP-MFDS_GEVORIN_V-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "PTC-MENSTRUAL_PAIN",
+          "locator": "질병관리청 국가건강정보포털 - 복통 > 프로토콜 근거: 효능효과/용법용량/사용상 주의/진료 필요 상황",
+          "source_id": "SRC-KDCA_ABDOMINAL_PAIN",
+          "source_snapshot_id": "SNAP-KDCA_ABDOMINAL_PAIN-20260713",
+          "verified_at": "2026-07-13T12:00:00+09:00"
+        }
+      ]
+    },
+    {
+      "rule_id": "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-SITUATION-SELECT-10",
+      "protocol_id": "PTC-MENSTRUAL_PAIN",
+      "kind": "selection_pattern",
+      "effect": "select",
+      "field": "symptom.dysmenorrhea_context",
+      "operator": "matches",
+      "value": [
+        "생리통",
+        "아랫배",
+        "속이 약"
+      ],
+      "option_ids": [
+        "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-5AC140B80C3E4BEE"
+      ],
+      "question": null,
+      "reason": "부종·경련 동반 여부에 따라 진통 성분과 이뇨 보조가 갈립니다. 입력된 증상 표현형과 일치하는 선택지만 유지합니다.",
+      "priority": 11,
       "status": "published",
       "review": {
         "expires_at": "2027-01-13T00:00:00+09:00",

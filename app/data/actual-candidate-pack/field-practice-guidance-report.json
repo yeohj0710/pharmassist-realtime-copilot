@@ -4,7 +4,7 @@
   "sourceContentSha256": "779e353077ad73871c97ce2cf7656a2b067c848a14d7abbf485d76992c36d9df",
   "ruleCount": 26,
   "appliedRuleCount": 26,
-  "applicationCount": 48,
+  "applicationCount": 50,
   "unmatchedRuleIds": [],
   "applications": [
     {
@@ -204,6 +204,13 @@
       "page": 3
     },
     {
+      "ruleId": "FP-PAIN-NAPROXEN",
+      "productId": "PRD-HEALTHKR-4439271C6252B39D",
+      "productName": "탁센(나프록센)",
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "page": 3
+    },
+    {
       "ruleId": "FP-STOMATITIS-APNIBEN",
       "productId": "PRD-HEALTHKR-946A9136840114C9",
       "productName": "아프니벤큐액",
@@ -271,6 +278,13 @@
       "productId": "PRD-HEALTHKR-DB666C2B6B0398CE",
       "productName": "파인큐나프록센현탁액",
       "protocolId": "PTC-JOINT_PAIN",
+      "page": 3
+    },
+    {
+      "ruleId": "FP-PAIN-NAPROXEN",
+      "productId": "PRD-HEALTHKR-DB666C2B6B0398CE",
+      "productName": "파인큐나프록센현탁액",
+      "protocolId": "PTC-MUSCLE_PAIN",
       "page": 3
     },
     {

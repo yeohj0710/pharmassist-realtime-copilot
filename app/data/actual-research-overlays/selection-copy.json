@@ -544,6 +544,11 @@
       "protocolId": "PTC-VAGINAL_ANTIFUNGAL",
       "ingredient": "포비돈요오드",
       "comparisonNote": "외음부 세정·소독용이라 질정과는 사용 부위와 목적이 다릅니다. 칸디다 치료를 대신하지 않습니다."
+    },
+    {
+      "protocolId": "PTC-MENSTRUAL_PAIN",
+      "ingredient": "나프록센",
+      "comparisonNote": "작용이 오래가서 통증이 하루 종일 이어질 때 맞습니다. 짧고 급하게 올라오는 통증이면 흡수가 빠른 이부프로펜 쪽입니다."
     }
   ]
 }
