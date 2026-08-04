@@ -1,0 +1,2037 @@
+[
+  {
+    "protocol_id": "PTC-FEVER",
+    "rule_id": "RUL-OVERLAY-PTC-FEVER-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.fever_context",
+    "question": "열 말고 같이 불편한 게 있나요? 콧물·기침 같은 감기 증상, 몸살, 아이 복용 중에 가까운 쪽을 말씀해 주세요.",
+    "reason": "동반 증상에 따라 단일 해열제와 복합 감기약, 소아 액상제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-FEVER-ACETAMINOPHEN",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-FEVER-ACETAMINOPHEN",
+        "patterns": [
+          "아이",
+          "아기",
+          "애기",
+          "아이가",
+          "몇 살",
+          "돌 지난",
+          "시럽",
+          "물약",
+          "삼키기 힘들"
+        ]
+      },
+      {
+        "option_id": "OPT-FEVER-ACETAMINOPHEN",
+        "patterns": ["몸살", "온몸이 쑤", "몸살기", "열만", "머리도 아파"]
+      },
+      {
+        "option_id": "OPT-FEVER-IBUPROFEN",
+        "patterns": [
+          "아이",
+          "아기",
+          "애기",
+          "아이가",
+          "몇 살",
+          "돌 지난",
+          "시럽",
+          "물약",
+          "삼키기 힘들"
+        ]
+      },
+      {
+        "option_id": "OPT-FEVER-IBUPROFEN",
+        "patterns": ["염증", "빨리 듣는", "연질캡슐", "소염"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-10761324287041A9",
+        "patterns": ["몸살", "온몸이 쑤", "몸살기", "열만", "머리도 아파"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-18B98DC4525C60CC",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-3F14A5A15AE0EBD9",
+        "patterns": ["몸살", "온몸이 쑤", "몸살기", "열만", "머리도 아파"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-489B24C0440ADC0F",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-4C331084BE5676A0",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-566597A664E4A126",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-5CA7DCC012E0CD3A",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-765430034FDD8536",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-986672497A382852",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-A865C1CBDAE764CF",
+        "patterns": ["몸살", "온몸이 쑤", "몸살기", "열만", "머리도 아파"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-B48716C76D851811",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-BC3D8306CE77BB09",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-C8812FBF446811E4",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-CD8A865192E9751A",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-F3F2C2C9037FC93E",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-HEALTHKR-21C0E2C953EA2235",
+        "patterns": ["몸살", "온몸이 쑤", "몸살기", "열만", "머리도 아파"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-HEALTHKR-236C0EE08FC5B626",
+        "patterns": [
+          "아이",
+          "아기",
+          "애기",
+          "아이가",
+          "몇 살",
+          "돌 지난",
+          "시럽",
+          "물약",
+          "삼키기 힘들"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-HEALTHKR-E3D730C8855896B5",
+        "patterns": [
+          "아이",
+          "아기",
+          "애기",
+          "아이가",
+          "몇 살",
+          "돌 지난",
+          "시럽",
+          "물약",
+          "삼키기 힘들"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-46AF132512A47C05",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-63CF9ADE720EF1C5",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파",
+          "가래가 나와요",
+          "재채기"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-938DE9D95121BDC0",
+        "patterns": ["몸살", "온몸이 쑤", "몸살기", "열만", "머리도 아파"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-FEVER-FORMULA-938DE9D95121BDC0",
+        "patterns": ["생약", "한방", "탕약"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-NASAL_CONGESTION",
+    "rule_id": "RUL-OVERLAY-PTC-NASAL_CONGESTION-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.congestion_context",
+    "question": "코막힘 말고 같이 있는 증상이 있나요? 열·기침 같은 감기 증상, 알레르기, 아이 복용 중에 가까운 쪽을 말씀해 주세요.",
+    "reason": "동반 증상에 따라 항히스타민제와 복합 감기약, 비충혈제거제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-NASAL_CONGESTION-PSEUDOEPHEDRINE_HCL",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-NASAL_CONGESTION-PSEUDOEPHEDRINE_HCL",
+        "patterns": ["졸려도", "강한", "확실하게"]
+      },
+      {
+        "option_id": "OPT-NASAL_CONGESTION-LORATADINE",
+        "patterns": [
+          "알레르기",
+          "비염",
+          "재채기",
+          "맑은 콧물",
+          "먼지",
+          "꽃가루"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-18B98DC4525C60CC",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-3CF96762618C9289",
+        "patterns": ["코가 꽉 막", "숨쉬기 힘들", "코막힘만"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-489B24C0440ADC0F",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-4C331084BE5676A0",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-566597A664E4A126",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-5CA7DCC012E0CD3A",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-765430034FDD8536",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-869F5365970D8E7B",
+        "patterns": ["코가 꽉 막", "숨쉬기 힘들", "코막힘만"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-986672497A382852",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-B48716C76D851811",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-BC3D8306CE77BB09",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-C8812FBF446811E4",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-CD8A865192E9751A",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-E56577F2542F754E",
+        "patterns": ["코가 꽉 막", "숨쉬기 힘들", "코막힘만"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-EB9B065E6C919BC0",
+        "patterns": ["코가 꽉 막", "숨쉬기 힘들", "코막힘만"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-F3F2C2C9037FC93E",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-CETIRIZINE_HCL",
+        "patterns": [
+          "알레르기",
+          "비염",
+          "재채기",
+          "맑은 콧물",
+          "먼지",
+          "꽃가루"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-46AF132512A47C05",
+        "patterns": [
+          "열이 나요",
+          "기침도 나와요",
+          "감기 기운",
+          "몸살",
+          "목도 아파",
+          "가래가 나와요"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-NASAL_CONGESTION-FORMULA-C3CFB683CDBDA3E3",
+        "patterns": [
+          "알레르기",
+          "비염",
+          "재채기",
+          "맑은 콧물",
+          "먼지",
+          "꽃가루"
+        ]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-RUNNY_NOSE",
+    "rule_id": "RUL-OVERLAY-PTC-RUNNY_NOSE-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.rhinorrhea_context",
+    "question": "콧물 말고 같이 있는 증상이 있나요? 감기 증상, 알레르기, 코막힘 동반 중에 가까운 쪽을 말씀해 주세요.",
+    "reason": "콧물 원인에 따라 항히스타민제와 복합 감기약이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-RUNNY_NOSE-TRIPROLIDINE_HCL_HYDRATE",
+        "patterns": ["강한", "확실하게"]
+      },
+      {
+        "option_id": "OPT-RUNNY_NOSE-LORATADINE",
+        "patterns": [
+          "재채기",
+          "맑은 콧물",
+          "알레르기",
+          "비염",
+          "간지러",
+          "먼지",
+          "꽃가루"
+        ]
+      },
+      {
+        "option_id": "OPT-RUNNY_NOSE-CETIRIZINE_HCL",
+        "patterns": [
+          "재채기",
+          "맑은 콧물",
+          "알레르기",
+          "비염",
+          "간지러",
+          "먼지",
+          "꽃가루"
+        ]
+      },
+      {
+        "option_id": "OPT-RUNNY_NOSE-CETIRIZINE_HCL",
+        "patterns": ["졸려도 괜찮", "효과 좋은"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-18B98DC4525C60CC",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-3CF96762618C9289",
+        "patterns": ["코막힘", "코가 막", "숨쉬기"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-489B24C0440ADC0F",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-4C331084BE5676A0",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-566597A664E4A126",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-5CA7DCC012E0CD3A",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-765430034FDD8536",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-869F5365970D8E7B",
+        "patterns": ["코막힘", "코가 막", "숨쉬기"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-986672497A382852",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-B48716C76D851811",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-BC3D8306CE77BB09",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-C8812FBF446811E4",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-CD8A865192E9751A",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-E56577F2542F754E",
+        "patterns": ["코막힘", "코가 막", "숨쉬기"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-EB9B065E6C919BC0",
+        "patterns": ["코막힘", "코가 막", "숨쉬기"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-F3F2C2C9037FC93E",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-HEALTHKR-103BD68982271795",
+        "patterns": [
+          "재채기",
+          "맑은 콧물",
+          "알레르기",
+          "비염",
+          "간지러",
+          "먼지",
+          "꽃가루"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-46AF132512A47C05",
+        "patterns": [
+          "열이 나요",
+          "몸살",
+          "기침도 나와요",
+          "감기 기운",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-RUNNY_NOSE-FORMULA-C3CFB683CDBDA3E3",
+        "patterns": [
+          "재채기",
+          "맑은 콧물",
+          "알레르기",
+          "비염",
+          "간지러",
+          "먼지",
+          "꽃가루"
+        ]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-PRODUCTIVE_COUGH",
+    "rule_id": "RUL-OVERLAY-PTC-PRODUCTIVE_COUGH-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.sputum_context",
+    "question": "가래가 끈적한가요? 감기 증상이 같이 있는지, 시럽이 편한지도 말씀해 주세요.",
+    "reason": "가래 성상과 동반 증상에 따라 거담제와 복합 감기약이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-PRODUCTIVE_COUGH-ACETYLCYSTEINE",
+        "patterns": ["끈적", "안 나와", "잘 안 뱉", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-18B98DC4525C60CC",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-26D5CA58C62D6358",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-29B258E8957D36D3",
+        "patterns": ["시럽", "물약", "알약 못", "삼키기 힘들"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-437D51B3DF3F48A1",
+        "patterns": ["시럽", "물약", "알약 못", "삼키기 힘들"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-489B24C0440ADC0F",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-4C331084BE5676A0",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-566597A664E4A126",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-5CA7DCC012E0CD3A",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-765430034FDD8536",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-869F5365970D8E7B",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-986672497A382852",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-9893B3ADDF5B13E6",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-B48716C76D851811",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-BC3D8306CE77BB09",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-C8812FBF446811E4",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-CD8A865192E9751A",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-F1101F36C0FFB3CB",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-F3F2C2C9037FC93E",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-63CF9ADE720EF1C5",
+        "patterns": [
+          "콧물도 나와요",
+          "코막힘",
+          "감기 기운",
+          "열이 나요",
+          "목도 아파"
+        ]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-979979600784103A",
+        "patterns": ["가래가 나와요", "생약", "한방"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-C3CFB683CDBDA3E3",
+        "patterns": ["가래가 나와요", "생약", "한방"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-PRODUCTIVE_COUGH-FORMULA-DEF4A1F1EDD9EBBB",
+        "patterns": ["가래가 나와요", "생약", "한방"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-BLOATING",
+    "rule_id": "RUL-OVERLAY-PTC-BLOATING-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.bloating_context",
+    "question": "가스가 차서 불편한 쪽인가요, 체해서 더부룩한 쪽인가요?",
+    "reason": "팽만 원인에 따라 소화효소제와 제산·소포제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-BLOATING-SIMETHICONE",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-BLOATING-SIMETHICONE",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-BLOATING-SIMETHICONE",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-BLOATING-DIASTASE_PROTEASE_CELLULASE",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-BLOATING-DIASTASE_PROTEASE_CELLULASE",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-BLOATING-DIASTASE_PROTEASE_CELLULASE",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-302CA517CA73B3AF",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-7CB2A22574A10B8E",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-7CB2A22574A10B8E",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-7CB2A22574A10B8E",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-7FF51DFBBC7BB223",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-AA98CBCC24687D8D",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-D33F4A22212528A1",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-D33F4A22212528A1",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-D33F4A22212528A1",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-01B8B52ADBB7DA85",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-01B8B52ADBB7DA85",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-01B8B52ADBB7DA85",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-02666309252440D5",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-02666309252440D5",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-02666309252440D5",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-06CEBC6C7BF1190E",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-37A124E52520EE01",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-3C5D99B40F3B6B04",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-48F62F936976CF1A",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-48F62F936976CF1A",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-48F62F936976CF1A",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-616BCE114AF7C13B",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-65F76D2B320F209E",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-675E58E215448921",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-72D10A7A2EAB5DC7",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-72D10A7A2EAB5DC7",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-72D10A7A2EAB5DC7",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-C559EABF719D269F",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-C559EABF719D269F",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-C559EABF719D269F",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-DE3A90DD549901EE",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-EE91AB75C971E0E8",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-FDE7B56C0264B610",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-FDE7B56C0264B610",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-BLOATING-FORMULA-FDE7B56C0264B610",
+        "patterns": ["체했", "더부룩", "얹힌", "답답"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-HEADACHE",
+    "rule_id": "RUL-OVERLAY-PTC-HEADACHE-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.headache_context",
+    "question": "두통이 어떤가요? 근육 긴장이나 염증이 같이 있는지, 아이 복용인지도 말씀해 주세요.",
+    "reason": "두통 양상과 연령에 따라 진통 성분과 제형이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-HEADACHE-ACETAMINOPHEN",
+        "patterns": ["아이", "아기", "아이가", "몇 살", "시럽", "물약"]
+      },
+      {
+        "option_id": "OPT-HEADACHE-ACETAMINOPHEN",
+        "patterns": ["머리만", "속이 약", "위가 안 좋", "열도"]
+      },
+      {
+        "option_id": "OPT-HEADACHE-IBUPROFEN",
+        "patterns": ["뒷목", "어깨", "뻐근", "긴장", "염증", "쑤"]
+      },
+      {
+        "option_id": "OPT-HEADACHE-IBUPROFEN",
+        "patterns": ["빨리", "연질캡슐"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEADACHE-FORMULA-10761324287041A9",
+        "patterns": ["뒷목", "어깨", "뻐근", "긴장", "염증", "쑤"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEADACHE-FORMULA-3F14A5A15AE0EBD9",
+        "patterns": ["뒷목", "어깨", "뻐근", "긴장", "염증", "쑤"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEADACHE-HEALTHKR-21C0E2C953EA2235",
+        "patterns": ["뒷목", "어깨", "뻐근", "긴장", "염증", "쑤"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEADACHE-HEALTHKR-236C0EE08FC5B626",
+        "patterns": ["아이", "아기", "아이가", "몇 살", "시럽", "물약"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEADACHE-HEALTHKR-6BC91FEFECC5D209",
+        "patterns": ["머리 한쪽만", "오래", "며칠째"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEADACHE-HEALTHKR-E3D730C8855896B5",
+        "patterns": ["아이", "아기", "아이가", "몇 살", "시럽", "물약"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEADACHE-FORMULA-938DE9D95121BDC0",
+        "patterns": ["머리만", "속이 약", "위가 안 좋", "열도"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-INDIGESTION",
+    "rule_id": "RUL-OVERLAY-PTC-INDIGESTION-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.dyspepsia_context",
+    "question": "소화가 안 되는 게 과식 뒤인가요, 기름진 음식 뒤인가요, 아니면 속이 잘 안 움직이는 느낌인가요?",
+    "reason": "소화불량 기전에 따라 효소제·담즙제·운동조절제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-INDIGESTION-DIASTASE_PROTEASE_CELLULASE",
+        "patterns": ["과식", "많이 먹", "고기", "기름진"]
+      },
+      {
+        "option_id": "OPT-INDIGESTION-DIASTASE_PROTEASE_CELLULASE",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-INDIGESTION-DIASTASE_PROTEASE_CELLULASE",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-INDIGESTION-SIMETHICONE",
+        "patterns": ["과식", "많이 먹", "고기", "기름진"]
+      },
+      {
+        "option_id": "OPT-INDIGESTION-SIMETHICONE",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-INDIGESTION-SIMETHICONE",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-01B8B52ADBB7DA85",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-02666309252440D5",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-06CEBC6C7BF1190E",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-48F62F936976CF1A",
+        "patterns": ["과식", "많이 먹", "고기", "기름진"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-48F62F936976CF1A",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-48F62F936976CF1A",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-52B669ACBAAF97D4",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-72D10A7A2EAB5DC7",
+        "patterns": ["과식", "많이 먹", "고기", "기름진"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-72D10A7A2EAB5DC7",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-72D10A7A2EAB5DC7",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-7CB2A22574A10B8E",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-BA76A1C03EB34592",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-C559EABF719D269F",
+        "patterns": ["과식", "많이 먹", "고기", "기름진"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-C559EABF719D269F",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-C559EABF719D269F",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-D33F4A22212528A1",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-DE3A90DD549901EE",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-DE3A90DD549901EE",
+        "patterns": ["잘 안 내려가", "명치에 걸린", "답답", "더부룩"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-DE3A90DD549901EE",
+        "patterns": ["둘 다", "같이"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-EE91AB75C971E0E8",
+        "patterns": ["과식", "많이 먹", "고기", "기름진"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-EE91AB75C971E0E8",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-EE91AB75C971E0E8",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-FDE7B56C0264B610",
+        "patterns": ["과식", "많이 먹", "고기", "기름진"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-FDE7B56C0264B610",
+        "patterns": ["체했", "얹힌", "소화가 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-FORMULA-FDE7B56C0264B610",
+        "patterns": ["기름진", "지방", "튀김", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-INDIGESTION-HEALTHKR-AA6F926D33147834",
+        "patterns": ["잘 안 내려가", "명치에 걸린", "답답", "더부룩"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-MINOR_WOUND",
+    "rule_id": "RUL-OVERLAY-PTC-MINOR_WOUND-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.wound_context",
+    "question": "상처에 고름이나 감염 소견이 있나요, 아니면 소독하고 아물게 하는 쪽인가요?",
+    "reason": "감염 여부에 따라 소독제·항생제·재생 보조제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-MINOR_WOUND-POVIDONE_IODINE",
+        "patterns": ["소독", "넓은 부위에", "긁혔", "까졌", "흙"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-FORMULA-18570FC4DCC92EAF",
+        "patterns": ["아물", "흉터 자국", "회복", "베였", "딱지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-FORMULA-2831F2F6CE6CE9E9",
+        "patterns": ["아물", "흉터 자국", "회복", "베였", "딱지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-FORMULA-2A542B6911FECA2F",
+        "patterns": ["아물", "흉터 자국", "회복", "베였", "딱지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-FORMULA-4B30E520FF1ADF96",
+        "patterns": ["아물", "흉터 자국", "회복", "베였", "딱지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-FORMULA-6BA2D1B7DEA7DD58",
+        "patterns": ["소독", "넓은 부위에", "긁혔", "까졌", "흙"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-FORMULA-DA1567019FF28A3B",
+        "patterns": ["아물", "흉터 자국", "회복", "베였", "딱지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-FORMULA-DCFCAEB144FEF6BE",
+        "patterns": ["소독", "넓은 부위에", "긁혔", "까졌", "흙"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-FORMULA-F6A9B0D21509A41D",
+        "patterns": ["아물", "흉터 자국", "회복", "베였", "딱지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-HEALTHKR-36351F2D4BFA13C9",
+        "patterns": ["아물", "흉터 자국", "회복", "베였", "딱지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-HEALTHKR-380DCFEDE5638A22",
+        "patterns": ["아물", "흉터 자국", "회복", "베였", "딱지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-HEALTHKR-992B6DB86ED077CB",
+        "patterns": ["누런 게 나와", "곪", "곪은 것 같", "빨갛게 부"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_WOUND-HEALTHKR-AB46A4748477646C",
+        "patterns": ["누런 게 나와", "곪", "곪은 것 같", "빨갛게 부"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-DIARRHEA",
+    "rule_id": "RUL-OVERLAY-PTC-DIARRHEA-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.diarrhea_context",
+    "question": "설사가 며칠째인가요? 물처럼 나오는지, 배가 아픈지도 말씀해 주세요.",
+    "reason": "설사 기전에 따라 흡착제·정장제·생약 복합제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-DIARRHEA-DIOSMECTITE",
+        "patterns": ["물처럼", "물설사", "묽", "아이", "자주"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-31D2597FAA66B929",
+        "patterns": ["설사", "배탈", "며칠"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-3238662D9D5012A6",
+        "patterns": ["설사", "배탈", "며칠"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-48C7385E19C8900B",
+        "patterns": ["설사", "배탈", "며칠"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-7EB8557F62D3D14C",
+        "patterns": ["설사", "배탈", "며칠"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-BA76A1C03EB34592",
+        "patterns": ["설사", "배탈", "며칠"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-F88390B5D1E61D4C",
+        "patterns": ["설사", "배탈", "며칠"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-HEALTHKR-420AD7E1A5F8BC73",
+        "patterns": ["물처럼", "물설사", "묽", "아이", "자주"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-HEALTHKR-4BD422846CA6C1ED",
+        "patterns": ["상한 음식", "잘못 먹", "여행 다녀와서"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-1EFF5D50C34E0C13",
+        "patterns": ["배가 아프면서", "배가 살살", "생약", "정로환"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-52659F22BF39E5BD",
+        "patterns": ["설사", "배탈", "며칠"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-8F4A7501261391C4",
+        "patterns": ["배가 아프면서", "배가 살살", "생약", "정로환"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-E5BD2E544DE3C408",
+        "patterns": ["설사", "배탈", "며칠"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-DIARRHEA-FORMULA-8B00A8F01105401B",
+        "patterns": ["설사", "배탈", "며칠"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-HEARTBURN",
+    "rule_id": "RUL-OVERLAY-PTC-HEARTBURN-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.heartburn_context",
+    "question": "속쓰림이 가끔인가요, 자주 반복되나요? 가스나 신물이 같이 올라오는지도 말씀해 주세요.",
+    "reason": "빈도와 동반 증상에 따라 제산제와 위산분비억제제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-HEARTBURN-ALUMINUM_PHOSPHATE_GEL",
+        "patterns": ["방귀가 자주", "빵빵", "더부룩"]
+      },
+      {
+        "option_id": "OPT-HEARTBURN-ALUMINUM_PHOSPHATE_GEL",
+        "patterns": ["기름진", "고기", "느끼"]
+      },
+      {
+        "option_id": "OPT-HEARTBURN-MAGNESIUM_HYDROXIDE",
+        "patterns": ["방귀가 자주", "빵빵", "더부룩"]
+      },
+      {
+        "option_id": "OPT-HEARTBURN-MAGNESIUM_HYDROXIDE",
+        "patterns": ["기름진", "고기", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-01B8B52ADBB7DA85",
+        "patterns": ["지금 쓰려", "바로", "가끔", "먹고 나면"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-056555ED47648466",
+        "patterns": ["신물", "올라와", "역류", "누우면"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-06CEBC6C7BF1190E",
+        "patterns": ["지금 쓰려", "바로", "가끔", "먹고 나면"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-66D4240C961686BA",
+        "patterns": ["지금 쓰려", "바로", "가끔", "먹고 나면"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-66D4240C961686BA",
+        "patterns": ["따가", "쓰라", "속이 쓰라려"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-675E58E215448921",
+        "patterns": ["방귀가 자주", "빵빵", "더부룩"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-AA76D5B01D47DAD5",
+        "patterns": ["지금 쓰려", "바로", "가끔", "먹고 나면"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-AA76D5B01D47DAD5",
+        "patterns": ["따가", "쓰라", "속이 쓰라려"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-CD3168AD57D3DC09",
+        "patterns": ["지금 쓰려", "바로", "가끔", "먹고 나면"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-FORMULA-DE3A90DD549901EE",
+        "patterns": ["지금 쓰려", "바로", "가끔", "먹고 나면"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-HEALTHKR-514905B825035432",
+        "patterns": ["자주", "자꾸 재발", "날마다", "밤에"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEARTBURN-HEALTHKR-514905B825035432",
+        "patterns": ["계속", "오래"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-GAS",
+    "rule_id": "RUL-OVERLAY-PTC-GAS-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.gas_context",
+    "question": "가스만 불편한가요, 속쓰림도 같이 있나요?",
+    "reason": "속쓰림 동반 여부에 따라 소화효소제와 제산·소포제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-GAS-SIMETHICONE",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      },
+      {
+        "option_id": "OPT-GAS-SIMETHICONE",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-GAS-SIMETHICONE",
+        "patterns": ["기름진", "고기", "느끼"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-01B8B52ADBB7DA85",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-02666309252440D5",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-48F62F936976CF1A",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-675E58E215448921",
+        "patterns": ["속쓰림", "신물", "위산", "명치"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-72D10A7A2EAB5DC7",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-7CB2A22574A10B8E",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-C559EABF719D269F",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-D33F4A22212528A1",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-GAS-FORMULA-FDE7B56C0264B610",
+        "patterns": ["방귀가 자주", "방귀", "빵빵", "소화가 더뎌"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-URTICARIA_ITCH",
+    "rule_id": "RUL-OVERLAY-PTC-URTICARIA_ITCH-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.urticaria_context",
+    "question": "낮에 활동해야 해서 졸리면 곤란한가요? 아이 복용인지도 말씀해 주세요.",
+    "reason": "졸림 허용 범위와 연령에 따라 항히스타민 성분이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-URTICARIA_ITCH-CETIRIZINE_HCL",
+        "patterns": ["아이", "아기", "아이가", "시럽", "물약", "몇 살"]
+      },
+      {
+        "option_id": "OPT-URTICARIA_ITCH-CETIRIZINE_HCL",
+        "patterns": ["졸려도", "가려워서 잠", "밤에", "많이 불편"]
+      },
+      {
+        "option_id": "OPT-URTICARIA_ITCH-CETIRIZINE_HCL",
+        "patterns": ["효과 좋은", "센 걸로"]
+      },
+      {
+        "option_id": "OPT-URTICARIA_ITCH-LORATADINE",
+        "patterns": ["낮에", "적당히", "덜 졸린"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-URTICARIA_ITCH-HEALTHKR-103BD68982271795",
+        "patterns": ["운전", "졸리면 안", "일해야", "학교", "안 졸리는"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-ANTIFUNGAL_SKIN",
+    "rule_id": "RUL-OVERLAY-PTC-ANTIFUNGAL_SKIN-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.tinea_context",
+    "question": "병변이 어디인가요? 발가락 사이, 손발톱, 사타구니, 몸통 중 가까운 쪽을 말씀해 주세요.",
+    "reason": "병변 부위와 범위에 따라 항진균 제형과 계열이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-PATHWAY-ANTIFUNGAL_SKIN-FORMULA-EFE61D55AF797E03",
+        "patterns": ["발가락 사이", "발바닥", "껍질이 일어나", "가렵", "물집"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ANTIFUNGAL_SKIN-HEALTHKR-208D4028BE90029A",
+        "patterns": ["발가락 사이", "발바닥", "껍질이 일어나", "가렵", "물집"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ANTIFUNGAL_SKIN-HEALTHKR-39275501AACAB7C0",
+        "patterns": ["발가락 사이", "발바닥", "껍질이 일어나", "가렵", "물집"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ANTIFUNGAL_SKIN-HEALTHKR-5D95D0336FE469A6",
+        "patterns": ["어루러기", "지루성", "등에", "얼룩"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ANTIFUNGAL_SKIN-HEALTHKR-B41D27179C9EE0FD",
+        "patterns": ["손톱", "발톱이 두꺼", "두꺼", "각질"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ANTIFUNGAL_SKIN-HEALTHKR-D0EAB23CF2187E87",
+        "patterns": ["사타구니", "완선", "몸통", "여러 군데", "고리 모양"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-ALLERGIC_RHINITIS",
+    "rule_id": "RUL-OVERLAY-PTC-ALLERGIC_RHINITIS-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.rhinitis_context",
+    "question": "낮에 활동해야 해서 졸리면 곤란한가요? 아이 복용인지도 말씀해 주세요.",
+    "reason": "졸림 허용 범위와 연령에 따라 항히스타민 성분이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-ALLERGIC_RHINITIS-LORATADINE",
+        "patterns": ["운전", "일해야", "학교", "덜 졸린", "낮에"]
+      },
+      {
+        "option_id": "OPT-ALLERGIC_RHINITIS-CETIRIZINE_HCL",
+        "patterns": ["아이", "아기", "아이가", "시럽", "물약", "몇 살"]
+      },
+      {
+        "option_id": "OPT-ALLERGIC_RHINITIS-CETIRIZINE_HCL",
+        "patterns": ["졸려도", "많이 불편", "밤에"]
+      },
+      {
+        "option_id": "OPT-ALLERGIC_RHINITIS-CETIRIZINE_HCL",
+        "patterns": ["효과 좋은", "센 걸로"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-CONSTIPATION",
+    "rule_id": "RUL-OVERLAY-PTC-CONSTIPATION-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.constipation_context",
+    "question": "변이 딱딱한 쪽인가요, 아니면 며칠째 아예 안 나오는 쪽인가요?",
+    "reason": "하제 기전과 사용 기간에 따라 후보가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-CONSTIPATION-BISACODYL",
+        "patterns": ["딱딱", "안 나와", "변을 못 봐요", "며칠", "힘들"]
+      },
+      {
+        "option_id": "OPT-CONSTIPATION-DOCUSATE_SODIUM",
+        "patterns": ["딱딱", "안 나와", "변을 못 봐요", "며칠", "힘들"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-CONSTIPATION-FORMULA-173B8E7F8D026F22",
+        "patterns": ["빨리", "오래 안", "센 걸로", "며칠째"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-CONSTIPATION-FORMULA-7A02515882766E98",
+        "patterns": ["딱딱", "안 나와", "변을 못 봐요", "며칠", "힘들"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-CONSTIPATION-FORMULA-B0B194BEC450C0FD",
+        "patterns": ["딱딱", "안 나와", "변을 못 봐요", "며칠", "힘들"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-CONSTIPATION-FORMULA-D9FDDAF8D86F489B",
+        "patterns": ["딱딱해서 아프", "부드럽게", "항문이 아프"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-CONSTIPATION-FORMULA-FD8E7D9B1A29278F",
+        "patterns": ["딱딱", "안 나와", "변을 못 봐요", "며칠", "힘들"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-CONSTIPATION-FORMULA-6FB7C8EA2C749280",
+        "patterns": ["딱딱", "안 나와", "변을 못 봐요", "며칠", "힘들"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-MINOR_BURN",
+    "rule_id": "RUL-OVERLAY-PTC-MINOR_BURN-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.burn_context",
+    "question": "화상 부위에 고름이나 오염이 있나요, 아니면 아물게 하는 쪽인가요?",
+    "reason": "감염·오염 여부에 따라 항생제·소독제·재생 보조제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-PATHWAY-MINOR_BURN-FORMULA-2A542B6911FECA2F",
+        "patterns": ["누런 게 나와", "곪", "곪은 것 같", "빨갛게 부"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_BURN-HEALTHKR-36351F2D4BFA13C9",
+        "patterns": ["아물", "따갑", "빨개", "회복"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_BURN-HEALTHKR-992B6DB86ED077CB",
+        "patterns": ["누런 게 나와", "곪", "곪은 것 같", "빨갛게 부"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_BURN-HEALTHKR-AB46A4748477646C",
+        "patterns": ["누런 게 나와", "곪", "곪은 것 같", "빨갛게 부"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MINOR_BURN-POVIDONE_IODINE",
+        "patterns": ["더러", "흙이 묻", "소독", "흙"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-MENSTRUAL_PAIN",
+    "rule_id": "RUL-OVERLAY-PTC-MENSTRUAL_PAIN-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.dysmenorrhea_context",
+    "question": "붓기나 배가 빵빵한 느낌이 같이 있나요?",
+    "reason": "부종·경련 동반 여부에 따라 진통 성분과 이뇨 보조가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-MENSTRUAL_PAIN-IBUPROFEN",
+        "patterns": ["쥐어짜", "쥐어짜듯", "많이 불편", "허리도"]
+      },
+      {
+        "option_id": "OPT-MENSTRUAL_PAIN-ACETAMINOPHEN",
+        "patterns": ["생리통", "아랫배", "속이 약"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-10761324287041A9",
+        "patterns": ["몸이 부", "손발이 부", "배가 빵빵"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-3F14A5A15AE0EBD9",
+        "patterns": ["부었", "붓기", "빵빵"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-HEALTHKR-21C0E2C953EA2235",
+        "patterns": ["쥐어짜", "쥐어짜듯", "많이 불편", "허리도"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MENSTRUAL_PAIN-FORMULA-5AC140B80C3E4BEE",
+        "patterns": ["생리통", "아랫배", "속이 약"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-STOMATITIS",
+    "rule_id": "RUL-OVERLAY-PTC-STOMATITIS-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.stomatitis_context",
+    "question": "구내염이 한 군데인가요 여러 군데인가요? 바르는 것과 가글 중 편한 쪽도 말씀해 주세요.",
+    "reason": "개수·위치와 제형 선호에 따라 연고·가글·스프레이가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-STOMATITIS-TRIAMCINOLONE_ACETONIDE",
+        "patterns": ["한 군데", "바르는", "연고", "입술 안쪽"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-STOMATITIS-FORMULA-835EA8B571A3B4B1",
+        "patterns": ["스프레이", "뿌리는"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-STOMATITIS-FORMULA-979080A7BCD9F9E8",
+        "patterns": ["입안이 헐", "헐었", "입안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-STOMATITIS-HEALTHKR-2D2AC138C11148AB",
+        "patterns": ["입안이 헐", "헐었", "입안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-STOMATITIS-HEALTHKR-41E94FC492B5CD36",
+        "patterns": ["입안이 헐", "헐었", "입안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-STOMATITIS-HEALTHKR-41E94FC492B5CD36",
+        "patterns": ["여러 군데", "가글", "안쪽", "닿지 않"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-STOMATITIS-POVIDONE_IODINE",
+        "patterns": ["살균", "소독", "넓은 부위에"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-SMOKING_CESSATION",
+    "rule_id": "RUL-OVERLAY-PTC-SMOKING_CESSATION-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.nicotine_context",
+    "question": "하루 몇 개비 피우시나요? 패치와 껌 중 편한 쪽도 말씀해 주세요.",
+    "reason": "하루 흡연량과 제형에 따라 니코틴 강도와 단계가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-PATHWAY-SMOKING_CESSATION-HEALTHKR-43EE8851CF2034F0",
+        "patterns": ["껌", "반 갑", "10개비", "적게", "20개비 이하"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-SMOKING_CESSATION-HEALTHKR-43EE8851CF2034F0",
+        "patterns": ["한 갑 넘", "두 갑", "많이 피", "2mg으로 안"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-SMOKING_CESSATION-HEALTHKR-74C45CB6308BFAEA",
+        "patterns": ["껌", "반 갑", "10개비", "적게", "20개비 이하"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-SMOKING_CESSATION-HEALTHKR-74C45CB6308BFAEA",
+        "patterns": ["패치", "붙이는", "시작"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-SMOKING_CESSATION-HEALTHKR-74C45CB6308BFAEA",
+        "patterns": ["마지막", "줄이는 중", "거의 끊"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-SMOKING_CESSATION-HEALTHKR-74C45CB6308BFAEA",
+        "patterns": ["한 갑 이상", "많이 피우는데 패치", "많이 불편"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-SMOKING_CESSATION-HEALTHKR-DF3DA9641B241F38",
+        "patterns": ["트로키", "사탕", "녹여", "껌은 싫"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-ORAL_CONTRACEPTION",
+    "rule_id": "RUL-OVERLAY-PTC-ORAL_CONTRACEPTION-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.contraception_context",
+    "question": "이전에 드시던 제품이 있나요? 21일 복용 후 휴약과 28일 연속 복용 중 편한 쪽도 말씀해 주세요.",
+    "reason": "성분 함량과 복용 일정에 따라 제품이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-PATHWAY-ORAL_CONTRACEPTION-FORMULA-0AF304D7D1B31039",
+        "patterns": ["머시론", "센스데이", "데소게스트렐"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ORAL_CONTRACEPTION-FORMULA-4A262197F904AC8C",
+        "patterns": ["마이보라", "0.03", "처음 먹어요"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ORAL_CONTRACEPTION-FORMULA-A80E13778CACE9EC",
+        "patterns": ["센스리베", "디어미", "0.02", "저용량"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ORAL_CONTRACEPTION-FORMULA-BD87C0AF09BBDEB1",
+        "patterns": ["센스리베", "디어미", "0.02", "저용량"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ORAL_CONTRACEPTION-FORMULA-D8CA61A1CF4FD9DE",
+        "patterns": ["날마다", "쉬는 기간 없이", "28일", "연속"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ORAL_CONTRACEPTION-FORMULA-EB1166AE14DD5BE0",
+        "patterns": ["머시론", "센스데이", "데소게스트렐"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-HEMORRHOID",
+    "rule_id": "RUL-OVERLAY-PTC-HEMORRHOID-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.hemorrhoid_context",
+    "question": "통증과 가려움이 심한 쪽인가요, 붓기와 출혈이 반복되는 쪽인가요?",
+    "reason": "증상 양상에 따라 국소제와 정맥순환 보조 경구제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-PATHWAY-HEMORRHOID-FORMULA-915B31935326C475",
+        "patterns": ["아파", "가렵", "바르는", "연고", "따가"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-HEMORRHOID-HEALTHKR-A72215887B757FDA",
+        "patterns": ["붓기", "피가 비쳐", "자꾸 재발", "먹는 약", "안쪽"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-MOTION_SICKNESS",
+    "rule_id": "RUL-OVERLAY-PTC-MOTION_SICKNESS-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.motion_context",
+    "question": "이동 시간이 얼마나 되나요? 물 없이 먹는 제형이 편한지도 말씀해 주세요.",
+    "reason": "이동 시간과 제형에 따라 지속시간이 다른 후보가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-MOTION_SICKNESS-DIMENHYDRINATE",
+        "patterns": ["잠깐", "짧게", "알약", "알약으로"]
+      },
+      {
+        "option_id": "OPT-MOTION_SICKNESS-DIMENHYDRINATE",
+        "patterns": ["씹어", "물 없이", "츄어블", "아이"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MOTION_SICKNESS-FORMULA-2C13C931F7B0A6E2",
+        "patterns": ["씹어", "물 없이", "츄어블", "아이"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MOTION_SICKNESS-HEALTHKR-ABA5C1C5D30ED5E2",
+        "patterns": ["장거리", "오래", "왕복", "비행기", "필름"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-ACID_REFLUX",
+    "rule_id": "RUL-OVERLAY-PTC-ACID_REFLUX-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.reflux_context",
+    "question": "신물이 올라오는 쪽인가요, 속이 쓰리고 따가운 쪽인가요?",
+    "reason": "역류 양상에 따라 점막 보호제와 역류 차단제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-ACID_REFLUX-ALUMINUM_PHOSPHATE_GEL",
+        "patterns": ["따가", "쓰라", "기름진"]
+      },
+      {
+        "option_id": "OPT-ACID_REFLUX-MAGNESIUM_HYDROXIDE",
+        "patterns": ["따가", "쓰라", "기름진"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ACID_REFLUX-FORMULA-056555ED47648466",
+        "patterns": ["신물", "목까지", "개비스콘"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ACID_REFLUX-FORMULA-66D4240C961686BA",
+        "patterns": ["따가", "쓰라", "기름진"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ACID_REFLUX-FORMULA-66D4240C961686BA",
+        "patterns": ["역류", "올라와", "누우면", "밤에"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ACID_REFLUX-FORMULA-AA76D5B01D47DAD5",
+        "patterns": ["따가", "쓰라", "기름진"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-ACID_REFLUX-FORMULA-AA76D5B01D47DAD5",
+        "patterns": ["역류", "올라와", "누우면", "밤에"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-SCAR_CARE",
+    "rule_id": "RUL-OVERLAY-PTC-SCAR_CARE-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.scar_context",
+    "question": "흉터가 단단하거나 당기나요? 면적도 말씀해 주세요.",
+    "reason": "흉터 상태와 면적에 따라 제형이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-PATHWAY-SCAR_CARE-FORMULA-4B30E520FF1ADF96",
+        "patterns": ["딱딱하게 굳", "당기", "튀어나", "마사지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-SCAR_CARE-FORMULA-DA1567019FF28A3B",
+        "patterns": ["딱딱하게 굳", "당기", "튀어나", "마사지"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-SCAR_CARE-HEALTHKR-380DCFEDE5638A22",
+        "patterns": ["흉터 자국", "자국", "넓은 부위에"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-INSECT_BITE",
+    "rule_id": "RUL-OVERLAY-PTC-INSECT_BITE-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.bite_context",
+    "question": "물린 자리만 가려운가요, 가려움이 넓게 퍼졌나요?",
+    "reason": "범위에 따라 국소 외용제와 경구 항히스타민제가 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-INSECT_BITE-HYDROCORTISONE",
+        "patterns": ["물린 자리", "한 군데", "바르는", "여기만"]
+      },
+      {
+        "option_id": "OPT-INSECT_BITE-CETIRIZINE_HCL",
+        "patterns": ["넓은 부위에", "여러 군데", "온몸", "먹는 약", "퍼졌"]
+      }
+    ]
+  },
+  {
+    "protocol_id": "PTC-MILD_DERMATITIS",
+    "rule_id": "RUL-OVERLAY-PTC-MILD_DERMATITIS-ASK-SITUATION",
+    "rule_suffix": "-SITUATION",
+    "ask_priority": 120,
+    "progressive": true,
+    "field": "symptom.dermatitis_context",
+    "question": "부위가 넓은가요, 좁은가요?",
+    "reason": "면적에 따라 로션과 연고 제형이 갈립니다.",
+    "options": [
+      {
+        "option_id": "OPT-MILD_DERMATITIS-HYDROCORTISONE",
+        "patterns": ["넓은 부위에", "여러 군데", "팔 전체", "로션"]
+      },
+      {
+        "option_id": "OPT-PATHWAY-MILD_DERMATITIS-FORMULA-F6A9B0D21509A41D",
+        "patterns": ["좁", "한 군데", "여기만", "연고"]
+      }
+    ]
+  }
+]

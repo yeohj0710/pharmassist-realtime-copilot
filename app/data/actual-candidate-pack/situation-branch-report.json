@@ -1,0 +1,764 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedFrom": "data/actual-research-overlays/situation-branches.json",
+  "protocolCount": 26,
+  "optionRuleCount": 308,
+  "protocols": [
+    {
+      "protocolId": "PTC-FEVER",
+      "branches": [
+        {
+          "branchId": "cold-combination",
+          "chooseWhenContains": "콧물·코막힘·기침 같은 감기 증상도 있어 복합제",
+          "products": 18,
+          "options": 15
+        },
+        {
+          "branchId": "pediatric-liquid",
+          "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
+          "products": 16,
+          "options": 4
+        },
+        {
+          "branchId": "ibuprofen-soft",
+          "chooseWhenContains": "이부프로펜 연질캡슐이 적합할 때",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "body-ache",
+          "chooseWhenContains": "발열과 몸살 통증을 함께 낮춰야 하는 경우",
+          "products": 7,
+          "options": 6
+        },
+        {
+          "branchId": "herbal-adjunct",
+          "chooseWhenContains": "생약 복합 보조를 함께 검토",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 27
+    },
+    {
+      "protocolId": "PTC-NASAL_CONGESTION",
+      "branches": [
+        {
+          "branchId": "cold-multi",
+          "chooseWhenContains": "발열·기침·콧물 등 여러 감기 증상이 같이",
+          "products": 17,
+          "options": 14
+        },
+        {
+          "branchId": "allergy-oral",
+          "chooseWhenContains": "동반 감기·알레르기 증상에 맞춰 성분과 제형",
+          "products": 10,
+          "options": 3
+        },
+        {
+          "branchId": "decongestant",
+          "chooseWhenContains": "먹는 약으로 코막힘을 줄이되",
+          "products": 5,
+          "options": 4
+        },
+        {
+          "branchId": "actifed",
+          "chooseWhenContains": "졸림보다 강한 증상 완화를 우선",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 22
+    },
+    {
+      "protocolId": "PTC-RUNNY_NOSE",
+      "branches": [
+        {
+          "branchId": "cold-multi",
+          "chooseWhenContains": "발열·몸살·기침 등 여러 감기 증상이 같이",
+          "products": 15,
+          "options": 13
+        },
+        {
+          "branchId": "allergic",
+          "chooseWhenContains": "재채기·맑은 콧물·가려움이 두드러지는",
+          "products": 11,
+          "options": 4
+        },
+        {
+          "branchId": "with-congestion",
+          "chooseWhenContains": "항히스타민과 비충혈제거 작용을 같이",
+          "products": 5,
+          "options": 4
+        },
+        {
+          "branchId": "cetirizine-strong",
+          "chooseWhenContains": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "actifed",
+          "chooseWhenContains": "졸림보다 강한 증상 완화를 우선",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 23
+    },
+    {
+      "protocolId": "PTC-PRODUCTIVE_COUGH",
+      "branches": [
+        {
+          "branchId": "cold-multi",
+          "chooseWhenContains": "콧물·코막힘·통증 같은 감기 증상도 함께",
+          "products": 20,
+          "options": 17
+        },
+        {
+          "branchId": "mucolytic",
+          "chooseWhenContains": "끈적하고 배출하기 어려운 가래를 묽게",
+          "products": 3,
+          "options": 1
+        },
+        {
+          "branchId": "syrup",
+          "chooseWhenContains": "정제보다 시럽 제형이 편할 때",
+          "products": 3,
+          "options": 2
+        },
+        {
+          "branchId": "expectorant-herbal",
+          "chooseWhenContains": "가래를 묽게 하거나 배출을 도와야 하는",
+          "products": 3,
+          "options": 3
+        }
+      ],
+      "optionRules": 23
+    },
+    {
+      "protocolId": "PTC-BLOATING",
+      "branches": [
+        {
+          "branchId": "enzyme",
+          "chooseWhenContains": "가스와 복부팽만이 주된 불편인 경우 또는 체함",
+          "products": 11,
+          "options": 10
+        },
+        {
+          "branchId": "antacid-antifoam",
+          "chooseWhenContains": "가스와 복부팽만이 주된 불편인 경우",
+          "products": 14,
+          "options": 11
+        },
+        {
+          "branchId": "fullness",
+          "chooseWhenContains": "체함과 더부룩함을 함께 완화",
+          "products": 24,
+          "options": 20
+        }
+      ],
+      "optionRules": 41
+    },
+    {
+      "protocolId": "PTC-HEADACHE",
+      "branches": [
+        {
+          "branchId": "pediatric",
+          "chooseWhenContains": "소아 두통에서 연령·체중별 용량",
+          "products": 8,
+          "options": 3
+        },
+        {
+          "branchId": "inflammatory",
+          "chooseWhenContains": "근육 긴장이나 염증성 통증이 동반된 두통",
+          "products": 11,
+          "options": 4
+        },
+        {
+          "branchId": "analgesic-first",
+          "chooseWhenContains": "염증 억제보다 두통·발열의 진통 효과를 우선",
+          "products": 3,
+          "options": 2
+        },
+        {
+          "branchId": "migraine-lasting",
+          "chooseWhenContains": "편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력",
+          "products": 2,
+          "options": 1
+        },
+        {
+          "branchId": "ibuprofen-soft",
+          "chooseWhenContains": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 11
+    },
+    {
+      "protocolId": "PTC-INDIGESTION",
+      "branches": [
+        {
+          "branchId": "enzyme-bile",
+          "chooseWhenContains": "과식이나 음식 소화 저하가 중심인 경우 또는 지방식",
+          "products": 9,
+          "options": 7
+        },
+        {
+          "branchId": "enzyme",
+          "chooseWhenContains": "과식이나 음식 소화 저하가 중심인 경우",
+          "products": 16,
+          "options": 13
+        },
+        {
+          "branchId": "bile",
+          "chooseWhenContains": "지방식 뒤 더부룩함처럼 담즙 보조",
+          "products": 11,
+          "options": 9
+        },
+        {
+          "branchId": "motility",
+          "chooseWhenContains": "위장 운동 저하나 불규칙한 운동이 소화불량의 중심",
+          "products": 5,
+          "options": 2
+        },
+        {
+          "branchId": "enzyme-motility",
+          "chooseWhenContains": "과식이나 음식 소화 저하가 중심인 경우 또는 위장 운동",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 32
+    },
+    {
+      "protocolId": "PTC-MINOR_WOUND",
+      "branches": [
+        {
+          "branchId": "infected",
+          "chooseWhenContains": "화농·감염 소견이 있는 상처에서 국소 항생제",
+          "products": 3,
+          "options": 2
+        },
+        {
+          "branchId": "disinfect",
+          "chooseWhenContains": "가벼운 상처를 넓은 범위로 소독",
+          "products": 5,
+          "options": 3
+        },
+        {
+          "branchId": "recovery",
+          "chooseWhenContains": "감염 소견이 없는 가벼운 상처의 보호와 피부 회복",
+          "products": 9,
+          "options": 8
+        }
+      ],
+      "optionRules": 13
+    },
+    {
+      "protocolId": "PTC-DIARRHEA",
+      "branches": [
+        {
+          "branchId": "adsorbent",
+          "chooseWhenContains": "장운동을 억제하기보다 장내 흡착과 점막 보호",
+          "products": 3,
+          "options": 2
+        },
+        {
+          "branchId": "general",
+          "chooseWhenContains": "감염 위험 신호를 확인한 뒤 설사 기전에 맞춰",
+          "products": 10,
+          "options": 9
+        },
+        {
+          "branchId": "antibacterial",
+          "chooseWhenContains": "장내 유해균 억제 기전을 검토할 근거",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "herbal-combo",
+          "chooseWhenContains": "항균·지사·진경 성분이 함께 든 복합 생약제",
+          "products": 2,
+          "options": 2
+        }
+      ],
+      "optionRules": 14
+    },
+    {
+      "protocolId": "PTC-HEARTBURN",
+      "branches": [
+        {
+          "branchId": "antacid-fast",
+          "chooseWhenContains": "이미 나온 위산을 빠르게 중화하는 쪽이 필요한 경우",
+          "products": 7,
+          "options": 6
+        },
+        {
+          "branchId": "acid-suppress",
+          "chooseWhenContains": "반복되는 위산 분비를 오래 억제",
+          "products": 3,
+          "options": 1
+        },
+        {
+          "branchId": "antacid-gas",
+          "chooseWhenContains": "가스와 복부 팽만이 함께 있어 제산과 기포 제거",
+          "products": 2,
+          "options": 3
+        },
+        {
+          "branchId": "antacid-fat",
+          "chooseWhenContains": "지방 소화 보조까지 함께 고려",
+          "products": 1,
+          "options": 2
+        },
+        {
+          "branchId": "mucosa-protect",
+          "chooseWhenContains": "식도·위 점막을 덮어 보호해야 하는 경우",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "famotidine-single",
+          "chooseWhenContains": "이미 나온 산을 중화하기보다 위산 분비를 줄여야",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "reflux-barrier",
+          "chooseWhenContains": "위산 중화와 물리적 역류 차단을 함께",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 16
+    },
+    {
+      "protocolId": "PTC-GAS",
+      "branches": [
+        {
+          "branchId": "enzyme",
+          "chooseWhenContains": "가스와 복부팽만이 주된 불편인 경우",
+          "products": 11,
+          "options": 9
+        },
+        {
+          "branchId": "antacid-gas",
+          "chooseWhenContains": "가스와 복부 팽만이 함께 있어 제산과 기포 제거",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "antacid-fat",
+          "chooseWhenContains": "지방 소화 보조까지 함께 고려",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 12
+    },
+    {
+      "protocolId": "PTC-URTICARIA_ITCH",
+      "branches": [
+        {
+          "branchId": "pediatric",
+          "chooseWhenContains": "소아 두드러기·가려움에 연령별 액상",
+          "products": 2,
+          "options": 1
+        },
+        {
+          "branchId": "non-drowsy",
+          "chooseWhenContains": "두드러기·전신 가려움에서 졸림을 가장 줄여야",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "balanced",
+          "chooseWhenContains": "두드러기·전신 가려움에서 효과와 졸림 감소의 균형",
+          "products": 3,
+          "options": 1
+        },
+        {
+          "branchId": "effect-first",
+          "chooseWhenContains": "두드러기·전신 가려움 완화 효과를 우선하고 졸림",
+          "products": 4,
+          "options": 1
+        },
+        {
+          "branchId": "cetirizine-strong",
+          "chooseWhenContains": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 5
+    },
+    {
+      "protocolId": "PTC-ANTIFUNGAL_SKIN",
+      "branches": [
+        {
+          "branchId": "interdigital",
+          "chooseWhenContains": "발가락 사이·발바닥의 전형적인 피부사상균성 무좀",
+          "products": 6,
+          "options": 3
+        },
+        {
+          "branchId": "nail-thick",
+          "chooseWhenContains": "두꺼운 각질이나 손발톱 주변",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "malassezia",
+          "chooseWhenContains": "지루성 피부염이나 어루러기와 함께 말라세지아",
+          "products": 2,
+          "options": 1
+        },
+        {
+          "branchId": "broad-azole",
+          "chooseWhenContains": "완선·체부백선·어루러기처럼 병변 범위가 다양",
+          "products": 2,
+          "options": 1
+        }
+      ],
+      "optionRules": 6
+    },
+    {
+      "protocolId": "PTC-ALLERGIC_RHINITIS",
+      "branches": [
+        {
+          "branchId": "pediatric",
+          "chooseWhenContains": "소아 알레르기 비염에서 연령별 액상",
+          "products": 2,
+          "options": 1
+        },
+        {
+          "branchId": "balanced",
+          "chooseWhenContains": "알레르기 비염에서 효과와 졸림 감소의 균형",
+          "products": 3,
+          "options": 1
+        },
+        {
+          "branchId": "effect-first",
+          "chooseWhenContains": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있는 경우",
+          "products": 4,
+          "options": 1
+        },
+        {
+          "branchId": "cetirizine-strong",
+          "chooseWhenContains": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 4
+    },
+    {
+      "protocolId": "PTC-CONSTIPATION",
+      "branches": [
+        {
+          "branchId": "general",
+          "chooseWhenContains": "배변이 어렵거나 딱딱한 변에서 하제 기전과 제형",
+          "products": 7,
+          "options": 6
+        },
+        {
+          "branchId": "stimulant-short",
+          "chooseWhenContains": "단기간에 강한 자극성 배변 효과가 필요하고",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "stimulant-softener",
+          "chooseWhenContains": "자극성 배변 효과와 대변을 부드럽게 하는 작용을 함께",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 8
+    },
+    {
+      "protocolId": "PTC-MINOR_BURN",
+      "branches": [
+        {
+          "branchId": "infected",
+          "chooseWhenContains": "화상 부위의 이차 세균감염이 확인되거나",
+          "products": 5,
+          "options": 3
+        },
+        {
+          "branchId": "barrier",
+          "chooseWhenContains": "감염 소견이 없는 가벼운 화상에서 피부 장벽 회복",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "disinfect",
+          "chooseWhenContains": "화상 부위에 오염이 있어 살균소독",
+          "products": 2,
+          "options": 1
+        }
+      ],
+      "optionRules": 5
+    },
+    {
+      "protocolId": "PTC-MENSTRUAL_PAIN",
+      "branches": [
+        {
+          "branchId": "inflammatory",
+          "chooseWhenContains": "염증성 생리통의 통증과 경련 완화를 우선",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "general",
+          "chooseWhenContains": "생리통 양상과 부종·경련 동반 여부에 맞춰 진통 성분",
+          "products": 3,
+          "options": 2
+        },
+        {
+          "branchId": "edema-ibuprofen",
+          "chooseWhenContains": "붓기나 복부 팽만감이 함께 있어 이부프로펜과 이뇨",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "edema-diuretic",
+          "chooseWhenContains": "붓기·복부 팽만감이 있어 이뇨 보조 성분도",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 6
+    },
+    {
+      "protocolId": "PTC-STOMATITIS",
+      "branches": [
+        {
+          "branchId": "ointment-single",
+          "chooseWhenContains": "손이 닿는 국소 구내염·잇몸 염증 부위에 점착성",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "compare-form",
+          "chooseWhenContains": "구내염의 개수와 위치에 따라 바르는 제형",
+          "products": 3,
+          "options": 3
+        },
+        {
+          "branchId": "gargle",
+          "chooseWhenContains": "목 안쪽처럼 연고가 닿기 어려워 가글형",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "spray",
+          "chooseWhenContains": "항균·항염 성분을 스프레이로 직접",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "antiseptic",
+          "chooseWhenContains": "구강·인후 부위의 넓은 범위 살균이 우선",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 7
+    },
+    {
+      "protocolId": "PTC-SMOKING_CESSATION",
+      "branches": [
+        {
+          "branchId": "gum-2mg",
+          "chooseWhenContains": "하루 20개비 이하를 피우며 갑작스러운 흡연 욕구",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "gum-4mg",
+          "chooseWhenContains": "하루 20개비를 초과해 피우거나 2mg",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "patch-20",
+          "chooseWhenContains": "하루 20개비 이하 흡연자가 패치를 시작",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "patch-10",
+          "chooseWhenContains": "니코틴 패치 치료의 마지막 단계에서 보충량을 줄이는",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "patch-30",
+          "chooseWhenContains": "하루 20개비 이상 피우는 심한 흡연자가 패치",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "lozenge",
+          "chooseWhenContains": "씹기·구강 사용법을 지킬 수 있는 경우",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 7
+    },
+    {
+      "protocolId": "PTC-ORAL_CONTRACEPTION",
+      "branches": [
+        {
+          "branchId": "gestodene-30",
+          "chooseWhenContains": "게스토덴 0.075mg·에티닐에스트라디올 0.03mg",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "gestodene-20",
+          "chooseWhenContains": "게스토덴 0.075mg·에티닐에스트라디올 0.02mg",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "desogestrel",
+          "chooseWhenContains": "데소게스트렐 0.15mg",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "continuous-24",
+          "chooseWhenContains": "24일 활성약+4일 위약",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 6
+    },
+    {
+      "protocolId": "PTC-HEMORRHOID",
+      "branches": [
+        {
+          "branchId": "oral-venotonic",
+          "chooseWhenContains": "정맥 울혈을 안쪽에서 보조하는 경구제",
+          "products": 4,
+          "options": 1
+        },
+        {
+          "branchId": "topical-anesthetic",
+          "chooseWhenContains": "국소 통증과 가려움이 두드러져 빠른 국소 마취",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 2
+    },
+    {
+      "protocolId": "PTC-MOTION_SICKNESS",
+      "branches": [
+        {
+          "branchId": "tablet-short",
+          "chooseWhenContains": "일반 정제를 복용할 수 있을 때",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "chewable",
+          "chooseWhenContains": "물 없이 씹어 먹는 제형이 편할 때",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "film-long",
+          "chooseWhenContains": "장거리나 왕복 이동에서 12~24시간",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 4
+    },
+    {
+      "protocolId": "PTC-ACID_REFLUX",
+      "branches": [
+        {
+          "branchId": "mucosa",
+          "chooseWhenContains": "식도·위 점막을 덮어 보호해야 하는 경우",
+          "products": 3,
+          "options": 4
+        },
+        {
+          "branchId": "reduce-reflux",
+          "chooseWhenContains": "위산 역류 자체를 줄이는 작용이 필요한",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "barrier",
+          "chooseWhenContains": "위산 중화와 물리적 역류 차단을 함께",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 7
+    },
+    {
+      "protocolId": "PTC-SCAR_CARE",
+      "branches": [
+        {
+          "branchId": "general",
+          "chooseWhenContains": "흉터 형태와 면적에 맞는 외용제를 고르는",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "massage-gel",
+          "chooseWhenContains": "단단하거나 당기는 흉터에 마사지 가능한 겔",
+          "products": 2,
+          "options": 2
+        }
+      ],
+      "optionRules": 3
+    },
+    {
+      "protocolId": "PTC-INSECT_BITE",
+      "branches": [
+        {
+          "branchId": "topical",
+          "chooseWhenContains": "벌레 물린 국소 부위의 가려움과 염증을 직접",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "oral",
+          "chooseWhenContains": "가려움이 넓게 퍼져 먹는 항히스타민제",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 2
+    },
+    {
+      "protocolId": "PTC-MILD_DERMATITIS",
+      "branches": [
+        {
+          "branchId": "wide-lotion",
+          "chooseWhenContains": "넓은 부위의 가벼운 습진·피부염에 약한 국소 스테로이드 로션",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "localized",
+          "chooseWhenContains": "감염이나 진균 소견이 없는 가벼운 습진·피부염의 가려움",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 2
+    }
+  ]
+}

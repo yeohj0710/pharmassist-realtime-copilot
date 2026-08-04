@@ -424,7 +424,14 @@ export interface ProtocolRule {
   effect: "ask" | "exclude" | "refer" | "select";
   question?: string | null;
   reason: string;
+  /**
+   * Evaluation order, ascending. Referral rules sit at 100 and an unmatched ask rule short-circuits the decision, so a question that only narrows between candidates must sit above 100 or it replaces the referral a red flag should have produced. Ordering only — it carries no clinical weight.
+   */
   priority: number;
+  /**
+   * An unmatched ask rule normally blocks the decision so nothing is offered before the answer arrives. A progressive question does not block: the consultation still recommends the candidates it can already justify and carries the question alongside them. Only for questions that narrow an already-safe candidate set — never for a safety gate, whose answer has to arrive before anything is offered.
+   */
+  progressive?: boolean;
   option_ids?: string[];
   /**
    * @minItems 1

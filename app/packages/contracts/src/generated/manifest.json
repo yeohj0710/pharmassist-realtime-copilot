@@ -1,5 +1,5 @@
 {
-  "schemaHash": "c196d0e05966f368f1197a9ba2bd3957df458da676f4506957054c641e2481dd",
+  "schemaHash": "adeb2ec251b0080daadab64dd84f9d8e567fa890762d269446c72594be405c82",
   "generated": [
     {
       "file": "claim.ts",
@@ -69,7 +69,7 @@
     {
       "file": "protocol_rule.ts",
       "title": "ProtocolRule",
-      "sha256": "f8fcb41e2c90df9dd71977f78de4194271b6623454efd63a41ec5b82fd464f85"
+      "sha256": "1a82ecdf92d4e3f6124a03ec61f0f14d83778ca08e85bf88ebf698e1082b7bb4"
     },
     {
       "file": "recommendation_decision.ts",
@@ -94,7 +94,7 @@
     {
       "file": "runtime_pack.ts",
       "title": "RuntimePackContract",
-      "sha256": "3c57e3e513d7043fe07e1f82316cbbeb0662b4badf36596655a5b4db320fe2fd"
+      "sha256": "e9b94f6f6039fa4dd8f78d2470ccfb8343002a8644dd8ff70ba8f0f1f3f5b331"
     },
     {
       "file": "source_record.ts",

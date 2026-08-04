@@ -373,6 +373,11 @@ export function nextProtocolQuestion(
   const asked = new Set(request.consultationState?.asked_slots ?? []);
   const rule = rulesFor(protocol, request)
     .filter((item) => item.effect === "ask" && item.question)
+    // A progressive question is offered to the counselor as a fact target, not
+    // asked by the engine. Putting it in ask_next would make it the pending
+    // question, and the next thing the customer says — including a new symptom
+    // — would be read as its answer instead of a new topic.
+    .filter((item) => !item.progressive)
     .filter((item) => !ruleMatches(item, request))
     .find((item) => !asked.has(slotName(item.field)));
   return rule?.question
@@ -1111,9 +1116,14 @@ export function buildRecommendationDecision(
           action: "제품 후보를 제시하지 말고 약사가 직접 평가하세요.",
         },
       };
+    // A progressive question narrows an already-safe candidate set, so it must
+    // not hold the consultation empty while it waits: the decision continues
+    // and nextProtocolQuestion carries the question alongside the candidates.
+    // Safety gates never set this — their answer has to arrive first.
     if (
       rule.effect === "ask" &&
       !matched &&
+      !rule.progressive &&
       (!request.allowProgressiveCandidates ||
         (rule.option_ids?.length ?? 0) > 1)
     ) {
@@ -1161,9 +1171,14 @@ export function buildRecommendationDecision(
       .filter((rule) => matchesRule(rule))
       .flatMap((rule) => rule.option_ids ?? []),
   );
+  // A progressive question is excluded here as well: collapsing the pool to
+  // one provisional option would hide the alternatives it is asking the
+  // customer to choose between, which is the opposite of letting the
+  // consultation continue while the question stands.
   const unresolvedChoiceRule = rules.find(
     (rule) =>
       rule.effect === "ask" &&
+      !rule.progressive &&
       (rule.option_ids?.length ?? 0) > 0 &&
       !matchesRule(rule),
   );

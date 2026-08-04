@@ -34,6 +34,12 @@ const selectionOverlaySource = join(
   "actual-research-overlays",
   "option-selection.json",
 );
+const generatedSelectionOverlaySource = join(
+  root,
+  "data",
+  "actual-research-overlays",
+  "option-selection-generated.json",
+);
 const triggerSupplementSource = join(
   root,
   "data",
@@ -310,7 +316,18 @@ const [
   readJsonl("product-enrichment/product_enrichment.jsonl"),
   readCsv("INTENT_INVENTORY_CANDIDATE.csv"),
   readCsv("ALIAS_SEED_CANDIDATE.csv"),
-  readFile(selectionOverlaySource, "utf8").then(JSON.parse),
+  // Hand-curated overlays plus the ones derived from each product's own
+  // choose_when. Without the derived set most protocols expose a single
+  // selectable option and most of their products can never be recommended.
+  Promise.all([
+    readFile(selectionOverlaySource, "utf8").then(JSON.parse),
+    readFile(generatedSelectionOverlaySource, "utf8")
+      .then(JSON.parse)
+      .catch((error) => {
+        if (error.code === "ENOENT") return [];
+        throw error;
+      }),
+  ]).then(([curated, generated]) => [...curated, ...generated]),
   readFile(triggerSupplementSource, "utf8").then(JSON.parse),
   readFile(dialogueCopySource, "utf8").then(JSON.parse),
   readFile(therapeuticFitSource, "utf8").then(JSON.parse),
@@ -2141,15 +2158,29 @@ const dialogueCards = intentSeeds.map((intent) => {
   };
 });
 
+// Pathway-expanded options are appended to each protocol later in this build,
+// so an overlay pointing at one is valid even though the source template has
+// not heard of it yet.
+const generatedOptionIdsByProtocol = new Map();
+for (const option of generatedProtocolOptions) {
+  if (!generatedOptionIdsByProtocol.has(option.protocol_id))
+    generatedOptionIdsByProtocol.set(option.protocol_id, new Set());
+  generatedOptionIdsByProtocol.get(option.protocol_id).add(option.option_id);
+}
 const selectionOverlayRules = selectionOverlays.flatMap((overlay) => {
-  const protocol = protocols.find(
+  // Field-practice protocols live in the extension set, so an overlay for one
+  // has to resolve against both.
+  const protocol = allProtocolTemplates.find(
     (item) => item.protocol_id === overlay.protocol_id,
   );
   if (!protocol)
     throw new Error(
       `Selection overlay protocol missing: ${overlay.protocol_id}`,
     );
-  const optionIds = new Set(protocol.option_ids);
+  const optionIds = new Set([
+    ...protocol.option_ids,
+    ...(generatedOptionIdsByProtocol.get(overlay.protocol_id) ?? []),
+  ]);
   for (const option of overlay.options)
     if (!optionIds.has(option.option_id))
       throw new Error(
@@ -2196,18 +2227,27 @@ const selectionOverlayRules = selectionOverlays.flatMap((overlay) => {
       value: progressiveOnly
         ? overlay.answer_patterns
         : overlay.options.flatMap((option) => option.patterns),
+      // Two branches can land on the same option (a product that fits both
+      // situations), which would repeat the id here.
       option_ids: progressiveOnly
         ? []
-        : overlay.options.map((option) => option.option_id),
+        : [...new Set(overlay.options.map((option) => option.option_id))],
       question: overlay.question,
       reason: overlay.reason,
-      priority: 1,
+      // Rules run in ascending priority and an unmatched ask short-circuits the
+      // decision, so an ask below the referral rules asks its question instead
+      // of referring. A situation question only narrows between candidates,
+      // which is worth nothing once a red flag is present.
+      priority: overlay.ask_priority ?? 1,
+      ...(overlay.progressive ? { progressive: true } : {}),
       status: "published",
       review: baseReview,
       source_refs: protocol.source_refs,
     },
     ...(progressiveOnly ? [] : overlay.options).map((option, index) => ({
-      rule_id: `RUL-OVERLAY-${overlay.protocol_id}-SELECT-${index + 1}`,
+      // A protocol can carry both a curated overlay and a generated situation
+      // overlay; without the discriminator both start at SELECT-1 and collide.
+      rule_id: `RUL-OVERLAY-${overlay.protocol_id}${overlay.rule_suffix ?? ""}-SELECT-${index + 1}`,
       protocol_id: overlay.protocol_id,
       kind: "selection_pattern",
       effect: "select",

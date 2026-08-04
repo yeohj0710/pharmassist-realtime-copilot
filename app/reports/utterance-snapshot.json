@@ -2,8 +2,8 @@
   "schemaVersion": "1.0.0",
   "packId": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
   "packVersion": "1.0.0-research-preview",
-  "composeAttempted": false,
-  "composeEndpoint": null,
+  "composeAttempted": true,
+  "composeEndpoint": "https://pharmassist-realtime-copilot.vercel.app/v1/consult/compose",
   "note": "compose 문구는 비결정적이라 합격·불합격 대상이 아니다. 사람이 읽고 판단한다. 안전 불변식만 테스트로 고정한다.",
   "scenarios": [
     {
@@ -86,8 +86,17 @@
           "provisionalCandidates": 0,
           "engineLine": "일치하는 승인 카드 없음로 확인해 볼게요.",
           "engineAsk": "지금 확인하고 싶은 내용을 조금만 더 말씀해 주세요.",
-          "composed": null,
-          "refereeVerdict": null
+          "composed": {
+            "say": "괜찮아요, 원인을 모르는 상태에서는 맞는 약을 바로 권하기 어렵습니다. 우선 무리하지 말고 물을 조금씩 드셔 보세요.",
+            "ask": null
+          },
+          "refereeVerdict": {
+            "status": "accepted",
+            "turn": {
+              "say": "괜찮아요, 원인을 모르는 상태에서는 맞는 약을 바로 권하기 어렵습니다. 우선 무리하지 말고 물을 조금씩 드셔 보세요.",
+              "ask": null
+            }
+          }
         }
       ]
     },
@@ -131,8 +140,17 @@
           "provisionalCandidates": 0,
           "engineLine": "많이 불편하셨겠어요. 말씀해 주신 증상에는 우선 게보린브이정(아세트아미노펜)을 살펴보면 좋겠어요. 이 제품에는 아세트아미노펜 성분이 들어 있어요.",
           "engineAsk": null,
-          "composed": null,
-          "refereeVerdict": null
+          "composed": {
+            "say": "머리 아픈 데는 게보린브이정(아세트아미노펜)이 우선 맞겠습니다. 무좀약은 지금 증상에 맞는 제품을 바로 확인하기 어려워요.",
+            "ask": null
+          },
+          "refereeVerdict": {
+            "status": "accepted",
+            "turn": {
+              "say": "머리 아픈 데는 게보린브이정(아세트아미노펜)이 우선 맞겠습니다. 무좀약은 지금 증상에 맞는 제품을 바로 확인하기 어려워요.",
+              "ask": null
+            }
+          }
         }
       ]
     },
@@ -158,10 +176,19 @@
             "코감콜"
           ],
           "provisionalCandidates": 0,
-          "engineLine": "말씀하신 증상이 함께 있어서 많이 불편하셨겠어요. 현재 정보로는 코막힘에는 액티피드정을, 콧물에는 액티피드정을 각각 살펴볼게요.",
+          "engineLine": "말씀하신 증상이 함께 있어서 많이 불편하셨겠어요. 현재 정보로는 코막힘에는 액티피드정을, 콧물에는 모드콜노즈시럽을 각각 살펴볼게요.",
           "engineAsk": null,
-          "composed": null,
-          "refereeVerdict": null
+          "composed": {
+            "say": "콧물과 코막힘이 같이 있으면 증상에 맞춰 고를 수 있어요.",
+            "ask": "열이나 기침도 함께 있나요?"
+          },
+          "refereeVerdict": {
+            "status": "accepted",
+            "turn": {
+              "say": "콧물과 코막힘이 같이 있으면 증상에 맞춰 고를 수 있어요.",
+              "ask": "열이나 기침도 함께 있나요?"
+            }
+          }
         }
       ]
     },
@@ -205,8 +232,17 @@
           "provisionalCandidates": 0,
           "engineLine": "두통 문의로 확인해 볼게요.",
           "engineAsk": "어디가 얼마나 아프고 언제부터 그랬나요?",
-          "composed": null,
-          "refereeVerdict": null
+          "composed": {
+            "say": "지금 확인된 제품이 없어 바로 드릴 수 있는 소화제는 없습니다. 불편하시겠지만 오늘은 무리한 음식은 피하고 쉬어 주세요.",
+            "ask": null
+          },
+          "refereeVerdict": {
+            "status": "accepted",
+            "turn": {
+              "say": "지금 확인된 제품이 없어 바로 드릴 수 있는 소화제는 없습니다. 불편하시겠지만 오늘은 무리한 음식은 피하고 쉬어 주세요.",
+              "ask": null
+            }
+          }
         }
       ]
     },
@@ -244,8 +280,17 @@
           "provisionalCandidates": 0,
           "engineLine": "무좀 문의로 확인해 볼게요.",
           "engineAsk": "어느 부위에 언제부터 생겼고, 번지거나 진물이 나나요?",
-          "composed": null,
-          "refereeVerdict": null
+          "composed": {
+            "say": "가려움만으로는 무좀약을 바로 권하기 어려워서 지금 드릴 수 있는 제품이 없어요. 발을 씻은 뒤 발가락 사이까지 잘 말려 주세요.",
+            "ask": null
+          },
+          "refereeVerdict": {
+            "status": "accepted",
+            "turn": {
+              "say": "가려움만으로는 무좀약을 바로 권하기 어려워서 지금 드릴 수 있는 제품이 없어요. 발을 씻은 뒤 발가락 사이까지 잘 말려 주세요.",
+              "ask": null
+            }
+          }
         }
       ]
     },
@@ -267,8 +312,17 @@
           "provisionalCandidates": 0,
           "engineLine": "말씀해 주신 것만으로는 약을 바로 고르기가 어려워요. 어디가 어떻게 불편한지 조금만 더 자세히 말씀해 주시겠어요?",
           "engineAsk": null,
-          "composed": null,
-          "refereeVerdict": null
+          "composed": {
+            "say": "입술 물집은 불편하시겠어요. 지금은 확인된 제품이 없어 바로 권해드릴 약이 없습니다.",
+            "ask": "물집이 입술 바깥쪽에 생겼나요, 아니면 입안쪽에도 있나요?"
+          },
+          "refereeVerdict": {
+            "status": "accepted",
+            "turn": {
+              "say": "입술 물집은 불편하시겠어요. 지금은 확인된 제품이 없어 바로 권해드릴 약이 없습니다.",
+              "ask": "물집이 입술 바깥쪽에 생겼나요, 아니면 입안쪽에도 있나요?"
+            }
+          }
         }
       ]
     }
