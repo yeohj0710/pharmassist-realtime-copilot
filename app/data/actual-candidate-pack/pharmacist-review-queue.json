@@ -31,17 +31,17 @@
     "note": "이 파일에 적은 결정만 큐에 반영된다. 생성기는 어떤 항목도 스스로 승인하지 않고, items에 없는 itemId가 남아 있으면 빌드를 실패시킨다."
   },
   "areaCount": 6,
-  "itemCount": 175,
+  "itemCount": 176,
   "countByKind": {
     "clinical_area": 31,
-    "selection_copy": 144
+    "selection_copy": 145
   },
   "originLegend": {
     "field_practice_pdf": "현장실습 PDF에서 인용한 문구. sourceLocator의 페이지와 대조할 수 있다.",
     "authored_contrast": "출처 문서 없이 작성한 대조 문장. 근거는 팩의 성분·제형 기록뿐이라 임상 판단은 검토가 필요하다."
   },
   "countByStatus": {
-    "pending": 175
+    "pending": 176
   },
   "items": [
     {
@@ -2485,6 +2485,188 @@
         "발열",
         "혈변·흑변",
         "체중감소"
+      ],
+      "status": "pending",
+      "decision": null,
+      "reviewerId": null,
+      "reviewedAt": null,
+      "reviewerNote": null
+    },
+    {
+      "itemId": "PRQ-COPY-PTC-GAS-COMBO-6a3f61b6",
+      "kind": "selection_copy",
+      "origin": "authored_contrast",
+      "areaId": "selection-card-copy",
+      "areaTitle": "제품 카드 비교 문구",
+      "whyReviewNeeded": "약사가 후보를 고를 때 읽는 문장이다. 출처 문서가 없고 팩의 성분·제형 기록만 근거로 작성했으므로, 임상적으로 틀린 대조가 있으면 그대로 상담에 나간다.",
+      "mustConfirm": [
+        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
+        "성분·제형 서술이 허가사항과 어긋나지 않는지",
+        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
+      ],
+      "protocolId": "PTC-GAS",
+      "protocolName": "가스 OTC 후보 선별",
+      "ingredientGroup": "COMBO",
+      "affectedProducts": [
+        "닥터베아제정",
+        "훼스탈플러스정",
+        "훼스탈플러스",
+        "훼스탈슈퍼자임",
+        "훼스탈플러스",
+        "훼스탈골드",
+        "활짝정",
+        "위엔젤정",
+        "닥터베아제",
+        "판키아제정",
+        "스토마제"
+      ],
+      "reviewTargets": [
+        {
+          "field": "comparison_note",
+          "text": "소화효소에 소포제를 더해 가스 자체를 줄이는 쪽입니다. 속쓰림이 함께 있으면 제산 성분이 든 후보를 봅니다."
+        },
+        {
+          "field": "choose_when",
+          "text": "가스와 복부팽만이 주된 불편인 경우"
+        }
+      ],
+      "sourceLocator": null,
+      "referRedFlags": [
+        "심한 복통",
+        "지속 구토",
+        "배가 단단하게 팽창하고 대변·가스가 안 나옴",
+        "혈변·흑변",
+        "발열"
+      ],
+      "status": "pending",
+      "decision": null,
+      "reviewerId": null,
+      "reviewedAt": null,
+      "reviewerNote": null
+    },
+    {
+      "itemId": "PRQ-COPY-PTC-JOINT_PAIN-ING-HEALTHKR-380DCFEDE5638A22",
+      "kind": "selection_copy",
+      "origin": "authored_contrast",
+      "areaId": "selection-card-copy",
+      "areaTitle": "제품 카드 비교 문구",
+      "whyReviewNeeded": "약사가 후보를 고를 때 읽는 문장이다. 출처 문서가 없고 팩의 성분·제형 기록만 근거로 작성했으므로, 임상적으로 틀린 대조가 있으면 그대로 상담에 나간다.",
+      "mustConfirm": [
+        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
+        "성분·제형 서술이 허가사항과 어긋나지 않는지",
+        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
+      ],
+      "protocolId": "PTC-JOINT_PAIN",
+      "protocolName": "관절통 OTC 후보 선별",
+      "ingredientGroup": "헤파리노이드",
+      "affectedProducts": [
+        "하나로겔"
+      ],
+      "reviewTargets": [
+        {
+          "field": "comparison_note",
+          "text": "관절 위 피부에 직접 바르는 겔이라 먹는 약을 피하고 싶을 때 씁니다. 관절 안쪽 염증이 문제면 먹는 소염진통제와 비교합니다."
+        },
+        {
+          "field": "choose_when",
+          "text": "관절 통증 부위에 먹는 약보다 국소 제형을 직접 적용하려는 경우"
+        }
+      ],
+      "sourceLocator": null,
+      "referRedFlags": [
+        "관절이 뜨겁고 붓고 발열 동반",
+        "외상 후 변형 또는 체중 부하 불가",
+        "갑작스러운 극심한 통증",
+        "전신 발진·호흡곤란",
+        "지속적인 야간통·체중감소"
+      ],
+      "status": "pending",
+      "decision": null,
+      "reviewerId": null,
+      "reviewedAt": null,
+      "reviewerNote": null
+    },
+    {
+      "itemId": "PRQ-COPY-PTC-MUSCLE_PAIN-ING-HEALTHKR-380DCFEDE5638A22",
+      "kind": "selection_copy",
+      "origin": "authored_contrast",
+      "areaId": "selection-card-copy",
+      "areaTitle": "제품 카드 비교 문구",
+      "whyReviewNeeded": "약사가 후보를 고를 때 읽는 문장이다. 출처 문서가 없고 팩의 성분·제형 기록만 근거로 작성했으므로, 임상적으로 틀린 대조가 있으면 그대로 상담에 나간다.",
+      "mustConfirm": [
+        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
+        "성분·제형 서술이 허가사항과 어긋나지 않는지",
+        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
+      ],
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "protocolName": "근육통 OTC 후보 선별",
+      "ingredientGroup": "헤파리노이드",
+      "affectedProducts": [
+        "하나로겔"
+      ],
+      "reviewTargets": [
+        {
+          "field": "comparison_note",
+          "text": "아픈 부위가 한 군데로 좁을 때 그 자리에만 바릅니다. 온몸이 쑤시면 먹는 진통제 쪽입니다."
+        },
+        {
+          "field": "choose_when",
+          "text": "한정된 근육 통증 부위에 국소 제형을 직접 적용하려는 경우"
+        }
+      ],
+      "sourceLocator": null,
+      "referRedFlags": [
+        "심한 외상·변형",
+        "근력저하·감각저하",
+        "짙은 갈색 소변 또는 심한 전신 근육통",
+        "고열·의식저하",
+        "흉통·호흡곤란"
+      ],
+      "status": "pending",
+      "decision": null,
+      "reviewerId": null,
+      "reviewedAt": null,
+      "reviewerNote": null
+    },
+    {
+      "itemId": "PRQ-COPY-PTC-MUSCLE_PAIN-ING-HEALTHKR-76BDC81575BDBA7F",
+      "kind": "selection_copy",
+      "origin": "authored_contrast",
+      "areaId": "selection-card-copy",
+      "areaTitle": "제품 카드 비교 문구",
+      "whyReviewNeeded": "약사가 후보를 고를 때 읽는 문장이다. 출처 문서가 없고 팩의 성분·제형 기록만 근거로 작성했으므로, 임상적으로 틀린 대조가 있으면 그대로 상담에 나간다.",
+      "mustConfirm": [
+        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
+        "성분·제형 서술이 허가사항과 어긋나지 않는지",
+        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
+      ],
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "protocolName": "근육통 OTC 후보 선별",
+      "ingredientGroup": "갈근탕연조엑스(4.32→1)",
+      "affectedProducts": [
+        "비트콜"
+      ],
+      "reviewTargets": [
+        {
+          "field": "comparison_note",
+          "text": "목·어깨가 굳으면서 오는 결림에 쓰는 생약 계열입니다. 통증을 직접 눌러야 하면 소염진통제와 비교합니다."
+        },
+        {
+          "field": "choose_when",
+          "text": "몸살이 아니라 근육통 자체의 진통 완화가 필요한 경우"
+        }
+      ],
+      "sourceLocator": null,
+      "referRedFlags": [
+        "심한 외상·변형",
+        "근력저하·감각저하",
+        "짙은 갈색 소변 또는 심한 전신 근육통",
+        "고열·의식저하",
+        "흉통·호흡곤란"
       ],
       "status": "pending",
       "decision": null,
@@ -6655,10 +6837,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-NASAL_CONGESTION-33e7ccb9",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -6681,7 +6863,7 @@
           "text": "알레르기성 콧물과 코막힘이 함께 있고 졸림보다 강한 증상 완화를 우선할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=1",
       "referRedFlags": [
         "흉통·심계항진",
         "갑작스러운 심한 두통 또는 신경학적 증상",
@@ -6698,10 +6880,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-RUNNY_NOSE-33e7ccb9",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -6724,7 +6906,7 @@
           "text": "알레르기성 콧물과 코막힘이 함께 있고 졸림보다 강한 증상 완화를 우선할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=1",
       "referRedFlags": [
         "호흡곤란·쌕쌕거림",
         "얼굴·혀 부종 또는 실신",
@@ -6741,10 +6923,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-MOTION_SICKNESS-036e178b",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -6767,7 +6949,7 @@
           "text": "짧은 이동에서 4~6시간 정도의 멀미 예방·완화가 필요하고 일반 정제를 복용할 수 있을 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "갑작스러운 신경학적 증상",
         "심한 두통·의식저하",
@@ -6782,64 +6964,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-GAS-5e2b8770",
-      "kind": "selection_copy",
-      "origin": "pipeline_generated",
-      "areaId": "selection-card-copy",
-      "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
-      "mustConfirm": [
-        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
-        "성분·제형 서술이 허가사항과 어긋나지 않는지",
-        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
-        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
-      ],
-      "protocolId": "PTC-GAS",
-      "protocolName": "가스 OTC 후보 선별",
-      "ingredientGroup": null,
-      "affectedProducts": [
-        "닥터베아제정",
-        "훼스탈플러스정",
-        "훼스탈플러스",
-        "훼스탈슈퍼자임",
-        "훼스탈골드",
-        "활짝정",
-        "위엔젤정",
-        "닥터베아제",
-        "판키아제정",
-        "스토마제"
-      ],
-      "reviewTargets": [
-        {
-          "field": "comparison_note",
-          "text": "직접 치료형 후보와 같은 순위로 보지 않고 보조 후보로 구분합니다."
-        },
-        {
-          "field": "choose_when",
-          "text": "가스와 복부팽만이 주된 불편인 경우"
-        }
-      ],
-      "sourceLocator": null,
-      "referRedFlags": [
-        "심한 복통",
-        "지속 구토",
-        "배가 단단하게 팽창하고 대변·가스가 안 나옴",
-        "혈변·흑변",
-        "발열"
-      ],
-      "status": "pending",
-      "decision": null,
-      "reviewerId": null,
-      "reviewedAt": null,
-      "reviewerNote": null
-    },
-    {
       "itemId": "PRQ-PIPE-PTC-FEVER-d33853dd",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -6862,7 +6992,7 @@
           "text": "발열과 몸살 통증을 함께 낮추는 이부프로펜 연질캡슐이 적합할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
       "referRedFlags": [
         "의식저하·경련",
         "호흡곤란·청색증",
@@ -6881,10 +7011,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-HEADACHE-eafb975e",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -6907,7 +7037,7 @@
           "text": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐형 이부프로펜을 원할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
       "referRedFlags": [
         "갑자기 발생한 생애 최악의 두통",
         "한쪽 마비·안면마비·말 어눌함·시야장애",
@@ -6925,10 +7055,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-JOINT_PAIN-eafb975e",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -6951,7 +7081,7 @@
           "text": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐형 이부프로펜을 원할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
       "referRedFlags": [
         "관절이 뜨겁고 붓고 발열 동반",
         "외상 후 변형 또는 체중 부하 불가",
@@ -6968,10 +7098,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-MUSCLE_PAIN-eafb975e",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -6994,7 +7124,7 @@
           "text": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐형 이부프로펜을 원할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
       "referRedFlags": [
         "심한 외상·변형",
         "근력저하·감각저하",
@@ -7011,10 +7141,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-HEARTBURN-458ca7f1",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7038,7 +7168,7 @@
           "text": "위산과다·속쓰림에 가스와 복부 팽만이 함께 있어 제산과 기포 제거를 같이 원할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "압박감 있는 흉통·호흡곤란·식은땀",
         "토혈·커피색 구토·흑변/혈변",
@@ -7056,10 +7186,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-GAS-458ca7f1",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7083,7 +7213,7 @@
           "text": "위산과다·속쓰림에 가스와 복부 팽만이 함께 있어 제산과 기포 제거를 같이 원할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "심한 복통",
         "지속 구토",
@@ -7100,10 +7230,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-PRODUCTIVE_COUGH-050957a6",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7127,7 +7257,7 @@
           "text": "기침과 가래가 함께 있고 정제보다 시럽 제형이 편할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=2",
       "referRedFlags": [
         "호흡곤란·청색증",
         "객혈",
@@ -7146,10 +7276,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-DRY_COUGH-ea3415bf",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7172,7 +7302,7 @@
           "text": "가래보다 마른기침 억제가 우선인 경우"
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=2",
       "referRedFlags": [
         "호흡곤란·청색증",
         "흉통",
@@ -7191,10 +7321,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-MILD_DERMATITIS-8954c701",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7217,7 +7347,7 @@
           "text": "넓은 부위의 가벼운 습진·피부염에 약한 국소 스테로이드 로션이 적합할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=7",
       "referRedFlags": [
         "고름·진물·통증 증가 등 감염 의심",
         "수포·피부 박리·점막 병변",
@@ -7235,10 +7365,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-STOMATITIS-57ee63b1",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7261,7 +7391,7 @@
           "text": "손이 닿는 국소 구내염·잇몸 염증 부위에 점착성 스테로이드 연고를 바를 수 있을 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=8",
       "referRedFlags": [
         "2주 이상 지속 또는 반복",
         "고열·전신 발진",
@@ -7279,10 +7409,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-DIARRHEA-5d884a82",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7306,7 +7436,7 @@
           "text": "급성·만성 설사에서 장운동을 억제하기보다 장내 흡착과 점막 보호를 우선할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=5",
       "referRedFlags": [
         "혈변·흑변",
         "고열",
@@ -7325,10 +7455,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-SORE_THROAT-55b4032b",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7351,7 +7481,7 @@
           "text": "기침·가래보다 인후염의 국소 통증을 단기간 줄이는 것이 우선일 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=2",
       "referRedFlags": [
         "호흡곤란",
         "침도 삼키기 어려운 연하곤란·침 흘림",
@@ -7370,10 +7500,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-ALLERGIC_RHINITIS-ff5d0173",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7396,7 +7526,7 @@
           "text": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=11",
       "referRedFlags": [
         "호흡곤란·쌕쌕거림",
         "얼굴·혀·목 부종",
@@ -7413,10 +7543,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-RUNNY_NOSE-ff5d0173",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7439,7 +7569,7 @@
           "text": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=11",
       "referRedFlags": [
         "호흡곤란·쌕쌕거림",
         "얼굴·혀 부종 또는 실신",
@@ -7456,10 +7586,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-URTICARIA_ITCH-ff5d0173",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7482,7 +7612,7 @@
           "text": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=11",
       "referRedFlags": [
         "호흡곤란·쌕쌕거림",
         "얼굴·혀·목 부종",
@@ -7499,10 +7629,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-MOTION_SICKNESS-46c98638",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7526,7 +7656,7 @@
           "text": "짧은 이동에서 4~6시간 정도의 멀미 예방이 필요하고 물 없이 씹어 먹는 제형이 편할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "갑작스러운 신경학적 증상",
         "심한 두통·의식저하",
@@ -7543,10 +7673,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-GAS-4bf5d083",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7569,7 +7699,7 @@
           "text": "위산과다·속쓰림과 가스에 더해 지방 소화 보조까지 함께 고려할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "심한 복통",
         "지속 구토",
@@ -7586,10 +7716,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-HEARTBURN-4bf5d083",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7612,7 +7742,7 @@
           "text": "위산과다·속쓰림과 가스에 더해 지방 소화 보조까지 함께 고려할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "압박감 있는 흉통·호흡곤란·식은땀",
         "토혈·커피색 구토·흑변/혈변",
@@ -7630,10 +7760,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-CONSTIPATION-b45f1097",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7656,7 +7786,7 @@
           "text": "단기간에 강한 자극성 배변 효과가 필요하고 장기 복용 계획이 아닐 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=5",
       "referRedFlags": [
         "심한 복통과 구역·구토",
         "복부팽만과 대변·가스 정지",
@@ -7674,10 +7804,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-CONSTIPATION-31126adf",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7700,7 +7830,7 @@
           "text": "단기간 자극성 배변 효과와 대변을 부드럽게 하는 작용을 함께 원할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=5",
       "referRedFlags": [
         "심한 복통과 구역·구토",
         "복부팽만과 대변·가스 정지",
@@ -7718,10 +7848,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-MOTION_SICKNESS-e6fc28bf",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7744,7 +7874,7 @@
           "text": "장거리나 왕복 이동에서 12~24시간 지속이 필요하고 물 없이 녹여 먹는 제형이 편할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "갑작스러운 신경학적 증상",
         "심한 두통·의식저하",
@@ -7759,103 +7889,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-JOINT_PAIN-5e2b8770",
-      "kind": "selection_copy",
-      "origin": "pipeline_generated",
-      "areaId": "selection-card-copy",
-      "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
-      "mustConfirm": [
-        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
-        "성분·제형 서술이 허가사항과 어긋나지 않는지",
-        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
-        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
-      ],
-      "protocolId": "PTC-JOINT_PAIN",
-      "protocolName": "관절통 OTC 후보 선별",
-      "ingredientGroup": null,
-      "affectedProducts": [
-        "하나로겔"
-      ],
-      "reviewTargets": [
-        {
-          "field": "comparison_note",
-          "text": "직접 치료형 후보와 같은 순위로 보지 않고 보조 후보로 구분합니다."
-        },
-        {
-          "field": "choose_when",
-          "text": "관절 통증 부위에 먹는 약보다 국소 제형을 직접 적용하려는 경우"
-        }
-      ],
-      "sourceLocator": null,
-      "referRedFlags": [
-        "관절이 뜨겁고 붓고 발열 동반",
-        "외상 후 변형 또는 체중 부하 불가",
-        "갑작스러운 극심한 통증",
-        "전신 발진·호흡곤란",
-        "지속적인 야간통·체중감소"
-      ],
-      "status": "pending",
-      "decision": null,
-      "reviewerId": null,
-      "reviewedAt": null,
-      "reviewerNote": null
-    },
-    {
-      "itemId": "PRQ-PIPE-PTC-MUSCLE_PAIN-5e2b8770",
-      "kind": "selection_copy",
-      "origin": "pipeline_generated",
-      "areaId": "selection-card-copy",
-      "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
-      "mustConfirm": [
-        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
-        "성분·제형 서술이 허가사항과 어긋나지 않는지",
-        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
-        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
-      ],
-      "protocolId": "PTC-MUSCLE_PAIN",
-      "protocolName": "근육통 OTC 후보 선별",
-      "ingredientGroup": null,
-      "affectedProducts": [
-        "하나로겔",
-        "비트콜"
-      ],
-      "reviewTargets": [
-        {
-          "field": "comparison_note",
-          "text": "직접 치료형 후보와 같은 순위로 보지 않고 보조 후보로 구분합니다."
-        },
-        {
-          "field": "choose_when",
-          "text": "한정된 근육 통증 부위에 국소 제형을 직접 적용하려는 경우"
-        },
-        {
-          "field": "choose_when",
-          "text": "몸살이 아니라 근육통 자체의 진통 완화가 필요한 경우"
-        }
-      ],
-      "sourceLocator": null,
-      "referRedFlags": [
-        "심한 외상·변형",
-        "근력저하·감각저하",
-        "짙은 갈색 소변 또는 심한 전신 근육통",
-        "고열·의식저하",
-        "흉통·호흡곤란"
-      ],
-      "status": "pending",
-      "decision": null,
-      "reviewerId": null,
-      "reviewedAt": null,
-      "reviewerNote": null
-    },
-    {
       "itemId": "PRQ-PIPE-PTC-MENSTRUAL_PAIN-47c74a73",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7878,7 +7917,7 @@
           "text": "생리통에 붓기나 복부 팽만감이 함께 있어 이부프로펜과 이뇨 보조 성분을 함께 고려할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
       "referRedFlags": [
         "임신 가능성 또는 생리 지연과 심한 통증",
         "실신·어지럼을 동반한 과다출혈",
@@ -7895,10 +7934,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-HEADACHE-eff076c4",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7922,7 +7961,7 @@
           "text": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
       "referRedFlags": [
         "갑자기 발생한 생애 최악의 두통",
         "한쪽 마비·안면마비·말 어눌함·시야장애",
@@ -7940,10 +7979,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-JOINT_PAIN-eff076c4",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7967,7 +8006,7 @@
           "text": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
       "referRedFlags": [
         "관절이 뜨겁고 붓고 발열 동반",
         "외상 후 변형 또는 체중 부하 불가",
@@ -7984,10 +8023,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-SORE_THROAT-065f1bf7",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8010,7 +8049,7 @@
           "text": "구내염이 여러 곳이거나 목 안쪽처럼 연고가 닿기 어려워 가글형 소염제가 편할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=8",
       "referRedFlags": [
         "호흡곤란",
         "침도 삼키기 어려운 연하곤란·침 흘림",
@@ -8029,10 +8068,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-STOMATITIS-065f1bf7",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8055,7 +8094,7 @@
           "text": "구내염이 여러 곳이거나 목 안쪽처럼 연고가 닿기 어려워 가글형 소염제가 편할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=8",
       "referRedFlags": [
         "2주 이상 지속 또는 반복",
         "고열·전신 발진",
@@ -8073,10 +8112,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-SORE_THROAT-74d8cdf2",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8099,7 +8138,7 @@
           "text": "목 통증이나 구내염 부위에 항균·항염 성분을 스프레이로 직접 적용하고 싶을 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=2",
       "referRedFlags": [
         "호흡곤란",
         "침도 삼키기 어려운 연하곤란·침 흘림",
@@ -8118,10 +8157,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-STOMATITIS-74d8cdf2",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8144,7 +8183,7 @@
           "text": "목 통증이나 구내염 부위에 항균·항염 성분을 스프레이로 직접 적용하고 싶을 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=2",
       "referRedFlags": [
         "2주 이상 지속 또는 반복",
         "고열·전신 발진",
@@ -8162,10 +8201,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-SORE_THROAT-65e877b5",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8188,7 +8227,7 @@
           "text": "통증 억제보다 구강·인후 부위의 넓은 범위 살균이 우선일 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=2",
       "referRedFlags": [
         "호흡곤란",
         "침도 삼키기 어려운 연하곤란·침 흘림",
@@ -8207,10 +8246,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-STOMATITIS-65e877b5",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8233,7 +8272,7 @@
           "text": "통증 억제보다 구강·인후 부위의 넓은 범위 살균이 우선일 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=2",
       "referRedFlags": [
         "2주 이상 지속 또는 반복",
         "고열·전신 발진",
@@ -8251,10 +8290,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-DIARRHEA-f8c9b1af",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8277,7 +8316,7 @@
           "text": "성인의 급성 설사에서 장내 유해균 억제 기전을 검토할 근거가 있을 때 후보로 비교합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=5",
       "referRedFlags": [
         "혈변·흑변",
         "고열",
@@ -8296,10 +8335,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-DIARRHEA-d861e2fd",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8323,7 +8362,7 @@
           "text": "급성 설사에서 항균·지사·진경 성분이 함께 든 복합 생약제를 검토할 때 비교합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=5",
       "referRedFlags": [
         "혈변·흑변",
         "고열",
@@ -8342,10 +8381,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-HEARTBURN-71bb709b",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8368,7 +8407,7 @@
           "text": "위산과다와 속쓰림이 반복되어 이미 나온 산을 중화하기보다 위산 분비를 줄여야 할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "압박감 있는 흉통·호흡곤란·식은땀",
         "토혈·커피색 구토·흑변/혈변",
@@ -8386,10 +8425,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-HEARTBURN-60b63a58",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8412,7 +8451,7 @@
           "text": "신물이 올라오는 역류 증상에서 위산 중화와 물리적 역류 차단을 함께 원할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "압박감 있는 흉통·호흡곤란·식은땀",
         "토혈·커피색 구토·흑변/혈변",
@@ -8430,10 +8469,10 @@
     {
       "itemId": "PRQ-PIPE-PTC-ACID_REFLUX-60b63a58",
       "kind": "selection_copy",
-      "origin": "pipeline_generated",
+      "origin": "field_practice_pdf",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8456,7 +8495,7 @@
           "text": "신물이 올라오는 역류 증상에서 위산 중화와 물리적 역류 차단을 함께 원할 때 검토합니다."
         }
       ],
-      "sourceLocator": null,
+      "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",
       "referRedFlags": [
         "연하곤란·음식 걸림",
         "토혈·흑변",

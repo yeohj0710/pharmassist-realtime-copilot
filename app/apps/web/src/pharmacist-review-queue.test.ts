@@ -65,29 +65,29 @@ describe("pharmacist review queue", () => {
         ).toBeGreaterThan(0);
       }
 
-      if (item.kind === "clinical_area") {
-        // Quoted from the PDF, so a locator a pharmacist cannot open is not a
-        // citation.
+      // What the item cites depends on where the wording came from, not on
+      // which pass produced the item.
+      if (item.origin === "field_practice_pdf") {
+        // Quoted, so a locator a pharmacist cannot open is not a citation.
         const sourceId = item.sourceLocator?.split("#")[0] ?? "";
         expect(
           sourceIds.has(sourceId),
           `${item.itemId} ${item.sourceLocator}`,
         ).toBe(true);
+      } else {
+        // Written text. Claiming a source page would be worse than admitting
+        // there is none.
+        expect(item.origin, item.itemId).toBe("authored_contrast");
+        expect(item.sourceLocator, item.itemId).toBeNull();
+      }
 
+      if (item.kind === "clinical_area") {
         const product = actualPack.products.find(
           (candidate) => candidate.product_id === item.productId,
         );
         expect(product, item.itemId).toBeDefined();
         expect(item.productName, item.itemId).toBe(product?.display_name);
       } else {
-        // Written text, not a quotation. Claiming a source page would be worse
-        // than admitting there is none, so the locator stays null and the item
-        // names the products the wording actually reaches.
-        expect(
-          ["authored_contrast", "pipeline_generated"],
-          item.itemId,
-        ).toContain(item.origin);
-        expect(item.sourceLocator, item.itemId).toBeNull();
         const affected = item.affectedProducts ?? [];
         expect(affected.length, item.itemId).toBeGreaterThan(0);
         for (const name of affected)
@@ -140,6 +140,20 @@ describe("pharmacist review queue", () => {
     expect(unreviewed.filter((note) => !fieldPracticeNotes.has(note))).toEqual(
       [],
     );
+  });
+
+  // Wording nobody ever read is the one kind that should not survive. Either it
+  // was quoted from the PDF, or a person wrote it on purpose.
+  it("leaves no card sentence that only a build step has seen", () => {
+    const generated = reviewQueue.items.filter(
+      (item) => item.origin === "pipeline_generated",
+    );
+    expect(
+      generated.map(
+        (item) =>
+          `${item.protocolId}: ${item.reviewTargets[0]?.text.slice(0, 40)}`,
+      ),
+    ).toEqual([]);
   });
 
   it("carries the referral red flags a reviewer has to judge against", () => {

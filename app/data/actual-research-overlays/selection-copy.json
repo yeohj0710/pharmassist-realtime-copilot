@@ -79,6 +79,27 @@
       "comparisonNote": "가스가 차는 쪽이면 소화효소·소포제 계열을, 속쓰림이 같이 있으면 제산 성분이 든 쪽을 봅니다."
     },
     {
+      "protocolId": "PTC-GAS",
+      "ingredient": "COMBO",
+      "chooseWhenContains": "가스와 복부팽만이 주된 불편인 경우",
+      "comparisonNote": "소화효소에 소포제를 더해 가스 자체를 줄이는 쪽입니다. 속쓰림이 함께 있으면 제산 성분이 든 후보를 봅니다."
+    },
+    {
+      "protocolId": "PTC-JOINT_PAIN",
+      "ingredient": "헤파리노이드",
+      "comparisonNote": "관절 위 피부에 직접 바르는 겔이라 먹는 약을 피하고 싶을 때 씁니다. 관절 안쪽 염증이 문제면 먹는 소염진통제와 비교합니다."
+    },
+    {
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "ingredient": "헤파리노이드",
+      "comparisonNote": "아픈 부위가 한 군데로 좁을 때 그 자리에만 바릅니다. 온몸이 쑤시면 먹는 진통제 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "ingredient": "갈근탕연조엑스(4.32→1)",
+      "comparisonNote": "목·어깨가 굳으면서 오는 결림에 쓰는 생약 계열입니다. 통증을 직접 눌러야 하면 소염진통제와 비교합니다."
+    },
+    {
       "protocolId": "PTC-BLOATING",
       "ingredient": "COMBO",
       "chooseWhenContains": "가스와 복부팽만이 주된 불편인 경우 또는 체함",

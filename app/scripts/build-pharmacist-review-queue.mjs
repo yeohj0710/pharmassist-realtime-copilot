@@ -272,13 +272,22 @@ const queuedNotes = new Set(
       .map((target) => target.text),
   ),
 );
+// Most of what is left is still field-practice wording. The six clinical areas
+// cover only part of the PDF, so the rest of it reaches this sweep — it has a
+// page to check against and must not be reported as unreviewed machine output.
+const fieldPracticeGuidance = await readJson(
+  "data/clinical-pathways/field-practice-guidance.json",
+);
+const fieldPracticeByNote = new Map(
+  fieldPracticeGuidance.profiles.map((rule) => [rule.comparisonNote, rule]),
+);
 const pipelineNotes = new Map();
 for (const product of pack.products)
   for (const profile of product.selection_profiles ?? []) {
     const note = profile.comparison_note;
     if (typeof note !== "string" || note.length === 0) continue;
     if (queuedNotes.has(note)) continue;
-    const key = `${profile.protocol_id} ${note}`;
+    const key = `${profile.protocol_id} :: ${note}`;
     if (!pipelineNotes.has(key))
       pipelineNotes.set(key, {
         protocolId: profile.protocol_id,
@@ -302,13 +311,14 @@ for (const entry of pipelineNotes.values()) {
   items.push({
     itemId,
     kind: "selection_copy",
-    // Emitted by the build from official fields, never written or read by a
-    // person. The least reviewed wording in the pack.
-    origin: "pipeline_generated",
+    origin: fieldPracticeByNote.has(entry.note)
+      ? "field_practice_pdf"
+      : "pipeline_generated",
     areaId: "selection-card-copy",
     areaTitle: "제품 카드 비교 문구",
-    whyReviewNeeded:
-      "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+    whyReviewNeeded: fieldPracticeByNote.has(entry.note)
+      ? "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다."
+      : "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
     mustConfirm: copyMustConfirm,
     protocolId: entry.protocolId,
     protocolName: protocol.display_name,
@@ -318,7 +328,11 @@ for (const entry of pipelineNotes.values()) {
       { field: "comparison_note", text: entry.note },
       ...[...entry.chooseWhens].map((text) => ({ field: "choose_when", text })),
     ],
-    sourceLocator: null,
+    // Field-practice wording that reached this sweep keeps its page; only text
+    // the build invented has nothing to cite.
+    sourceLocator: fieldPracticeByNote.has(entry.note)
+      ? `${fieldPracticeGuidance.source.sourceId}#page=${fieldPracticeByNote.get(entry.note).page}`
+      : null,
     referRedFlags: referTermsByProtocolId.get(entry.protocolId) ?? [],
     status: prior?.status ?? "pending",
     decision: prior?.decision ?? null,
