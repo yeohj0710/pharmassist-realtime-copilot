@@ -36,6 +36,19 @@ describe("selection card copy", () => {
     }
   });
 
+  // The label asks when this product is right. A sentence describing how to
+  // compare candidates answers a different question and leaves the pharmacist
+  // exactly where they started.
+  it("states a condition in 언제 이 제품, not a comparison procedure", () => {
+    for (const { product, profile } of profiles)
+      expect(
+        /비교하는 경우|확인한 뒤|공식 .*적응증과 함께/.test(
+          profile.choose_when ?? "",
+        ),
+        `${product}: ${profile.choose_when}`,
+      ).toBe(false);
+  });
+
   it("states no dose on a card", () => {
     for (const { product, profile } of profiles)
       expect(

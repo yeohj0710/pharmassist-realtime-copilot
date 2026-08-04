@@ -963,7 +963,7 @@ const contextualSelectionGuidance = ({
     if (coldCombination)
       return "발열과 함께 콧물·코막힘·기침 같은 감기 증상도 있어 복합제를 검토하는 경우";
     if (pediatric)
-      return "소아의 발열·통증에서 연령과 체중에 맞춰 액상 해열진통제를 선택하는 경우";
+      return "아이가 정제를 삼키기 어려워 액상 해열진통제가 필요한 경우";
   }
   if (protocolId === "PTC-HEADACHE") {
     if (has("나프록센"))
@@ -1076,20 +1076,20 @@ const contextualSelectionGuidance = ({
       return "묽은 설사와 함께 복통이 있어 흡착·점막 보호가 필요한 경우";
     if (has("인산알루미늄", "수산화마그네슘", "알긴산"))
       return "속쓰림·신트림·위산과다와 함께 윗배 통증이나 구역이 나타나는 경우";
-    return "복통·구역·구토가 해당 제품의 공식 소화기 적응증과 함께 나타나는 경우";
+    return "복통에 구역이나 구토가 함께 있는 경우";
   }
   if (protocolId === "PTC-CONSTIPATION")
-    return "배변이 어렵거나 딱딱한 변에서 하제 기전과 제형을 비교하는 경우";
+    return "변이 딱딱하거나 며칠째 배변이 어려운 경우";
   if (protocolId === "PTC-DIARRHEA")
-    return "급성·만성 여부와 감염 위험 신호를 확인한 뒤 설사 기전에 맞춰 비교하는 경우";
+    return "감염 위험 신호가 없는 설사가 이어지는 경우";
   if (protocolId === "PTC-MENSTRUAL_PAIN")
-    return "생리통 양상과 부종·경련 동반 여부에 맞춰 진통 성분을 비교하는 경우";
+    return "생리통이 주된 불편이고 먹는 진통제로 다루는 경우";
   if (protocolId === "PTC-NASAL_CONGESTION")
-    return "코막힘의 주된 불편과 동반 감기·알레르기 증상에 맞춰 성분과 제형을 비교하는 경우";
+    return "알레르기성 코막힘을 먹는 약으로 조절하려는 경우";
   if (protocolId === "PTC-SORE_THROAT")
-    return "인후통의 주된 불편과 기침·가래 동반 여부에 맞춰 국소제와 복합제를 비교하는 경우";
+    return "목 통증이 주된 불편이고 먹는 진통제로 다루는 경우";
   if (protocolId === "PTC-STOMATITIS")
-    return "구내염의 개수와 위치에 따라 바르는 제형·붙이는 제형·가글 제형을 비교하는 경우";
+    return "입안이 헐어 국소제를 바르거나 헹구려는 경우";
   if (protocolId === "PTC-ANTIFUNGAL_SKIN") {
     if (has("테르비나핀", "나프티핀"))
       return "발가락 사이·발바닥의 전형적인 피부사상균성 무좀에서 짧은 치료 기간을 우선하는 경우";

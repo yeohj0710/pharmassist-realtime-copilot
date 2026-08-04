@@ -24,7 +24,7 @@
         },
         {
           "branchId": "pediatric-acetaminophen",
-          "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
+          "chooseWhenContains": "아이가 정제를 삼키기 어려워",
           "patterns": [
             "아이",
             "아기",
@@ -55,7 +55,7 @@
         },
         {
           "branchId": "pediatric-ibuprofen",
-          "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
+          "chooseWhenContains": "아이가 정제를 삼키기 어려워",
           "differentiatorContains": "주요 성분: 이부프로펜",
           "patterns": ["아이 해열제 이부", "아이가 염증", "아이 소염", "부루펜"]
         }
@@ -94,7 +94,7 @@
         },
         {
           "branchId": "official-gi",
-          "chooseWhenContains": "공식 소화기 적응증과 함께 나타나는 경우",
+          "chooseWhenContains": "구역이나 구토가 함께",
           "patterns": ["울렁거려", "토했어요", "메스꺼", "울렁"]
         }
       ]
@@ -119,7 +119,7 @@
         },
         {
           "branchId": "allergy-oral",
-          "chooseWhenContains": "동반 감기·알레르기 증상에 맞춰 성분과 제형",
+          "chooseWhenContains": "알레르기성 코막힘을 먹는 약으로",
           "patterns": [
             "알레르기",
             "비염",
@@ -358,7 +358,7 @@
         },
         {
           "branchId": "oral-analgesic",
-          "chooseWhenContains": "기침·가래 동반 여부에 맞춰 국소제와 복합제를 비교",
+          "chooseWhenContains": "목 통증이 주된 불편이고",
           "patterns": ["먹는 약", "삼킬 때", "침 삼키"]
         },
         {
@@ -447,7 +447,7 @@
         },
         {
           "branchId": "general",
-          "chooseWhenContains": "감염 위험 신호를 확인한 뒤 설사 기전에 맞춰",
+          "chooseWhenContains": "감염 위험 신호가 없는 설사",
           "patterns": ["설사", "배탈", "며칠"]
         },
         {
@@ -631,7 +631,7 @@
       "branches": [
         {
           "branchId": "general",
-          "chooseWhenContains": "배변이 어렵거나 딱딱한 변에서 하제 기전과 제형",
+          "chooseWhenContains": "변이 딱딱하거나 며칠째",
           "patterns": ["딱딱", "안 나와", "변을 못 봐요", "며칠", "힘들"]
         },
         {
@@ -706,7 +706,7 @@
         },
         {
           "branchId": "general",
-          "chooseWhenContains": "생리통 양상과 부종·경련 동반 여부에 맞춰 진통 성분",
+          "chooseWhenContains": "생리통이 주된 불편이고",
           "patterns": ["생리통", "아랫배", "속이 약"]
         },
         {
@@ -734,7 +734,7 @@
         },
         {
           "branchId": "compare-form",
-          "chooseWhenContains": "구내염의 개수와 위치에 따라 바르는 제형",
+          "chooseWhenContains": "입안이 헐어 국소제를",
           "patterns": ["입안이 헐", "헐었", "입안"]
         },
         {

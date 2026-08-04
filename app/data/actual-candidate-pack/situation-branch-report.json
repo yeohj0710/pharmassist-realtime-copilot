@@ -15,7 +15,7 @@
         },
         {
           "branchId": "pediatric-acetaminophen",
-          "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
+          "chooseWhenContains": "아이가 정제를 삼키기 어려워",
           "products": 8,
           "options": 3
         },
@@ -39,7 +39,7 @@
         },
         {
           "branchId": "pediatric-ibuprofen",
-          "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
+          "chooseWhenContains": "아이가 정제를 삼키기 어려워",
           "products": 8,
           "options": 1
         }
@@ -81,7 +81,7 @@
         },
         {
           "branchId": "official-gi",
-          "chooseWhenContains": "공식 소화기 적응증과 함께 나타나는 경우",
+          "chooseWhenContains": "구역이나 구토가 함께",
           "products": 21,
           "options": 19
         }
@@ -99,7 +99,7 @@
         },
         {
           "branchId": "allergy-oral",
-          "chooseWhenContains": "동반 감기·알레르기 증상에 맞춰 성분과 제형",
+          "chooseWhenContains": "알레르기성 코막힘을 먹는 약으로",
           "products": 10,
           "options": 3
         },
@@ -321,7 +321,7 @@
         },
         {
           "branchId": "oral-analgesic",
-          "chooseWhenContains": "기침·가래 동반 여부에 맞춰 국소제와 복합제를 비교",
+          "chooseWhenContains": "목 통증이 주된 불편이고",
           "products": 3,
           "options": 2
         },
@@ -417,7 +417,7 @@
         },
         {
           "branchId": "general",
-          "chooseWhenContains": "감염 위험 신호를 확인한 뒤 설사 기전에 맞춰",
+          "chooseWhenContains": "감염 위험 신호가 없는 설사",
           "products": 10,
           "options": 9
         },
@@ -615,7 +615,7 @@
       "branches": [
         {
           "branchId": "general",
-          "chooseWhenContains": "배변이 어렵거나 딱딱한 변에서 하제 기전과 제형",
+          "chooseWhenContains": "변이 딱딱하거나 며칠째",
           "products": 7,
           "options": 6
         },
@@ -687,7 +687,7 @@
         },
         {
           "branchId": "general",
-          "chooseWhenContains": "생리통 양상과 부종·경련 동반 여부에 맞춰 진통 성분",
+          "chooseWhenContains": "생리통이 주된 불편이고",
           "products": 3,
           "options": 2
         },
@@ -717,7 +717,7 @@
         },
         {
           "branchId": "compare-form",
-          "chooseWhenContains": "구내염의 개수와 위치에 따라 바르는 제형",
+          "chooseWhenContains": "입안이 헐어 국소제를",
           "products": 3,
           "options": 3
         },
