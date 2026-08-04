@@ -159,7 +159,7 @@
     {
       "protocolId": "PTC-SORE_THROAT",
       "ingredient": "벤지다민염산염",
-      "comparisonNote": "가글형 국소 소염진통제입니다. 구내염처럼 병변이 여러 곳이라 연고가 닿기 어려울 때도 씁니다."
+      "comparisonNote": "가글형 국소 소염진통제라 삼키지 않고 인후 전체에 닿습니다. 아픈 자리가 좁으면 입에서 녹이는 트로키와 비교합니다."
     },
     {
       "protocolId": "PTC-SORE_THROAT",
@@ -329,7 +329,7 @@
     {
       "protocolId": "PTC-ACID_REFLUX",
       "ingredient": "COMBO",
-      "comparisonNote": "위산을 중화하면서 점막을 덮어 역류를 함께 줄이는 쪽입니다. 역류가 반복돼 분비 자체를 줄여야 하면 파모티딘과 비교합니다."
+      "comparisonNote": "위산을 중화하면서 점막을 덮어 역류를 함께 줄이는 쪽입니다. 신물이 목까지 올라오면 알긴산으로 역류를 물리적으로 막는 후보와 비교합니다."
     },
     {
       "protocolId": "PTC-GUM_INFLAMMATION",
@@ -354,7 +354,7 @@
     {
       "protocolId": "PTC-DRY_EYE",
       "ingredient": "카르복시메틸셀룰로오스나트륨",
-      "comparisonNote": "점도가 있어 건조감이 오래갈 때 맞습니다."
+      "comparisonNote": "점도가 높아 한 번 넣으면 편안함이 오래갑니다. 대신 넣은 직후 잠깐 뿌옇게 느껴질 수 있습니다."
     },
     {
       "protocolId": "PTC-DRY_EYE",

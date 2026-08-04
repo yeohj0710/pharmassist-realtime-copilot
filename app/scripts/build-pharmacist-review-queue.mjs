@@ -342,6 +342,68 @@ for (const entry of pipelineNotes.values()) {
   });
 }
 
+// A note that says "compare with X" only helps if X is on this protocol's list.
+// Some field-practice wording names an alternative the protocol does not carry
+// — 나프록센 under PTC-MUSCLE_PAIN, 아세트아미노펜 under PTC-JOINT_PAIN. The
+// sentence is true in general and it is a quotation, so it is not rewritten
+// here; the reviewer is told which item to look at and why.
+const namedAlternatives = [
+  "아세트아미노펜",
+  "이부프로펜",
+  "나프록센",
+  "로라타딘",
+  "세티리진",
+  "펙소페나딘",
+  "파모티딘",
+  "트리메부틴",
+  "디오스민",
+  "포비돈요오드",
+  "덱스판테놀",
+  "헤파리노이드",
+  "테르비나핀",
+  "케토코나졸",
+  "클로트리마졸",
+  "시메티콘",
+  "콘드로이틴",
+  "비사코딜",
+  "니코틴",
+  "디펜히드라민",
+  "알긴산",
+];
+const vocabularyByProtocol = new Map();
+for (const product of pack.products)
+  for (const profile of product.selection_profiles ?? []) {
+    if (!vocabularyByProtocol.has(profile.protocol_id))
+      vocabularyByProtocol.set(profile.protocol_id, new Set());
+    const words = vocabularyByProtocol.get(profile.protocol_id);
+    words.add(product.display_name);
+    for (const ingredient of product.active_ingredients ?? [])
+      words.add(
+        pack.ingredients.find(
+          (item) => item.ingredient_id === ingredient.ingredient_id,
+        )?.display_name_ko ?? "",
+      );
+    for (const text of profile.differentiators ?? []) words.add(text);
+  }
+let flaggedDangling = 0;
+for (const item of items) {
+  const note =
+    item.reviewTargets.find((target) => target.field === "comparison_note")
+      ?.text ?? "";
+  const vocabulary = [
+    ...(vocabularyByProtocol.get(item.protocolId) ?? []),
+  ].join(" ");
+  const missing = namedAlternatives.filter(
+    (name) => note.includes(name) && !vocabulary.includes(name),
+  );
+  if (missing.length === 0) continue;
+  flaggedDangling += 1;
+  item.mustConfirm = [
+    ...item.mustConfirm,
+    `이 문구가 ${missing.join("·")}과 비교하라고 하는데 이 상담의 후보 목록에는 없다. 문구를 고칠지, 그 후보를 목록에 넣을지 판단이 필요하다.`,
+  ];
+}
+
 const orphanDecisionIds = [...priorDecisionByItemId.keys()]
   .filter((itemId) => !carriedDecisionIds.has(itemId))
   .sort();
@@ -421,5 +483,6 @@ console.log(
     items: queue.itemCount,
     countByStatus,
     carriedDecisions: carriedDecisionIds.size,
+    flaggedDangling,
   }),
 );

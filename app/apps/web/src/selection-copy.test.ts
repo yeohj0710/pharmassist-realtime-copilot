@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import actualPack from "../../../data/actual-candidate-pack/pack.json" with { type: "json" };
+import selectionCopy from "../../../data/actual-research-overlays/selection-copy.json" with { type: "json" };
 
 const profiles = actualPack.products.flatMap((product) =>
   (product.selection_profiles ?? []).map((profile) => ({
@@ -47,6 +48,72 @@ describe("selection card copy", () => {
         ),
         `${product}: ${profile.choose_when}`,
       ).toBe(false);
+  });
+
+  // A note that says "compare with X" is only useful if X is something this
+  // protocol actually offers. PTC-ACID_REFLUX pointed at 파모티딘, which is a
+  // PTC-HEARTBURN candidate — a pharmacist would have gone looking for a
+  // product that was never on the list.
+  it("never sends the reader to an ingredient this protocol does not carry", () => {
+    const vocabulary = new Map<string, Set<string>>();
+    for (const product of actualPack.products)
+      for (const profile of product.selection_profiles ?? []) {
+        if (!vocabulary.has(profile.protocol_id))
+          vocabulary.set(profile.protocol_id, new Set());
+        const words = vocabulary.get(profile.protocol_id);
+        words?.add(product.display_name);
+        for (const ingredient of product.active_ingredients ?? [])
+          words?.add(
+            actualPack.ingredients.find(
+              (item) => item.ingredient_id === ingredient.ingredient_id,
+            )?.display_name_ko ?? "",
+          );
+        // Field-practice profiles describe composition in free text rather
+        // than a labelled field, so the differentiators count as vocabulary.
+        for (const text of profile.differentiators ?? []) words?.add(text);
+      }
+
+    const named = [
+      "아세트아미노펜",
+      "이부프로펜",
+      "나프록센",
+      "로라타딘",
+      "세티리진",
+      "펙소페나딘",
+      "파모티딘",
+      "트리메부틴",
+      "디오스민",
+      "포비돈요오드",
+      "덱스판테놀",
+      "헤파리노이드",
+      "테르비나핀",
+      "케토코나졸",
+      "클로트리마졸",
+      "시메티콘",
+      "콘드로이틴",
+      "비사코딜",
+      "니코틴",
+      "디펜히드라민",
+      "알긴산",
+    ];
+    // Enforced on the authored notes, which are ours to fix. Field-practice
+    // quotations also carry a few of these — 나프록센 under PTC-MUSCLE_PAIN,
+    // 아세트아미노펜 under PTC-JOINT_PAIN — but rewriting a quotation would
+    // break the promise that it matches its cited page, so those go to the
+    // pharmacist through the review queue instead.
+    const authored = new Set(
+      selectionCopy.entries.map((entry) => entry.comparisonNote),
+    );
+    const dangling: string[] = [];
+    for (const { profile } of profiles) {
+      const note = profile.comparison_note ?? "";
+      if (!authored.has(note)) continue;
+      const text = [...(vocabulary.get(profile.protocol_id) ?? [])].join(" ");
+      for (const name of named)
+        if (note.includes(name) && !text.includes(name))
+          dangling.push(`${profile.protocol_id}: ${name}`);
+    }
+    expect([...new Set(dangling)]).toEqual([]);
   });
 
   it("states no dose on a card", () => {
