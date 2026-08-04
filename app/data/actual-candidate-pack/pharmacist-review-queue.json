@@ -38,6 +38,7 @@
   },
   "originLegend": {
     "field_practice_pdf": "현장실습 PDF에서 인용한 문구. sourceLocator의 페이지와 대조할 수 있다.",
+    "field_practice_scoped": "현장실습 문구를 이 프로토콜의 후보에 맞게 다시 쓴 문장. 페이지는 임상 내용의 근거일 뿐 인용문은 아니다.",
     "authored_contrast": "출처 문서 없이 작성한 대조 문장. 근거는 팩의 성분·제형 기록뿐이라 임상 판단은 검토가 필요하다."
   },
   "countByStatus": {
@@ -8023,18 +8024,17 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-JOINT_PAIN-eff076c4",
+      "itemId": "PRQ-PIPE-PTC-JOINT_PAIN-64c87237",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
         "손님에게 그대로 옮겨도 오해를 만들지 않는지",
-        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지",
-        "이 문구가 아세트아미노펜과 비교하라고 하는데 이 상담의 후보 목록에는 없다. 문구를 고칠지, 그 후보를 목록에 넣을지 판단이 필요하다."
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
       ],
       "protocolId": "PTC-JOINT_PAIN",
       "protocolName": "관절통 OTC 후보 선별",
@@ -8046,11 +8046,11 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "짧게 빠른 해열·몸살 완화가 목적이면 이부프로펜 또는 아세트아미노펜과 비교합니다."
+          "text": "한 번 먹으면 오래가서 종일 이어지는 관절 통증에 맞습니다. 통증이 짧게 왔다 가면 이부프로펜 쪽이 회복도 빠릅니다."
         },
         {
           "field": "choose_when",
-          "text": "한쪽으로 오래 지속되는 편두통이나 허리·관절처럼 말초 염증성 통증에서 지속력을 우선할 때 검토합니다."
+          "text": "허리나 관절처럼 염증이 낀 통증이 하루 종일 이어져 지속력이 필요한 경우"
         }
       ],
       "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=3",
@@ -8558,18 +8558,17 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-ACID_REFLUX-60b63a58",
+      "itemId": "PRQ-PIPE-PTC-ACID_REFLUX-de9ac172",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
         "손님에게 그대로 옮겨도 오해를 만들지 않는지",
-        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지",
-        "이 문구가 파모티딘과 비교하라고 하는데 이 상담의 후보 목록에는 없다. 문구를 고칠지, 그 후보를 목록에 넣을지 판단이 필요하다."
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
       ],
       "protocolId": "PTC-ACID_REFLUX",
       "protocolName": "위산 역류 증상 OTC 후보 선별",
@@ -8580,11 +8579,11 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "반복되는 위산 분비 자체를 줄이려면 파모티딘과, 단순한 빠른 중화가 목적이면 제산 현탁액과 구분합니다."
+          "text": "알긴산이 위 내용물 위에 겔 층을 만들어 올라오는 것 자체를 막습니다. 올라오는 느낌 없이 속만 쓰릴 때는 빠르게 중화하는 제산 현탁액이 낫습니다."
         },
         {
           "field": "choose_when",
-          "text": "신물이 올라오는 역류 증상에서 위산 중화와 물리적 역류 차단을 함께 원할 때 검토합니다."
+          "text": "신물이 목까지 올라오는 역류가 주된 불편인 경우"
         }
       ],
       "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=4",

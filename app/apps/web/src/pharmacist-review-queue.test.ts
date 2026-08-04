@@ -67,8 +67,13 @@ describe("pharmacist review queue", () => {
 
       // What the item cites depends on where the wording came from, not on
       // which pass produced the item.
-      if (item.origin === "field_practice_pdf") {
-        // Quoted, so a locator a pharmacist cannot open is not a citation.
+      if (
+        item.origin === "field_practice_pdf" ||
+        // Rewritten to fit one protocol's roster rather than quoted, but the
+        // page still backs the clinical content, so it keeps the locator.
+        item.origin === "field_practice_scoped"
+      ) {
+        // A locator a pharmacist cannot open is not a citation.
         const sourceId = item.sourceLocator?.split("#")[0] ?? "";
         expect(
           sourceIds.has(sourceId),
@@ -143,7 +148,7 @@ describe("pharmacist review queue", () => {
   });
 
   // Wording nobody ever read is the one kind that should not survive. Either it
-  // was quoted from the PDF, or a person wrote it on purpose.
+  // was quoted from the PDF, scoped from it on purpose, or written on purpose.
   it("leaves no card sentence that only a build step has seen", () => {
     const generated = reviewQueue.items.filter(
       (item) => item.origin === "pipeline_generated",

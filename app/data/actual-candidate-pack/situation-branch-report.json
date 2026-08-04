@@ -393,7 +393,7 @@
         },
         {
           "branchId": "lasting",
-          "chooseWhenContains": "허리·관절처럼 말초 염증성 통증에서 지속력",
+          "chooseWhenContains": "염증이 낀 통증이 하루 종일 이어져 지속력",
           "products": 2,
           "options": 1
         },
@@ -873,7 +873,7 @@
         },
         {
           "branchId": "barrier",
-          "chooseWhenContains": "위산 중화와 물리적 역류 차단을 함께",
+          "chooseWhenContains": "신물이 목까지 올라오는 역류가 주된 불편인",
           "products": 1,
           "options": 1
         }

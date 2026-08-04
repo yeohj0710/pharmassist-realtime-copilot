@@ -281,6 +281,18 @@ const fieldPracticeGuidance = await readJson(
 const fieldPracticeByNote = new Map(
   fieldPracticeGuidance.profiles.map((rule) => [rule.comparisonNote, rule]),
 );
+// A profile that serves several protocols can carry a per-protocol override,
+// because the protocols do not offer the same candidates. Those sentences are
+// ours, not the PDF's, but the page still backs the clinical content — so they
+// are neither a quotation nor something only a build step has seen.
+const fieldPracticeScopedByNote = new Map();
+for (const rule of fieldPracticeGuidance.profiles)
+  for (const [protocolId, override] of Object.entries(rule.byProtocol ?? {}))
+    if (typeof override.comparisonNote === "string")
+      fieldPracticeScopedByNote.set(
+        `${protocolId} :: ${override.comparisonNote}`,
+        rule,
+      );
 const pipelineNotes = new Map();
 for (const product of pack.products)
   for (const profile of product.selection_profiles ?? []) {
@@ -308,17 +320,24 @@ for (const entry of pipelineNotes.values()) {
   const itemId = `PRQ-PIPE-${entry.protocolId}-${createHash("sha256").update(entry.note).digest("hex").slice(0, 8)}`;
   const prior = priorDecisionByItemId.get(itemId);
   if (prior) carriedDecisionIds.add(itemId);
+  const scopedRule = fieldPracticeScopedByNote.get(
+    `${entry.protocolId} :: ${entry.note}`,
+  );
   items.push({
     itemId,
     kind: "selection_copy",
     origin: fieldPracticeByNote.has(entry.note)
       ? "field_practice_pdf"
-      : "pipeline_generated",
+      : scopedRule
+        ? "field_practice_scoped"
+        : "pipeline_generated",
     areaId: "selection-card-copy",
     areaTitle: "제품 카드 비교 문구",
     whyReviewNeeded: fieldPracticeByNote.has(entry.note)
       ? "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다."
-      : "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+      : scopedRule
+        ? "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다."
+        : "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
     mustConfirm: copyMustConfirm,
     protocolId: entry.protocolId,
     protocolName: protocol.display_name,
@@ -332,7 +351,9 @@ for (const entry of pipelineNotes.values()) {
     // the build invented has nothing to cite.
     sourceLocator: fieldPracticeByNote.has(entry.note)
       ? `${fieldPracticeGuidance.source.sourceId}#page=${fieldPracticeByNote.get(entry.note).page}`
-      : null,
+      : scopedRule
+        ? `${fieldPracticeGuidance.source.sourceId}#page=${scopedRule.page}`
+        : null,
     referRedFlags: referTermsByProtocolId.get(entry.protocolId) ?? [],
     status: prior?.status ?? "pending",
     decision: prior?.decision ?? null,
@@ -465,6 +486,8 @@ const queue = {
   originLegend: {
     field_practice_pdf:
       "현장실습 PDF에서 인용한 문구. sourceLocator의 페이지와 대조할 수 있다.",
+    field_practice_scoped:
+      "현장실습 문구를 이 프로토콜의 후보에 맞게 다시 쓴 문장. 페이지는 임상 내용의 근거일 뿐 인용문은 아니다.",
     authored_contrast:
       "출처 문서 없이 작성한 대조 문장. 근거는 팩의 성분·제형 기록뿐이라 임상 판단은 검토가 필요하다.",
   },

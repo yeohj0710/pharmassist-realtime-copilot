@@ -411,6 +411,29 @@ for (const rule of fieldPracticeGuidance.profiles) {
     rule.page > fieldPracticeGuidance.source.pageCount
   )
     throw new Error(`Invalid field-practice rule: ${rule.ruleId ?? "unknown"}`);
+  // One profile can serve several protocols, and those protocols do not offer
+  // the same candidates. A note naming famotidine is right under PTC-HEARTBURN
+  // and dangling under PTC-ACID_REFLUX, which carries no famotidine at all.
+  // byProtocol lets the shared profile say something different where the roster
+  // differs, instead of forcing one sentence to be true everywhere.
+  for (const [protocolId, override] of Object.entries(rule.byProtocol ?? {})) {
+    if (!rule.protocolIds.includes(protocolId))
+      throw new Error(
+        `Field-practice override targets a protocol the rule does not serve: ${rule.ruleId} ${protocolId}`,
+      );
+    if (
+      (override.chooseWhen !== undefined &&
+        typeof override.chooseWhen !== "string") ||
+      (override.comparisonNote !== undefined &&
+        typeof override.comparisonNote !== "string") ||
+      (override.differentiators !== undefined &&
+        (!Array.isArray(override.differentiators) ||
+          override.differentiators.length < 2))
+    )
+      throw new Error(
+        `Invalid field-practice override: ${rule.ruleId} ${protocolId}`,
+      );
+  }
   fieldPracticeRuleIds.add(rule.ruleId);
 }
 const legacyProtocolAllowlistByProductId = new Map();
@@ -2170,11 +2193,12 @@ const runtimeProducts = [
         protocolId: profile.protocol_id,
         page: rule.page,
       });
+      const override = rule.byProtocol?.[profile.protocol_id] ?? {};
       return {
         ...profile,
-        choose_when: rule.chooseWhen,
-        differentiators: rule.differentiators,
-        comparison_note: rule.comparisonNote,
+        choose_when: override.chooseWhen ?? rule.chooseWhen,
+        differentiators: override.differentiators ?? rule.differentiators,
+        comparison_note: override.comparisonNote ?? rule.comparisonNote,
         practical_points: rule.practicalPoints,
         evidence_source: `${fieldPracticeGuidance.source.sourceId}#page=${rule.page}`,
       };

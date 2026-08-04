@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import actualPack from "../../../data/actual-candidate-pack/pack.json" with { type: "json" };
-import selectionCopy from "../../../data/actual-research-overlays/selection-copy.json" with { type: "json" };
 
 const profiles = actualPack.products.flatMap((product) =>
   (product.selection_profiles ?? []).map((profile) => ({
@@ -62,12 +61,18 @@ describe("selection card copy", () => {
           vocabulary.set(profile.protocol_id, new Set());
         const words = vocabulary.get(profile.protocol_id);
         words?.add(product.display_name);
-        for (const ingredient of product.active_ingredients ?? [])
+        for (const ingredient of product.active_ingredients ?? []) {
+          // Most HealthKR products carry ingredients that are not registered
+          // in pack.ingredients, so a lookup alone reads as an empty
+          // vocabulary and this check silently passes. The name on the
+          // product is what the card is actually built from.
+          words?.add(ingredient.name ?? "");
           words?.add(
             actualPack.ingredients.find(
               (item) => item.ingredient_id === ingredient.ingredient_id,
             )?.display_name_ko ?? "",
           );
+        }
         // Field-practice profiles describe composition in free text rather
         // than a labelled field, so the differentiators count as vocabulary.
         for (const text of profile.differentiators ?? []) words?.add(text);
@@ -95,19 +100,18 @@ describe("selection card copy", () => {
       "니코틴",
       "디펜히드라민",
       "알긴산",
+      "수산화마그네슘",
+      "덱시부프로펜",
+      "록소프로펜",
     ];
-    // Enforced on the authored notes, which are ours to fix. Field-practice
-    // quotations also carry a few of these — 나프록센 under PTC-MUSCLE_PAIN,
-    // 아세트아미노펜 under PTC-JOINT_PAIN — but rewriting a quotation would
-    // break the promise that it matches its cited page, so those go to the
-    // pharmacist through the review queue instead.
-    const authored = new Set(
-      selectionCopy.entries.map((entry) => entry.comparisonNote),
-    );
+    // Enforced on every note, not just the authored ones. A field-practice
+    // profile can serve several protocols whose rosters differ, so one shared
+    // sentence was accurate under PTC-HEARTBURN and dangling under
+    // PTC-ACID_REFLUX. Those now carry a byProtocol override rather than a
+    // reworded quotation, so the page each note cites still backs it.
     const dangling: string[] = [];
     for (const { profile } of profiles) {
       const note = profile.comparison_note ?? "";
-      if (!authored.has(note)) continue;
       const text = [...(vocabulary.get(profile.protocol_id) ?? [])].join(" ");
       for (const name of named)
         if (note.includes(name) && !text.includes(name))
