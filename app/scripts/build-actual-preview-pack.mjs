@@ -2503,6 +2503,141 @@ const applyProtocolDenylistToClaim = (claim) => {
   };
 };
 
+// A comparison note that says "compare with X" is only actionable if X is on
+// this protocol's list. X can be named three ways — an ingredient, a drug
+// class, or a dosage form — and checking only the first let two of them
+// through. Deliberate redirections are the exception: telling a pharmacist
+// that ringworm needs an antifungal is the point of the sentence, not a
+// dangling pointer, so those are declared rather than silently allowed.
+const noteClassTerms = {
+  스테로이드: ["트리암시놀론", "히드로코르티손", "프레드니솔론", "덱사메타손"],
+  항히스타민: [
+    "로라타딘",
+    "세티리진",
+    "펙소페나딘",
+    "클로르페니라민",
+    "디펜히드라민",
+    "트리프롤리딘",
+  ],
+  제산: ["수산화마그네슘", "인산알루미늄", "탄산칼슘", "탄산수소나트륨"],
+  소염진통: [
+    "이부프로펜",
+    "나프록센",
+    "플루르비프로펜",
+    "디클로페낙",
+    "벤지다민",
+    "덱시부프로펜",
+  ],
+  항진균: ["테르비나핀", "케토코나졸", "클로트리마졸"],
+};
+const noteFormTerms = {
+  트로키: ["트로키"],
+  가글: ["가글"],
+  스프레이: ["분무", "스프레이"],
+  연고: ["연고"],
+  크림: ["크림"],
+  현탁액: ["현탁액"],
+  점안: ["점안"],
+  패치: ["패취", "경피"],
+  좌제: ["좌제"],
+};
+const strippedIngredientName = (name) =>
+  String(name ?? "")
+    .replace(/[A-Za-z0-9 ().,/·%-]/gu, "")
+    .trim();
+const packIngredientVocabulary = new Set();
+for (const product of runtimeProducts)
+  for (const ingredient of product.active_ingredients ?? []) {
+    const name = strippedIngredientName(ingredient.name);
+    if (name.length < 3) continue;
+    packIngredientVocabulary.add(name);
+    const stem = name.replace(
+      /(염산염|말레산염|시트르산염|브롬화수소산염)?(수화물|무수물)?$/u,
+      "",
+    );
+    if (stem.length >= 3) packIngredientVocabulary.add(stem);
+  }
+for (const ingredient of [...ingredients, ...generatedIngredients])
+  if (ingredient.display_name_ko)
+    packIngredientVocabulary.add(ingredient.display_name_ko);
+for (const entry of fieldPracticeGuidance.offListReferences ?? [])
+  if (
+    typeof entry.protocolId !== "string" ||
+    typeof entry.term !== "string" ||
+    // An exemption without a stated reason is indistinguishable from someone
+    // silencing the guard, which is the failure this whole check exists for.
+    typeof entry.reason !== "string" ||
+    entry.reason.length < 30
+  )
+    throw new Error(
+      `Off-list reference needs a protocol, a term and a reason: ${entry.protocolId ?? "unknown"}`,
+    );
+const allowedOffListReference = new Set(
+  (fieldPracticeGuidance.offListReferences ?? []).map(
+    (entry) => `${entry.protocolId} :: ${entry.term}`,
+  ),
+);
+const rosterTermsByProtocol = new Map();
+for (const product of runtimeProducts)
+  for (const profile of product.selection_profiles ?? []) {
+    if (!rosterTermsByProtocol.has(profile.protocol_id))
+      rosterTermsByProtocol.set(profile.protocol_id, {
+        ingredients: new Set(),
+        forms: new Set(),
+      });
+    const terms = rosterTermsByProtocol.get(profile.protocol_id);
+    terms.ingredients.add(product.display_name);
+    for (const ingredient of product.active_ingredients ?? [])
+      terms.ingredients.add(strippedIngredientName(ingredient.name));
+    if (product.dosage_form) terms.forms.add(product.dosage_form);
+  }
+const usedOffListReference = new Set();
+const danglingNoteReferences = [];
+for (const product of runtimeProducts)
+  for (const profile of product.selection_profiles ?? []) {
+    const note = profile.comparison_note ?? "";
+    if (!note) continue;
+    const terms = rosterTermsByProtocol.get(profile.protocol_id);
+    const ingredientText = [...terms.ingredients].join(" ");
+    const formText = [...terms.forms].join(" ");
+    const missing = [];
+    for (const name of packIngredientVocabulary)
+      if (note.includes(name) && !ingredientText.includes(name))
+        missing.push(name);
+    for (const [word, members] of Object.entries(noteClassTerms))
+      if (
+        note.includes(word) &&
+        !members.some((member) => ingredientText.includes(member))
+      )
+        missing.push(word);
+    for (const [word, members] of Object.entries(noteFormTerms))
+      if (
+        note.includes(word) &&
+        !members.some((member) => formText.includes(member))
+      )
+        missing.push(word);
+    for (const term of new Set(missing)) {
+      const key = `${profile.protocol_id} :: ${term}`;
+      if (allowedOffListReference.has(key)) usedOffListReference.add(key);
+      else danglingNoteReferences.push(key);
+    }
+  }
+if (danglingNoteReferences.length)
+  throw new Error(
+    `Card notes point at candidates the protocol does not carry: ${[
+      ...new Set(danglingNoteReferences),
+    ].join(", ")}`,
+  );
+// An exemption for a case that no longer exists is the shape a real finding
+// gets silenced by later. Make it fail while it is still obvious why.
+const staleOffListReferences = [...allowedOffListReference].filter(
+  (key) => !usedOffListReference.has(key),
+);
+if (staleOffListReferences.length)
+  throw new Error(
+    `Off-list references exempt a card that no longer says it: ${staleOffListReferences.join(", ")}`,
+  );
+
 const pack = {
   packId: "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
   version: "1.0.0-research-preview",

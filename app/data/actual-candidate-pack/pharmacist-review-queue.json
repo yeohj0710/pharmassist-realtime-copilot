@@ -6968,12 +6968,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-MOTION_SICKNESS-036e178b",
+      "itemId": "PRQ-PIPE-PTC-MOTION_SICKNESS-fbdcd1db",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -6989,7 +6989,7 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "장거리 왕복이면 12~24시간 지속하는 메클리진, 3일 지속이 필요하면 스코폴라민 패치와 구분합니다."
+          "text": "짧은 이동에 맞는 지속 시간입니다. 왕복이나 장거리라 하루 넘게 버텨야 하면 메클리진 쪽이 낫습니다."
         },
         {
           "field": "choose_when",
@@ -7545,12 +7545,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-ALLERGIC_RHINITIS-ff5d0173",
+      "itemId": "PRQ-PIPE-PTC-ALLERGIC_RHINITIS-fbd03a05",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7566,7 +7566,7 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "운전이나 업무 때문에 졸림을 피해야 하면 로라타딘 또는 펙소페나딘 계열과 비교합니다."
+          "text": "증상은 잘 잡히지만 졸릴 수 있습니다. 운전이나 일을 해야 하면 로라타딘 쪽이 덜 졸립니다."
         },
         {
           "field": "choose_when",
@@ -7893,12 +7893,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-MOTION_SICKNESS-e6fc28bf",
+      "itemId": "PRQ-PIPE-PTC-MOTION_SICKNESS-0efd2303",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7914,7 +7914,7 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "짧은 이동이면 디멘히드리네이트 제형과, 3일 지속이 필요하면 스코폴라민 패치와 구분합니다."
+          "text": "한 번 먹으면 하루 넘게 가서 왕복 이동에 맞습니다. 한두 시간 이동이면 디멘히드리네이트 쪽으로 충분합니다."
         },
         {
           "field": "choose_when",
@@ -8112,12 +8112,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-SORE_THROAT-065f1bf7",
+      "itemId": "PRQ-PIPE-PTC-SORE_THROAT-46c5fd6a",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8133,11 +8133,11 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "한두 곳의 병변에 직접 바를 수 있으면 점착성 스테로이드 연고와 구분합니다."
+          "text": "가글이라 손이 닿지 않는 목 안쪽까지 약이 퍼집니다. 아픈 자리가 입안 앞쪽이면 뿌리는 국소 소염제로도 충분합니다."
         },
         {
           "field": "choose_when",
-          "text": "구내염이 여러 곳이거나 목 안쪽처럼 연고가 닿기 어려워 가글형 소염제가 편할 때 검토합니다."
+          "text": "목 안쪽까지 아파서 바르는 약이 닿지 않고 가글이 편한 경우"
         }
       ],
       "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=8",
@@ -8335,12 +8335,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-STOMATITIS-65e877b5",
+      "itemId": "PRQ-PIPE-PTC-STOMATITIS-6b73290e",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -8356,11 +8356,11 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "통증만 두드러지면 플루르비프로펜 트로키와, 항균과 항염을 함께 원하면 세틸피리디늄·아줄렌 스프레이와 구분합니다."
+          "text": "살균 범위가 넓은 대신 통증 자체를 누르지는 않습니다. 아픈 자리가 한두 곳이면 병변에 직접 붙이는 스테로이드 연고와, 항균과 항염을 함께 원하면 세틸피리디늄·아줄렌 스프레이와 구분합니다."
         },
         {
           "field": "choose_when",
-          "text": "통증 억제보다 구강·인후 부위의 넓은 범위 살균이 우선일 때 검토합니다."
+          "text": "입안 여러 곳을 한 번에 소독해야 하는 경우"
         }
       ],
       "sourceLocator": "SRC-CENTRALPARK-OTC-PRACTICE#page=2",

@@ -333,7 +333,7 @@
         },
         {
           "branchId": "gargle",
-          "chooseWhenContains": "목 안쪽처럼 연고가 닿기 어려워 가글형",
+          "chooseWhenContains": "바르는 약이 닿지 않고 가글이 편한",
           "products": 1,
           "options": 1
         },
@@ -735,7 +735,7 @@
         },
         {
           "branchId": "antiseptic",
-          "chooseWhenContains": "구강·인후 부위의 넓은 범위 살균이 우선",
+          "chooseWhenContains": "입안 여러 곳을 한 번에 소독해야 하는",
           "products": 1,
           "options": 1
         }

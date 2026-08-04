@@ -10,6 +10,13 @@
     "title": "일반의약품 정리_센트럴파크약국",
     "fetchedAt": "2026-07-31T00:00:00+09:00"
   },
+  "offListReferences": [
+    {
+      "protocolId": "PTC-MILD_DERMATITIS",
+      "term": "항진균",
+      "reason": "이 문장은 후보를 고르라는 뜻이 아니라 이 제품을 쓰면 안 되는 경우를 말한다. 고리 모양 백선에 약한 스테로이드를 단독으로 바르면 병변이 번지므로, 항진균제가 이 목록에 없다는 이유로 경고를 지우면 안 된다."
+    }
+  ],
   "legacyProtocolAllowlist": [
     {
       "productId": "PRD-HAESOCOPU_S_201900312",
@@ -62,6 +69,11 @@
         "콧물·가려움 등 알레르기 증상에 사용"
       ],
       "comparisonNote": "운전이나 업무 때문에 졸림을 피해야 하면 로라타딘 또는 펙소페나딘 계열과 비교합니다.",
+      "byProtocol": {
+        "PTC-ALLERGIC_RHINITIS": {
+          "comparisonNote": "증상은 잘 잡히지만 졸릴 수 있습니다. 운전이나 일을 해야 하면 로라타딘 쪽이 덜 졸립니다."
+        }
+      },
       "practicalPoints": [],
       "page": 11
     },
@@ -136,6 +148,12 @@
         "소염진통제가 아님"
       ],
       "comparisonNote": "통증만 두드러지면 플루르비프로펜 트로키와, 항균과 항염을 함께 원하면 세틸피리디늄·아줄렌 스프레이와 구분합니다.",
+      "byProtocol": {
+        "PTC-STOMATITIS": {
+          "chooseWhen": "입안 여러 곳을 한 번에 소독해야 하는 경우",
+          "comparisonNote": "살균 범위가 넓은 대신 통증 자체를 누르지는 않습니다. 아픈 자리가 한두 곳이면 병변에 직접 붙이는 스테로이드 연고와, 항균과 항염을 함께 원하면 세틸피리디늄·아줄렌 스프레이와 구분합니다."
+        }
+      },
       "practicalPoints": [],
       "page": 2
     },
@@ -287,6 +305,11 @@
         "졸림 가능성"
       ],
       "comparisonNote": "장거리 왕복이면 12~24시간 지속하는 메클리진, 3일 지속이 필요하면 스코폴라민 패치와 구분합니다.",
+      "byProtocol": {
+        "PTC-MOTION_SICKNESS": {
+          "comparisonNote": "짧은 이동에 맞는 지속 시간입니다. 왕복이나 장거리라 하루 넘게 버텨야 하면 메클리진 쪽이 낫습니다."
+        }
+      },
       "practicalPoints": [
         "이동 15~30분 전에 복용하는 계열로 정리되어 있습니다."
       ],
@@ -319,6 +342,11 @@
         "구강용해필름 제형"
       ],
       "comparisonNote": "짧은 이동이면 디멘히드리네이트 제형과, 3일 지속이 필요하면 스코폴라민 패치와 구분합니다.",
+      "byProtocol": {
+        "PTC-MOTION_SICKNESS": {
+          "comparisonNote": "한 번 먹으면 하루 넘게 가서 왕복 이동에 맞습니다. 한두 시간 이동이면 디멘히드리네이트 쪽으로 충분합니다."
+        }
+      },
       "practicalPoints": [],
       "page": 4
     },
@@ -439,6 +467,12 @@
         "다발성·접근하기 어려운 병변에 비교"
       ],
       "comparisonNote": "한두 곳의 병변에 직접 바를 수 있으면 점착성 스테로이드 연고와 구분합니다.",
+      "byProtocol": {
+        "PTC-SORE_THROAT": {
+          "chooseWhen": "목 안쪽까지 아파서 바르는 약이 닿지 않고 가글이 편한 경우",
+          "comparisonNote": "가글이라 손이 닿지 않는 목 안쪽까지 약이 퍼집니다. 아픈 자리가 입안 앞쪽이면 뿌리는 국소 소염제로도 충분합니다."
+        }
+      },
       "practicalPoints": [
         "자료에는 하루 2~3회 가글하는 제품으로 정리되어 있습니다."
       ],
