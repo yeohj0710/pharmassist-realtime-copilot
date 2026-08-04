@@ -2529,7 +2529,41 @@ const noteClassTerms = {
     "덱시부프로펜",
   ],
   항진균: ["테르비나핀", "케토코나졸", "클로트리마졸"],
+  점액용해: ["아세틸시스테인", "암브록솔", "브롬헥신"],
+  거담: ["구아이페네신", "아세틸시스테인", "염화암모늄"],
+  진해: ["덱스트로메토르판", "티페피딘", "노스카핀"],
+  삼투성: ["수산화마그네슘", "산화마그네슘", "락툴로오스", "마크로골"],
+  부피형성: ["차전자"],
+  지사: ["로페라미드", "스멕타이트", "베르베린", "비스무트"],
 };
+// The vocabulary above is built from the pack, so it can only catch a name
+// that exists somewhere else in the pack. A note naming a drug this registry
+// does not stock at all — ambroxol, loperamide, a scopolamine patch — was
+// invisible to it, which is the worse case: there is nowhere for the
+// pharmacist to go. This list is deliberately independent of the pack.
+const offPackDrugNames = [
+  "암브록솔",
+  "브롬헥신",
+  "로페라미드",
+  "락툴로오스",
+  "마크로골",
+  "폴리에틸렌글리콜",
+  "라니티딘",
+  "시메티딘",
+  "오메프라졸",
+  "란소프라졸",
+  "에스오메프라졸",
+  "스코폴라민",
+  "아스피린",
+  "록소프로펜",
+  "노스카핀",
+  "슈도에페드린",
+  "옥시메타졸린",
+  "나파졸린",
+  "미코나졸",
+  "무피로신",
+  "겐타마이신",
+];
 const noteFormTerms = {
   트로키: ["트로키"],
   가글: ["가글"],
@@ -2602,6 +2636,9 @@ for (const product of runtimeProducts)
     const formText = [...terms.forms].join(" ");
     const missing = [];
     for (const name of packIngredientVocabulary)
+      if (note.includes(name) && !ingredientText.includes(name))
+        missing.push(name);
+    for (const name of offPackDrugNames)
       if (note.includes(name) && !ingredientText.includes(name))
         missing.push(name);
     for (const [word, members] of Object.entries(noteClassTerms))

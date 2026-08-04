@@ -7275,12 +7275,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-PRODUCTIVE_COUGH-050957a6",
+      "itemId": "PRQ-PIPE-PTC-PRODUCTIVE_COUGH-32a8d22f",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7297,7 +7297,7 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "끈적한 가래 배출이 주된 문제면 아세틸시스테인·암브록솔 같은 점액용해 후보와 구분합니다."
+          "text": "기침을 눌러 주는 성분이 같이 들어 있어 기침이 잦을 때 맞습니다. 가래가 끈적해서 안 떨어지는 게 주된 불편이면 아세틸시스테인 쪽이 낫습니다."
         },
         {
           "field": "choose_when",
@@ -7454,12 +7454,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-DIARRHEA-5d884a82",
+      "itemId": "PRQ-PIPE-PTC-DIARRHEA-13230698",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7476,7 +7476,7 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "비감염성 설사에서 장운동 억제가 필요하면 로페라미드와, 감염성 단서가 있으면 일반 지사제 추천보다 진료 필요성을 먼저 봅니다."
+          "text": "장 점막을 덮어 자극을 줄이는 방식이라 설사를 억지로 멈추지는 않습니다. 열이나 혈변처럼 감염이 의심되는 단서가 있으면 약을 고르기 전에 진료를 먼저 봅니다."
         },
         {
           "field": "choose_when",
@@ -7805,12 +7805,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-CONSTIPATION-b45f1097",
+      "itemId": "PRQ-PIPE-PTC-CONSTIPATION-33014837",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7826,7 +7826,7 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "부피형성 하제나 삼투성 하제보다 자극이 강한 단기 후보로 구분합니다."
+          "text": "장을 직접 자극해서 빨리 듣는 대신 오래 쓰기는 어렵습니다. 며칠 이상 이어서 관리해야 하면 차전자피처럼 변 부피를 늘리는 쪽이 맞습니다."
         },
         {
           "field": "choose_when",
@@ -7936,12 +7936,12 @@
       "reviewerNote": null
     },
     {
-      "itemId": "PRQ-PIPE-PTC-MENSTRUAL_PAIN-47c74a73",
+      "itemId": "PRQ-PIPE-PTC-MENSTRUAL_PAIN-5d9c1b9f",
       "kind": "selection_copy",
-      "origin": "field_practice_pdf",
+      "origin": "field_practice_scoped",
       "areaId": "selection-card-copy",
       "areaTitle": "제품 카드 비교 문구",
-      "whyReviewNeeded": "현장실습 자료에서 온 문구인데 위 여섯 개 임상 영역에 걸리지 않는 프로토콜에 붙어 있다. 출처 페이지가 있으니 원문과 대조해서 확인한다.",
+      "whyReviewNeeded": "같은 현장실습 문구가 후보 구성이 다른 프로토콜에도 붙어 있어서, 이 프로토콜의 후보만 가리키도록 문장을 새로 썼다. 페이지의 임상 내용은 그대로지만 문장 자체는 인용이 아니므로 대조 방향이 맞는지 확인한다.",
       "mustConfirm": [
         "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
         "성분·제형 서술이 허가사항과 어긋나지 않는지",
@@ -7957,7 +7957,7 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "일반 두통·발열만 있으면 단일 이부프로펜과 비교하고, 지속적인 편두통이면 나프록센과 구분합니다."
+          "text": "생리통에 붓고 더부룩한 느낌이 같이 올 때 맞습니다. 그런 증상 없이 통증만 있으면 단일 이부프로펜으로 충분하고, 통증이 하루 종일 이어지면 나프록센 쪽이 오래갑니다."
         },
         {
           "field": "choose_when",
