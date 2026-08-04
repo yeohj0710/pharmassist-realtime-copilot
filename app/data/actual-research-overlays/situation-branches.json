@@ -23,7 +23,7 @@
           ]
         },
         {
-          "branchId": "pediatric-liquid",
+          "branchId": "pediatric-acetaminophen",
           "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
           "patterns": [
             "아이",
@@ -35,7 +35,8 @@
             "시럽",
             "물약",
             "삼키기 힘들"
-          ]
+          ],
+          "differentiatorContains": "주요 성분: 아세트아미노펜"
         },
         {
           "branchId": "ibuprofen-soft",
@@ -51,6 +52,12 @@
           "branchId": "herbal-adjunct",
           "chooseWhenContains": "생약 복합 보조를 함께 검토",
           "patterns": ["생약", "한방", "탕약"]
+        },
+        {
+          "branchId": "pediatric-ibuprofen",
+          "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
+          "differentiatorContains": "주요 성분: 이부프로펜",
+          "patterns": ["아이 해열제 이부", "아이가 염증", "아이 소염", "부루펜"]
         }
       ]
     },
@@ -408,7 +415,7 @@
         {
           "branchId": "inflammatory",
           "chooseWhenContains": "붓기나 염증을 동반한 관절 통증에 소염진통",
-          "patterns": ["부었", "붓기", "열감", "염증", "쑤"]
+          "patterns": ["부었", "붓기", "열감", "염증"]
         },
         {
           "branchId": "topical",
@@ -551,6 +558,12 @@
           "branchId": "cetirizine-strong",
           "chooseWhenContains": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때",
           "patterns": ["효과 좋은", "센 걸로"]
+        },
+        {
+          "branchId": "effect-first-liquid",
+          "chooseWhenContains": "두드러기·전신 가려움 완화 효과를 우선하고 졸림",
+          "differentiatorContains": "액제 · 경구(내용액제)",
+          "patterns": ["액으로", "물약으로", "알약이 어려"]
         }
       ]
     },
@@ -922,6 +935,26 @@
           "branchId": "localized",
           "chooseWhenContains": "감염이나 진균 소견이 없는 가벼운 습진·피부염의 가려움",
           "patterns": ["좁", "한 군데", "여기만", "연고"]
+        }
+      ]
+    },
+    {
+      "protocolId": "PTC-DRY_EYE",
+      "field": "symptom.dry_eye_context",
+      "question": "점안액 성분에 따라 사용감이 다릅니다. 평소 쓰시던 제품이 있나요?",
+      "reason": "같은 건조감이라도 윤활 성분에 따라 후보가 갈립니다.",
+      "branches": [
+        {
+          "branchId": "multi-dose",
+          "chooseWhenContains": "건조감과 이물감에 윤활·보습이 필요한 경우",
+          "differentiatorContains": "카르복시메틸셀룰로오스",
+          "patterns": ["카르복시", "평소 쓰던", "다회용"]
+        },
+        {
+          "branchId": "single-use",
+          "chooseWhenContains": "건조감과 이물감에 윤활·보습이 필요한 경우",
+          "differentiatorContains": "히프로멜로오스",
+          "patterns": ["히프로멜", "일회용", "낱개"]
         }
       ]
     }

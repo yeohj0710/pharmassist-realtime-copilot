@@ -84,10 +84,6 @@ for (const entry of curated.protocols) {
   const protocol = protocolById.get(entry.protocolId);
   if (!protocol)
     throw new Error(`Situation branch protocol missing: ${entry.protocolId}`);
-  if (curatedProtocolIds.has(entry.protocolId)) {
-    skipped.push(entry.protocolId);
-    continue;
-  }
   if (
     typeof entry.field !== "string" ||
     typeof entry.question !== "string" ||
@@ -132,17 +128,27 @@ for (const entry of curated.protocols) {
     // Products whose own choose_when for this protocol describes this
     // situation. The text is the evidence; the patterns are only the customer
     // vocabulary that points at it.
+    // A cluster larger than the five displayed candidates hides the rest, so a
+    // branch may narrow further on the product's own differentiators — its
+    // composition and dosage form, both quoted from the official record. Same
+    // rule as chooseWhenContains: it names text the pack really carries.
+    const matchesDifferentiator = (profile) =>
+      branch.differentiatorContains === undefined ||
+      (profile.differentiators ?? []).some((text) =>
+        text.includes(branch.differentiatorContains),
+      );
     const matchedProducts = pack.products.filter((product) =>
       (product.selection_profiles ?? []).some(
         (profile) =>
           profile.protocol_id === entry.protocolId &&
           typeof profile.choose_when === "string" &&
-          profile.choose_when.includes(branch.chooseWhenContains),
+          profile.choose_when.includes(branch.chooseWhenContains) &&
+          matchesDifferentiator(profile),
       ),
     );
     if (matchedProducts.length === 0)
       throw new Error(
-        `No product carries this choose_when any more: ${entry.protocolId}/${branch.branchId} -> "${branch.chooseWhenContains}"`,
+        `No product carries this choose_when any more: ${entry.protocolId}/${branch.branchId} -> "${branch.chooseWhenContains}"${branch.differentiatorContains ? ` + "${branch.differentiatorContains}"` : ""}`,
       );
 
     const branchOptionIds = new Set();

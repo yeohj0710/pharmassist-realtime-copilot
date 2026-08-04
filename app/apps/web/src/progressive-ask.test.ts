@@ -33,8 +33,8 @@ const progressiveRules = actualPack.protocolRules.filter(
 );
 
 describe("progressive situation questions", () => {
-  it("ships a situation question for the protocols that had no branching", () => {
-    expect(progressiveRules.length).toBe(26);
+  it("ships a situation question for every protocol that carries one", () => {
+    expect(progressiveRules.length).toBe(32);
     for (const rule of progressiveRules) {
       // Referral rules sit at 100 and an unmatched ask short-circuits the
       // decision, so anything at or below that replaces a referral.

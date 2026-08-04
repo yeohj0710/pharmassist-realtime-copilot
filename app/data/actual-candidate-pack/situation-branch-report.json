@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0.0",
   "generatedFrom": "data/actual-research-overlays/situation-branches.json",
-  "protocolCount": 26,
-  "optionRuleCount": 308,
+  "protocolCount": 32,
+  "optionRuleCount": 386,
   "protocols": [
     {
       "protocolId": "PTC-FEVER",
@@ -14,10 +14,10 @@
           "options": 15
         },
         {
-          "branchId": "pediatric-liquid",
+          "branchId": "pediatric-acetaminophen",
           "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
-          "products": 16,
-          "options": 4
+          "products": 8,
+          "options": 3
         },
         {
           "branchId": "ibuprofen-soft",
@@ -36,9 +36,57 @@
           "chooseWhenContains": "생약 복합 보조를 함께 검토",
           "products": 1,
           "options": 1
+        },
+        {
+          "branchId": "pediatric-ibuprofen",
+          "chooseWhenContains": "소아의 발열·통증에서 연령과 체중",
+          "products": 8,
+          "options": 1
         }
       ],
       "optionRules": 27
+    },
+    {
+      "protocolId": "PTC-ABDOMINAL_PAIN_VOMITING",
+      "branches": [
+        {
+          "branchId": "acid",
+          "chooseWhenContains": "속쓰림·신트림·위산과다와 함께 윗배",
+          "products": 3,
+          "options": 2
+        },
+        {
+          "branchId": "diarrhea-adsorbent",
+          "chooseWhenContains": "묽은 설사와 함께 복통이 있어 흡착",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "overeating",
+          "chooseWhenContains": "과식·체함 뒤 소화불량과 함께",
+          "products": 3,
+          "options": 2
+        },
+        {
+          "branchId": "diarrhea-general",
+          "chooseWhenContains": "설사와 함께 복통·구역이 나타나고 감염 위험",
+          "products": 3,
+          "options": 3
+        },
+        {
+          "branchId": "motility",
+          "chooseWhenContains": "위장 운동이 불규칙해 복통·구역",
+          "products": 5,
+          "options": 2
+        },
+        {
+          "branchId": "official-gi",
+          "chooseWhenContains": "공식 소화기 적응증과 함께 나타나는 경우",
+          "products": 21,
+          "options": 19
+        }
+      ],
+      "optionRules": 29
     },
     {
       "protocolId": "PTC-NASAL_CONGESTION",
@@ -105,6 +153,30 @@
         }
       ],
       "optionRules": 23
+    },
+    {
+      "protocolId": "PTC-MUSCLE_PAIN",
+      "branches": [
+        {
+          "branchId": "topical",
+          "chooseWhenContains": "한정된 근육 통증 부위에 국소 제형",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "oral",
+          "chooseWhenContains": "근육통 자체의 진통 완화가 필요한",
+          "products": 27,
+          "options": 13
+        },
+        {
+          "branchId": "ibuprofen-soft",
+          "chooseWhenContains": "빠르게 복용할 연질캡슐형 이부프로펜",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 15
     },
     {
       "protocolId": "PTC-PRODUCTIVE_COUGH",
@@ -233,6 +305,54 @@
       "optionRules": 32
     },
     {
+      "protocolId": "PTC-SORE_THROAT",
+      "branches": [
+        {
+          "branchId": "cold-multi",
+          "chooseWhenContains": "인후통과 함께 발열·기침·콧물 같은 감기 증상도",
+          "products": 9,
+          "options": 6
+        },
+        {
+          "branchId": "topical-direct",
+          "chooseWhenContains": "인후의 국소 통증·염증 부위에 직접 사용하는 제형",
+          "products": 3,
+          "options": 3
+        },
+        {
+          "branchId": "oral-analgesic",
+          "chooseWhenContains": "기침·가래 동반 여부에 맞춰 국소제와 복합제를 비교",
+          "products": 3,
+          "options": 2
+        },
+        {
+          "branchId": "lozenge",
+          "chooseWhenContains": "인후염의 국소 통증을 단기간 줄이는 것이 우선",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "gargle",
+          "chooseWhenContains": "목 안쪽처럼 연고가 닿기 어려워 가글형",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "spray-antibacterial",
+          "chooseWhenContains": "항균·항염 성분을 스프레이로 직접",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "antiseptic-wide",
+          "chooseWhenContains": "구강·인후 부위의 넓은 범위 살균이 우선",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 15
+    },
+    {
       "protocolId": "PTC-MINOR_WOUND",
       "branches": [
         {
@@ -255,6 +375,36 @@
         }
       ],
       "optionRules": 13
+    },
+    {
+      "protocolId": "PTC-JOINT_PAIN",
+      "branches": [
+        {
+          "branchId": "inflammatory",
+          "chooseWhenContains": "붓기나 염증을 동반한 관절 통증에 소염진통",
+          "products": 11,
+          "options": 4
+        },
+        {
+          "branchId": "topical",
+          "chooseWhenContains": "먹는 약보다 국소 제형을 직접 적용",
+          "products": 2,
+          "options": 2
+        },
+        {
+          "branchId": "lasting",
+          "chooseWhenContains": "허리·관절처럼 말초 염증성 통증에서 지속력",
+          "products": 2,
+          "options": 1
+        },
+        {
+          "branchId": "ibuprofen-soft",
+          "chooseWhenContains": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 8
     },
     {
       "protocolId": "PTC-DIARRHEA",
@@ -390,9 +540,15 @@
           "chooseWhenContains": "알레르기 증상 완화 효과를 우선하고 졸림 가능성을 감수할 수 있을 때",
           "products": 1,
           "options": 1
+        },
+        {
+          "branchId": "effect-first-liquid",
+          "chooseWhenContains": "두드러기·전신 가려움 완화 효과를 우선하고 졸림",
+          "products": 1,
+          "options": 1
         }
       ],
-      "optionRules": 5
+      "optionRules": 6
     },
     {
       "protocolId": "PTC-ANTIFUNGAL_SKIN",
@@ -473,6 +629,24 @@
           "branchId": "stimulant-softener",
           "chooseWhenContains": "자극성 배변 효과와 대변을 부드럽게 하는 작용을 함께",
           "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 8
+    },
+    {
+      "protocolId": "PTC-DRY_COUGH",
+      "branches": [
+        {
+          "branchId": "cough-only",
+          "chooseWhenContains": "가래보다 마른기침 억제가 우선",
+          "products": 7,
+          "options": 7
+        },
+        {
+          "branchId": "cold-multi",
+          "chooseWhenContains": "발열·인후통·콧물 같은 감기 증상도",
+          "products": 2,
           "options": 1
         }
       ],
@@ -754,6 +928,24 @@
         {
           "branchId": "localized",
           "chooseWhenContains": "감염이나 진균 소견이 없는 가벼운 습진·피부염의 가려움",
+          "products": 1,
+          "options": 1
+        }
+      ],
+      "optionRules": 2
+    },
+    {
+      "protocolId": "PTC-DRY_EYE",
+      "branches": [
+        {
+          "branchId": "multi-dose",
+          "chooseWhenContains": "건조감과 이물감에 윤활·보습이 필요한 경우",
+          "products": 1,
+          "options": 1
+        },
+        {
+          "branchId": "single-use",
+          "chooseWhenContains": "건조감과 이물감에 윤활·보습이 필요한 경우",
           "products": 1,
           "options": 1
         }
