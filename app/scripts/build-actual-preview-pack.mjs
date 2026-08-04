@@ -2675,6 +2675,49 @@ if (staleOffListReferences.length)
     `Off-list references exempt a card that no longer says it: ${staleOffListReferences.join(", ")}`,
   );
 
+// A profile can declare a protocol whose roster never carries the product, and
+// nothing showed it: the report below counts a rule as applied if any one of
+// its protocols matched. The declaration is not wrong on its own — the wording
+// would apply if the roster ever gained the product — but it is an assumption
+// about the candidate set, and an invisible assumption is the thing that made
+// the famotidine note look reasonable for a protocol that has no famotidine.
+const reachedRuleProtocols = new Set(
+  fieldPracticeApplications.map(
+    (item) => `${item.ruleId} :: ${item.protocolId}`,
+  ),
+);
+const declaredUnreached = new Set();
+for (const entry of fieldPracticeGuidance.unreachedProtocols ?? []) {
+  if (
+    typeof entry.ruleId !== "string" ||
+    typeof entry.protocolId !== "string" ||
+    typeof entry.reason !== "string" ||
+    entry.reason.length < 30
+  )
+    throw new Error(
+      `Unreached protocol needs a rule, a protocol and a reason: ${entry.ruleId ?? "unknown"}`,
+    );
+  declaredUnreached.add(`${entry.ruleId} :: ${entry.protocolId}`);
+}
+const undeclaredUnreached = [];
+for (const rule of fieldPracticeGuidance.profiles)
+  for (const protocolId of rule.protocolIds) {
+    const key = `${rule.ruleId} :: ${protocolId}`;
+    if (!reachedRuleProtocols.has(key) && !declaredUnreached.has(key))
+      undeclaredUnreached.push(key);
+  }
+if (undeclaredUnreached.length)
+  throw new Error(
+    `Field-practice rules declare a protocol whose roster never carries the product: ${undeclaredUnreached.join(", ")}`,
+  );
+const staleUnreached = [...declaredUnreached].filter((key) =>
+  reachedRuleProtocols.has(key),
+);
+if (staleUnreached.length)
+  throw new Error(
+    `Unreached-protocol notes describe a link that now exists: ${staleUnreached.join(", ")}`,
+  );
+
 const pack = {
   packId: "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
   version: "1.0.0-research-preview",
