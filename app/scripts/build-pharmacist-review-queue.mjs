@@ -44,11 +44,15 @@ if (areasFile.schemaVersion !== "1.0.0" || !Array.isArray(areasFile.areas))
 const protocolById = new Map(
   pack.protocols.map((protocol) => [protocol.protocol_id, protocol]),
 );
-const referRuleByProtocolId = new Map(
-  pack.protocolRules
-    .filter((rule) => rule.effect === "refer" && Array.isArray(rule.value))
-    .map((rule) => [rule.protocol_id, rule]),
-);
+// A protocol can carry several referral rules and a reviewer has to judge the
+// wording against all of them, not whichever one happened to be last.
+const referTermsByProtocolId = new Map();
+for (const rule of pack.protocolRules) {
+  if (rule.effect !== "refer" || !Array.isArray(rule.value)) continue;
+  const terms = referTermsByProtocolId.get(rule.protocol_id) ?? [];
+  for (const term of rule.value) if (!terms.includes(term)) terms.push(term);
+  referTermsByProtocolId.set(rule.protocol_id, terms);
+}
 
 // A pharmacist reviews sentences, not field names. Each entry is one block of
 // text they have to read and accept or reject.
@@ -124,6 +128,9 @@ for (const area of areasFile.areas) {
       if (prior) carriedDecisionIds.add(itemId);
       items.push({
         itemId,
+        kind: "clinical_area",
+        // Quoted from the field-practice PDF, so it has a page to check against.
+        origin: "field_practice_pdf",
         areaId: area.areaId,
         areaTitle: area.title,
         whyReviewNeeded: area.whyReviewNeeded,
@@ -134,7 +141,7 @@ for (const area of areasFile.areas) {
         productName: product.display_name,
         reviewTargets,
         sourceLocator: profile.evidence_source,
-        referRedFlags: referRuleByProtocolId.get(protocolId)?.value ?? [],
+        referRedFlags: referTermsByProtocolId.get(protocolId) ?? [],
         // Nothing here approves itself. A decision only appears because a
         // pharmacist wrote it into pharmacist-review-decisions.json.
         status: prior?.status ?? "pending",
@@ -145,6 +152,180 @@ for (const area of areasFile.areas) {
       });
     }
   }
+}
+
+// The card copy is a second review surface. Unlike the field-practice items
+// above it quotes no document: the contrast sentences were written to replace a
+// circular template, and the only thing behind them is the pack's own
+// composition and dosage-form record. That makes them more in need of a
+// pharmacist's eye, not less, so the queue says so rather than implying a
+// source page exists.
+const selectionCopy = await readJson(
+  "data/actual-research-overlays/selection-copy.json",
+);
+const ingredientIdByName = new Map();
+for (const item of pack.ingredients) {
+  const name = item.display_name_ko;
+  ingredientIdByName.set(
+    name,
+    ingredientIdByName.has(name) ? "AMBIGUOUS" : item.ingredient_id,
+  );
+}
+const copyMustConfirm = [
+  "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
+  "성분·제형 서술이 허가사항과 어긋나지 않는지",
+  "손님에게 그대로 옮겨도 오해를 만들지 않는지",
+  "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지",
+];
+for (const entry of selectionCopy.entries) {
+  const ingredientKey =
+    entry.ingredient === "COMBO"
+      ? "COMBO"
+      : ingredientIdByName.get(entry.ingredient);
+  if (!ingredientKey || ingredientKey === "AMBIGUOUS")
+    throw new Error(
+      `Selection copy ingredient does not resolve: ${entry.ingredient}`,
+    );
+  const protocol = protocolById.get(entry.protocolId);
+  if (!protocol)
+    throw new Error(`Selection copy protocol missing: ${entry.protocolId}`);
+
+  const affected = pack.products.filter((product) => {
+    const active = (product.active_ingredients ?? []).map(
+      (item) => item.ingredient_id,
+    );
+    const key = active.length === 1 ? active[0] : "COMBO";
+    if (key !== ingredientKey) return false;
+    return (product.selection_profiles ?? []).some(
+      (profile) =>
+        profile.protocol_id === entry.protocolId &&
+        profile.comparison_note === entry.comparisonNote,
+    );
+  });
+  if (affected.length === 0)
+    throw new Error(
+      `Selection copy reaches no product: ${entry.protocolId}/${entry.ingredient}`,
+    );
+
+  // The wording a pharmacist has to accept: the contrast sentence plus the
+  // condition line the same candidates show above it.
+  const chooseWhens = [
+    ...new Set(
+      affected.flatMap((product) =>
+        (product.selection_profiles ?? [])
+          .filter(
+            (profile) =>
+              profile.protocol_id === entry.protocolId &&
+              profile.comparison_note === entry.comparisonNote,
+          )
+          .map((profile) => profile.choose_when)
+          .filter((text) => typeof text === "string" && text.length > 0),
+      ),
+    ),
+  ];
+  // A protocol whose candidates are all combination products carries several
+  // notes on the same ingredient group, split by choose_when cluster, so the
+  // cluster has to be part of the id.
+  const baseId = `PRQ-COPY-${entry.protocolId}-${entry.ingredient === "COMBO" ? "COMBO" : ingredientKey}`;
+  const itemId = entry.chooseWhenContains
+    ? `${baseId}-${createHash("sha256").update(entry.chooseWhenContains).digest("hex").slice(0, 8)}`
+    : baseId;
+  if (items.some((item) => item.itemId === itemId))
+    throw new Error(`Duplicate selection copy review item: ${itemId}`);
+  const prior = priorDecisionByItemId.get(itemId);
+  if (prior) carriedDecisionIds.add(itemId);
+  items.push({
+    itemId,
+    kind: "selection_copy",
+    // No page to check against — this is written text, not a quotation.
+    origin: "authored_contrast",
+    areaId: "selection-card-copy",
+    areaTitle: "제품 카드 비교 문구",
+    whyReviewNeeded:
+      "약사가 후보를 고를 때 읽는 문장이다. 출처 문서가 없고 팩의 성분·제형 기록만 근거로 작성했으므로, 임상적으로 틀린 대조가 있으면 그대로 상담에 나간다.",
+    mustConfirm: copyMustConfirm,
+    protocolId: entry.protocolId,
+    protocolName: protocol.display_name,
+    ingredientGroup: entry.ingredient,
+    affectedProducts: affected.map((product) => product.display_name),
+    reviewTargets: [
+      { field: "comparison_note", text: entry.comparisonNote },
+      ...chooseWhens.map((text) => ({ field: "choose_when", text })),
+    ],
+    sourceLocator: null,
+    referRedFlags: referTermsByProtocolId.get(entry.protocolId) ?? [],
+    status: prior?.status ?? "pending",
+    decision: prior?.decision ?? null,
+    reviewerId: prior?.reviewerId ?? null,
+    reviewedAt: prior?.reviewedAt ?? null,
+    reviewerNote: prior?.reviewerNote ?? null,
+  });
+}
+
+// Whatever the two passes above did not claim is wording the original pipeline
+// produced and nobody has ever agreed to. It is on the card either way, so it
+// belongs in the queue rather than in the gap between two review surfaces.
+const queuedNotes = new Set(
+  items.flatMap((item) =>
+    item.reviewTargets
+      .filter((target) => target.field === "comparison_note")
+      .map((target) => target.text),
+  ),
+);
+const pipelineNotes = new Map();
+for (const product of pack.products)
+  for (const profile of product.selection_profiles ?? []) {
+    const note = profile.comparison_note;
+    if (typeof note !== "string" || note.length === 0) continue;
+    if (queuedNotes.has(note)) continue;
+    const key = `${profile.protocol_id} ${note}`;
+    if (!pipelineNotes.has(key))
+      pipelineNotes.set(key, {
+        protocolId: profile.protocol_id,
+        note,
+        products: [],
+        chooseWhens: new Set(),
+      });
+    pipelineNotes.get(key).products.push(product.display_name);
+    if (profile.choose_when)
+      pipelineNotes.get(key).chooseWhens.add(profile.choose_when);
+  }
+for (const entry of pipelineNotes.values()) {
+  const protocol = protocolById.get(entry.protocolId);
+  if (!protocol)
+    throw new Error(
+      `Pipeline note points at a missing protocol: ${entry.protocolId}`,
+    );
+  const itemId = `PRQ-PIPE-${entry.protocolId}-${createHash("sha256").update(entry.note).digest("hex").slice(0, 8)}`;
+  const prior = priorDecisionByItemId.get(itemId);
+  if (prior) carriedDecisionIds.add(itemId);
+  items.push({
+    itemId,
+    kind: "selection_copy",
+    // Emitted by the build from official fields, never written or read by a
+    // person. The least reviewed wording in the pack.
+    origin: "pipeline_generated",
+    areaId: "selection-card-copy",
+    areaTitle: "제품 카드 비교 문구",
+    whyReviewNeeded:
+      "빌드가 공식 항목에서 자동으로 만든 문장이라 사람이 한 번도 읽지 않았다. 카드에는 그대로 나가므로 임상적으로 어긋나는 대조가 있으면 상담에 실린다.",
+    mustConfirm: copyMustConfirm,
+    protocolId: entry.protocolId,
+    protocolName: protocol.display_name,
+    ingredientGroup: null,
+    affectedProducts: [...new Set(entry.products)],
+    reviewTargets: [
+      { field: "comparison_note", text: entry.note },
+      ...[...entry.chooseWhens].map((text) => ({ field: "choose_when", text })),
+    ],
+    sourceLocator: null,
+    referRedFlags: referTermsByProtocolId.get(entry.protocolId) ?? [],
+    status: prior?.status ?? "pending",
+    decision: prior?.decision ?? null,
+    reviewerId: prior?.reviewerId ?? null,
+    reviewedAt: prior?.reviewedAt ?? null,
+    reviewerNote: prior?.reviewerNote ?? null,
+  });
 }
 
 const orphanDecisionIds = [...priorDecisionByItemId.keys()]
@@ -198,6 +379,19 @@ const queue = {
   },
   areaCount: areasFile.areas.length,
   itemCount: items.length,
+  countByKind: items.reduce(
+    (totals, item) => ({
+      ...totals,
+      [item.kind]: (totals[item.kind] ?? 0) + 1,
+    }),
+    {},
+  ),
+  originLegend: {
+    field_practice_pdf:
+      "현장실습 PDF에서 인용한 문구. sourceLocator의 페이지와 대조할 수 있다.",
+    authored_contrast:
+      "출처 문서 없이 작성한 대조 문장. 근거는 팩의 성분·제형 기록뿐이라 임상 판단은 검토가 필요하다.",
+  },
   countByStatus,
   items,
 };

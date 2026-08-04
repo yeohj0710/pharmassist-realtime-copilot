@@ -65,29 +65,100 @@ describe("pharmacist review queue", () => {
         ).toBeGreaterThan(0);
       }
 
-      // A locator a pharmacist cannot open is not a citation.
-      const sourceId = item.sourceLocator.split("#")[0] ?? "";
-      expect(
-        sourceIds.has(sourceId),
-        `${item.itemId} ${item.sourceLocator}`,
-      ).toBe(true);
+      if (item.kind === "clinical_area") {
+        // Quoted from the PDF, so a locator a pharmacist cannot open is not a
+        // citation.
+        const sourceId = item.sourceLocator?.split("#")[0] ?? "";
+        expect(
+          sourceIds.has(sourceId),
+          `${item.itemId} ${item.sourceLocator}`,
+        ).toBe(true);
 
-      const product = actualPack.products.find(
-        (candidate) => candidate.product_id === item.productId,
-      );
-      expect(product, item.itemId).toBeDefined();
-      expect(item.productName, item.itemId).toBe(product?.display_name);
+        const product = actualPack.products.find(
+          (candidate) => candidate.product_id === item.productId,
+        );
+        expect(product, item.itemId).toBeDefined();
+        expect(item.productName, item.itemId).toBe(product?.display_name);
+      } else {
+        // Written text, not a quotation. Claiming a source page would be worse
+        // than admitting there is none, so the locator stays null and the item
+        // names the products the wording actually reaches.
+        expect(
+          ["authored_contrast", "pipeline_generated"],
+          item.itemId,
+        ).toContain(item.origin);
+        expect(item.sourceLocator, item.itemId).toBeNull();
+        const affected = item.affectedProducts ?? [];
+        expect(affected.length, item.itemId).toBeGreaterThan(0);
+        for (const name of affected)
+          expect(
+            actualPack.products.some(
+              (candidate) => candidate.display_name === name,
+            ),
+            `${item.itemId} ${name}`,
+          ).toBe(true);
+      }
     }
+  });
+
+  it("puts every authored card sentence in front of a pharmacist", () => {
+    const copyItems = reviewQueue.items.filter(
+      (item) => item.kind === "selection_copy",
+    );
+    expect(copyItems.length).toBeGreaterThanOrEqual(103);
+    // Every comparison note the pack shows should be one of these, or it
+    // reached a card without anyone agreeing to it.
+    const queued = new Set(
+      copyItems.flatMap((item) =>
+        item.reviewTargets
+          .filter((target) => target.field === "comparison_note")
+          .map((target) => target.text),
+      ),
+    );
+    const shown = new Set(
+      actualPack.products.flatMap((product) =>
+        (product.selection_profiles ?? []).map(
+          (profile) => profile.comparison_note,
+        ),
+      ),
+    );
+    const unreviewed = [...shown].filter(
+      (note) =>
+        typeof note === "string" && note.length > 0 && !queued.has(note),
+    );
+    // What remains is field-practice wording, which the clinical-area items
+    // already cover.
+    const fieldPracticeNotes = new Set(
+      reviewQueue.items
+        .filter((item) => item.kind === "clinical_area")
+        .flatMap((item) =>
+          item.reviewTargets
+            .filter((target) => target.field === "comparison_note")
+            .map((target) => target.text),
+        ),
+    );
+    expect(unreviewed.filter((note) => !fieldPracticeNotes.has(note))).toEqual(
+      [],
+    );
   });
 
   it("carries the referral red flags a reviewer has to judge against", () => {
     for (const item of reviewQueue.items) {
       expect(item.referRedFlags.length, item.itemId).toBeGreaterThan(0);
-      const referRule = actualPack.protocolRules.find(
-        (rule) =>
-          rule.protocol_id === item.protocolId && rule.effect === "refer",
-      );
-      expect(item.referRedFlags, item.itemId).toEqual(referRule?.value);
+      // Every referral term of the protocol, not just the first rule's — a
+      // reviewer judges the wording against all of them.
+      const terms: string[] = [];
+      for (const rule of actualPack.protocolRules)
+        // Some refer rules carry a single string rather than a list; iterating
+        // that would collect its characters.
+        if (
+          rule.protocol_id === item.protocolId &&
+          rule.effect === "refer" &&
+          Array.isArray(rule.value)
+        )
+          for (const term of rule.value)
+            if (!terms.includes(term)) terms.push(term);
+      expect(item.referRedFlags, item.itemId).toEqual(terms);
     }
   });
 });
