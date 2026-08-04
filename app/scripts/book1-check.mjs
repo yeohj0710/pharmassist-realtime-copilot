@@ -20,7 +20,11 @@ const pack = JSON.parse(
 // came only from secondary words in labels (for example, cold combinations as
 // standalone headache products and laxatives as gas products). Keep the new
 // safe pack counts exact so the book merge still cannot hide any later loss.
-const BASELINE = { claims: 478, protocols: 39, protocolOptions: 332 };
+// Protocols went 39 -> 44 when the five no_registered_product protocols started
+// shipping instead of being dropped from the pack. They carry zero options and
+// zero products, which is why claims and protocolOptions are unchanged: that
+// pair staying fixed is the evidence no product was invented to fill the gap.
+const BASELINE = { claims: 478, protocols: 44, protocolOptions: 332 };
 
 const failures = [];
 const fail = (message) => failures.push(message);

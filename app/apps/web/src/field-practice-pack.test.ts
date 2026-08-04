@@ -122,12 +122,16 @@ describe("field-practice evidence layer", () => {
     expect(guidanceReport.applicationCount).toBeGreaterThan(30);
   });
 
-  it("activates every PDF protocol backed by an official product and records inventory gaps", () => {
+  it("ships every PDF protocol and invents no product for the ones the registry lacks", () => {
     const activeIds = fieldPracticeProtocols.protocols
-      .filter((protocol) => protocol.activationStatus !== "inventory_gap")
+      .filter(
+        (protocol) => protocol.activationStatus !== "no_registered_product",
+      )
       .map((protocol) => protocol.protocolId);
     const gapIds = fieldPracticeProtocols.protocols
-      .filter((protocol) => protocol.activationStatus === "inventory_gap")
+      .filter(
+        (protocol) => protocol.activationStatus === "no_registered_product",
+      )
       .map((protocol) => protocol.protocolId);
 
     expect(activeIds).toHaveLength(13);
@@ -141,14 +145,60 @@ describe("field-practice evidence layer", () => {
       ).toBe(true);
       expect(productsFor(protocolId).length, protocolId).toBeGreaterThan(0);
     }
-    for (const protocolId of gapIds)
-      expect(
-        actualPack.protocols.some(
-          (protocol) => protocol.protocol_id === protocolId,
-        ),
-        protocolId,
-      ).toBe(false);
+    // A protocol the official registry has no product for still ships. It has
+    // to be present so it can claim its own utterances, and it has to stay
+    // empty so nothing gets recommended for it.
+    for (const protocolId of gapIds) {
+      const packProtocol = actualPack.protocols.find(
+        (protocol) => protocol.protocol_id === protocolId,
+      );
+      expect(packProtocol, protocolId).toBeDefined();
+      expect(packProtocol?.option_ids ?? [], protocolId).toEqual([]);
+      expect(productsFor(protocolId), protocolId).toEqual([]);
+    }
   });
+
+  it.each([
+    ["입술에 물집이 났어요", "PTC-ORAL_HERPES"],
+    ["구순포진이에요", "PTC-ORAL_HERPES"],
+    ["각질이 두꺼워요", "PTC-DRY_SKIN"],
+    ["피부가 너무 건조해요", "PTC-DRY_SKIN"],
+    ["눈이 가렵고 빨개요", "PTC-EYE_ALLERGY"],
+    ["알레르기 안약 주세요", "PTC-EYE_ALLERGY"],
+    ["기미약 주세요", "PTC-PIGMENTATION"],
+    ["얼굴에 색소침착이 있어요", "PTC-PIGMENTATION"],
+    ["티눈약 주세요", "PTC-CORN_WART"],
+    ["사마귀약 주세요", "PTC-CORN_WART"],
+  ])(
+    // Before these protocols shipped, 입술에 물집 matched PTC-MINOR_BURN and
+    // drew 후시딘·포비돈요오드 for a viral cold sore, and 각질이 두꺼워요
+    // matched PTC-SCALP_DANDRUFF. Absence routed the patient to a neighbouring
+    // protocol's products rather than to nothing.
+    "keeps an unregistered condition on its own protocol with no product: %s",
+    (text, protocolId) => {
+      const engine = new LocalClinicalEngine(runtimePack);
+      const result = engine.run(
+        {
+          request_id: crypto.randomUUID(),
+          session_id: crypto.randomUUID(),
+          sequence: 1,
+          input_type: "typed",
+          text,
+          is_partial: false,
+          locale: "ko-KR",
+          domain: "human_otc",
+          patient_context: {},
+          client_timestamp: new Date().toISOString(),
+        },
+        { tenantId: "local-research-preview", formulary: previewFormulary },
+      );
+
+      expect(result.output.decision.protocol_id).toBe(protocolId);
+      expect(result.output.decision.status).not.toBe("recommend");
+      expect(result.output.decision.product_candidates).toEqual([]);
+      expect(result.output.provisional_candidates).toEqual([]);
+    },
+  );
 
   it.each([
     ["당뇨발에 무좀이 생겼어요", "PTC-ANTIFUNGAL_SKIN"],

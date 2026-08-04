@@ -37,7 +37,7 @@
     },
     {
       "protocolId": "PTC-EYE_ALLERGY",
-      "activationStatus": "inventory_gap",
+      "activationStatus": "no_registered_product",
       "activationNote": "현재 공식 제품 레지스트리에 PDF의 케토티펜·나파졸린 점안제가 없어 후보를 노출하지 않음",
       "displayName": "알레르기·충혈 점안제 후보 선별",
       "intent": "건조감과 알레르기성 가려움·충혈을 구분해 점안 후보를 비교",
@@ -139,7 +139,7 @@
     },
     {
       "protocolId": "PTC-PIGMENTATION",
-      "activationStatus": "inventory_gap",
+      "activationStatus": "no_registered_product",
       "activationNote": "현재 공식 제품 레지스트리에 PDF의 히드로퀴논 외용제가 없어 후보를 노출하지 않음",
       "displayName": "기미·색소침착 외용제 후보 선별",
       "intent": "기미와 상처 후 색소침착을 구분해 농도·제형별 후보를 비교",
@@ -152,7 +152,7 @@
     },
     {
       "protocolId": "PTC-ORAL_HERPES",
-      "activationStatus": "inventory_gap",
+      "activationStatus": "no_registered_product",
       "activationNote": "현재 공식 제품 레지스트리에 PDF의 아시클로버·티로트리신 외용제가 없어 후보를 노출하지 않음",
       "displayName": "구순포진 단계별 외용제 후보 선별",
       "intent": "물집 전후 단계를 확인해 항바이러스제와 상처 후 국소제를 구분",
@@ -165,7 +165,7 @@
     },
     {
       "protocolId": "PTC-DRY_SKIN",
-      "activationStatus": "inventory_gap",
+      "activationStatus": "no_registered_product",
       "activationNote": "현재 공식 제품 레지스트리에 PDF의 우레아·헤파리노이드 건피 외용제가 없어 후보를 노출하지 않음",
       "displayName": "건피·각질 외용제 후보 선별",
       "intent": "단순 건조와 두꺼운 각질을 구분해 보습·각질연화 후보를 비교",
@@ -195,7 +195,7 @@
     },
     {
       "protocolId": "PTC-CORN_WART",
-      "activationStatus": "inventory_gap",
+      "activationStatus": "no_registered_product",
       "activationNote": "현재 공식 제품 레지스트리에 PDF의 살리실산 티눈·사마귀 외용제가 없어 후보를 노출하지 않음",
       "displayName": "티눈·사마귀 외용제 후보 선별",
       "intent": "반복 압박성 티눈과 감염성 사마귀를 구분해 각질용해 후보를 비교",

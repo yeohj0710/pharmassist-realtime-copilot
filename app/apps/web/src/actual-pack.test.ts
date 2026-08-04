@@ -967,9 +967,20 @@ describe("actual research preview pack", () => {
         "https://www.health.kr/searchDrug/result_drug.asp?drug_cd=2021111700001",
       image_url: "/product-images/202107495.jpg",
     });
-    expect(actualPack.protocols).toHaveLength(39);
+    expect(actualPack.protocols).toHaveLength(44);
+    // Five protocols carry no options because the official registry has no
+    // product for them. They ship anyway so they claim their own utterances
+    // rather than letting a neighbouring protocol absorb them, so they are the
+    // only protocols allowed to have no product selection profile.
+    const emptyProtocolIds = actualPack.protocols
+      .filter((protocol) => protocol.option_ids.length === 0)
+      .map((protocol) => protocol.protocol_id);
+    expect(emptyProtocolIds).toHaveLength(5);
     expect(productProtocolProfileIds).toEqual(
-      actualPack.protocols.map((protocol) => protocol.protocol_id).sort(),
+      actualPack.protocols
+        .map((protocol) => protocol.protocol_id)
+        .filter((protocolId) => !emptyProtocolIds.includes(protocolId))
+        .sort(),
     );
     expect(actualPack.protocolOptions.length).toBeGreaterThan(47);
     expect(

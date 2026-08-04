@@ -325,9 +325,11 @@ export interface OTCProtocol {
     negative?: string[];
   };
   /**
-   * @minItems 1
+   * Empty only for a protocol the official product registry has no product for. Such a protocol still ships so it claims its own utterances instead of letting a neighbouring protocol absorb them and recommend that neighbour's products; the empty option set is what keeps it from recommending anything. The pack build rejects an empty option set for any protocol not explicitly marked no_registered_product.
+   *
+   * @minItems 0
    */
-  option_ids: [string, ...string[]];
+  option_ids: string[];
   rule_ids: string[];
   /**
    * @minItems 1

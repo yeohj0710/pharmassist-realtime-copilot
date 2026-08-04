@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0.0",
+  "researchOnly": true,
+  "intent": "현장실습 자료에서 끌어온 선택 문구 가운데 약사가 직접 확인해야 하는 영역을 선언한다. 여기 선언된 영역은 pharmacist-review-queue.json으로 생성되며, 승인 전까지 어떤 항목도 approved 상태가 될 수 없다.",
+  "areas": [
+    {
+      "areaId": "oral-contraception-schedule",
+      "title": "경구피임제 복용 일정과 금기",
+      "protocolIds": ["PTC-ORAL_CONTRACEPTION"],
+      "whyReviewNeeded": "21일 복용·7일 휴약 일정과 복용을 놓쳤을 때의 대처는 제품마다 다르고, 전조 편두통·혈전증 병력·35세 이상 흡연은 절대 금기에 가깝다. 자료 문구를 그대로 상담에 쓰면 금기 확인이 빠질 수 있다.",
+      "mustConfirm": [
+        "복용 일정과 휴약 기간 설명이 해당 제품 허가사항과 일치하는지",
+        "복용을 놓친 경우의 안내가 빠져 있지 않은지",
+        "전조 편두통·혈전증 병력·35세 이상 흡연·조절되지 않는 고혈압을 상담 전 반드시 확인하도록 되어 있는지"
+      ]
+    },
+    {
+      "areaId": "sleep-aid-age-anticholinergic",
+      "title": "수면보조제 연령과 항콜린성 위험",
+      "protocolIds": ["PTC-SLEEP_AID"],
+      "whyReviewNeeded": "독시라민·디펜히드라민은 고령자에서 항콜린성 부작용과 낙상 위험이 올라가고, 2주 이상 불면은 OTC로 다룰 상태가 아니다. 연령 제한과 사용 기간 한계가 문구에 분명히 있어야 한다.",
+      "mustConfirm": [
+        "연령 상한과 고령자 주의가 문구에 들어 있는지",
+        "항콜린성 부작용과 병용 위험(항히스타민·삼환계 등)을 다루는지",
+        "단기 사용 한계와 2주 이상 불면의 의뢰 기준이 분명한지"
+      ]
+    },
+    {
+      "areaId": "nicotine-replacement-strength",
+      "title": "니코틴 대체요법 강도 선택",
+      "protocolIds": ["PTC-SMOKING_CESSATION"],
+      "whyReviewNeeded": "하루 흡연량에 따라 시작 강도가 달라지고, 임신 중 흡연과 최근 흉통·부정맥은 OTC 판단 범위를 벗어난다. 강도를 잘못 고르면 과량 또는 금단 실패로 이어진다.",
+      "mustConfirm": [
+        "하루 흡연량에 따른 시작 강도 기준이 문구에 있는지",
+        "패치·껌·트로키의 사용법 차이가 구분되어 있는지",
+        "임신·최근 흉통·부정맥에서 상담을 중단하고 의뢰하도록 되어 있는지"
+      ]
+    },
+    {
+      "areaId": "vaginal-antifungal-vs-antiseptic",
+      "title": "질정과 국소 소독제 구분",
+      "protocolIds": ["PTC-VAGINAL_ANTIFUNGAL"],
+      "whyReviewNeeded": "질정과 외음부 세정·소독제는 투여 부위와 목적이 다른데 상담에서 섞이기 쉽다. 임신·발열·골반 통증·악취 분비물은 칸디다가 아닐 가능성이 높아 의뢰 대상이다.",
+      "mustConfirm": [
+        "질정과 외용 소독제의 투여 부위·목적 구분이 문구에 분명한지",
+        "반복 재발과 임신에서 자가치료를 권하지 않는지",
+        "발열·골반 통증·악취 분비물의 의뢰 기준이 있는지"
+      ]
+    },
+    {
+      "areaId": "hemorrhoid-oral-vs-topical",
+      "title": "치질 경구제와 국소제 구분",
+      "protocolIds": ["PTC-HEMORRHOID"],
+      "whyReviewNeeded": "정맥순환 보조 경구제와 국소 연고·좌제는 작용 위치와 기대 효과가 다르다. 검은 변과 다량 출혈은 치질이 아닌 상부위장관 출혈일 수 있어 제품 상담 자체를 멈춰야 한다.",
+      "mustConfirm": [
+        "경구 정맥순환 보조제와 국소제의 역할 구분이 문구에 있는지",
+        "좌제와 연고의 사용 상황 구분이 있는지",
+        "검은 변·다량 출혈·실신에서 제품을 제시하지 않고 의뢰하는지"
+      ]
+    },
+    {
+      "areaId": "burn-depth-referral",
+      "title": "화상 깊이와 의뢰 기준",
+      "protocolIds": ["PTC-MINOR_BURN"],
+      "whyReviewNeeded": "OTC로 다룰 수 있는 화상은 좁은 범위의 표재성 화상뿐이다. 물집 처치와 소독제 선택은 깊이 판단에 달려 있고, 얼굴·전기·화학 화상은 즉시 의뢰 대상이다.",
+      "mustConfirm": [
+        "OTC로 다룰 수 있는 화상 깊이와 범위가 문구에 한정되어 있는지",
+        "물집을 터뜨리지 않도록 안내하는지",
+        "넓은 화상·얼굴·전기·화학 화상의 즉시 의뢰 기준이 분명한지"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "schemaHash": "bd0a81289dad9e68dc5054d6cd27ece956b3cfc520096b0d9a0f08571e7c0425",
+  "schemaHash": "c196d0e05966f368f1197a9ba2bd3957df458da676f4506957054c641e2481dd",
   "generated": [
     {
       "file": "claim.ts",
@@ -44,7 +44,7 @@
     {
       "file": "otc_protocol.ts",
       "title": "OTCProtocol",
-      "sha256": "4558c61b9213dc2f22138630f2a5c33964e60ecb33d551290a9206fa84028690"
+      "sha256": "f30c1d8c74d7c62da9cfce2e5ef98a87c3ec407b1a970003f752e9e206130edc"
     },
     {
       "file": "pack_manifest.ts",
@@ -94,7 +94,7 @@
     {
       "file": "runtime_pack.ts",
       "title": "RuntimePackContract",
-      "sha256": "d193ff746512c7f7c42d65dc032511ab899f878498bca1a341a445c6055f64a9"
+      "sha256": "3c57e3e513d7043fe07e1f82316cbbeb0662b4badf36596655a5b4db320fe2fd"
     },
     {
       "file": "source_record.ts",

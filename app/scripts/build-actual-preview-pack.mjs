@@ -463,8 +463,8 @@ for (const protocol of fieldPracticeProtocols.protocols) {
     !Array.isArray(protocol.negative) ||
     protocol.negative.length === 0 ||
     (protocol.activationStatus !== undefined &&
-      protocol.activationStatus !== "inventory_gap") ||
-    (protocol.activationStatus === "inventory_gap" &&
+      protocol.activationStatus !== "no_registered_product") ||
+    (protocol.activationStatus === "no_registered_product" &&
       (typeof protocol.activationNote !== "string" ||
         protocol.activationNote.length === 0)) ||
     !Number.isInteger(protocol.page) ||
@@ -477,7 +477,13 @@ for (const protocol of fieldPracticeProtocols.protocols) {
   extensionProtocolIds.add(protocol.protocolId);
 }
 const extensionProtocols = fieldPracticeProtocols.protocols
-  .filter((protocol) => protocol.activationStatus !== "inventory_gap")
+  // Every field-practice protocol ships, including the ones with no product in
+  // the official registry. Dropping one does not make the system silent about
+  // that condition — it lets a lexically adjacent protocol absorb the
+  // utterance and recommend the wrong product, the way 구순포진 fell through to
+  // PTC-MINOR_BURN and drew 후시딘·포비돈요오드 candidates. Shipping it with
+  // zero options keeps the match correct and lets the safety gate return zero
+  // candidates.
   .map((protocol) => {
     const suffix = protocol.protocolId.replace(/^PTC-/u, "");
     return {
@@ -1609,61 +1615,73 @@ const extensionProtocolRules = extensionProtocols.flatMap((protocol) => {
   const optionIds = generatedProtocolOptions
     .filter((option) => option.protocol_id === protocol.protocol_id)
     .map((option) => option.option_id);
-  if (!definition || optionIds.length === 0)
+  // A protocol marked no_registered_product carries zero options by design:
+  // the official registry has no product for it. That is the one case where an
+  // empty option set is expected rather than a build defect.
+  const noRegisteredProduct =
+    definition?.activationStatus === "no_registered_product";
+  if (!definition || (optionIds.length === 0 && !noRegisteredProduct))
     throw new Error(
       `Field-practice protocol has no official product candidates: ${protocol.protocol_id}`,
+    );
+  if (noRegisteredProduct && optionIds.length > 0)
+    throw new Error(
+      `Protocol is marked no_registered_product but has official candidates: ${protocol.protocol_id}`,
     );
   const suffix = protocol.protocol_id.replace(/^PTC-/u, "");
   const referRuleId = `RUL-${suffix}-REFER-RED-FLAGS`;
   const selectRuleId = `RUL-${suffix}-SELECT-FALLBACK`;
-  return [
-    {
-      rule_id: referRuleId,
-      protocol_id: protocol.protocol_id,
-      kind: "referral_pattern",
-      effect: "refer",
-      field: "normalized_text",
-      operator: "matches",
-      value: definition.negative,
-      option_ids: [],
-      question: null,
-      reason:
-        "현장실습 자료의 의뢰 신호가 있으면 제품 후보를 비우고 진료를 우선합니다.",
-      priority: 100,
-      status: "candidate",
-      review: protocol.review,
-      source_refs: [
-        fieldPracticeProtocolSourceRef(
-          protocol.protocol_id,
-          definition.page,
-          referRuleId,
-        ),
-      ],
-    },
-    {
-      rule_id: selectRuleId,
-      protocol_id: protocol.protocol_id,
-      kind: "selection_pattern",
-      effect: "select",
-      field: "triage.red_flags_absent_and_minimum_safety_known",
-      operator: "equals",
-      value: true,
-      option_ids: optionIds,
-      question: null,
-      reason:
-        "위험 신호가 없을 때 공식 효능과 제품별 현장 선택 기준이 있는 후보만 제공합니다.",
-      priority: 70,
-      status: "candidate",
-      review: protocol.review,
-      source_refs: [
-        fieldPracticeProtocolSourceRef(
-          protocol.protocol_id,
-          definition.page,
-          selectRuleId,
-        ),
-      ],
-    },
-  ];
+  const referRule = {
+    rule_id: referRuleId,
+    protocol_id: protocol.protocol_id,
+    kind: "referral_pattern",
+    effect: "refer",
+    field: "normalized_text",
+    operator: "matches",
+    value: definition.negative,
+    option_ids: [],
+    question: null,
+    reason:
+      "현장실습 자료의 의뢰 신호가 있으면 제품 후보를 비우고 진료를 우선합니다.",
+    priority: 100,
+    status: "candidate",
+    review: protocol.review,
+    source_refs: [
+      fieldPracticeProtocolSourceRef(
+        protocol.protocol_id,
+        definition.page,
+        referRuleId,
+      ),
+    ],
+  };
+  // No registered product means nothing to select. Emitting only the refer
+  // rule keeps the protocol retrievable for red-flag screening while the
+  // decision path yields zero candidates.
+  if (noRegisteredProduct) return [referRule];
+  const selectRule = {
+    rule_id: selectRuleId,
+    protocol_id: protocol.protocol_id,
+    kind: "selection_pattern",
+    effect: "select",
+    field: "triage.red_flags_absent_and_minimum_safety_known",
+    operator: "equals",
+    value: true,
+    option_ids: optionIds,
+    question: null,
+    reason:
+      "위험 신호가 없을 때 공식 효능과 제품별 현장 선택 기준이 있는 후보만 제공합니다.",
+    priority: 70,
+    status: "candidate",
+    review: protocol.review,
+    source_refs: [
+      fieldPracticeProtocolSourceRef(
+        protocol.protocol_id,
+        definition.page,
+        selectRuleId,
+      ),
+    ],
+  };
+  return [referRule, selectRule];
 });
 const packComposition = (product) =>
   new Set(

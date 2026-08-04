@@ -37,6 +37,9 @@
     "data:build:clinical-pathways": "tsx scripts/build-clinical-pathway-mappings.ts && prettier --write data/clinical-pathways/product-mappings.json data/clinical-pathways/coverage-report.json",
     "data:import:local-catalog": "tsx scripts/import-local-pharmacy-catalog.ts",
     "data:sync:mfds-otc": "tsx scripts/sync-mfds-otc-catalog.ts",
+    "data:build:pharmacist-review": "node scripts/build-pharmacist-review-queue.mjs && prettier --write data/actual-candidate-pack/pharmacist-review-queue.json",
+    "snapshot:utterance": "vitest run --config vitest.config.ts apps/web/src/utterance-snapshot.test.ts",
+    "data:build:pack": "node scripts/build-actual-preview-pack.mjs && node scripts/book1-merge.mjs && pnpm data:build:pharmacist-review && node scripts/book1-check.mjs",
     "check": "pnpm lint && pnpm format:check && pnpm schema:check && pnpm typecheck && pnpm test && pnpm build && pnpm docs:check"
   },
   "devDependencies": {

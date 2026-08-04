@@ -76915,6 +76915,55 @@
     },
     {
       "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "protocol_id": "PTC-EYE_ALLERGY",
+      "display_name": "알레르기·충혈 점안제 후보 선별",
+      "domain": "human_otc",
+      "intent": "건조감과 알레르기성 가려움·충혈을 구분해 점안 후보를 비교",
+      "symptom_category": "눈/알레르기·충혈",
+      "triggers": {
+        "aliases": [
+          "눈이 가렵고 빨개요",
+          "알레르기 안약",
+          "눈 충혈"
+        ],
+        "anchors": [
+          "알레르기 결막염",
+          "눈 가려움"
+        ],
+        "keywords": [
+          "충혈",
+          "결막염",
+          "눈 자극"
+        ],
+        "negative": []
+      },
+      "version": "1.0.0",
+      "status": "published",
+      "expires_at": "2027-01-13T00:00:00+09:00",
+      "option_ids": [],
+      "rule_ids": [
+        "RUL-EYE_ALLERGY-REFER-RED-FLAGS"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "PTC-EYE_ALLERGY",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.9 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
       "protocol_id": "PTC-MINOR_BURN",
       "display_name": "가벼운 화상 외용제 후보 선별",
       "domain": "human_otc",
@@ -77288,6 +77337,153 @@
     },
     {
       "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "protocol_id": "PTC-PIGMENTATION",
+      "display_name": "기미·색소침착 외용제 후보 선별",
+      "domain": "human_otc",
+      "intent": "기미와 상처 후 색소침착을 구분해 농도·제형별 후보를 비교",
+      "symptom_category": "피부/기미·색소침착",
+      "triggers": {
+        "aliases": [
+          "기미약",
+          "색소침착",
+          "검은 자국"
+        ],
+        "anchors": [
+          "기미",
+          "색소침착"
+        ],
+        "keywords": [
+          "주근깨",
+          "갈색 반점",
+          "여드름 자국"
+        ],
+        "negative": []
+      },
+      "version": "1.0.0",
+      "status": "published",
+      "expires_at": "2027-01-13T00:00:00+09:00",
+      "option_ids": [],
+      "rule_ids": [
+        "RUL-PIGMENTATION-REFER-RED-FLAGS"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "PTC-PIGMENTATION",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.10 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "protocol_id": "PTC-ORAL_HERPES",
+      "display_name": "구순포진 단계별 외용제 후보 선별",
+      "domain": "human_otc",
+      "intent": "물집 전후 단계를 확인해 항바이러스제와 상처 후 국소제를 구분",
+      "symptom_category": "구강/구순포진",
+      "triggers": {
+        "aliases": [
+          "입술 포진",
+          "입술에 물집",
+          "헤르페스"
+        ],
+        "anchors": [
+          "구순포진",
+          "입술 물집"
+        ],
+        "keywords": [
+          "포진",
+          "따끔거림",
+          "물집"
+        ],
+        "negative": []
+      },
+      "version": "1.0.0",
+      "status": "published",
+      "expires_at": "2027-01-13T00:00:00+09:00",
+      "option_ids": [],
+      "rule_ids": [
+        "RUL-ORAL_HERPES-REFER-RED-FLAGS"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "PTC-ORAL_HERPES",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.8 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "protocol_id": "PTC-DRY_SKIN",
+      "display_name": "건피·각질 외용제 후보 선별",
+      "domain": "human_otc",
+      "intent": "단순 건조와 두꺼운 각질을 구분해 보습·각질연화 후보를 비교",
+      "symptom_category": "피부/건피·각질",
+      "triggers": {
+        "aliases": [
+          "피부가 너무 건조해요",
+          "건피",
+          "각질이 두꺼워요"
+        ],
+        "anchors": [
+          "건피",
+          "피부 건조"
+        ],
+        "keywords": [
+          "각질",
+          "갈라짐",
+          "주부습진"
+        ],
+        "negative": []
+      },
+      "version": "1.0.0",
+      "status": "published",
+      "expires_at": "2027-01-13T00:00:00+09:00",
+      "option_ids": [],
+      "rule_ids": [
+        "RUL-DRY_SKIN-REFER-RED-FLAGS"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "PTC-DRY_SKIN",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.8 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
       "protocol_id": "PTC-BRUISE",
       "display_name": "멍·타박상 외용제 후보 선별",
       "domain": "human_otc",
@@ -77325,6 +77521,54 @@
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
           "locator": "일반의약품 정리_센트럴파크약국.pdf p.9 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ],
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "pack_id": "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
+      "protocol_id": "PTC-CORN_WART",
+      "display_name": "티눈·사마귀 외용제 후보 선별",
+      "domain": "human_otc",
+      "intent": "반복 압박성 티눈과 감염성 사마귀를 구분해 각질용해 후보를 비교",
+      "symptom_category": "피부/티눈·사마귀",
+      "triggers": {
+        "aliases": [
+          "티눈약",
+          "사마귀약",
+          "발바닥에 딱딱한 심"
+        ],
+        "anchors": [
+          "티눈",
+          "사마귀"
+        ],
+        "keywords": [
+          "살리실산",
+          "발바닥 심"
+        ],
+        "negative": []
+      },
+      "version": "1.0.0",
+      "status": "published",
+      "expires_at": "2027-01-13T00:00:00+09:00",
+      "option_ids": [],
+      "rule_ids": [
+        "RUL-CORN_WART-REFER-RED-FLAGS"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "PTC-CORN_WART",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.10 > 현장실습 제품군 선택 기준",
           "verified_at": "2026-07-31T00:00:00+09:00"
         }
       ],
@@ -101226,6 +101470,42 @@
       ]
     },
     {
+      "rule_id": "RUL-EYE_ALLERGY-REFER-RED-FLAGS",
+      "protocol_id": "PTC-EYE_ALLERGY",
+      "kind": "referral_pattern",
+      "effect": "refer",
+      "field": "normalized_text",
+      "operator": "matches",
+      "value": [
+        "시력 저하",
+        "심한 눈 통증",
+        "눈 외상",
+        "빛을 못 봄"
+      ],
+      "option_ids": [],
+      "question": null,
+      "reason": "현장실습 자료의 의뢰 신호가 있으면 제품 후보를 비우고 진료를 우선합니다.",
+      "priority": 100,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "RUL-EYE_ALLERGY-REFER-RED-FLAGS",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.9 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ]
+    },
+    {
       "rule_id": "RUL-MINOR_BURN-REFER-RED-FLAGS",
       "protocol_id": "PTC-MINOR_BURN",
       "kind": "referral_pattern",
@@ -101716,6 +101996,113 @@
       ]
     },
     {
+      "rule_id": "RUL-PIGMENTATION-REFER-RED-FLAGS",
+      "protocol_id": "PTC-PIGMENTATION",
+      "kind": "referral_pattern",
+      "effect": "refer",
+      "field": "normalized_text",
+      "operator": "matches",
+      "value": [
+        "빠르게 커지는 반점",
+        "출혈하는 점",
+        "모양이 불규칙한 점"
+      ],
+      "option_ids": [],
+      "question": null,
+      "reason": "현장실습 자료의 의뢰 신호가 있으면 제품 후보를 비우고 진료를 우선합니다.",
+      "priority": 100,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "RUL-PIGMENTATION-REFER-RED-FLAGS",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.10 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ]
+    },
+    {
+      "rule_id": "RUL-ORAL_HERPES-REFER-RED-FLAGS",
+      "protocol_id": "PTC-ORAL_HERPES",
+      "kind": "referral_pattern",
+      "effect": "refer",
+      "field": "normalized_text",
+      "operator": "matches",
+      "value": [
+        "눈 주변 포진",
+        "면역저하",
+        "고열",
+        "처음 생긴 심한 포진"
+      ],
+      "option_ids": [],
+      "question": null,
+      "reason": "현장실습 자료의 의뢰 신호가 있으면 제품 후보를 비우고 진료를 우선합니다.",
+      "priority": 100,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "RUL-ORAL_HERPES-REFER-RED-FLAGS",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.8 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ]
+    },
+    {
+      "rule_id": "RUL-DRY_SKIN-REFER-RED-FLAGS",
+      "protocol_id": "PTC-DRY_SKIN",
+      "kind": "referral_pattern",
+      "effect": "refer",
+      "field": "normalized_text",
+      "operator": "matches",
+      "value": [
+        "진물",
+        "고름",
+        "넓게 벗겨짐",
+        "고열"
+      ],
+      "option_ids": [],
+      "question": null,
+      "reason": "현장실습 자료의 의뢰 신호가 있으면 제품 후보를 비우고 진료를 우선합니다.",
+      "priority": 100,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "RUL-DRY_SKIN-REFER-RED-FLAGS",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.8 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ]
+    },
+    {
       "rule_id": "RUL-BRUISE-REFER-RED-FLAGS",
       "protocol_id": "PTC-BRUISE",
       "kind": "referral_pattern",
@@ -101781,6 +102168,42 @@
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
           "locator": "일반의약품 정리_센트럴파크약국.pdf p.9 > 현장실습 제품군 선택 기준",
+          "verified_at": "2026-07-31T00:00:00+09:00"
+        }
+      ]
+    },
+    {
+      "rule_id": "RUL-CORN_WART-REFER-RED-FLAGS",
+      "protocol_id": "PTC-CORN_WART",
+      "kind": "referral_pattern",
+      "effect": "refer",
+      "field": "normalized_text",
+      "operator": "matches",
+      "value": [
+        "당뇨",
+        "혈액순환 장애",
+        "감염",
+        "얼굴 병변"
+      ],
+      "option_ids": [],
+      "question": null,
+      "reason": "현장실습 자료의 의뢰 신호가 있으면 제품 후보를 비우고 진료를 우선합니다.",
+      "priority": 100,
+      "status": "published",
+      "review": {
+        "expires_at": "2027-01-13T00:00:00+09:00",
+        "notes": "현장실습 PDF와 공식 제품 정보를 결합한 연구 후보. 약사 검토 및 운영 승인 전 임상 사용 금지. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": false,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      },
+      "source_refs": [
+        {
+          "claim_id": "RUL-CORN_WART-REFER-RED-FLAGS",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "일반의약품 정리_센트럴파크약국.pdf p.10 > 현장실습 제품군 선택 기준",
           "verified_at": "2026-07-31T00:00:00+09:00"
         }
       ]
