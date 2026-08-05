@@ -2591,9 +2591,15 @@ for (const product of runtimeProducts)
     );
     if (stem.length >= 3) packIngredientVocabulary.add(stem);
   }
+const registeredIngredientNameById = new Map();
 for (const ingredient of [...ingredients, ...generatedIngredients])
-  if (ingredient.display_name_ko)
+  if (ingredient.display_name_ko) {
     packIngredientVocabulary.add(ingredient.display_name_ko);
+    registeredIngredientNameById.set(
+      ingredient.ingredient_id,
+      ingredient.display_name_ko,
+    );
+  }
 for (const entry of fieldPracticeGuidance.offListReferences ?? [])
   if (
     typeof entry.protocolId !== "string" ||
@@ -2621,16 +2627,35 @@ for (const product of runtimeProducts)
       });
     const terms = rosterTermsByProtocol.get(profile.protocol_id);
     terms.ingredients.add(product.display_name);
-    for (const ingredient of product.active_ingredients ?? [])
+    for (const ingredient of product.active_ingredients ?? []) {
       terms.ingredients.add(strippedIngredientName(ingredient.name));
+      // The vocabulary takes registered names verbatim, so the roster has to
+      // carry them verbatim too. Stripping only one side made a registered
+      // name like 디아스타제·프로테아제·셀룰라제 look absent from the very
+      // product that carries it.
+      terms.ingredients.add(ingredient.name ?? "");
+      const registered = registeredIngredientNameById.get(
+        ingredient.ingredient_id,
+      );
+      if (registered) terms.ingredients.add(registered);
+    }
     if (product.dosage_form) terms.forms.add(product.dosage_form);
   }
 const usedOffListReference = new Set();
 const danglingNoteReferences = [];
 for (const product of runtimeProducts)
   for (const profile of product.selection_profiles ?? []) {
-    const note = profile.comparison_note ?? "";
-    if (!note) continue;
+    // The card shows four fields, and checking only the comparison note left
+    // the other three unguarded — the cetirizine differentiators kept naming
+    // fexofenadine for a protocol that carries none long after the note
+    // itself was fixed.
+    const note = [
+      profile.comparison_note ?? "",
+      profile.choose_when ?? "",
+      ...(profile.differentiators ?? []),
+      ...(profile.practical_points ?? []),
+    ].join(" ");
+    if (!note.trim()) continue;
     const terms = rosterTermsByProtocol.get(profile.protocol_id);
     const ingredientText = [...terms.ingredients].join(" ");
     const formText = [...terms.forms].join(" ");

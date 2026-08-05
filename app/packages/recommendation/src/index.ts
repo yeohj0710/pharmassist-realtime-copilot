@@ -825,6 +825,31 @@ const selectionProfileForProtocol = (
     (profile) => profile.protocol_id === protocolId,
   );
 
+/**
+ * Collapses rows that are the same official product. official_product_key is
+ * set by the audited crosswalk; item_seq is the registry row itself. Records
+ * the audit has not linked keep their own identity and both still appear,
+ * because asserting they are the same product is the audit's call, not this
+ * function's. The pool arrives ranked, so the first row of a group is the one
+ * that would have been shown anyway.
+ */
+const dedupedByOfficialProduct = (
+  pool: readonly RankedProduct[],
+): readonly RankedProduct[] => {
+  const seen = new Set<string>();
+  const kept: RankedProduct[] = [];
+  for (const ranked of pool) {
+    const identity =
+      ranked.product.official_product_key ??
+      ranked.product.item_seq ??
+      ranked.product.product_id;
+    if (seen.has(identity)) continue;
+    seen.add(identity);
+    kept.push(ranked);
+  }
+  return kept;
+};
+
 const rankedProducts = (
   options: readonly VerifiedOption[],
   protocol: OTCProtocol,
@@ -1221,7 +1246,16 @@ export function buildRecommendationDecision(
   // Every verified option participates in product ranking; truncating options
   // before ranking would silently drop most officially linked products. Only
   // the displayed lists below are capped by the decision contract.
-  const rankedPool = rankedProducts(options, protocol, request);
+  // One official product can reach the pack as more than one record: the
+  // registry lists the same item_seq twice, and an audited crosswalk links a
+  // legacy record to its HealthKR twin. Both rows are real, so neither is
+  // dropped from the pack — but letting them take two of five display slots
+  // shows a pharmacist the same box twice and hides a real alternative. The
+  // key is the identity the data already asserts; nothing new is claimed here,
+  // which is why the unaudited pairs stay separate.
+  const rankedPool = dedupedByOfficialProduct(
+    rankedProducts(options, protocol, request),
+  );
   const products = rankedPool.slice(0, 5);
   if (request.tenant.inventory !== undefined && products.length === 0)
     return noDecision(request, ["NO_IN_STOCK_FORMULARY_PRODUCT"], protocol);
