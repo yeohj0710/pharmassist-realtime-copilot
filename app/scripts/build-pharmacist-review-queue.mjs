@@ -391,19 +391,49 @@ const namedAlternatives = [
   "디펜히드라민",
   "알긴산",
 ];
+// What a protocol can offer is what its options reach, not the smaller set
+// that happens to carry card copy. Reading only the profiles said
+// acetaminophen was absent from PTC-JOINT_PAIN while
+// OPT-JOINT_PAIN-ACETAMINOPHEN was sitting right there.
+const optionIngredientIdsByProtocol = new Map();
+for (const option of pack.protocolOptions) {
+  if (!optionIngredientIdsByProtocol.has(option.protocol_id))
+    optionIngredientIdsByProtocol.set(option.protocol_id, new Set());
+  optionIngredientIdsByProtocol
+    .get(option.protocol_id)
+    .add(option.ingredient_id);
+}
 const vocabularyByProtocol = new Map();
+const vocabularyFor = (protocolId) => {
+  if (!vocabularyByProtocol.has(protocolId))
+    vocabularyByProtocol.set(protocolId, new Set());
+  return vocabularyByProtocol.get(protocolId);
+};
+const addProductWords = (words, product) => {
+  words.add(product.display_name);
+  for (const ingredient of product.active_ingredients ?? []) {
+    // The registered table covers only part of the pack; the name on the
+    // product is what the card is built from.
+    words.add(ingredient.name ?? "");
+    words.add(
+      pack.ingredients.find(
+        (item) => item.ingredient_id === ingredient.ingredient_id,
+      )?.display_name_ko ?? "",
+    );
+  }
+};
+for (const [protocolId, ingredientIds] of optionIngredientIdsByProtocol)
+  for (const product of pack.products)
+    if (
+      (product.active_ingredients ?? []).some((ingredient) =>
+        ingredientIds.has(ingredient.ingredient_id),
+      )
+    )
+      addProductWords(vocabularyFor(protocolId), product);
 for (const product of pack.products)
   for (const profile of product.selection_profiles ?? []) {
-    if (!vocabularyByProtocol.has(profile.protocol_id))
-      vocabularyByProtocol.set(profile.protocol_id, new Set());
-    const words = vocabularyByProtocol.get(profile.protocol_id);
-    words.add(product.display_name);
-    for (const ingredient of product.active_ingredients ?? [])
-      words.add(
-        pack.ingredients.find(
-          (item) => item.ingredient_id === ingredient.ingredient_id,
-        )?.display_name_ko ?? "",
-      );
+    const words = vocabularyFor(profile.protocol_id);
+    addProductWords(words, product);
     for (const text of profile.differentiators ?? []) words.add(text);
   }
 let flaggedDangling = 0;

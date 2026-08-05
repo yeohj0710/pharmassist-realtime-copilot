@@ -55,6 +55,30 @@ describe("selection card copy", () => {
   // product that was never on the list.
   it("never sends the reader to an ingredient this protocol does not carry", () => {
     const vocabulary = new Map<string, Set<string>>();
+    // A protocol offers what its options reach. Reading only the profiles —
+    // the products that happen to carry card copy — said acetaminophen was
+    // absent from PTC-JOINT_PAIN while OPT-JOINT_PAIN-ACETAMINOPHEN exists
+    // and 게보린브이정 answers to it.
+    const optionIngredientIds = new Map<string, Set<string>>();
+    for (const option of actualPack.protocolOptions) {
+      if (!optionIngredientIds.has(option.protocol_id))
+        optionIngredientIds.set(option.protocol_id, new Set());
+      optionIngredientIds.get(option.protocol_id)?.add(option.ingredient_id);
+    }
+    for (const [protocolId, ingredientIds] of optionIngredientIds)
+      for (const product of actualPack.products) {
+        if (
+          !(product.active_ingredients ?? []).some((ingredient) =>
+            ingredientIds.has(ingredient.ingredient_id),
+          )
+        )
+          continue;
+        if (!vocabulary.has(protocolId)) vocabulary.set(protocolId, new Set());
+        const words = vocabulary.get(protocolId);
+        words?.add(product.display_name);
+        for (const ingredient of product.active_ingredients ?? [])
+          words?.add(ingredient.name ?? "");
+      }
     for (const product of actualPack.products)
       for (const profile of product.selection_profiles ?? []) {
         if (!vocabulary.has(profile.protocol_id))

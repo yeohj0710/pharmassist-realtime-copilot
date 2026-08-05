@@ -7021,13 +7021,13 @@
         {
           "protocol_id": "PTC-JOINT_PAIN",
           "fit_score": 90,
-          "choose_when": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐형 이부프로펜을 원할 때 검토합니다.",
+          "choose_when": "관절이 아프면서 빨리 듣는 약이 필요한 경우",
           "differentiators": [
             "이부프로펜 200mg 계열",
             "연질캡슐 제형",
             "해열과 소염진통을 함께 고려"
           ],
-          "comparison_note": "편두통처럼 지속력이 중요하면 나프록센과, 부종을 동반한 생리통이면 파마브롬 복합제와 비교합니다.",
+          "comparison_note": "연질캡슐이라 흡수가 빨라 지금 아픈 것을 눌러 줍니다. 통증이 하루 종일 이어지면 나프록센이 오래가고, 속이 약하면 아세트아미노펜 쪽입니다.",
           "practical_points": [],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         },
@@ -7046,13 +7046,13 @@
         {
           "protocol_id": "PTC-MUSCLE_PAIN",
           "fit_score": 85,
-          "choose_when": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐형 이부프로펜을 원할 때 검토합니다.",
+          "choose_when": "근육이나 허리가 아프면서 빨리 듣는 약이 필요한 경우",
           "differentiators": [
             "이부프로펜 200mg 계열",
             "연질캡슐 제형",
             "해열과 소염진통을 함께 고려"
           ],
-          "comparison_note": "편두통처럼 지속력이 중요하면 나프록센과, 부종을 동반한 생리통이면 파마브롬 복합제와 비교합니다.",
+          "comparison_note": "연질캡슐이라 흡수가 빨라 지금 아픈 것을 눌러 줍니다. 통증이 며칠 이어지면 나프록센이 오래가고, 속이 약하면 아세트아미노펜 쪽입니다.",
           "practical_points": [],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         },
@@ -22741,7 +22741,7 @@
             "이부프로펜보다 한 번 먹었을 때 오래갑니다",
             "말초 염증성 통증에 초점"
           ],
-          "comparison_note": "한 번 먹으면 오래가서 종일 이어지는 관절 통증에 맞습니다. 통증이 짧게 왔다 가면 이부프로펜 쪽이 회복도 빠릅니다.",
+          "comparison_note": "한 번 먹으면 오래가서 종일 이어지는 관절 통증에 맞습니다. 통증이 짧게 왔다 가면 이부프로펜이 빠르고, 속이 약해 소염진통제가 부담되면 아세트아미노펜 쪽입니다.",
           "practical_points": [],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         },
@@ -30506,7 +30506,7 @@
             "이부프로펜보다 한 번 먹었을 때 오래갑니다",
             "말초 염증성 통증에 초점"
           ],
-          "comparison_note": "한 번 먹으면 오래가서 종일 이어지는 관절 통증에 맞습니다. 통증이 짧게 왔다 가면 이부프로펜 쪽이 회복도 빠릅니다.",
+          "comparison_note": "한 번 먹으면 오래가서 종일 이어지는 관절 통증에 맞습니다. 통증이 짧게 왔다 가면 이부프로펜이 빠르고, 속이 약해 소염진통제가 부담되면 아세트아미노펜 쪽입니다.",
           "practical_points": [],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         },

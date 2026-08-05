@@ -2617,15 +2617,50 @@ const allowedOffListReference = new Set(
     (entry) => `${entry.protocolId} :: ${entry.term}`,
   ),
 );
+// What the protocol can actually offer is the set of products the engine can
+// reach through its options, not the smaller set that happens to carry card
+// copy. Using the latter said acetaminophen was absent from PTC-JOINT_PAIN
+// when OPT-JOINT_PAIN-ACETAMINOPHEN exists and 게보린브이정 answers to it —
+// the pathway classifier excludes acetaminophen on mechanism, but a curated
+// claim adds the option anyway, and the engine offers what the option offers.
+const protocolOptionIngredientIds = new Map();
+for (const option of [...protocolOptions, ...generatedProtocolOptions]) {
+  if (!protocolOptionIngredientIds.has(option.protocol_id))
+    protocolOptionIngredientIds.set(option.protocol_id, new Set());
+  protocolOptionIngredientIds.get(option.protocol_id).add(option.ingredient_id);
+}
 const rosterTermsByProtocol = new Map();
+const rosterEntryFor = (protocolId) => {
+  if (!rosterTermsByProtocol.has(protocolId))
+    rosterTermsByProtocol.set(protocolId, {
+      ingredients: new Set(),
+      forms: new Set(),
+    });
+  return rosterTermsByProtocol.get(protocolId);
+};
+for (const [protocolId, ingredientIds] of protocolOptionIngredientIds)
+  for (const product of runtimeProducts) {
+    if (
+      !(product.active_ingredients ?? []).some((ingredient) =>
+        ingredientIds.has(ingredient.ingredient_id),
+      )
+    )
+      continue;
+    const terms = rosterEntryFor(protocolId);
+    terms.ingredients.add(product.display_name);
+    for (const ingredient of product.active_ingredients ?? []) {
+      terms.ingredients.add(strippedIngredientName(ingredient.name));
+      terms.ingredients.add(ingredient.name ?? "");
+      const registered = registeredIngredientNameById.get(
+        ingredient.ingredient_id,
+      );
+      if (registered) terms.ingredients.add(registered);
+    }
+    if (product.dosage_form) terms.forms.add(product.dosage_form);
+  }
 for (const product of runtimeProducts)
   for (const profile of product.selection_profiles ?? []) {
-    if (!rosterTermsByProtocol.has(profile.protocol_id))
-      rosterTermsByProtocol.set(profile.protocol_id, {
-        ingredients: new Set(),
-        forms: new Set(),
-      });
-    const terms = rosterTermsByProtocol.get(profile.protocol_id);
+    const terms = rosterEntryFor(profile.protocol_id);
     terms.ingredients.add(product.display_name);
     for (const ingredient of product.active_ingredients ?? []) {
       terms.ingredients.add(strippedIngredientName(ingredient.name));

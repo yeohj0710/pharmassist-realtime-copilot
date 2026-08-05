@@ -206,7 +206,7 @@
         },
         {
           "branchId": "ibuprofen-soft",
-          "chooseWhenContains": "빠르게 복용할 연질캡슐형 이부프로펜",
+          "chooseWhenContains": "근육이나 허리가 아프면서 빨리 듣는 약이",
           "patterns": ["빨리", "염증", "연질캡슐"]
         }
       ]
@@ -429,7 +429,7 @@
         },
         {
           "branchId": "ibuprofen-soft",
-          "chooseWhenContains": "긴장성 두통이나 염증성 통증에서 빠르게 복용할 연질캡슐",
+          "chooseWhenContains": "관절이 아프면서 빨리 듣는 약이",
           "patterns": ["빨리", "연질캡슐"]
         }
       ]
