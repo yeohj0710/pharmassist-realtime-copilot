@@ -7366,6 +7366,18 @@
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3"
         },
         {
+          "protocol_id": "PTC-JOINT_PAIN",
+          "fit_score": 90,
+          "choose_when": "관절이 아프지만 붓거나 열감은 없고, 속이 약해 소염진통제를 쓰기 어려운 경우",
+          "differentiators": [
+            "주요 성분: 아세트아미노펜",
+            "제형·투여경로: 정제 · 경구"
+          ],
+          "comparison_note": "통증만 눌러 주고 염증은 건드리지 않습니다. 관절이 붓거나 열감이 있으면 이부프로펜처럼 염증까지 잡는 쪽이 맞습니다.",
+          "practical_points": [],
+          "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=3,9"
+        },
+        {
           "protocol_id": "PTC-MENSTRUAL_PAIN",
           "fit_score": 100,
           "choose_when": "생리통이 주된 불편이고 먹는 진통제로 다루는 경우",
@@ -7690,15 +7702,36 @@
           "source_id": "SRC-ABBVIE_CMC_LABEL",
           "source_snapshot_id": "SNAP-ABBVIE_CMC_LABEL-20260713",
           "verified_at": "2026-07-13T12:00:00+09:00"
+        },
+        {
+          "claim_id": "FIELD-PRACTICE-PRD-I2O_MINI_201105482",
+          "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
+          "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
+          "locator": "제품별 실무 선택 기준 ()",
+          "verified_at": "2026-07-31T00:00:00+09:00"
         }
       ],
       "source_snapshot_ids": [
         "SNAP-ABBVIE_CMC_LABEL-20260713",
-        "SNAP-HIRA_CMC-20260713"
+        "SNAP-HIRA_CMC-20260713",
+        "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
-      "selection_profiles": []
+      "selection_profiles": [
+        {
+          "protocol_id": "PTC-DRY_EYE",
+          "fit_score": 100,
+          "choose_when": "건조감과 이물감에 윤활·보습이 필요한 경우",
+          "differentiators": [
+            "주요 성분: 카르복시메틸셀룰로오스나트륨",
+            "제형·투여경로: 점안액(1회용) · 점안"
+          ],
+          "comparison_note": "점도가 높아 한 번 넣으면 편안함이 오래갑니다. 대신 넣은 직후 잠깐 뿌옇게 느껴질 수 있습니다.",
+          "practical_points": [],
+          "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=9"
+        }
+      ]
     },
     {
       "active_ingredients": [
@@ -11060,7 +11093,7 @@
             "주요 성분: 히프로멜로오스, 염화칼륨, 염화나트륨",
             "제형·투여경로: 점안제 · 눈"
           ],
-          "comparison_note": "일회용 낱개 포장이라 보존제 접촉을 줄이고 싶거나 렌즈를 자주 쓰는 경우에 맞습니다.",
+          "comparison_note": "눈물에 가까운 전해질을 더해 묽게 흐릅니다. 렌즈 착용 중 불쾌감이나 눈의 피로에 쓰도록 허가돼 있고, 건조가 심해 오래가는 쪽이 필요하면 카르복시메틸셀룰로오스와 비교합니다.",
           "practical_points": [
             "1일 3 ～ 6회, 1회 1~3방울 점안한다. 점안 후 남은 액과 용기는 바로 버린다."
           ],

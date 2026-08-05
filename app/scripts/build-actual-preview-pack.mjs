@@ -1956,9 +1956,16 @@ const legacySelectionProfilesFor = (product) => {
         (ingredient) => ingredient.name,
       ),
     ]);
+    // The gate stops a card being written for a product whose only link is a
+    // word matching in its indication text. A curated claim naming this exact
+    // product for this exact protocol is not that: a person decided it, and
+    // the claim is what creates the option the engine offers. Suppressing the
+    // card there left 게보린브이정 displayed as a joint-pain candidate with no
+    // guidance on it at all, which is worse than either answer alone.
     if (
       pathway.requireMechanismEvidence === true &&
-      mechanisms.includes("official_indication_match")
+      mechanisms.includes("official_indication_match") &&
+      !explicitlyClaimedProtocolIds.has(protocolId)
     )
       return [];
     const population = dosagePopulationLabel("", product.display_name);
@@ -1999,13 +2006,16 @@ const legacySelectionProfilesFor = (product) => {
 const productsWithHealthKrOverlays = [...products, ...newProducts].map(
   (product) => {
     const record = overlayRecordFor(product);
+    // A legacy product with neither a HealthKR record nor enrichment used to
+    // fall through with no profiles at all, while its options still put it in
+    // front of a pharmacist — 아이투오미니점안액 was the top dry-eye candidate
+    // with no guidance text on the card. The profiles come from the same
+    // function either way; only the enrichment check gated the call.
     if (!record)
-      return healthKrEnrichmentProductIds.has(product.product_id)
-        ? {
-            ...product,
-            selection_profiles: legacySelectionProfilesFor(product),
-          }
-        : product;
+      return {
+        ...product,
+        selection_profiles: legacySelectionProfilesFor(product),
+      };
     const sourceRef = healthKrSourceRef(record);
     const durFlags = [
       ...(product.dur_flags ?? []),
@@ -2121,6 +2131,12 @@ for (const entry of selectionCopy.entries) {
     throw new Error(`Duplicate selection copy entry: ${mapKey}`);
   selectionCopyByKey.set(mapKey, {
     note,
+    // The generated choose_when is derived from the pathway's mechanisms, so a
+    // product that reaches a protocol through a curated claim rather than a
+    // mechanism gets the pathway's generic wording — which said acetaminophen
+    // supplies 소염진통 for joint pain. It does not. An entry may replace that
+    // sentence as well as the note.
+    chooseWhen: typeof entry.chooseWhen === "string" ? entry.chooseWhen : null,
     used: false,
     protocolId: entry.protocolId,
     ingredientKey: key,
@@ -2183,6 +2199,7 @@ const runtimeProducts = [
         return {
           ...profile,
           differentiators,
+          ...(copy.chooseWhen ? { choose_when: copy.chooseWhen } : {}),
           comparison_note: copy.note,
         };
       }

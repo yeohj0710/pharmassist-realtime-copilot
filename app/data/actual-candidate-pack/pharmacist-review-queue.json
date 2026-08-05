@@ -31,10 +31,10 @@
     "note": "이 파일에 적은 결정만 큐에 반영된다. 생성기는 어떤 항목도 스스로 승인하지 않고, items에 없는 itemId가 남아 있으면 빌드를 실패시킨다."
   },
   "areaCount": 6,
-  "itemCount": 178,
+  "itemCount": 179,
   "countByKind": {
     "clinical_area": 31,
-    "selection_copy": 147
+    "selection_copy": 148
   },
   "originLegend": {
     "field_practice_pdf": "현장실습 PDF에서 인용한 문구. sourceLocator의 페이지와 대조할 수 있다.",
@@ -42,7 +42,7 @@
     "authored_contrast": "출처 문서 없이 작성한 대조 문장. 근거는 팩의 성분·제형 기록뿐이라 임상 판단은 검토가 필요하다."
   },
   "countByStatus": {
-    "pending": 178
+    "pending": 179
   },
   "items": [
     {
@@ -5173,6 +5173,7 @@
       "protocolName": "안구건조 OTC 후보 선별",
       "ingredientGroup": "카르복시메틸셀룰로오스나트륨",
       "affectedProducts": [
+        "아이투오미니점안액(카르복시메틸셀룰로오스나트륨)(1회용)",
         "맥스클리어점안액"
       ],
       "reviewTargets": [
@@ -5222,7 +5223,7 @@
       "reviewTargets": [
         {
           "field": "comparison_note",
-          "text": "일회용 낱개 포장이라 보존제 접촉을 줄이고 싶거나 렌즈를 자주 쓰는 경우에 맞습니다."
+          "text": "눈물에 가까운 전해질을 더해 묽게 흐릅니다. 렌즈 착용 중 불쾌감이나 눈의 피로에 쓰도록 허가돼 있고, 건조가 심해 오래가는 쪽이 필요하면 카르복시메틸셀룰로오스와 비교합니다."
         },
         {
           "field": "choose_when",
@@ -6874,6 +6875,49 @@
         "새롭게 발생한 매우 심한 통증",
         "발열·악취 분비물",
         "생리 사이 출혈 또는 성교통"
+      ],
+      "status": "pending",
+      "decision": null,
+      "reviewerId": null,
+      "reviewedAt": null,
+      "reviewerNote": null
+    },
+    {
+      "itemId": "PRQ-COPY-PTC-JOINT_PAIN-ING-ACETAMINOPHEN",
+      "kind": "selection_copy",
+      "origin": "authored_contrast",
+      "areaId": "selection-card-copy",
+      "areaTitle": "제품 카드 비교 문구",
+      "whyReviewNeeded": "약사가 후보를 고를 때 읽는 문장이다. 출처 문서가 없고 팩의 성분·제형 기록만 근거로 작성했으므로, 임상적으로 틀린 대조가 있으면 그대로 상담에 나간다.",
+      "mustConfirm": [
+        "이 문장이 같은 프로토콜의 다른 후보와 실제로 갈리는 지점을 말하는지",
+        "성분·제형 서술이 허가사항과 어긋나지 않는지",
+        "손님에게 그대로 옮겨도 오해를 만들지 않는지",
+        "빠뜨리면 안 되는 금기나 주의가 이 문장 때문에 가려지지 않는지"
+      ],
+      "protocolId": "PTC-JOINT_PAIN",
+      "protocolName": "관절통 OTC 후보 선별",
+      "ingredientGroup": "아세트아미노펜",
+      "affectedProducts": [
+        "게보린브이정(아세트아미노펜)"
+      ],
+      "reviewTargets": [
+        {
+          "field": "comparison_note",
+          "text": "통증만 눌러 주고 염증은 건드리지 않습니다. 관절이 붓거나 열감이 있으면 이부프로펜처럼 염증까지 잡는 쪽이 맞습니다."
+        },
+        {
+          "field": "choose_when",
+          "text": "관절이 아프지만 붓거나 열감은 없고, 속이 약해 소염진통제를 쓰기 어려운 경우"
+        }
+      ],
+      "sourceLocator": null,
+      "referRedFlags": [
+        "관절이 뜨겁고 붓고 발열 동반",
+        "외상 후 변형 또는 체중 부하 불가",
+        "갑작스러운 극심한 통증",
+        "전신 발진·호흡곤란",
+        "지속적인 야간통·체중감소"
       ],
       "status": "pending",
       "decision": null,

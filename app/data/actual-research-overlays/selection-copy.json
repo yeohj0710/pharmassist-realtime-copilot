@@ -359,7 +359,7 @@
     {
       "protocolId": "PTC-DRY_EYE",
       "ingredient": "COMBO",
-      "comparisonNote": "일회용 낱개 포장이라 보존제 접촉을 줄이고 싶거나 렌즈를 자주 쓰는 경우에 맞습니다."
+      "comparisonNote": "눈물에 가까운 전해질을 더해 묽게 흐릅니다. 렌즈 착용 중 불쾌감이나 눈의 피로에 쓰도록 허가돼 있고, 건조가 심해 오래가는 쪽이 필요하면 카르복시메틸셀룰로오스와 비교합니다."
     },
     {
       "protocolId": "PTC-HEARTBURN",
@@ -549,6 +549,12 @@
       "protocolId": "PTC-MENSTRUAL_PAIN",
       "ingredient": "나프록센",
       "comparisonNote": "작용이 오래가서 통증이 하루 종일 이어질 때 맞습니다. 짧고 급하게 올라오는 통증이면 흡수가 빠른 이부프로펜 쪽입니다."
+    },
+    {
+      "protocolId": "PTC-JOINT_PAIN",
+      "ingredient": "아세트아미노펜",
+      "chooseWhen": "관절이 아프지만 붓거나 열감은 없고, 속이 약해 소염진통제를 쓰기 어려운 경우",
+      "comparisonNote": "통증만 눌러 주고 염증은 건드리지 않습니다. 관절이 붓거나 열감이 있으면 이부프로펜처럼 염증까지 잡는 쪽이 맞습니다."
     }
   ]
 }
