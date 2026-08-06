@@ -1284,6 +1284,181 @@
       "uncertainty": "로컬에 수집된 약학정보원 연결 결과를 정규화한 연구 미리보기입니다. confirmed 연결만 자동 후보로 사용하며 실제 약사 승인과 운영 승격은 별도입니다."
     },
     {
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+      "provider": "mfds_easy_drug",
+      "official": true,
+      "source_url": "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList",
+      "fetched_at": "2026-08-06T04:33:03.722Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "b64922a2c7290118e08eca8440f9d7d6d7bc0f9115563dadcd2b1058fd17f9ff",
+      "content_type": "application/json",
+      "parser_version": "mfds-easy-drug-v1",
+      "record_count": 4774,
+      "page_count": 48,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06 with a credentialed one-page request: HTTP 200, totalCount 4774, items carry efcyQesitm, useMethodQesitm, atpnWarnQesitm, atpnQesitm, intrcQesitm, seQesitm and depositMethodQesitm. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
+      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
+      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+      "provider": "mfds_dur_ingredient",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getPwnmTabooInfoList02",
+      "fetched_at": "2026-08-06T09:29:57.935Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "df3f1d26c9a35c20e9f900e714275b54e89c4b660c6257a6c5a82b0104a350bd",
+      "content_type": "application/json",
+      "parser_version": "mfds-dur-ingredient-03-v1",
+      "record_count": 1459,
+      "page_count": 15,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
+      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+      "provider": "mfds_dur_ingredient",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getCpctyAtentInfoList02",
+      "fetched_at": "2026-08-06T09:30:02.834Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "142aef113a2d891b5e53af1a7cc08a2d0178085e79f027c702dad669ab1defce",
+      "content_type": "application/json",
+      "parser_version": "mfds-dur-ingredient-03-v1",
+      "record_count": 708,
+      "page_count": 8,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
+      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-8C8CC0887FEE3A4D",
+      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+      "provider": "mfds_dur_ingredient",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getUsjntTabooInfoList02",
+      "fetched_at": "2026-08-06T09:29:49.142Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "8c8cc0887fee3a4defddc876e61d8e62cb22a62e6b950a8c7555234c8c77d97e",
+      "content_type": "application/json",
+      "parser_version": "mfds-dur-ingredient-03-v1",
+      "record_count": 1836,
+      "page_count": 19,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
+      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-02B38625E0A546FB",
+      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+      "provider": "mfds_dur_ingredient",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getMdctnPdAtentInfoList02",
+      "fetched_at": "2026-08-06T09:30:03.103Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "02b38625e0a546fb71fd79a2f3fc9ea7d2345d7f4010f2c8b81aa24543a4ce18",
+      "content_type": "application/json",
+      "parser_version": "mfds-dur-ingredient-03-v1",
+      "record_count": 98,
+      "page_count": 1,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
+      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-25328BD21DCBC853",
+      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+      "provider": "mfds_dur_ingredient",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getOdsnAtentInfoList02",
+      "fetched_at": "2026-08-06T09:30:04.992Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "25328bd21dcbc85372cff722837a86b51b212834e2ca0c9ec0c0a26f05d17f92",
+      "content_type": "application/json",
+      "parser_version": "mfds-dur-ingredient-03-v1",
+      "record_count": 112,
+      "page_count": 2,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
+      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-1B518F70F10D4068",
+      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+      "provider": "mfds_dur_ingredient",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getSpcifyAgrdeTabooInfoList02",
+      "fetched_at": "2026-08-06T09:30:06.512Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "1b518f70f10d4068da3965e23de17d27a6da2df2e5f00833b8b9d22f2e883dfc",
+      "content_type": "application/json",
+      "parser_version": "mfds-dur-ingredient-03-v1",
+      "record_count": 233,
+      "page_count": 3,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
       "source_snapshot_id": "SNAP-BOOK1-BOGYAK-20260530",
       "source_id": "SRC-BOOK1-BOGYAK",
       "provider": "other",
@@ -6277,6 +6452,510 @@
         "reviewed_at": null,
         "reviewer_ids": []
       }
+    },
+    {
+      "ingredient_id": "ING-UNMAPPED_201109334_4",
+      "display_name_ko": "구아이페네신",
+      "display_name_en": "구아이페네신",
+      "normalized_name": "구아이페네신",
+      "mfds_ingredient_code": "D000493",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_201109334_4",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:29:57.935Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-UNMAPPED_202302949_6",
+      "display_name_ko": "구아이페네신",
+      "display_name_en": "구아이페네신",
+      "normalized_name": "구아이페네신",
+      "mfds_ingredient_code": "D000493",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_202302949_6",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:29:57.935Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-UNMAPPED_199801026_1",
+      "display_name_ko": "[D000803]Pancreatin(판크레아틴)",
+      "display_name_en": "[D000803]Pancreatin(판크레아틴)",
+      "normalized_name": "d000803pancreatin판크레아틴",
+      "mfds_ingredient_code": "D000425",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_199801026_1",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:02.834Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-B486B3D3A356FE57",
+      "display_name_ko": "구아이페네신",
+      "display_name_en": "구아이페네신",
+      "normalized_name": "구아이페네신",
+      "mfds_ingredient_code": "D000493",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-B486B3D3A356FE57",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:29:57.935Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-7E265678A829DDA4",
+      "display_name_ko": "Potassium Chloride",
+      "display_name_en": "Potassium Chloride",
+      "normalized_name": "potassiumchloride",
+      "mfds_ingredient_code": "D000565",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-8C8CC0887FEE3A4D"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-7E265678A829DDA4",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-8C8CC0887FEE3A4D",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:29:49.142Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-BF55A34C221DEC5F",
+      "display_name_ko": "[D001266]Anhydrous Caffeine(카페인무수물)",
+      "display_name_en": "[D001266]Anhydrous Caffeine(카페인무수물)",
+      "normalized_name": "d001266anhydrouscaffeine카페인무수물",
+      "mfds_ingredient_code": "D001262",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-BF55A34C221DEC5F",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:02.834Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-E209DFF34168485C",
+      "display_name_ko": "[D001511]Calcium Carbonate p.p.t.(침강탄산칼슘)",
+      "display_name_en": "[D001511]Calcium Carbonate p.p.t.(침강탄산칼슘)",
+      "normalized_name": "d001511calciumcarbonateppt침강탄산칼슘",
+      "mfds_ingredient_code": "D001498",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-E209DFF34168485C",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:29:57.935Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-418C3ECF31B8276C",
+      "display_name_ko": "탄산마그네슘",
+      "display_name_en": "탄산마그네슘",
+      "normalized_name": "탄산마그네슘",
+      "mfds_ingredient_code": "D001491",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-418C3ECF31B8276C",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:29:57.935Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-75AB6951899CA6C0",
+      "display_name_ko": "[D001148]sodium bicarbonate(탄산수소나트륨)",
+      "display_name_en": "[D001148]sodium bicarbonate(탄산수소나트륨)",
+      "normalized_name": "d001148sodiumbicarbonate탄산수소나트륨",
+      "mfds_ingredient_code": "D001262",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-75AB6951899CA6C0",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:02.834Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-98EC336E3A02321D",
+      "display_name_ko": "[D001669]Psyllium husk(차전자피)",
+      "display_name_en": "[D001669]Psyllium husk(차전자피)",
+      "normalized_name": "d001669psylliumhusk차전자피",
+      "mfds_ingredient_code": "D001670",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-02B38625E0A546FB"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-98EC336E3A02321D",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-02B38625E0A546FB",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:03.103Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-6D4A405C4F5B8C64",
+      "display_name_ko": "Ethenzamide",
+      "display_name_en": "Ethenzamide",
+      "normalized_name": "ethenzamide",
+      "mfds_ingredient_code": "D000847",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-25328BD21DCBC853"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-6D4A405C4F5B8C64",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-25328BD21DCBC853",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:04.992Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-955F947F628181A4",
+      "display_name_ko": "[D000997]Pamabrom(파마브롬)",
+      "display_name_en": "[D000997]Pamabrom(파마브롬)",
+      "normalized_name": "d000997pamabrom파마브롬",
+      "mfds_ingredient_code": "D000363",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-955F947F628181A4",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:29:57.935Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-6B07FA5E1DBF97E4",
+      "display_name_ko": "Licorice",
+      "display_name_en": "Licorice",
+      "normalized_name": "licorice",
+      "mfds_ingredient_code": "D001000",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-6B07FA5E1DBF97E4",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:02.834Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-A0A2A7E36BC43FF5",
+      "display_name_ko": "Gestodene",
+      "display_name_en": "Gestodene",
+      "normalized_name": "gestodene",
+      "mfds_ingredient_code": "D000733",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-8C8CC0887FEE3A4D"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-A0A2A7E36BC43FF5",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-8C8CC0887FEE3A4D",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:29:49.142Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-918513F69C9BDF65",
+      "display_name_ko": "Acrinol",
+      "display_name_en": "Acrinol",
+      "normalized_name": "acrinol",
+      "mfds_ingredient_code": "D001753",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-1B518F70F10D4068"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-918513F69C9BDF65",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-1B518F70F10D4068",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:06.512Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-1E54E25833AAA04A",
+      "display_name_ko": "[D000803]Pancreatin(판크레아틴)",
+      "display_name_en": "[D000803]Pancreatin(판크레아틴)",
+      "normalized_name": "d000803pancreatin판크레아틴",
+      "mfds_ingredient_code": "D000425",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-1E54E25833AAA04A",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:02.834Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-6A49FB5633B4C0AA",
+      "display_name_ko": "파파베린염산염",
+      "display_name_en": "파파베린염산염",
+      "normalized_name": "파파베린염산염",
+      "mfds_ingredient_code": "D000354",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-6A49FB5633B4C0AA",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:02.834Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-HEALTHKR-275511FAE7662EC2",
+      "display_name_ko": "Calcium Carbonate",
+      "display_name_en": "Calcium Carbonate",
+      "normalized_name": "calciumcarbonate",
+      "mfds_ingredient_code": "D000671",
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-HEALTHKR-275511FAE7662EC2",
+          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+          "locator": "MFDS official ingredient field: ingredient name field",
+          "verified_at": "2026-08-06T09:30:02.834Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
     }
   ],
   "products": [
@@ -6326,6 +7005,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ACTIFED_197000053",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ACTIFED_197000053",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -6335,10 +7021,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_ACTIFED-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "이 약은 코감기, 알레르기 및 혈관운동성 코염에 의한 재채기, 콧물, 코막힘, 눈물의 완화에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-NASAL_CONGESTION",
@@ -6403,6 +7091,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-BONALING_A_197000076",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-BONALING_A_197000076",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -6412,10 +7107,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_BONALING_A-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
+      "indication_summary": "이 약은 멀미·메니에르증후군·방사선숙취에 의한 구역·구토·어지러움, 수술후 구역·구토에 사용합니다.",
       "selection_profiles": [
         {
           "protocol_id": "PTC-MOTION_SICKNESS",
@@ -6487,6 +7184,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-CLARITIN_200905692",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-CLARITIN_200905692",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -6496,10 +7200,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_CLARITIN-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
+      "indication_summary": "이 약은 알레르기성 비염(재채기, 코막힘, 가려움, 눈의 작열감), 만성 특발성(원인 불명의) 두드러기에 사용합니다.",
       "selection_profiles": [
         {
           "protocol_id": "PTC-ALLERGIC_RHINITIS",
@@ -6659,6 +7365,7 @@
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "소화불량, 식욕감퇴(식욕부진), 과식, 체함, 소화촉진, 소화불량으로 인한 위부팽만감",
       "official_match_status": "confirmed",
       "official_product_key": "A11AOOOOO0816",
       "official_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11AOOOOO0816",
@@ -6767,7 +7474,6 @@
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=4"
         }
       ],
-      "indication_summary": "소화불량, 식욕감퇴(식욕부진), 과식, 체함, 소화촉진, 소화불량으로 인한 위부팽만감",
       "dosage_summary": "성인 : 1회 1정을 1일 3회 식후 복용한다.",
       "precaution_summary": "1. 다음과 같은 사람은 이 약을 복용하지 말 것. 만 7세 이하의 소아 2. 다음과 같은 사람은 이 약을 복용하기 전에 의사, 치과의사, 약사와 상의할 것. 1) 본인 또는 가족이 알레르기 체질인 사람 2) 임부 또는 임신하고 있을 가능성이 있는 여성 3) 다른 약물을 복용하고 있는 사람 3. 다음과 같은 경우 이 약의 복용을 즉각 중지하고 의사, 치과의사, 약사와 상의할 것. 상담시 이 첨부문서를 소지할 것. 2주 정도 복용하여도 증상의 개선이 없을 경우 4. 기타 이 약의 복용시 주의할 사항 정해진 용법▪용량을 잘 지킬 것. 5. 저장상의 주의사항 1) 어린이의 손이 닿지 않는 곳에 보관할 것.…",
       "medication_guide": "- 2주 정도 투여해도 증상 개선이 없는 경우 전문가와 상의하세요. - 습관적으로 사용하지 마시고, 반드시 필요한 경우에만 투여하세요. - 식사는 규칙적으로 하고, 취침 전 음식 섭취 및 과식은 삼가세요. - 위에 자극을 줄 수 있는 강한 향신료, 카페인 등의 섭취는 삼가세요.",
@@ -6871,6 +7577,7 @@
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "· 변비 · 변비에 따른 다음 증상의 완화 : 식욕부진(식욕감퇴), 복부팽만, 장내이상발효, 치질",
       "official_match_status": "confirmed",
       "official_product_key": "2009092300055",
       "official_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2009092300055",
@@ -6920,7 +7627,6 @@
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=5"
         }
       ],
-      "indication_summary": "· 변비 · 변비에 따른 다음 증상의 완화 : 식욕부진(식욕감퇴), 복부팽만, 장내이상발효, 치질",
       "dosage_summary": "복용시 정제를 씹지 말고 적절한 양의 물과 함께 복 용한다. 만 15세 이상: 1회 1- 2정 만 11세 이상 - 만 15세 미만: 1회 1-2정 1일 1회 취침 시에 복용한다. 다만, 초회는 최소량을 복용하고 변의 모양과 상태를 보면서 조금씩 증량 또는 감량한다.",
       "precaution_summary": "1. 다음과 같은 사람은 이 약을 복용하지 말 것. 1) 급성 복부(배부분)질환(충수염, 장출혈, 궤양성 결장염의 급성 염증성 장질환 등) 환자 2) 장폐색(창자막힘증) 환자 3) 구역, 구토를 동반하는 중증의 복부(배부분)통증 환자. 이는 중증의 상태를 암시하는 것일 수도 있다. 4) 이 약 또는 이 약의 구성성분에 과민증 환자 5) 수분 및 전해질 불균형 환자(예: 심한 탈수 상태) 6) 7세 이하의 어린이 2. 이 약을 복용하는 동안 다음의 약(식품)을 복용하지 말 것. 1) 제산제 또는 우유 섭취 후 1시간 이내 2) 미네랄 오일 3. 다음과 같은 사람은 이 약을 복용하기 전에 의사, 치과의사, 약사와 상의할 것.…",
       "medication_guide": "- 취침 전에 투여하세요. - 전문가와 상의없이 장기간 연용하지 마세요. - 매일 충분한 물을 마시고 섬유소가 풍부한 음식을 드세요. - 직장출혈이 있거나 배변에 실패한 경우에는 전문가와 상의하세요. - 투여 후 1시간 이내에는 제산제나 우유 섭취를 피하세요.",
@@ -6978,6 +7684,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-EZ6_ANI_200400463",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-EZ6_ANI_200400463",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -6987,10 +7700,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_EZ6_ANI-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
+      "indication_summary": "이 약은 감기로 인한 발열 및 동통(통증), 요통, 생리통, 류마티양 관절염, 연소성(어리거나 젊은나이에 나타나는) 류마티양 관절염, 골관절염(퇴행성 관절질환), 수술후 동통(통증)과 두통, 편두통, 치통, 근육통, 신경통, 강직성 척추염, 급성통풍, 건선(건선, 마른비닐증)성 관절염, 연조직손상(염좌(삠), 좌상(타박상/멍)), 비관절 류마티스질환(건염(힘줄염), 건초염(힘줄윤활막염), 활액(윤활)낭염)에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-FEVER",
@@ -7136,6 +7851,7 @@
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "(현탁액) 위산과다(위염, 위·십이지장궤양에 관련된 것도 포함), 속쓰림, 위부불쾌감, 위부팽만감, 체함, 구역, 구토, 위통, 신트림",
       "official_match_status": "confirmed",
       "official_product_key": "A11A0930A0424",
       "official_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=A11A0930A0424",
@@ -7265,7 +7981,6 @@
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=4-5"
         }
       ],
-      "indication_summary": "(현탁액) 위산과다(위염, 위·십이지장궤양에 관련된 것도 포함), 속쓰림, 위부불쾌감, 위부팽만감, 체함, 구역, 구토, 위통, 신트림",
       "dosage_summary": "[허가사항변경(2014년 재평가), 의약품안전평가과-2589, 2015.11.17] (현탁액) 성인 1회 1포, 1일 3회 식간[식사때와 식사때사이] 및 취침시 복용한다. 복용간격은 4시간 이상으로 한다.",
       "precaution_summary": "[허가사항변경(2014년 재평가), 의약품안전평가과-2589, 2015.11.17] (현탁액) 1. 다음과 같은 사람은 이 약을 복용하지 말 것. 이 약은 3개월 미만의 영아에게는 복용시키지 말 것. 또 3개월 이상이라도 1세 미만의 영아에게는 부득이한 경우를 제외하고는 복용시키지 말 것. 2. 이 약을 복용하는 동안 다음의 약을 복용하지 말 것. 테트라사이클린계 항생제 3. 다음과 같은 사람은 이 약을 복용하기 전에 의사, 치과의사, 약사와 상의할 것. 1) 신장애 환자 2) 의사의 치료를 받고 있는 사람 또는 다른 약물을 복용하고 있는 사람 4. 다음과 같은 경우 이 약의 복용을 즉각 중지하고 의사, 치과의사, 약사와 상의할 것.…",
       "medication_guide": "- 심한 변비나 설사가 나타날 경우 전문가와 상의하세요. - 이 약의 투여기간 동안 다량의 우유를 섭취하는 것은 삼가세요. - 항생제와 병용하기 전에는 반드시 전문가와 상의하세요. - 철분제와 병용할 경우에는 최소 2시간 이상의 간격을 두고 복용하세요. - 신장질환 환자나 그 병력이 있는 경우 전문가에게 미리 알리세요.",
@@ -7327,6 +8042,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-GEVORIN_V_202107495",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-GEVORIN_V_202107495",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -7336,10 +8058,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_GEVORIN_V-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "이 약은 감기로 인한 발열 및 동통(통증), 두통, 신경통, 근육통, 월경통, 염좌통(삔 통증), 치통, 관절통, 류마티양 동통(통증)에 사용합니다\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-FEVER",
@@ -7510,6 +8234,7 @@
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "기침, 가래",
       "official_match_status": "confirmed",
       "official_product_key": "2019012500051",
       "official_source_url": "https://health.kr/searchDrug/result_drug.asp?drug_cd=2019012500051",
@@ -7570,7 +8295,6 @@
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=2"
         }
       ],
-      "indication_summary": "기침, 가래",
       "dosage_summary": "‑ 성인 : 1회 20 mL ‑ 소아 : 1회 11세 이상 ~ 15세 미만 13 mL 8세 이상 ~ 11세 미만 10 mL 5세 이상 ~ 8세 미만 7 mL 3세 이상 ~ 5세 미만 5 mL 2세 이상 ~ 3세 미만 4 mL 만 2세 미만 : 의사의 진료를 받는다. ‑ 1일 3 ~ 4회 식후 및 취침 시에 복용한다.",
       "precaution_summary": "1. 다음과 같은 사람은 이 약을 복용하지 말 것. 1) 이 약 및 이 약의 구성성분에 대한 과민반응 및 그 병력이 있는 사람 2) MAO억제제(항우울제, 항정신병제, 감정조절제, 항파킨슨제 등)를 복용하고 있거나 복용을 중단한 후 2주 이내의 사람 3) 3개월 미만의 영아(시럽제에 한함) 4) 15세 미만의 소아(정제에 한함) 2. 이 약을 복용하는 동안 다음의 약을 복용하지 말 것. 다른 진해거담제, 감기약, 항히스타민제, 진정제, 알코올 등 3. 이 약을 복용하는 동안 다음의 행위를 하지 말 것. 1) 복용시에는 음주하지 말 것. 2) 복용하는 동안 졸음이 오는 경우가 있으므로 자동차 운전 또는 기계류의 운전 조작을 피할 것.…",
       "medication_guide": "- 평상시 충분한 수분을 섭취하세요. - 전문가와 상의없이 장기간 연용하지 마세요. - 과도한 음주나 흡연은 삼가세요. - 졸음이 올 수 있으므로 운전, 위험한 기계조작시 주의하세요. - 진정제와 병용하기 전에는 반드시 전문가와 상의하세요. - 심혈관계 질환 환자나 그 병력이 있는 경우 전문가에게 미리 알리세요. - 긴장, 흥분, 불면, 가슴두근거림 등이 나타나면 전문가와 상의하세요.",
@@ -7624,6 +8348,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-HATISONE_1_200402651",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-HATISONE_1_200402651",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -7634,10 +8365,12 @@
       "source_snapshot_ids": [
         "SNAP-HIRA_HATISONE-20260713",
         "SNAP-MFDS_HYDROCORTISONE_CLASS-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
+      "indication_summary": "이 약은 습진ㆍ피부염군, 피부가려움, 벌레물린데에 사용합니다.",
       "selection_profiles": [
         {
           "protocol_id": "PTC-INSECT_BITE",
@@ -7704,6 +8437,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-I2O_MINI_201105482",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-I2O_MINI_201105482",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -7714,10 +8454,12 @@
       "source_snapshot_ids": [
         "SNAP-ABBVIE_CMC_LABEL-20260713",
         "SNAP-HIRA_CMC-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
+      "indication_summary": "이 약은 안구건조증이나 바람·태양에 노출되어 생기는 화끈거리는 증상, 자극감, 불쾌감을 일시적으로 완화 및 안구자극감 예방에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-DRY_EYE",
@@ -7764,6 +8506,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-MUTERAN_200_198701129",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-MUTERAN_200_198701129",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -7773,10 +8522,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_MUTERAN-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "이 약은 급ㆍ만성기관지염, 기관지천식, 후두염, 부비동염, 낭성섬유증의 질환에서 객담배출곤란에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-PRODUCTIVE_COUGH",
@@ -7830,6 +8581,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ORAMED_198500023",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ORAMED_198500023",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -7840,10 +8598,12 @@
       "source_snapshot_ids": [
         "SNAP-DKPHARM_ORAMED-20260713",
         "SNAP-HIRA_ORAMED-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
+      "indication_summary": "이 약은 만성 박리성 치은염, 미란 또는 궤양을 수반하는 난치성 구내염 및 설염에 의한 염증의 완화에 사용합니다.",
       "selection_profiles": [
         {
           "protocol_id": "PTC-STOMATITIS",
@@ -7901,6 +8661,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-PORTAGEL_200201403",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-PORTAGEL_200201403",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -7910,10 +8677,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_PORTAGEL-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "이 약은 성인의 식도, 위·십이지장과 관련된 통증의 완화, 성인의 급·만성 설사, 24개월 이상 소아의 급성 설사에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-ABDOMINAL_PAIN_VOMITING",
@@ -7982,6 +8751,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-SEONGGWANG_POVIDONE_199900422",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-SEONGGWANG_POVIDONE_199900422",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -7992,10 +8768,12 @@
       "source_snapshot_ids": [
         "SNAP-FIRSON_POVIDONE-20260713",
         "SNAP-HIRA_POVIDONE-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
+      "indication_summary": "이 약은 찢긴 상처, 화상, 창상(상처), 욕창의 살균소독, 궤양, 농양(고름집)의 살균소독, 감염피부면의 소독, 수술 부위의 살균소독, 주사 및 카테터부위의 소독에 사용합니다.",
       "selection_profiles": [
         {
           "protocol_id": "PTC-MINOR_WOUND",
@@ -8042,6 +8820,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-STREPSILS_HONEY_LEMON_200906877",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-STREPSILS_HONEY_LEMON_200906877",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -8051,10 +8836,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_STREPSILS-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": false,
+      "indication_summary": "이 약은 인후염의 단기 증상 완화에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-SORE_THROAT",
@@ -8119,6 +8906,13 @@
           "verified_at": "2026-07-13T12:00:00+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ZYRTEC_200610765",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official ingredient field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ZYRTEC_200610765",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -8128,10 +8922,12 @@
       ],
       "source_snapshot_ids": [
         "SNAP-MFDS_ZYRTEC-20260713",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "status": "active",
       "supply_performance": true,
+      "indication_summary": "이 약은 계절성 및 다년성 알레르기성 비염, 알레르기성 결막염, 만성 특발성 두드러기, 피부가려움증과 하이드로코티손 외용제와 병용에 의한 습진, 피부염에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-ALLERGIC_RHINITIS",
@@ -8359,7 +9155,7 @@
           "normalized_unit": null
         },
         {
-          "ingredient_id": "ING-UNMAPPED_202302949_6",
+          "ingredient_id": "ING-UNMAPPED_201109334_4",
           "name": "구아이페네신",
           "strength_text": "41.6mg/1캡슐",
           "normalized_amount": null,
@@ -50259,6 +51055,25 @@
       ]
     },
     {
+      "product_ingredient_id": "PRI-ENRICHED_201109334_UNMAPPED_201109334_4",
+      "product_id": "PRD-ENRICHED_201109334",
+      "ingredient_id": "ING-UNMAPPED_201109334_4",
+      "strength_text": "40mg/1캡슐",
+      "normalized_amount": null,
+      "normalized_unit": null,
+      "role": "active",
+      "is_active": true,
+      "source_refs": [
+        {
+          "claim_id": "REG-ENR-201109334",
+          "source_id": "SRC-MFDS-ENRICHMENT-201109334",
+          "source_snapshot_id": "SNAP-MFDS-ENRICHMENT-201109334-20260714",
+          "locator": "식약처 품목정보 및 약학정보원 교차 확인 (item_seq=201109334)",
+          "verified_at": "2026-07-14T12:05:36+09:00"
+        }
+      ]
+    },
+    {
       "product_ingredient_id": "PRI-ENRICHED_201109334_PSEUDOEPHEDRINE_HCL",
       "product_id": "PRD-ENRICHED_201109334",
       "ingredient_id": "ING-PSEUDOEPHEDRINE_HCL",
@@ -50358,6 +51173,25 @@
       "product_id": "PRD-ENRICHED_202302949",
       "ingredient_id": "ING-DEXTROMETHORPHAN_HBR_HYDRATE",
       "strength_text": "8mg/1캡슐",
+      "normalized_amount": null,
+      "normalized_unit": null,
+      "role": "active",
+      "is_active": true,
+      "source_refs": [
+        {
+          "claim_id": "REG-ENR-202302949",
+          "source_id": "SRC-MFDS-ENRICHMENT-202302949",
+          "source_snapshot_id": "SNAP-MFDS-ENRICHMENT-202302949-20260714",
+          "locator": "식약처 품목정보 및 약학정보원 교차 확인 (item_seq=202302949)",
+          "verified_at": "2026-07-14T12:05:36+09:00"
+        }
+      ]
+    },
+    {
+      "product_ingredient_id": "PRI-ENRICHED_202302949_UNMAPPED_201109334_4",
+      "product_id": "PRD-ENRICHED_202302949",
+      "ingredient_id": "ING-UNMAPPED_201109334_4",
+      "strength_text": "41.6mg/1캡슐",
       "normalized_amount": null,
       "normalized_unit": null,
       "role": "active",
@@ -50482,6 +51316,25 @@
           "source_id": "SRC-MFDS-ENRICHMENT-201708580",
           "source_snapshot_id": "SNAP-MFDS-ENRICHMENT-201708580-20260714",
           "locator": "식약처 품목정보 및 약학정보원 교차 확인 (item_seq=201708580)",
+          "verified_at": "2026-07-14T12:05:36+09:00"
+        }
+      ]
+    },
+    {
+      "product_ingredient_id": "PRI-ENRICHED_199801026_UNMAPPED_199801026_1",
+      "product_id": "PRD-ENRICHED_199801026",
+      "ingredient_id": "ING-UNMAPPED_199801026_1",
+      "strength_text": "315mg/1정",
+      "normalized_amount": null,
+      "normalized_unit": null,
+      "role": "active",
+      "is_active": true,
+      "source_refs": [
+        {
+          "claim_id": "REG-ENR-199801026",
+          "source_id": "SRC-MFDS-ENRICHMENT-199801026",
+          "source_snapshot_id": "SNAP-MFDS-ENRICHMENT-199801026-20260714",
+          "locator": "식약처 품목정보 및 약학정보원 교차 확인 (item_seq=199801026)",
           "verified_at": "2026-07-14T12:05:36+09:00"
         }
       ]

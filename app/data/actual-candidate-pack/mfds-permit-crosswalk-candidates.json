@@ -1,0 +1,3715 @@
+{
+  "schemaVersion": "1.0.0",
+  "candidateOnly": true,
+  "clinicalUseProhibited": true,
+  "failedLegacyCount": 21,
+  "failedLegacy": [
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ACTIFED_197000053",
+      "itemSeq": "197000053",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "삼일제약(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "슈도에페드린염산염",
+            "트리프롤리딘염산염수화물"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "정제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-BONALING_A_197000076",
+      "itemSeq": "197000076",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "일양약품(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "디멘히드리네이트"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "정제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-CLARITIN_200905692",
+      "itemSeq": "200905692",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "바이엘코리아(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "로라타딘"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "정제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-EZ6_ANI_200400463",
+      "itemSeq": "200400463",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "(주)대웅제약",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "이부프로펜"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "연질캡슐제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-GEVORIN_V_202107495",
+      "itemSeq": "202107495",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "삼진제약(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "아세트아미노펜"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "정제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-HATISONE_1_200402651",
+      "itemSeq": "200402651",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "한미약품(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "히드로코르티손"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "로션제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-I2O_MINI_201105482",
+      "itemSeq": "201105482",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "삼일제약(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "카르복시메틸셀룰로오스나트륨"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "점안액(1회용)",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-MUTERAN_200_198701129",
+      "itemSeq": "198701129",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "한화제약(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "아세틸시스테인"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "과립제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ORAMED_198500023",
+      "itemSeq": "198500023",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "동국제약(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "트리암시놀론아세토니드"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "구강용 연고",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-PORTAGEL_200201403",
+      "itemSeq": "200201403",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "대원제약(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "디오스멕타이트"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "현탁액",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-SEONGGWANG_POVIDONE_199900422",
+      "itemSeq": "199900422",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "(주)퍼슨",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "포비돈요오드"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "외용액제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-STREPSILS_HONEY_LEMON_200906877",
+      "itemSeq": "200906877",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "(유)옥시레킷벤키저",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "플루르비프로펜"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "트로키제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ZYRTEC_200610765",
+      "itemSeq": "200610765",
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": "한국유씨비제약(주)",
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            "세티리진염산염"
+          ],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": "정제",
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ENRICHED_201109334",
+      "itemSeq": null,
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": null,
+          "official": null
+        },
+        "ingredient": {
+          "local": [],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": null,
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ENRICHED_202302949",
+      "itemSeq": null,
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": null,
+          "official": null
+        },
+        "ingredient": {
+          "local": [],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": null,
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ENRICHED_199200475",
+      "itemSeq": null,
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": null,
+          "official": null
+        },
+        "ingredient": {
+          "local": [],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": null,
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ENRICHED_199902656",
+      "itemSeq": null,
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": null,
+          "official": null
+        },
+        "ingredient": {
+          "local": [],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": null,
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ENRICHED_201708580",
+      "itemSeq": null,
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": null,
+          "official": null
+        },
+        "ingredient": {
+          "local": [],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": null,
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ENRICHED_201200854",
+      "itemSeq": null,
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": null,
+          "official": null
+        },
+        "ingredient": {
+          "local": [],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": null,
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ENRICHED_201504877",
+      "itemSeq": null,
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": null,
+          "official": null
+        },
+        "ingredient": {
+          "local": [],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": null,
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "productId": "PRD-ENRICHED_201600490",
+      "itemSeq": null,
+      "officialProductKey": null,
+      "matchStatus": null,
+      "evidence": {
+        "manufacturer": {
+          "local": null,
+          "official": null
+        },
+        "ingredient": {
+          "local": [],
+          "official": [],
+          "permit": null
+        },
+        "dosageForm": {
+          "local": null,
+          "official": null
+        },
+        "permit": {
+          "itemSeq": null,
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    }
+  ],
+  "sameItemSeqPairs": [
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11AHHHHH0243",
+      "left": {
+        "productId": "PRD-HEALTHKR-9CF3B0F8B6C8658C",
+        "registryRecordId": "REG-HEALTHKR-AD69BBB2228A66B6"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-1B187C52376D8B5D",
+        "registryRecordId": "REG-HEALTHKR-8AD9DA7B7FADF6A1"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11AHHHHH0243",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2017090500003",
+      "left": {
+        "productId": "PRD-HEALTHKR-E4BC833BBBAD9C50",
+        "registryRecordId": "REG-HEALTHKR-7F6CFB0751A53456"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-95308DCCA77EDA7C",
+        "registryRecordId": "REG-HEALTHKR-E3B481F3BE5EBB71"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2017090500003",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2018110500002",
+      "left": {
+        "productId": "PRD-HEALTHKR-35CB511980CF274D",
+        "registryRecordId": "REG-HEALTHKR-84B4DDAE3286F450"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-5347FA563921BD8C",
+        "registryRecordId": "REG-HEALTHKR-19146A006C801949"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2018110500002",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2021121000002",
+      "left": {
+        "productId": "PRD-HEALTHKR-C626993C5A1D2143",
+        "registryRecordId": "REG-HEALTHKR-33C965101B3E8C1D"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-5FCA66A21EB44690",
+        "registryRecordId": "REG-HEALTHKR-2D18C17BC8646C13"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2021121000002",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2016071900002",
+      "left": {
+        "productId": "PRD-HEALTHKR-9BEA0AE2415D4672",
+        "registryRecordId": "REG-HEALTHKR-B39D3A88004CD012"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-2F72EF38A0300E75",
+        "registryRecordId": "REG-HEALTHKR-AFF6A9294BB6692D"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2016071900002",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2018100500006",
+      "left": {
+        "productId": "PRD-HEALTHKR-E0D2884FF07D1138",
+        "registryRecordId": "REG-HEALTHKR-3A720CC25B479993"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-6AF431948C40EDCA",
+        "registryRecordId": "REG-HEALTHKR-6A4568BEB206B430"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2018100500006",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11ADDDDD0017",
+      "left": {
+        "productId": "PRD-HEALTHKR-CF587ACFBE8EC576",
+        "registryRecordId": "REG-HEALTHKR-85068343EABB0F4B"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-667E3D1AA6535131",
+        "registryRecordId": "REG-HEALTHKR-47ABC454F7D45967"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11ADDDDD0017",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11ABBBBB0727",
+      "left": {
+        "productId": "PRD-HEALTHKR-48A62EA13902D34C",
+        "registryRecordId": "REG-HEALTHKR-EAA8F8D537A1C8B7"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-7166C981C5963232",
+        "registryRecordId": "REG-HEALTHKR-1D71FFA06184D2A6"
+      },
+      "additional": [
+        {
+          "productId": "PRD-HEALTHKR-F9E1594EFD26F572",
+          "registryRecordId": "REG-HEALTHKR-53CEA09B4FC1873C"
+        },
+        {
+          "productId": "PRD-HEALTHKR-382F19BC3C065AD2",
+          "registryRecordId": "REG-HEALTHKR-F05114F7E8A0692E"
+        }
+      ],
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            [],
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11ABBBBB0727",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A2260A0456",
+      "left": {
+        "productId": "PRD-HEALTHKR-5C31E61BC57A7B18",
+        "registryRecordId": "REG-HEALTHKR-74DCD0C767D5CFBA"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-2C33FB153FD72980",
+        "registryRecordId": "REG-HEALTHKR-EF5AE8BFC2E3BB41"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A2260A0456",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2021042300003",
+      "left": {
+        "productId": "PRD-HEALTHKR-F569042E782B5A7A",
+        "registryRecordId": "REG-HEALTHKR-F9010BA0DF98FD65"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-90DC832E86B72A8F",
+        "registryRecordId": "REG-HEALTHKR-2F4D1A9814EFDC97"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2021042300003",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A0570A0226",
+      "left": {
+        "productId": "PRD-HEALTHKR-4A709405D66150F4",
+        "registryRecordId": "REG-HEALTHKR-1E5945C0C44D83BE"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-E89E8F5C8ECA9030",
+        "registryRecordId": "REG-HEALTHKR-4930A549F2D81700"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A0570A0226",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2023013100005",
+      "left": {
+        "productId": "PRD-HEALTHKR-7316158AB0A8AEE9",
+        "registryRecordId": "REG-HEALTHKR-A4BAA1F774CCE4DB"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-15093B98303C7547",
+        "registryRecordId": "REG-HEALTHKR-22504F80E561B1EB"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2023013100005",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2023011600015",
+      "left": {
+        "productId": "PRD-HEALTHKR-F159635D220881D2",
+        "registryRecordId": "REG-HEALTHKR-0E5442D12D891D80"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-FDF0433534BF2EF8",
+        "registryRecordId": "REG-HEALTHKR-8633EB13C4C8F190"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2023011600015",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2024052400001",
+      "left": {
+        "productId": "PRD-HEALTHKR-53F97E415A43640A",
+        "registryRecordId": "REG-HEALTHKR-D162F534C7604A99"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-CDB99383BCEDA5BE",
+        "registryRecordId": "REG-HEALTHKR-D3BF1BEFB35E5427"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2024052400001",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2022090800004",
+      "left": {
+        "productId": "PRD-HEALTHKR-39ED65AE0D5FE2A1",
+        "registryRecordId": "REG-HEALTHKR-EFFC97268F27481D"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-52F4348365F4FEF6",
+        "registryRecordId": "REG-HEALTHKR-B4D9CF2EEBA6A9F9"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2022090800004",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2009071506011",
+      "left": {
+        "productId": "PRD-HEALTHKR-3A4BE81CBB750CDB",
+        "registryRecordId": "REG-HEALTHKR-3B3B9BA701C1DB79"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-B4A435CD57E51FDA",
+        "registryRecordId": "REG-HEALTHKR-47ACEDE026CD67C9"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2009071506011",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A0670A0329",
+      "left": {
+        "productId": "PRD-HEALTHKR-503391330422C768",
+        "registryRecordId": "REG-HEALTHKR-ED9723A7272BD21C"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-D6A3F8E3F581F171",
+        "registryRecordId": "REG-HEALTHKR-E8C49821F10EBC75"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A0670A0329",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11AKP08F1261",
+      "left": {
+        "productId": "PRD-HEALTHKR-2ADAC7232AD26DEE",
+        "registryRecordId": "REG-HEALTHKR-68B999165FCF036F"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-0DA45241AB8910CC",
+        "registryRecordId": "REG-HEALTHKR-77D0E35473715059"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11AKP08F1261",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11AKP08F1359",
+      "left": {
+        "productId": "PRD-HEALTHKR-E26129F2534B301F",
+        "registryRecordId": "REG-HEALTHKR-ED47D394702DB197"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-6AED92732199FEAD",
+        "registryRecordId": "REG-HEALTHKR-C8729A3FD21B4B90"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11AKP08F1359",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2013101100013",
+      "left": {
+        "productId": "PRD-HEALTHKR-4DFFCD375AF270D1",
+        "registryRecordId": "REG-HEALTHKR-B67BEC11FCAF3ADA"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-A5797D043195106B",
+        "registryRecordId": "REG-HEALTHKR-B2CF023CC81C9790"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2013101100013",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A2670A0001",
+      "left": {
+        "productId": "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "registryRecordId": "REG-HEALTHKR-6C215F81A034F9AA"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-9F478A14D17A1A63",
+        "registryRecordId": "REG-HEALTHKR-8D85E547A07295B4"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A2670A0001",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "krqpwvlvb3q6f",
+      "left": {
+        "productId": "PRD-HEALTHKR-58CF470586806A38",
+        "registryRecordId": "REG-HEALTHKR-1A81704A0A8B610B"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-DC837CC0882F30A0",
+        "registryRecordId": "REG-HEALTHKR-834C1D9F01D1100C"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "krqpwvlvb3q6f",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11AKP07K0065",
+      "left": {
+        "productId": "PRD-HEALTHKR-08FA07A5BFB4B32E",
+        "registryRecordId": "REG-HEALTHKR-2274F86363340C5A"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-8352ABE2F45B9C9D",
+        "registryRecordId": "REG-HEALTHKR-EA81E930BFB328AB"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11AKP07K0065",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "f29ua8m9p963y",
+      "left": {
+        "productId": "PRD-HEALTHKR-F654331C9C2D2C75",
+        "registryRecordId": "REG-HEALTHKR-B5E0E908A4A2CBE2"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-754B356FE03AF951",
+        "registryRecordId": "REG-HEALTHKR-27C3EBFBFB1F98F6"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "f29ua8m9p963y",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A2260A0347",
+      "left": {
+        "productId": "PRD-HEALTHKR-62314069FC109D30",
+        "registryRecordId": "REG-HEALTHKR-DD5923CC954999EA"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-7A18013B386B10AA",
+        "registryRecordId": "REG-HEALTHKR-A76B321EBCFBD5CD"
+      },
+      "additional": [
+        {
+          "productId": "PRD-HEALTHKR-425E11812748B05F",
+          "registryRecordId": "REG-HEALTHKR-01C2C76D0AD23519"
+        }
+      ],
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A2260A0347",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A0740B0009",
+      "left": {
+        "productId": "PRD-HEALTHKR-8C7D91DAF17764F8",
+        "registryRecordId": "REG-HEALTHKR-D3B14BE34F6A973F"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-402DDD6ED32DD071",
+        "registryRecordId": "REG-HEALTHKR-B3FDE42CA578A8AD"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A0740B0009",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A3780A0129",
+      "left": {
+        "productId": "PRD-HEALTHKR-73CE19343E3E91DD",
+        "registryRecordId": "REG-HEALTHKR-3F193E4FCF3AF510"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-F24AAFD552538528",
+        "registryRecordId": "REG-HEALTHKR-6C2FCFB56128A2B5"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A3780A0129",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A3180A0218",
+      "left": {
+        "productId": "PRD-HEALTHKR-5867545CA7F18367",
+        "registryRecordId": "REG-HEALTHKR-2CE3D55A45B4F0D8"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-54F5B98CF480A817",
+        "registryRecordId": "REG-HEALTHKR-766B59C52308AD69"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A3180A0218",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11AKP08G2439",
+      "left": {
+        "productId": "PRD-HEALTHKR-D585B4EFEAF9DD96",
+        "registryRecordId": "REG-HEALTHKR-2559E94B8EF02E10"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-7E51AF3AF7F6B8EB",
+        "registryRecordId": "REG-HEALTHKR-8D2968C9CB9C4E4E"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11AKP08G2439",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2024050300005",
+      "left": {
+        "productId": "PRD-HEALTHKR-E5D4C53A482385FF",
+        "registryRecordId": "REG-HEALTHKR-293F500011A1B11D"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-768445F0D45094FF",
+        "registryRecordId": "REG-HEALTHKR-FFC18A169D54A043"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2024050300005",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11AKP08G2962",
+      "left": {
+        "productId": "PRD-HEALTHKR-2BC0A7CE06BC07B8",
+        "registryRecordId": "REG-HEALTHKR-C76BD243A070167D"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-E1CD4B903B7D25E4",
+        "registryRecordId": "REG-HEALTHKR-C5C7043138FEE9A1"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11AKP08G2962",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2009071505962",
+      "left": {
+        "productId": "PRD-HEALTHKR-6EC6F2ED1BE44822",
+        "registryRecordId": "REG-HEALTHKR-219A42D4716032E2"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-3EB8608C30E21C67",
+        "registryRecordId": "REG-HEALTHKR-70037526BA01BEE0"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2009071505962",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A3060A0346",
+      "left": {
+        "productId": "PRD-HEALTHKR-79B5B54694E5BAA8",
+        "registryRecordId": "REG-HEALTHKR-4A9A85504F42F508"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-774DB34D09706CC0",
+        "registryRecordId": "REG-HEALTHKR-D31ADD98F930BE2C"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A3060A0346",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11A2262A0568",
+      "left": {
+        "productId": "PRD-HEALTHKR-DD7C8F7D95140829",
+        "registryRecordId": "REG-HEALTHKR-30CC199A67E62CEB"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-09F2839EFCF2F26C",
+        "registryRecordId": "REG-HEALTHKR-6CE0E90B470E47A2"
+      },
+      "additional": [
+        {
+          "productId": "PRD-HEALTHKR-ED8CF86DFA37815E",
+          "registryRecordId": "REG-HEALTHKR-815F506AE42FF5E9"
+        },
+        {
+          "productId": "PRD-HEALTHKR-76EB564F862A609A",
+          "registryRecordId": "REG-HEALTHKR-5EA7BBCDB96DF3E5"
+        }
+      ],
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            [],
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11A2262A0568",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2015121700002",
+      "left": {
+        "productId": "PRD-HEALTHKR-F937539D050E3EA6",
+        "registryRecordId": "REG-HEALTHKR-500F2E6AEF860023"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-0EA52C9B69029E4D",
+        "registryRecordId": "REG-HEALTHKR-B56561B2370543B5"
+      },
+      "additional": [
+        {
+          "productId": "PRD-HEALTHKR-88C99837C92B1D4A",
+          "registryRecordId": "REG-HEALTHKR-D43E85B99908E89B"
+        },
+        {
+          "productId": "PRD-HEALTHKR-974AD831C2E8FEDF",
+          "registryRecordId": "REG-HEALTHKR-6864CA66BFD2E587"
+        }
+      ],
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            [],
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2015121700002",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2019051000107",
+      "left": {
+        "productId": "PRD-HEALTHKR-FFAFC80E885E819A",
+        "registryRecordId": "REG-HEALTHKR-305A4CC8865D3A28"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-BD1DC078D1CE5C39",
+        "registryRecordId": "REG-HEALTHKR-18B1EFF780F988D1"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2019051000107",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "A11AOOOOO2180",
+      "left": {
+        "productId": "PRD-HEALTHKR-41F3D0CE11E3D945",
+        "registryRecordId": "REG-HEALTHKR-CCEA5901B6BEFC89"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-908D06A5A12ECB4B",
+        "registryRecordId": "REG-HEALTHKR-A52F39D19A983D60"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "A11AOOOOO2180",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    },
+    {
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "itemSeq": "2021031100002",
+      "left": {
+        "productId": "PRD-HEALTHKR-44952E115D7C4D54",
+        "registryRecordId": "REG-HEALTHKR-1EA36369AE9FB879"
+      },
+      "right": {
+        "productId": "PRD-HEALTHKR-B3E67DA70D26B753",
+        "registryRecordId": "REG-HEALTHKR-AAA1FD6C9C7D8A7A"
+      },
+      "evidence": {
+        "manufacturer": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "ingredient": {
+          "local": [
+            [],
+            []
+          ],
+          "official": null
+        },
+        "dosageForm": {
+          "local": [
+            null,
+            null
+          ],
+          "official": null
+        },
+        "permit": {
+          "itemSeq": "2021031100002",
+          "itemName": null,
+          "permitStatus": null
+        }
+      },
+      "permitSource": {
+        "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+        "source_id": "SRC-MFDS-PERMIT-15095677",
+        "provider": "mfds_permit",
+        "official": true,
+        "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+        "fetched_at": "2026-08-06T09:24:10.114Z",
+        "effective_at": null,
+        "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+        "usage_rights": "unknown",
+        "commercial_use": "allowed",
+        "cache_policy": "allowed",
+        "redistribution": "allowed",
+        "ai_context_use": "allowed",
+        "http_status": 200,
+        "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+        "content_type": "application/json",
+        "parser_version": "mfds-permit-07-dtl06-v1",
+        "record_count": 42971,
+        "page_count": 1218,
+        "next_cursor": null,
+        "status": "parsed",
+        "raw_retention_policy": "none",
+        "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+      }
+    }
+  ]
+}

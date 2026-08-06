@@ -1,0 +1,290 @@
+{
+  "schemaVersion": "1.0.0",
+  "candidateOnly": true,
+  "clinicalUseProhibited": true,
+  "entries": [
+    {
+      "productId": "PRD-ACTIFED_197000053",
+      "itemSeq": "197000053",
+      "indicationSummary": "이 약은 코감기, 알레르기 및 혈관운동성 코염에 의한 재채기, 콧물, 코막힘, 눈물의 완화에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-ACTIFED_197000053",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-BONALING_A_197000076",
+      "itemSeq": "197000076",
+      "indicationSummary": "이 약은 멀미·메니에르증후군·방사선숙취에 의한 구역·구토·어지러움, 수술후 구역·구토에 사용합니다.",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-BONALING_A_197000076",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-CLARITIN_200905692",
+      "itemSeq": "200905692",
+      "indicationSummary": "이 약은 알레르기성 비염(재채기, 코막힘, 가려움, 눈의 작열감), 만성 특발성(원인 불명의) 두드러기에 사용합니다.",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-CLARITIN_200905692",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-DR_BEARSE_200300406",
+      "itemSeq": "200300406",
+      "indicationSummary": "이 약은 소화불량, 식욕감퇴(식욕부진), 과식, 체함, 소화촉진, 소화불량으로 인한 위부팽만감에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-DR_BEARSE_200300406",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-DULCOLAX_S_200906478",
+      "itemSeq": "200906478",
+      "indicationSummary": "이 약은 변비와 변비에 수반하는 식욕부진(식욕감퇴), 복부팽만, 장내이상발효, 치질의 완화에 사용합니다.",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-DULCOLAX_S_200906478",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-EZ6_ANI_200400463",
+      "itemSeq": "200400463",
+      "indicationSummary": "이 약은 감기로 인한 발열 및 동통(통증), 요통, 생리통, 류마티양 관절염, 연소성(어리거나 젊은나이에 나타나는) 류마티양 관절염, 골관절염(퇴행성 관절질환), 수술후 동통(통증)과 두통, 편두통, 치통, 근육통, 신경통, 강직성 척추염, 급성통풍, 건선(건선, 마른비닐증)성 관절염, 연조직손상(염좌(삠), 좌상(타박상/멍)), 비관절 류마티스질환(건염(힘줄염), 건초염(힘줄윤활막염), 활액(윤활)낭염)에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-EZ6_ANI_200400463",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-GELFOS_M_199400883",
+      "itemSeq": "199400883",
+      "indicationSummary": "이 약은 위산과다(위염, 위·십이지장궤양에 관련된 것도 포함), 속쓰림, 위부불쾌감, 위부팽만감, 체함, 구역, 구토, 위통, 신트림에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-GELFOS_M_199400883",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-GEVORIN_V_202107495",
+      "itemSeq": "202107495",
+      "indicationSummary": "이 약은 감기로 인한 발열 및 동통(통증), 두통, 신경통, 근육통, 월경통, 염좌통(삔 통증), 치통, 관절통, 류마티양 동통(통증)에 사용합니다\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-GEVORIN_V_202107495",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-HAESOCOPU_S_201900312",
+      "itemSeq": "201900312",
+      "indicationSummary": "이 약은 기침, 가래에 사용합니다.",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-HAESOCOPU_S_201900312",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-HATISONE_1_200402651",
+      "itemSeq": "200402651",
+      "indicationSummary": "이 약은 습진ㆍ피부염군, 피부가려움, 벌레물린데에 사용합니다.",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-HATISONE_1_200402651",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-I2O_MINI_201105482",
+      "itemSeq": "201105482",
+      "indicationSummary": "이 약은 안구건조증이나 바람·태양에 노출되어 생기는 화끈거리는 증상, 자극감, 불쾌감을 일시적으로 완화 및 안구자극감 예방에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-I2O_MINI_201105482",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-MUTERAN_200_198701129",
+      "itemSeq": "198701129",
+      "indicationSummary": "이 약은 급ㆍ만성기관지염, 기관지천식, 후두염, 부비동염, 낭성섬유증의 질환에서 객담배출곤란에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-MUTERAN_200_198701129",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-ORAMED_198500023",
+      "itemSeq": "198500023",
+      "indicationSummary": "이 약은 만성 박리성 치은염, 미란 또는 궤양을 수반하는 난치성 구내염 및 설염에 의한 염증의 완화에 사용합니다.",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-ORAMED_198500023",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-PORTAGEL_200201403",
+      "itemSeq": "200201403",
+      "indicationSummary": "이 약은 성인의 식도, 위·십이지장과 관련된 통증의 완화, 성인의 급·만성 설사, 24개월 이상 소아의 급성 설사에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-PORTAGEL_200201403",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-SEONGGWANG_POVIDONE_199900422",
+      "itemSeq": "199900422",
+      "indicationSummary": "이 약은 찢긴 상처, 화상, 창상(상처), 욕창의 살균소독, 궤양, 농양(고름집)의 살균소독, 감염피부면의 소독, 수술 부위의 살균소독, 주사 및 카테터부위의 소독에 사용합니다.",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-SEONGGWANG_POVIDONE_199900422",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-STREPSILS_HONEY_LEMON_200906877",
+      "itemSeq": "200906877",
+      "indicationSummary": "이 약은 인후염의 단기 증상 완화에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-STREPSILS_HONEY_LEMON_200906877",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    },
+    {
+      "productId": "PRD-ZYRTEC_200610765",
+      "itemSeq": "200610765",
+      "indicationSummary": "이 약은 계절성 및 다년성 알레르기성 비염, 알레르기성 결막염, 만성 특발성 두드러기, 피부가려움증과 하이드로코티손 외용제와 병용에 의한 습진, 피부염에 사용합니다.\n",
+      "sourceDataset": "easy",
+      "sourceField": "efcyQesitm",
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_ref": {
+        "claim_id": "REG-MFDS-ING-PRD-ZYRTEC_200610765",
+        "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+        "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+        "locator": "MFDS official ingredient field: efcyQesitm",
+        "verified_at": "2026-08-06T04:33:03.722Z"
+      }
+    }
+  ],
+  "skipped": [],
+  "sources": [
+    {
+      "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+      "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+      "provider": "mfds_easy_drug",
+      "official": true,
+      "source_url": "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList",
+      "fetched_at": "2026-08-06T04:33:03.722Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "b64922a2c7290118e08eca8440f9d7d6d7bc0f9115563dadcd2b1058fd17f9ff",
+      "content_type": "application/json",
+      "parser_version": "mfds-easy-drug-v1",
+      "record_count": 4774,
+      "page_count": 48,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06 with a credentialed one-page request: HTTP 200, totalCount 4774, items carry efcyQesitm, useMethodQesitm, atpnWarnQesitm, atpnQesitm, intrcQesitm, seQesitm and depositMethodQesitm. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    }
+  ]
+}

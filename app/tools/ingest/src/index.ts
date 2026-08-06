@@ -196,10 +196,15 @@ export interface HttpResponse {
 export interface HttpTransport {
   request(url: string, signal: AbortSignal): Promise<HttpResponse>;
 }
+const MFDS_REQUEST_TIMEOUT_MS = 30_000;
 export const fetchTransport: HttpTransport = {
   async request(url, signal) {
-    const response = await fetch(url, {
+    const requestSignal = AbortSignal.any([
       signal,
+      AbortSignal.timeout(MFDS_REQUEST_TIMEOUT_MS),
+    ]);
+    const response = await fetch(url, {
+      signal: requestSignal,
       headers: { Accept: "application/json, application/xml;q=0.8" },
     });
     return {
@@ -226,8 +231,6 @@ export function assertProductionAdapter(adapter: SourceAdapter): void {
     throw new Error("official source/license gate required");
 }
 
-const sha256 = (value: string): string =>
-  createHash("sha256").update(value).digest("hex");
 const sleep = (ms: number, signal: AbortSignal): Promise<void> =>
   new Promise((resolvePromise, reject) => {
     const timer = setTimeout(resolvePromise, ms);
@@ -312,7 +315,12 @@ export function parseMfDsPage(
     Array.isArray(rawItems) ? rawItems : rawItems ? [rawItems] : []
   )
     .map(asRecord)
-    .filter((item): item is Readonly<Record<string, unknown>> => Boolean(item));
+    .filter((item): item is Readonly<Record<string, unknown>> => Boolean(item))
+    .map((item) => {
+      if (Object.keys(item).length !== 1) return item;
+      const nested = asRecord(item["item"]);
+      return nested ?? item;
+    });
   return {
     items,
     totalCount: Number(responseBody?.["totalCount"] ?? items.length),
@@ -333,6 +341,12 @@ export interface MfdsAdapterOptions {
   readonly now?: () => Date;
 }
 
+export interface MfdsPageResult {
+  readonly pageNo: number;
+  readonly totalCount: number;
+  readonly items: readonly Readonly<Record<string, unknown>>[];
+}
+
 export class MfdsPagedAdapter implements SourceAdapter {
   readonly id: string;
   readonly official = true;
@@ -348,45 +362,84 @@ export class MfdsPagedAdapter implements SourceAdapter {
   private async page(
     pageNo: number,
     signal: AbortSignal,
+    pageSize = this.options.definition.pageSize,
   ): Promise<HttpResponse> {
     const definition = this.options.definition;
     const path = this.options.operationPath ?? definition.operationPath;
     const url = new URL(`${definition.baseUrl.replace(/\/$/u, "")}/${path}`);
     url.searchParams.set("ServiceKey", this.options.serviceKey);
     url.searchParams.set("pageNo", String(pageNo));
-    url.searchParams.set("numOfRows", String(definition.pageSize));
+    url.searchParams.set("numOfRows", String(pageSize));
     url.searchParams.set("type", "json");
-    const attempts = this.options.maxAttempts ?? 4;
+    const attempts = this.options.maxAttempts ?? 8;
     let last: HttpResponse | undefined;
+    let lastError: unknown;
     for (let attempt = 1; attempt <= attempts; attempt += 1) {
-      last = await this.transport.request(url.toString(), signal);
+      try {
+        last = await this.transport.request(url.toString(), signal);
+        lastError = undefined;
+      } catch (error) {
+        lastError = error;
+        if (attempt === attempts) break;
+        await sleep(Math.min(8_000, 250 * 2 ** (attempt - 1)), signal);
+        continue;
+      }
       if (last.status >= 200 && last.status < 300) return last;
       if (![408, 425, 429, 500, 502, 503, 504].includes(last.status)) break;
       const retryAfter = Number(last.headers["retry-after"] ?? 0);
       const backoff =
         retryAfter > 0
-          ? retryAfter * 1_000
-          : Math.min(8_000, 250 * 2 ** (attempt - 1));
+          ? Math.min(60_000, retryAfter * 1_000)
+          : last.status >= 500
+            ? Math.min(60_000, 1_000 * 2 ** (attempt - 1))
+            : Math.min(8_000, 250 * 2 ** (attempt - 1));
       await sleep(backoff, signal);
     }
+    if (lastError instanceof Error)
+      throw new Error(
+        `MFDS ${definition.id} request failed: ${lastError.message}`,
+        { cause: lastError },
+      );
     throw new Error(
       `MFDS ${definition.id} request failed with HTTP ${last?.status ?? 0}`,
     );
   }
 
-  async fetch(signal: AbortSignal): Promise<
-    Readonly<{
-      snapshot: SourceSnapshot;
-      records: readonly Readonly<Record<string, unknown>>[];
-    }>
-  > {
-    const pages: string[] = [];
-    const records: Readonly<Record<string, unknown>>[] = [];
+  async fetchPages(
+    onPage: (page: MfdsPageResult) => Promise<void> | void,
+    signal: AbortSignal,
+  ): Promise<SourceSnapshot> {
+    const digest = createHash("sha256");
+    let recordCount = 0;
+    let pageCount = 0;
     const maxPages = this.options.maxPages ?? 10_000;
-    let pageNo = 1;
+    let pageSize = this.options.definition.pageSize;
     let totalCount = Number.POSITIVE_INFINITY;
-    while (records.length < totalCount && pageNo <= maxPages) {
-      const response = await this.page(pageNo, signal);
+    while (recordCount < totalCount) {
+      if (pageCount >= maxPages)
+        throw new Error(`MFDS ${this.id} pagination limit exceeded`);
+      const pageNo = Math.floor(recordCount / pageSize) + 1;
+      let response: HttpResponse;
+      try {
+        response = await this.page(pageNo, signal, pageSize);
+      } catch (error) {
+        const status = Number(
+          String(error instanceof Error ? error.message : error).match(
+            /HTTP (\d+)/u,
+          )?.[1] ?? 0,
+        );
+        if ([500, 502, 503, 504].includes(status)) {
+          const fallbackPageSize = [50, 10, 5, 1].find(
+            (candidate) =>
+              candidate < pageSize && recordCount % candidate === 0,
+          );
+          if (fallbackPageSize !== undefined) {
+            pageSize = fallbackPageSize;
+            continue;
+          }
+        }
+        throw error;
+      }
       const parsed = parseMfDsPage(
         response.body,
         response.headers["content-type"] ?? "",
@@ -395,51 +448,71 @@ export class MfdsPagedAdapter implements SourceAdapter {
         throw new Error(
           `MFDS ${this.id} API error ${parsed.resultCode}: ${parsed.resultMessage}`,
         );
-      pages.push(response.body);
-      records.push(...parsed.items);
+      if (pageCount > 0) digest.update("\n--PAGE--\n");
+      digest.update(response.body);
+      pageCount += 1;
+      recordCount += parsed.items.length;
+      await onPage({
+        pageNo: parsed.pageNo,
+        totalCount: parsed.totalCount,
+        items: parsed.items,
+      });
       totalCount = parsed.totalCount;
-      if (parsed.items.length === 0 || records.length >= totalCount) break;
-      pageNo += 1;
+      if (pageSize <= 5) {
+        const recoveredPageSize = [50, 10, 5, 4, 2].find(
+          (candidate) => candidate > pageSize && recordCount % candidate === 0,
+        );
+        if (recoveredPageSize !== undefined) pageSize = recoveredPageSize;
+      }
+      if (parsed.items.length === 0 || recordCount >= totalCount) break;
       await sleep(
         Math.ceil(1_000 / this.options.definition.requestsPerSecond),
         signal,
       );
     }
-    if (pageNo > maxPages && records.length < totalCount)
-      throw new Error(`MFDS ${this.id} pagination limit exceeded`);
     const fetchedAt = (this.options.now ?? (() => new Date()))().toISOString();
-    const digest = sha256(pages.join("\n--PAGE--\n"));
+    const contentSha256 = digest.digest("hex");
     return {
-      records,
-      snapshot: {
-        source_snapshot_id: `SNAP-${this.id.toUpperCase().replaceAll("_", "-")}-${digest.slice(0, 16).toUpperCase()}`,
-        source_id: this.options.definition.sourceId,
-        provider: this.options.definition.id,
-        official: true,
-        source_url: `${this.options.definition.baseUrl}/${this.options.operationPath ?? this.options.definition.operationPath}`,
-        fetched_at: fetchedAt,
-        effective_at: null,
-        terms_url: this.options.definition.termsUrl,
-        // Portal Type-0 permissions are recorded below, but individual records
-        // can still contain third-party rights. Keep the aggregate rights gate
-        // unresolved until the activation review explicitly clears that risk.
-        usage_rights: "unknown",
-        commercial_use: "allowed",
-        cache_policy: "allowed",
-        redistribution: "allowed",
-        ai_context_use: "allowed",
-        http_status: 200,
-        content_sha256: digest,
-        content_type: "application/json",
-        parser_version: this.options.definition.parserVersion,
-        record_count: records.length,
-        page_count: pages.length,
-        next_cursor: null,
-        status: "parsed",
-        raw_retention_policy: "none",
-        uncertainty: `${this.options.definition.uncertainty} Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review.`,
-      },
+      source_snapshot_id: `SNAP-${this.id.toUpperCase().replaceAll("_", "-")}-${contentSha256.slice(0, 16).toUpperCase()}`,
+      source_id: this.options.definition.sourceId,
+      provider: this.options.definition.id,
+      official: true,
+      source_url: `${this.options.definition.baseUrl}/${this.options.operationPath ?? this.options.definition.operationPath}`,
+      fetched_at: fetchedAt,
+      effective_at: null,
+      terms_url: this.options.definition.termsUrl,
+      // Portal Type-0 permissions are recorded below, but individual records
+      // can still contain third-party rights. Keep the aggregate rights gate
+      // unresolved until the activation review explicitly clears that risk.
+      usage_rights: "unknown",
+      commercial_use: "allowed",
+      cache_policy: "allowed",
+      redistribution: "allowed",
+      ai_context_use: "allowed",
+      http_status: 200,
+      content_sha256: contentSha256,
+      content_type: "application/json",
+      parser_version: this.options.definition.parserVersion,
+      record_count: recordCount,
+      page_count: pageCount,
+      next_cursor: null,
+      status: "parsed",
+      raw_retention_policy: "none",
+      uncertainty: `${this.options.definition.uncertainty} Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review.`,
     };
+  }
+
+  async fetch(signal: AbortSignal): Promise<
+    Readonly<{
+      snapshot: SourceSnapshot;
+      records: readonly Readonly<Record<string, unknown>>[];
+    }>
+  > {
+    const records: Readonly<Record<string, unknown>>[] = [];
+    const snapshot = await this.fetchPages(({ items }) => {
+      records.push(...items);
+    }, signal);
+    return { records, snapshot };
   }
 }
 
@@ -466,7 +539,7 @@ export function createMfDsAdapterFromEnv(
     definition,
     serviceKey,
     operationPath: env[definition.operationPathEnv] ?? definition.operationPath,
-    maxAttempts: boundedInteger(env["MFDS_HTTP_MAX_ATTEMPTS"], 4, 1, 8),
+    maxAttempts: boundedInteger(env["MFDS_HTTP_MAX_ATTEMPTS"], 8, 1, 8),
     ...(transport ? { transport } : {}),
   });
 }

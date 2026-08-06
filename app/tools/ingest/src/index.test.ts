@@ -70,6 +70,24 @@ describe("ingest boundary", () => {
     ).toEqual([{ ITEM_SEQ: "2", ITEM_NAME: "테스트2" }]);
   });
 
+  it("unwraps nested MFDS ingredient item arrays", () => {
+    expect(
+      parseMfDsPage(
+        JSON.stringify({
+          response: {
+            header: { resultCode: "00", resultMsg: "NORMAL SERVICE" },
+            body: {
+              pageNo: 1,
+              numOfRows: 1,
+              totalCount: 1,
+              items: [{ item: { INGR_CODE: "D000762" } }],
+            },
+          },
+        }),
+      ).items,
+    ).toEqual([{ INGR_CODE: "D000762" }]);
+  });
+
   it("paginates with injected mock HTTP and records provenance without retaining raw dumps", async () => {
     const requested: string[] = [];
     const transport: HttpTransport = {

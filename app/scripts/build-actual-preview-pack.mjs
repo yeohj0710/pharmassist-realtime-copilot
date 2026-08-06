@@ -124,6 +124,18 @@ const healthKrLegacyMatchReportOutput = join(
   "actual-candidate-pack",
   "healthkr-legacy-match-report.json",
 );
+const mfdsIndicationCandidateSource = join(
+  root,
+  "data",
+  "actual-candidate-pack",
+  "mfds-indication-candidates.json",
+);
+const mfdsIngredientCandidateSource = join(
+  root,
+  "data",
+  "actual-candidate-pack",
+  "mfds-ingredient-candidates.json",
+);
 const productMediaImageSource = join(
   root,
   "data",
@@ -136,6 +148,15 @@ const readJsonl = async (name) =>
     .split(/\r?\n/u)
     .filter(Boolean)
     .map((line) => JSON.parse(line));
+
+const readOptionalJson = async (path, fallback) => {
+  try {
+    return JSON.parse(await readFile(path, "utf8"));
+  } catch (error) {
+    if (error.code === "ENOENT") return fallback;
+    throw error;
+  }
+};
 
 const parseCsv = (text) => {
   const rows = [];
@@ -348,6 +369,60 @@ const [
   readFile(fieldPracticeGuidanceSource, "utf8").then(JSON.parse),
   readFile(fieldPracticeProtocolsSource, "utf8").then(JSON.parse),
 ]);
+
+const mfdsIndicationCandidates = await readOptionalJson(
+  mfdsIndicationCandidateSource,
+  { schemaVersion: "1.0.0", candidateOnly: true, entries: [], sources: [] },
+);
+const mfdsIngredientCandidates = await readOptionalJson(
+  mfdsIngredientCandidateSource,
+  { schemaVersion: "1.0.0", candidateOnly: true, entries: [], sources: [] },
+);
+const mfdsIngredientSources = [
+  ...(mfdsIndicationCandidates.sources ?? []),
+  ...(mfdsIngredientCandidates.sources ?? []),
+];
+if (
+  mfdsIndicationCandidates.candidateOnly !== true ||
+  !Array.isArray(mfdsIndicationCandidates.entries) ||
+  mfdsIngredientCandidates.candidateOnly !== true ||
+  !Array.isArray(mfdsIngredientCandidates.entries)
+)
+  throw new Error("MFDS derived candidate files are invalid");
+const mfdsRegisteredIngredients = mfdsIngredientCandidates.entries;
+const mfdsSourceIds = new Set(
+  mfdsIngredientSources.map((source) => source.source_snapshot_id),
+);
+for (const candidate of mfdsRegisteredIngredients) {
+  if (
+    candidate.candidateOnly !== true ||
+    candidate.clinicalUseProhibited !== true ||
+    !Array.isArray(candidate.source_snapshot_ids) ||
+    candidate.source_snapshot_ids.length === 0 ||
+    candidate.source_snapshot_ids.some((id) => !mfdsSourceIds.has(id)) ||
+    !Array.isArray(candidate.source_refs) ||
+    candidate.source_refs.length === 0
+  )
+    throw new Error(
+      `MFDS ingredient candidate provenance failed: ${candidate.ingredient_id ?? "unknown"}`,
+    );
+}
+const mfdsPackIngredients = mfdsRegisteredIngredients.map((item) =>
+  Object.fromEntries(
+    Object.entries(item).filter(
+      ([key]) =>
+        !["candidateOnly", "clinicalUseProhibited", "source_names"].includes(
+          key,
+        ),
+    ),
+  ),
+);
+const mfdsIndicationByItemSeq = new Map(
+  mfdsIndicationCandidates.entries.map((entry) => [
+    String(entry.itemSeq),
+    entry,
+  ]),
+);
 
 const healthKrRegistry = JSON.parse(healthKrRegistryBody);
 const healthKrRegistryContentSha256 = createHash("sha256")
@@ -590,6 +665,15 @@ ingredientIdByName.set(
   normalizedIngredientName("디옥타헤드랄스멕타이트"),
   "ING-DIOSMECTITE",
 );
+
+for (const candidate of mfdsRegisteredIngredients) {
+  const names = [candidate.display_name_ko, ...(candidate.source_names ?? [])];
+  for (const name of names) {
+    const key = normalizedIngredientName(name);
+    if (key && !ingredientIdByName.has(key))
+      ingredientIdByName.set(key, candidate.ingredient_id);
+  }
+}
 
 const existingProductByItemSeq = new Map(
   products.map((item) => [item.item_seq, item]),
@@ -2003,6 +2087,23 @@ const legacySelectionProfilesFor = (product) => {
     ];
   });
 };
+const localIndicationPatch = (product) => {
+  const entry = mfdsIndicationByItemSeq.get(String(product.item_seq));
+  if (
+    product.indication_summary ||
+    !entry?.indicationSummary ||
+    !entry.source_ref
+  )
+    return {};
+  return {
+    indication_summary: entry.indicationSummary,
+    source_snapshot_ids: [
+      ...(product.source_snapshot_ids ?? []),
+      entry.source_snapshot_id,
+    ].filter(Boolean),
+    source_refs: [...(product.source_refs ?? []), entry.source_ref],
+  };
+};
 const productsWithHealthKrOverlays = [...products, ...newProducts].map(
   (product) => {
     const record = overlayRecordFor(product);
@@ -2014,6 +2115,7 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
     if (!record)
       return {
         ...product,
+        ...localIndicationPatch(product),
         selection_profiles: legacySelectionProfilesFor(product),
       };
     const sourceRef = healthKrSourceRef(record);
@@ -2051,6 +2153,7 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
     ];
     return {
       ...product,
+      ...localIndicationPatch(product),
       ...officialMetadata,
       // A confirmed official mapping is the protocol source of truth. Reusing
       // profiles inferred from any shared ingredient reintroduced cold
@@ -2066,7 +2169,17 @@ const productsWithHealthKrOverlays = [...products, ...newProducts].map(
   },
 );
 
-const runtimeSources = [...sources, ...newSources];
+const runtimeSources = [
+  ...sources,
+  ...newSources,
+  ...mfdsIngredientSources,
+].filter(
+  (sourceItem, index, all) =>
+    all.findIndex(
+      (candidate) =>
+        candidate.source_snapshot_id === sourceItem.source_snapshot_id,
+    ) === index,
+);
 const fieldPracticeApplications = [];
 // The generated pipeline gave every profile the same comparison note — "성분
 // 기전과 제형이 현재 불편에 더 직접 맞을 때 우선합니다" — which is circular and
@@ -2078,7 +2191,11 @@ const fieldPracticeApplications = [];
 // Both lists: the pathway expansion adds the health.kr ingredients that most of
 // these notes are written against, and they only exist in generatedIngredients.
 const ingredientIdByDisplayName = new Map();
-for (const item of [...ingredients, ...generatedIngredients]) {
+for (const item of [
+  ...ingredients,
+  ...generatedIngredients,
+  ...mfdsRegisteredIngredients,
+]) {
   const name = item.display_name_ko;
   if (ingredientIdByDisplayName.has(name))
     ingredientIdByDisplayName.set(name, "AMBIGUOUS");
@@ -2609,7 +2726,11 @@ for (const product of runtimeProducts)
     if (stem.length >= 3) packIngredientVocabulary.add(stem);
   }
 const registeredIngredientNameById = new Map();
-for (const ingredient of [...ingredients, ...generatedIngredients])
+for (const ingredient of [
+  ...ingredients,
+  ...generatedIngredients,
+  ...mfdsRegisteredIngredients,
+])
   if (ingredient.display_name_ko) {
     packIngredientVocabulary.add(ingredient.display_name_ko);
     registeredIngredientNameById.set(
@@ -2805,7 +2926,11 @@ const pack = {
   createdAt: "2026-07-13T12:00:00+09:00",
   expiresAt: "2027-01-13T00:00:00+09:00",
   sources: runtimeSources,
-  ingredients: [...ingredients, ...generatedIngredients].map((item) => ({
+  ingredients: [
+    ...ingredients,
+    ...generatedIngredients,
+    ...mfdsPackIngredients,
+  ].map((item) => ({
     ...item,
     review: previewReview(item.review),
   })),

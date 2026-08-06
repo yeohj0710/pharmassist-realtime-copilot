@@ -1,0 +1,5566 @@
+{
+  "schemaVersion": "1.0.0",
+  "candidateOnly": true,
+  "clinicalUseProhibited": true,
+  "generatedAt": "2026-08-06T09:32:57.480Z",
+  "entries": [
+    {
+      "ingredientId": "ING-UNMAPPED_201109334_4",
+      "sourceNames": [
+        "구아이페네신"
+      ],
+      "strengths": [
+        "40mg/1캡슐"
+      ],
+      "itemSeqs": [
+        "201109334"
+      ],
+      "productIds": [
+        "PRD-ENRICHED_201109334"
+      ],
+      "productNames": [
+        "그날엔콜드연질캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-UNMAPPED_202302949_6",
+      "sourceNames": [
+        "구아이페네신"
+      ],
+      "strengths": [
+        "41.6mg/1캡슐"
+      ],
+      "itemSeqs": [
+        "202302949"
+      ],
+      "productIds": [
+        "PRD-ENRICHED_202302949"
+      ],
+      "productNames": [
+        "그날엔콜드에이연질캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-UNMAPPED_201600779_2",
+      "sourceNames": [
+        "스코폴라민브롬화수소산염수화물"
+      ],
+      "strengths": [
+        "0.125mg/1정"
+      ],
+      "itemSeqs": [
+        "201600779"
+      ],
+      "productIds": [
+        "PRD-ENRICHED_201600779"
+      ],
+      "productNames": [
+        "보나링츄어블정"
+      ]
+    },
+    {
+      "ingredientId": "ING-UNMAPPED_201708580_4",
+      "sourceNames": [
+        "DL-카르니틴염산염"
+      ],
+      "strengths": [
+        "150mg/20g"
+      ],
+      "itemSeqs": [
+        "201708580"
+      ],
+      "productIds": [
+        "PRD-ENRICHED_201708580"
+      ],
+      "productNames": [
+        "겔포스엘현탁액"
+      ]
+    },
+    {
+      "ingredientId": "ING-UNMAPPED_199801026_1",
+      "sourceNames": [
+        "판크레아틴"
+      ],
+      "strengths": [
+        "315mg/1정"
+      ],
+      "itemSeqs": [
+        "199801026"
+      ],
+      "productIds": [
+        "PRD-ENRICHED_199801026"
+      ],
+      "productNames": [
+        "훼스탈플러스정"
+      ]
+    },
+    {
+      "ingredientId": "ING-UNMAPPED_199801026_2",
+      "sourceNames": [
+        "셀룰라제"
+      ],
+      "strengths": [
+        "10mg/1정"
+      ],
+      "itemSeqs": [
+        "199801026"
+      ],
+      "productIds": [
+        "PRD-ENRICHED_199801026"
+      ],
+      "productNames": [
+        "훼스탈플러스정"
+      ]
+    },
+    {
+      "ingredientId": "ING-UNMAPPED_201200854_3",
+      "sourceNames": [
+        "센노사이드칼슘"
+      ],
+      "strengths": [
+        "5mg/1정(센노사이드 A+B로서 1.97mg)"
+      ],
+      "itemSeqs": [
+        "201200854"
+      ],
+      "productIds": [
+        "PRD-ENRICHED_201200854"
+      ],
+      "productNames": [
+        "비코그린에스정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-ADD9D69D873BA60E",
+      "sourceNames": [
+        "Ascorbic Acid Coated 제피아스코르브산 156mg",
+        "Ascorbic Acid Coated 제피아스코르브산 156.3mg (아스코르브산(으)로서 150mg)",
+        "Ascorbic Acid Coated 제피아스코르브산 153.85mg"
+      ],
+      "strengths": [
+        "Ascorbic Acid Coated 제피아스코르브산 156mg",
+        "Ascorbic Acid Coated 제피아스코르브산 156.3mg (아스코르브산(으)로서 150mg)",
+        "Ascorbic Acid Coated 제피아스코르브산 153.85mg"
+      ],
+      "itemSeqs": [
+        "x1yz9ddq5chfc",
+        "pmewl0drvmfc7",
+        "A11AKP08D0143"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0293F9329CD725B",
+        "PRD-HEALTHKR-F80B8D345CB8AC77",
+        "PRD-HEALTHKR-94BC4F71817742DC"
+      ],
+      "productNames": [
+        "이가탄에프캡슐",
+        "덴타자임",
+        "덴타포스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-233E329805A97FE5",
+      "sourceNames": [
+        "Tocopherol Acetate Concentrated Powder 알파-토코페롤아세테이트농축분말 10mg (dl-α-토코페롤아세테이트(으)로서 5mg)"
+      ],
+      "strengths": [
+        "Tocopherol Acetate Concentrated Powder 알파-토코페롤아세테이트농축분말 10mg (dl-α-토코페롤아세테이트(으)로서 5mg)"
+      ],
+      "itemSeqs": [
+        "x1yz9ddq5chfc"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0293F9329CD725B"
+      ],
+      "productNames": [
+        "이가탄에프캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-B0A1A69B5D4468C3",
+      "sourceNames": [
+        "Carbazochrome 카르바조크롬 2mg"
+      ],
+      "strengths": [
+        "Carbazochrome 카르바조크롬 2mg"
+      ],
+      "itemSeqs": [
+        "x1yz9ddq5chfc",
+        "A11AKP07L0271",
+        "pmewl0drvmfc7",
+        "A11AKP08D0143",
+        "y0uwsrxlvahx3"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0293F9329CD725B",
+        "PRD-HEALTHKR-41DF1B360E00E958",
+        "PRD-HEALTHKR-F80B8D345CB8AC77",
+        "PRD-HEALTHKR-94BC4F71817742DC",
+        "PRD-HEALTHKR-137313AC7326C850"
+      ],
+      "productNames": [
+        "이가탄에프캡슐",
+        "덴파사캡슐",
+        "덴타자임",
+        "덴타포스",
+        "이모나캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-99EB0A4685172884",
+      "sourceNames": [
+        "Lysozyme Chloride 리소짐염산염 30mg"
+      ],
+      "strengths": [
+        "Lysozyme Chloride 리소짐염산염 30mg"
+      ],
+      "itemSeqs": [
+        "x1yz9ddq5chfc",
+        "A11AKP07L0271",
+        "pmewl0drvmfc7",
+        "A11AKP08D0143",
+        "y0uwsrxlvahx3"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0293F9329CD725B",
+        "PRD-HEALTHKR-41DF1B360E00E958",
+        "PRD-HEALTHKR-F80B8D345CB8AC77",
+        "PRD-HEALTHKR-94BC4F71817742DC",
+        "PRD-HEALTHKR-137313AC7326C850"
+      ],
+      "productNames": [
+        "이가탄에프캡슐",
+        "덴파사캡슐",
+        "덴타자임",
+        "덴타포스",
+        "이모나캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-B486B3D3A356FE57",
+      "sourceNames": [
+        "Guaifenesin 구아이페네신 2.5mg/mL",
+        "Guaifenesin 구아이페네신 20.83mg",
+        "Guaifenesin 구아이페네신 40mg",
+        "Guaifenesin 구아이페네신 83.3mg / 1병(30mL) 중",
+        "Guaifenesin 구아이페네신 42mg/20mL",
+        "Guaifenesin 구아이페네신 3.1245mg/mL",
+        "Guaifenesin 구아이페네신 31.25mg / 1포(12mL) 중",
+        "Guaifenesin 구아이페네신 41.6mg",
+        "Guaifenesin 구아이페네신 21mg",
+        "Guaifenesin 구아이페네신 50mg / 1포(20 밀리리터) 중-",
+        "Guaifenesin 구아이페네신 1000mg/100mL",
+        "Guaifenesin 구아이페네신 250mg / 100mL 중"
+      ],
+      "strengths": [
+        "Guaifenesin 구아이페네신 2.5mg/mL",
+        "Guaifenesin 구아이페네신 20.83mg",
+        "Guaifenesin 구아이페네신 40mg",
+        "Guaifenesin 구아이페네신 83.3mg / 1병(30mL) 중",
+        "Guaifenesin 구아이페네신 42mg/20mL",
+        "Guaifenesin 구아이페네신 3.1245mg/mL",
+        "Guaifenesin 구아이페네신 31.25mg / 1포(12mL) 중",
+        "Guaifenesin 구아이페네신 41.6mg",
+        "Guaifenesin 구아이페네신 21mg",
+        "Guaifenesin 구아이페네신 50mg / 1포(20 밀리리터) 중-",
+        "Guaifenesin 구아이페네신 1000mg/100mL",
+        "Guaifenesin 구아이페네신 250mg / 100mL 중"
+      ],
+      "itemSeqs": [
+        "2018110500002",
+        "2023111600008",
+        "2022122600005",
+        "A11A0570A0353",
+        "A11AKP08F0397",
+        "2024052400001",
+        "2018052300006",
+        "2013041200009",
+        "A11AKP07L0206",
+        "2023031500003",
+        "2019090900165",
+        "2019052900002",
+        "2022090100005"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-35CB511980CF274D",
+        "PRD-HEALTHKR-3D2912F45433840E",
+        "PRD-HEALTHKR-67F575E18F9A3A0A",
+        "PRD-HEALTHKR-18B66186DF89B2CF",
+        "PRD-HEALTHKR-B93DADD61F322C88",
+        "PRD-HEALTHKR-5347FA563921BD8C",
+        "PRD-HEALTHKR-53F97E415A43640A",
+        "PRD-HEALTHKR-CDB99383BCEDA5BE",
+        "PRD-HEALTHKR-2ED72A4B8982D4DA",
+        "PRD-HEALTHKR-702B18060B5CD8AC",
+        "PRD-HEALTHKR-158E3A1B855F441E",
+        "PRD-HEALTHKR-7C4E414929C03FB7",
+        "PRD-HEALTHKR-156F5EC241CA099E",
+        "PRD-HEALTHKR-C005D51CFAB96172",
+        "PRD-HEALTHKR-58E02DB06AE998A8"
+      ],
+      "productNames": [
+        "챔프코프목감기",
+        "챔프콜드펜시럽종합감기",
+        "종합감기약 타세놀 콜드캡슐",
+        "판콜에스내복액",
+        "판피린큐액",
+        "챔프코프액",
+        "챔프콜드펜하이시럽",
+        "판콜아이 콜드시럽",
+        "하벤큐",
+        "하벤목에스",
+        "하벤파워골드",
+        "센코프액",
+        "그린코플시럽",
+        "모드콜코프시럽"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-10B09D0D56615981",
+      "sourceNames": [
+        "Tipepidine Citrate 티페피딘시트르산염 0.5mg/mL",
+        "Tipepidine Citrate 티페피딘시트르산염 5mg",
+        "Tipepidine Citrate 티페피딘시트르산염 10mg/20mL",
+        "Tipepidine Citrate 티페피딘시트르산염 0.75mg/mL"
+      ],
+      "strengths": [
+        "Tipepidine Citrate 티페피딘시트르산염 0.5mg/mL",
+        "Tipepidine Citrate 티페피딘시트르산염 5mg",
+        "Tipepidine Citrate 티페피딘시트르산염 10mg/20mL",
+        "Tipepidine Citrate 티페피딘시트르산염 0.75mg/mL"
+      ],
+      "itemSeqs": [
+        "2018110500002",
+        "2023111600008",
+        "A11AKP08F0397",
+        "2024052400001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-35CB511980CF274D",
+        "PRD-HEALTHKR-3D2912F45433840E",
+        "PRD-HEALTHKR-B93DADD61F322C88",
+        "PRD-HEALTHKR-5347FA563921BD8C",
+        "PRD-HEALTHKR-53F97E415A43640A",
+        "PRD-HEALTHKR-CDB99383BCEDA5BE"
+      ],
+      "productNames": [
+        "챔프코프목감기",
+        "챔프콜드펜시럽종합감기",
+        "판피린큐액",
+        "챔프코프액",
+        "챔프콜드펜하이시럽"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-BA785B3779CFB581",
+      "sourceNames": [
+        "Hypromellose 히프로멜로오스 2mg"
+      ],
+      "strengths": [
+        "Hypromellose 히프로멜로오스 2mg"
+      ],
+      "itemSeqs": [
+        "2011111100002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-DD09B1CC1C307DEE"
+      ],
+      "productNames": [
+        "루핑점안액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-7E265678A829DDA4",
+      "sourceNames": [
+        "Potassium Chloride 염화칼륨 1.3mg"
+      ],
+      "strengths": [
+        "Potassium Chloride 염화칼륨 1.3mg"
+      ],
+      "itemSeqs": [
+        "2011111100002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-DD09B1CC1C307DEE"
+      ],
+      "productNames": [
+        "루핑점안액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6E3EE39A30CE7DDC",
+      "sourceNames": [
+        "Sodium Chloride 염화나트륨 7.4mg"
+      ],
+      "strengths": [
+        "Sodium Chloride 염화나트륨 7.4mg"
+      ],
+      "itemSeqs": [
+        "2011111100002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-DD09B1CC1C307DEE"
+      ],
+      "productNames": [
+        "루핑점안액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6D2F1ED28FC0EECF",
+      "sourceNames": [
+        "Casanthranol 카산트라놀 14mg"
+      ],
+      "strengths": [
+        "Casanthranol 카산트라놀 14mg"
+      ],
+      "itemSeqs": [
+        "2014103100002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9E8DD36DD253B493"
+      ],
+      "productNames": [
+        "메이킨큐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-BF55A34C221DEC5F",
+      "sourceNames": [
+        "Caffeine Anhydrous 카페인무수물 17mg",
+        "Caffeine Anhydrous 카페인무수물 30mg / 1병(30mL) 중",
+        "Caffeine Anhydrous 카페인무수물 30mg/20mL",
+        "Caffeine Anhydrous 카페인무수물 12.5mg"
+      ],
+      "strengths": [
+        "Caffeine Anhydrous 카페인무수물 17mg",
+        "Caffeine Anhydrous 카페인무수물 30mg / 1병(30mL) 중",
+        "Caffeine Anhydrous 카페인무수물 30mg/20mL",
+        "Caffeine Anhydrous 카페인무수물 12.5mg"
+      ],
+      "itemSeqs": [
+        "2022122600005",
+        "A11A0570A0353",
+        "A11AKP08F0397",
+        "2019071200031"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-67F575E18F9A3A0A",
+        "PRD-HEALTHKR-18B66186DF89B2CF",
+        "PRD-HEALTHKR-B93DADD61F322C88",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA"
+      ],
+      "productNames": [
+        "종합감기약 타세놀 콜드캡슐",
+        "판콜에스내복액",
+        "판피린큐액",
+        "코감콜"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-2364516EAF134DE7",
+      "sourceNames": [
+        "Biodiastase2000 비오디아스타제2000 4mg"
+      ],
+      "strengths": [
+        "Biodiastase2000 비오디아스타제2000 4mg"
+      ],
+      "itemSeqs": [
+        "2018100500006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-6AF431948C40EDCA"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "카베진코와알파"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-E209DFF34168485C",
+      "sourceNames": [
+        "Calcium Carbonate P.P.T. 침강탄산칼슘 200mg",
+        "Calcium Carbonate P.P.T. 침강탄산칼슘 100mg"
+      ],
+      "strengths": [
+        "Calcium Carbonate P.P.T. 침강탄산칼슘 200mg",
+        "Calcium Carbonate P.P.T. 침강탄산칼슘 100mg"
+      ],
+      "itemSeqs": [
+        "2018100500006",
+        "2021071300001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-6AF431948C40EDCA",
+        "PRD-HEALTHKR-390F4C26DA5C4153"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "카베진코와알파",
+        "위엔스탈"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-7A549D77D3F6041A",
+      "sourceNames": [
+        "Lipase AP12 리파제AP12 2.5mg"
+      ],
+      "strengths": [
+        "Lipase AP12 리파제AP12 2.5mg"
+      ],
+      "itemSeqs": [
+        "2018100500006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-6AF431948C40EDCA"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "카베진코와알파"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-418C3ECF31B8276C",
+      "sourceNames": [
+        "Magnesium Carbonate 탄산마그네슘 41.6667mg",
+        "Magnesium Carbonate 탄산마그네슘 83.8mg"
+      ],
+      "strengths": [
+        "Magnesium Carbonate 탄산마그네슘 41.6667mg",
+        "Magnesium Carbonate 탄산마그네슘 83.8mg"
+      ],
+      "itemSeqs": [
+        "2018100500006",
+        "A11AJJJJJ0093"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-6AF431948C40EDCA",
+        "PRD-HEALTHKR-71136BFE90F4BE7D"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "카베진코와알파",
+        "트리겔정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-7042DD5D479E6D83",
+      "sourceNames": [
+        "Methylmethionine Sulfonium Chloride 메틸메티오닌설포늄염화물 25mg"
+      ],
+      "strengths": [
+        "Methylmethionine Sulfonium Chloride 메틸메티오닌설포늄염화물 25mg"
+      ],
+      "itemSeqs": [
+        "2018100500006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-6AF431948C40EDCA"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "카베진코와알파"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-9B21C8C8B8E3383A",
+      "sourceNames": [
+        "Perilla Leaf Dried Extract (7.8∼9.5→1) 자소엽건조엑스(7.8∼9.5→1) 5mg"
+      ],
+      "strengths": [
+        "Perilla Leaf Dried Extract (7.8∼9.5→1) 자소엽건조엑스(7.8∼9.5→1) 5mg"
+      ],
+      "itemSeqs": [
+        "2018100500006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-6AF431948C40EDCA"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "카베진코와알파"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-C2920773E7D7DF2A",
+      "sourceNames": [
+        "Scopolia Extract Powder 33.3% 스코폴리아엑스3배산 15mg"
+      ],
+      "strengths": [
+        "Scopolia Extract Powder 33.3% 스코폴리아엑스3배산 15mg"
+      ],
+      "itemSeqs": [
+        "2018100500006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-6AF431948C40EDCA"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "카베진코와알파"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-75AB6951899CA6C0",
+      "sourceNames": [
+        "Sodium Bicarbonate 탄산수소나트륨 116.6667mg",
+        "Sodium Bicarbonate 탄산수소나트륨 50mg",
+        "Sodium Bicarbonate 탄산수소나트륨 2.13g",
+        "Sodium Bicarbonate 탄산수소나트륨 2.13g/100mL"
+      ],
+      "strengths": [
+        "Sodium Bicarbonate 탄산수소나트륨 116.6667mg",
+        "Sodium Bicarbonate 탄산수소나트륨 50mg",
+        "Sodium Bicarbonate 탄산수소나트륨 2.13g",
+        "Sodium Bicarbonate 탄산수소나트륨 2.13g/100mL"
+      ],
+      "itemSeqs": [
+        "2018100500006",
+        "2021071300001",
+        "2014022800018",
+        "2014061600003",
+        "A11AKP08G0782"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-6AF431948C40EDCA",
+        "PRD-HEALTHKR-390F4C26DA5C4153",
+        "PRD-HEALTHKR-305F85362AB31B5E",
+        "PRD-HEALTHKR-983C5C51489DC019",
+        "PRD-HEALTHKR-54A79F106554905B"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "카베진코와알파",
+        "위엔스탈",
+        "바로스콘더블액션",
+        "노루모듀얼액션현탁액",
+        "개비스콘더블액션"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5A4C98A5DA579587",
+      "sourceNames": [
+        "Swertiae Herba Powder 당약가루 5mg",
+        "Swertiae Herba Powder 당약가루 8.333mg"
+      ],
+      "strengths": [
+        "Swertiae Herba Powder 당약가루 5mg",
+        "Swertiae Herba Powder 당약가루 8.333mg"
+      ],
+      "itemSeqs": [
+        "2018100500006",
+        "2021122200006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E0D2884FF07D1138",
+        "PRD-HEALTHKR-3B61DC6F1E066703",
+        "PRD-HEALTHKR-6AF431948C40EDCA"
+      ],
+      "productNames": [
+        "카베진 코와 알파",
+        "훼스탈슈퍼자임",
+        "카베진코와알파"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-2B79B37A9AA32743",
+      "sourceNames": [
+        "Cinnamon Bark 육계 30mg",
+        "Cinnamon Bark 육계 1.25mg / 소환(175mg) 중",
+        "Cinnamon Bark 육계 50mg",
+        "Cinnamon Bark 육계 0.83g / 1포(3g) 중",
+        "Cinnamon Bark 육계 0.495g/75mL",
+        "Cinnamon Bark 육계 200mg / 1포(20 밀리리터) 중-",
+        "Cinnamon Bark 육계 168mg",
+        "Cinnamon Bark 육계 27mg / 1포(10mL) 중",
+        "Cinnamon Bark 육계 63.3mg / 1포 (10mL) 중",
+        "Cinnamon Bark 육계 150mg/20mL",
+        "Cinnamon Bark 육계 0.83g",
+        "Cinnamon Bark 육계 0.495g/100mL"
+      ],
+      "strengths": [
+        "Cinnamon Bark 육계 30mg",
+        "Cinnamon Bark 육계 1.25mg / 소환(175mg) 중",
+        "Cinnamon Bark 육계 50mg",
+        "Cinnamon Bark 육계 0.83g / 1포(3g) 중",
+        "Cinnamon Bark 육계 0.495g/75mL",
+        "Cinnamon Bark 육계 200mg / 1포(20 밀리리터) 중-",
+        "Cinnamon Bark 육계 168mg",
+        "Cinnamon Bark 육계 27mg / 1포(10mL) 중",
+        "Cinnamon Bark 육계 63.3mg / 1포 (10mL) 중",
+        "Cinnamon Bark 육계 150mg/20mL",
+        "Cinnamon Bark 육계 0.83g",
+        "Cinnamon Bark 육계 0.495g/100mL"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "A11A2670A0001",
+        "A11AGGGGG7026",
+        "2021121400003",
+        "2012091400010",
+        "2019090900165",
+        "2019071200031",
+        "2016040700006",
+        "2022021000010",
+        "A11AKP08L0153",
+        "2024011800001",
+        "A11AKP07L0179",
+        "2012091400011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-0E5A2D7361C7CE94",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-995BEFAEE1A25563",
+        "PRD-HEALTHKR-156F5EC241CA099E",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-A5FFD17F8BABAB06",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-1402C543995C2A2D",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-F1755A3EBB87A0BF"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "보화소합원(소환)",
+        "장편환",
+        "한풍올가에스",
+        "경남보감탕액",
+        "센코프액",
+        "코감콜",
+        "꼬마활명수액",
+        "베나치오키즈",
+        "베나치오액",
+        "보화소합원",
+        "베나치오이지",
+        "커버든엑스과립(위령탕)",
+        "경남보감탕노즈액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-64420E64286D3638",
+      "sourceNames": [
+        "Atractylodes Rhizome 창출 3mg",
+        "Atractylodes Rhizome 창출 31.25mg",
+        "Atractylodes Rhizome 창출 6.25mg / 소환(175mg) 중",
+        "Atractylodes Rhizome 창출 50mg / 대환(1.4g) 중",
+        "Atractylodes Rhizome 창출 50mg",
+        "Atractylodes Rhizome 창출 1g / 1포(3g) 중",
+        "Atractylodes Rhizome 창출 20mg",
+        "Atractylodes Rhizome 창출 16.9mg / 1포 (10mL) 중",
+        "Atractylodes Rhizome 창출 40mg/20mL",
+        "Atractylodes Rhizome 창출 0.3g / 1포 (20g) 중",
+        "Atractylodes Rhizome 창출 1g",
+        "Atractylodes Rhizome 창출 1.88g / 75mL 중"
+      ],
+      "strengths": [
+        "Atractylodes Rhizome 창출 3mg",
+        "Atractylodes Rhizome 창출 31.25mg",
+        "Atractylodes Rhizome 창출 6.25mg / 소환(175mg) 중",
+        "Atractylodes Rhizome 창출 50mg / 대환(1.4g) 중",
+        "Atractylodes Rhizome 창출 50mg",
+        "Atractylodes Rhizome 창출 1g / 1포(3g) 중",
+        "Atractylodes Rhizome 창출 20mg",
+        "Atractylodes Rhizome 창출 16.9mg / 1포 (10mL) 중",
+        "Atractylodes Rhizome 창출 40mg/20mL",
+        "Atractylodes Rhizome 창출 0.3g / 1포 (20g) 중",
+        "Atractylodes Rhizome 창출 1g",
+        "Atractylodes Rhizome 창출 1.88g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "A11AKP07L0284",
+        "A11A2670A0001",
+        "A11AGGGGG7026",
+        "2021121400003",
+        "A11ABBBBB2010",
+        "2022021000010",
+        "A11AKP08L0153",
+        "2024011800001",
+        "2022120700002",
+        "A11AKP07L0179",
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-0E5A2D7361C7CE94",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-08400520FC85198D",
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-A5FFD17F8BABAB06",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-1402C543995C2A2D",
+        "PRD-HEALTHKR-96BF62AD9A62A50B",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "무통환(영선제통음)",
+        "보화소합원(소환)",
+        "장편환",
+        "한풍올가에스",
+        "절효환",
+        "베나치오키즈",
+        "베나치오액",
+        "보화소합원",
+        "베나치오이지",
+        "에스톰액",
+        "커버든엑스과립(위령탕)",
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-2D54916A83B5511B",
+      "sourceNames": [
+        "Capsicum Tinc. 고추틴크 0.06mg"
+      ],
+      "strengths": [
+        "Capsicum Tinc. 고추틴크 0.06mg"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C"
+      ],
+      "productNames": [
+        "까스활명수-큐액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-FF994F2DDFA27E06",
+      "sourceNames": [
+        "Citrus Unshiu Peel 진피 250mg",
+        "Citrus Unshiu Peel 진피 15mg / 소환(175mg) 중",
+        "Citrus Unshiu Peel 진피 120mg / 대환(1.4g) 중",
+        "Citrus Unshiu Peel 진피 1g / 1포(3g) 중",
+        "Citrus Unshiu Peel 진피 166.67mg / 1포(10mL) 중",
+        "Citrus Unshiu Peel 진피 97mg / 1포 (10mL) 중",
+        "Citrus Unshiu Peel 진피 230mg/20mL",
+        "Citrus Unshiu Peel 진피 0.58g / 1포 (20g) 중",
+        "Citrus Unshiu Peel 진피 1g",
+        "Citrus Unshiu Peel 진피 366.3mg",
+        "Citrus Unshiu Peel 진피 1.25g / 75mL 중"
+      ],
+      "strengths": [
+        "Citrus Unshiu Peel 진피 250mg",
+        "Citrus Unshiu Peel 진피 15mg / 소환(175mg) 중",
+        "Citrus Unshiu Peel 진피 120mg / 대환(1.4g) 중",
+        "Citrus Unshiu Peel 진피 1g / 1포(3g) 중",
+        "Citrus Unshiu Peel 진피 166.67mg / 1포(10mL) 중",
+        "Citrus Unshiu Peel 진피 97mg / 1포 (10mL) 중",
+        "Citrus Unshiu Peel 진피 230mg/20mL",
+        "Citrus Unshiu Peel 진피 0.58g / 1포 (20g) 중",
+        "Citrus Unshiu Peel 진피 1g",
+        "Citrus Unshiu Peel 진피 366.3mg",
+        "Citrus Unshiu Peel 진피 1.25g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "A11A2670A0001",
+        "2021121400003",
+        "2016040700006",
+        "2022021000010",
+        "A11AKP08L0153",
+        "2024011800001",
+        "2022120700002",
+        "A11AKP07L0179",
+        "A11AKP07L0357",
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-A5FFD17F8BABAB06",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-1402C543995C2A2D",
+        "PRD-HEALTHKR-96BF62AD9A62A50B",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-A2C380F4DE5A4413",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "보화소합원(소환)",
+        "한풍올가에스",
+        "꼬마활명수액",
+        "베나치오키즈",
+        "베나치오액",
+        "보화소합원",
+        "베나치오이지",
+        "에스톰액",
+        "커버든엑스과립(위령탕)",
+        "숙신환",
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-B2ACB84DBBB983D3",
+      "sourceNames": [
+        "Clove 정향 12mg",
+        "Clove 정향 10.8mg / 1포(10mL) 중",
+        "Clove 정향 0.23g / 1포 (20g) 중"
+      ],
+      "strengths": [
+        "Clove 정향 12mg",
+        "Clove 정향 10.8mg / 1포(10mL) 중",
+        "Clove 정향 0.23g / 1포 (20g) 중"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "2016040700006",
+        "2022120700002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-96BF62AD9A62A50B"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "꼬마활명수액",
+        "에스톰액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-C6D72C0DE61920C7",
+      "sourceNames": [
+        "Corydalis Tuber 현호색 180mg",
+        "Corydalis Tuber 현호색 120mg / 1포(10mL) 중",
+        "Corydalis Tuber 현호색 80mg / 1포 (10mL) 중",
+        "Corydalis Tuber 현호색 167mg/20mL",
+        "Corydalis Tuber 현호색 0.42g / 1포 (20g) 중"
+      ],
+      "strengths": [
+        "Corydalis Tuber 현호색 180mg",
+        "Corydalis Tuber 현호색 120mg / 1포(10mL) 중",
+        "Corydalis Tuber 현호색 80mg / 1포 (10mL) 중",
+        "Corydalis Tuber 현호색 167mg/20mL",
+        "Corydalis Tuber 현호색 0.42g / 1포 (20g) 중"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "2016040700006",
+        "2022021000010",
+        "A11AKP08L0153",
+        "2022120700002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-A5FFD17F8BABAB06",
+        "PRD-HEALTHKR-96BF62AD9A62A50B"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "꼬마활명수액",
+        "베나치오키즈",
+        "베나치오액",
+        "에스톰액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-68DD2C64B147EC36",
+      "sourceNames": [
+        "Gambir 아선약 100mg",
+        "Gambir 아선약 66.67mg / 1포(10mL) 중",
+        "Gambir 아선약 67.7mg / 1포 (10mL) 중",
+        "Gambir 아선약 144.2mg/20mL"
+      ],
+      "strengths": [
+        "Gambir 아선약 100mg",
+        "Gambir 아선약 66.67mg / 1포(10mL) 중",
+        "Gambir 아선약 67.7mg / 1포 (10mL) 중",
+        "Gambir 아선약 144.2mg/20mL"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "2016040700006",
+        "2022021000010",
+        "2024011800001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-1402C543995C2A2D"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "꼬마활명수액",
+        "베나치오키즈",
+        "베나치오이지"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-ECEB6AF78295E178",
+      "sourceNames": [
+        "Ginger 건강 12mg",
+        "Ginger 건강 277mg",
+        "Ginger 건강 0.83g",
+        "Ginger 건강 0.33g / 수침연조엑스 2.54g 중",
+        "Ginger 건강 1g",
+        "Ginger 건강 0.67g / 1포(3g) 중",
+        "Ginger 건강 0.33g/75mL",
+        "Ginger 건강 0.165g/75mL",
+        "Ginger 건강 0.33g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Ginger 건강 56mg",
+        "Ginger 건강 10.8mg / 1포(10mL) 중",
+        "Ginger 건강 42.2mg / 1포 (10mL) 중",
+        "Ginger 건강 100mg/20mL",
+        "Ginger 건강 0.18g / 1포 (20g) 중",
+        "Ginger 건강 0.67g",
+        "Ginger 건강 0.375g / 75mL 중",
+        "Ginger 건강 0.165g/100mL"
+      ],
+      "strengths": [
+        "Ginger 건강 12mg",
+        "Ginger 건강 277mg",
+        "Ginger 건강 0.83g",
+        "Ginger 건강 0.33g / 수침연조엑스 2.54g 중",
+        "Ginger 건강 1g",
+        "Ginger 건강 0.67g / 1포(3g) 중",
+        "Ginger 건강 0.33g/75mL",
+        "Ginger 건강 0.165g/75mL",
+        "Ginger 건강 0.33g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Ginger 건강 56mg",
+        "Ginger 건강 10.8mg / 1포(10mL) 중",
+        "Ginger 건강 42.2mg / 1포 (10mL) 중",
+        "Ginger 건강 100mg/20mL",
+        "Ginger 건강 0.18g / 1포 (20g) 중",
+        "Ginger 건강 0.67g",
+        "Ginger 건강 0.375g / 75mL 중",
+        "Ginger 건강 0.165g/100mL"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "krqpwvlvb3q6f",
+        "A11AKP09B0079",
+        "A11AKP08G1445",
+        "A11AGGGGG7012",
+        "2021121400003",
+        "A11AKP08G1151",
+        "2012091400010",
+        "A11A1500A0493",
+        "2019071200031",
+        "2016040700006",
+        "2022021000010",
+        "A11AKP08L0153",
+        "2024011800001",
+        "2022120700002",
+        "A11AKP07L0179",
+        "A11AKP07L0378",
+        "A11A1240A0068",
+        "2012091400011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-58CF470586806A38",
+        "PRD-HEALTHKR-E6BAEDF4F117CDD7",
+        "PRD-HEALTHKR-5C22A30FE8BF41E7",
+        "PRD-HEALTHKR-AD5397460805501C",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-F59D06E08AD132B7",
+        "PRD-HEALTHKR-995BEFAEE1A25563",
+        "PRD-HEALTHKR-DC837CC0882F30A0",
+        "PRD-HEALTHKR-E3BBB51BA35F5B40",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-A5FFD17F8BABAB06",
+        "PRD-HEALTHKR-1402C543995C2A2D",
+        "PRD-HEALTHKR-96BF62AD9A62A50B",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-000D6ABCD59849E9",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE",
+        "PRD-HEALTHKR-F1755A3EBB87A0BF"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "상위정",
+        "위평원과립",
+        "한솔갈근탕",
+        "기가천과립",
+        "한풍올가에스",
+        "경방갈근탕액",
+        "경남보감탕액",
+        "한신갈근탕",
+        "코감콜",
+        "꼬마활명수액",
+        "베나치오키즈",
+        "베나치오액",
+        "베나치오이지",
+        "에스톰액",
+        "커버든엑스과립(위령탕)",
+        "스토마큐",
+        "취어스액",
+        "경남보감탕노즈액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-D9527AD4338F1A08",
+      "sourceNames": [
+        "L-Menthol L-멘톨 16mg",
+        "L-Menthol L-멘톨 0.05mg / 소환(175mg) 중",
+        "L-Menthol L-멘톨 0.4mg / 대환(1.4g) 중",
+        "L-Menthol L-멘톨 10mg/g",
+        "L-Menthol L-멘톨 8mg/20mL",
+        "L-Menthol L-멘톨 0.003g / 1포 (20g) 중"
+      ],
+      "strengths": [
+        "L-Menthol L-멘톨 16mg",
+        "L-Menthol L-멘톨 0.05mg / 소환(175mg) 중",
+        "L-Menthol L-멘톨 0.4mg / 대환(1.4g) 중",
+        "L-Menthol L-멘톨 10mg/g",
+        "L-Menthol L-멘톨 8mg/20mL",
+        "L-Menthol L-멘톨 0.003g / 1포 (20g) 중"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "A11A2670A0001",
+        "2016072600007",
+        "A11AKP08L0153",
+        "2022120700002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-F0829CA5E5C890FC",
+        "PRD-HEALTHKR-A5FFD17F8BABAB06",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-96BF62AD9A62A50B"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "보화소합원(소환)",
+        "로시놀 더블액션 크림",
+        "베나치오액",
+        "보화소합원",
+        "에스톰액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-0BC3165F0E61248A",
+      "sourceNames": [
+        "Magnolia Bark 후박 50mg",
+        "Magnolia Bark 후박 2.5mg / 소환(175mg) 중",
+        "Magnolia Bark 후박 20mg / 대환(1.4g) 중",
+        "Magnolia Bark 후박 1g / 1포(3g) 중",
+        "Magnolia Bark 후박 342mg",
+        "Magnolia Bark 후박 33.33mg / 1포(10mL) 중",
+        "Magnolia Bark 후박 1g"
+      ],
+      "strengths": [
+        "Magnolia Bark 후박 50mg",
+        "Magnolia Bark 후박 2.5mg / 소환(175mg) 중",
+        "Magnolia Bark 후박 20mg / 대환(1.4g) 중",
+        "Magnolia Bark 후박 1g / 1포(3g) 중",
+        "Magnolia Bark 후박 342mg",
+        "Magnolia Bark 후박 33.33mg / 1포(10mL) 중",
+        "Magnolia Bark 후박 1g"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "A11A2670A0001",
+        "2021121400003",
+        "A11AKP08G1247",
+        "2016040700006",
+        "A11AKP07L0179",
+        "A11AKP07L0109"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-A9817CC9D1C64E79",
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-E4C4252C2C39F436"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "보화소합원(소환)",
+        "한풍올가에스",
+        "경방마자인환",
+        "꼬마활명수액",
+        "보화소합원",
+        "커버든엑스과립(위령탕)",
+        "건양탕"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-53AB9848F4540E34",
+      "sourceNames": [
+        "Nutmeg 육두구 6mg",
+        "Nutmeg 육두구 5.4mg / 1포(10mL) 중",
+        "Nutmeg 육두구 0.18g / 1포 (20g) 중"
+      ],
+      "strengths": [
+        "Nutmeg 육두구 6mg",
+        "Nutmeg 육두구 5.4mg / 1포(10mL) 중",
+        "Nutmeg 육두구 0.18g / 1포 (20g) 중"
+      ],
+      "itemSeqs": [
+        "A11A0570A0357",
+        "2016040700006",
+        "2022120700002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-661CC89ABA5ED21C",
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-96BF62AD9A62A50B"
+      ],
+      "productNames": [
+        "까스활명수-큐액",
+        "꼬마활명수액",
+        "에스톰액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-C371F2CE1127B716",
+      "sourceNames": [
+        "Powdered Senna Leaf 센나엽가루 100mg"
+      ],
+      "strengths": [
+        "Powdered Senna Leaf 센나엽가루 100mg"
+      ],
+      "itemSeqs": [
+        "2024040100016"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-CF981ABFE45EF607"
+      ],
+      "productNames": [
+        "장제로큐장용정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-54B9B0CFE8641F1B",
+      "sourceNames": [
+        "Nicotinamide 니코틴산아미드 1.67mg"
+      ],
+      "strengths": [
+        "Nicotinamide 니코틴산아미드 1.67mg"
+      ],
+      "itemSeqs": [
+        "2009071505688"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-673911BE2AC2B461"
+      ],
+      "productNames": [
+        "식물성변비약 위드원엘과립"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-98EC336E3A02321D",
+      "sourceNames": [
+        "Psyllium Husk 차전자피 1000mg"
+      ],
+      "strengths": [
+        "Psyllium Husk 차전자피 1000mg"
+      ],
+      "itemSeqs": [
+        "2009071505688"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-673911BE2AC2B461"
+      ],
+      "productNames": [
+        "식물성변비약 위드원엘과립"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5F2DE7D4B431D5F0",
+      "sourceNames": [
+        "Sennoside Calcium 센노시드칼슘 41.03mg"
+      ],
+      "strengths": [
+        "Sennoside Calcium 센노시드칼슘 41.03mg"
+      ],
+      "itemSeqs": [
+        "2009071505688"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-673911BE2AC2B461"
+      ],
+      "productNames": [
+        "식물성변비약 위드원엘과립"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-73EABBCD5AA34B12",
+      "sourceNames": [
+        "Sporullating Lactobacillus 유포자성유산균 43.33mg"
+      ],
+      "strengths": [
+        "Sporullating Lactobacillus 유포자성유산균 43.33mg"
+      ],
+      "itemSeqs": [
+        "2009071505688"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-673911BE2AC2B461"
+      ],
+      "productNames": [
+        "식물성변비약 위드원엘과립"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-AE70602DA64FECB8",
+      "sourceNames": [
+        "Allantoin 알란토인 10mg/g",
+        "Allantoin 알란토인 50mg/g",
+        "Allantoin 알란토인 2mg/mL",
+        "Allantoin 알란토인 0.2g/100mL"
+      ],
+      "strengths": [
+        "Allantoin 알란토인 10mg/g",
+        "Allantoin 알란토인 50mg/g",
+        "Allantoin 알란토인 2mg/mL",
+        "Allantoin 알란토인 0.2g/100mL"
+      ],
+      "itemSeqs": [
+        "2016120100007",
+        "A11AOOOOO9487",
+        "2019053100012",
+        "A11A3060A0344",
+        "A11AKP08F1048"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9D9ACCBDCD59CECF",
+        "PRD-HEALTHKR-6BD318556E455A08",
+        "PRD-HEALTHKR-FDA7287AEEF813D5",
+        "PRD-HEALTHKR-574D5BD1C9A6EC74",
+        "PRD-HEALTHKR-9299B815AD6FE734"
+      ],
+      "productNames": [
+        "치젤연고",
+        "콘투락투벡스겔",
+        "스카덤 클리어겔",
+        "누보클렌",
+        "애니클렌액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-93F6E440C6EBBEF4",
+      "sourceNames": [
+        "Chlorhexidine Hydrochloride 클로르헥시딘염산염 5mg/g"
+      ],
+      "strengths": [
+        "Chlorhexidine Hydrochloride 클로르헥시딘염산염 5mg/g"
+      ],
+      "itemSeqs": [
+        "2016120100007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9D9ACCBDCD59CECF"
+      ],
+      "productNames": [
+        "치젤연고"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-CDD0BC384A5D4B7A",
+      "sourceNames": [
+        "Lidocaine 리도카인 30mg/g",
+        "Lidocaine 리도카인 20mg/g"
+      ],
+      "strengths": [
+        "Lidocaine 리도카인 30mg/g",
+        "Lidocaine 리도카인 20mg/g"
+      ],
+      "itemSeqs": [
+        "2016120100007",
+        "2016072600007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9D9ACCBDCD59CECF",
+        "PRD-HEALTHKR-F0829CA5E5C890FC"
+      ],
+      "productNames": [
+        "치젤연고",
+        "로시놀 더블액션 크림"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-86E69A8321DD6BE7",
+      "sourceNames": [
+        "Phenylephrine Hydrochloride 페닐레프린염산염 2.5mg/g"
+      ],
+      "strengths": [
+        "Phenylephrine Hydrochloride 페닐레프린염산염 2.5mg/g"
+      ],
+      "itemSeqs": [
+        "2016120100007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9D9ACCBDCD59CECF"
+      ],
+      "productNames": [
+        "치젤연고"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1C903E0256EFA957",
+      "sourceNames": [
+        "Retinol Palmitate Oil 레티놀팔미테이트유 1.2mg/g"
+      ],
+      "strengths": [
+        "Retinol Palmitate Oil 레티놀팔미테이트유 1.2mg/g"
+      ],
+      "itemSeqs": [
+        "2016120100007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9D9ACCBDCD59CECF"
+      ],
+      "productNames": [
+        "치젤연고"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-8B922AA4A6C0FD2A",
+      "sourceNames": [
+        "Tocopherol Acetate 토코페롤아세테이트 30mg/g"
+      ],
+      "strengths": [
+        "Tocopherol Acetate 토코페롤아세테이트 30mg/g"
+      ],
+      "itemSeqs": [
+        "2016120100007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9D9ACCBDCD59CECF"
+      ],
+      "productNames": [
+        "치젤연고"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-21A5A68184601C1A",
+      "sourceNames": [
+        "Scopolamine Hydrobromide Hydrate 스코폴라민브롬화수소산염수화물 0.125mg"
+      ],
+      "strengths": [
+        "Scopolamine Hydrobromide Hydrate 스코폴라민브롬화수소산염수화물 0.125mg"
+      ],
+      "itemSeqs": [
+        "2016021200001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-5DF08DF71C615563"
+      ],
+      "productNames": [
+        "보나링츄어블"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-0ADD74425599E15B",
+      "sourceNames": [
+        "Hydrocortisone Acetate 히드로코르티손아세테이트 10mg/g"
+      ],
+      "strengths": [
+        "Hydrocortisone Acetate 히드로코르티손아세테이트 10mg/g"
+      ],
+      "itemSeqs": [
+        "A11A0071B0010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-3CCE8BA905FB65D6"
+      ],
+      "productNames": [
+        "복합마데카솔"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-54C0D66D8CD9A4BF",
+      "sourceNames": [
+        "Neomycin Sulfate 네오마이신황산염 3.5mg/g"
+      ],
+      "strengths": [
+        "Neomycin Sulfate 네오마이신황산염 3.5mg/g"
+      ],
+      "itemSeqs": [
+        "A11A0071B0010",
+        "2009071506011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-3CCE8BA905FB65D6",
+        "PRD-HEALTHKR-3A4BE81CBB750CDB",
+        "PRD-HEALTHKR-B4A435CD57E51FDA"
+      ],
+      "productNames": [
+        "복합마데카솔",
+        "마데카솔케어"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-B174C573C7C5120F",
+      "sourceNames": [
+        "Titrated Ext. of Centella Asiatica 센텔라아시아티카정량추출물 10mg/g (아시아티코사이드(으)로서 4mg/g)",
+        "Titrated Ext. of Centella Asiatica 센텔라아시아티카정량추출물 10mg/g"
+      ],
+      "strengths": [
+        "Titrated Ext. of Centella Asiatica 센텔라아시아티카정량추출물 10mg/g (아시아티코사이드(으)로서 4mg/g)",
+        "Titrated Ext. of Centella Asiatica 센텔라아시아티카정량추출물 10mg/g"
+      ],
+      "itemSeqs": [
+        "A11A0071B0010",
+        "2009071506011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-3CCE8BA905FB65D6",
+        "PRD-HEALTHKR-3A4BE81CBB750CDB",
+        "PRD-HEALTHKR-B4A435CD57E51FDA"
+      ],
+      "productNames": [
+        "복합마데카솔",
+        "마데카솔케어"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-A83FC803D203D057",
+      "sourceNames": [
+        "Heparin Sodium 헤파린나트륨 50IU/g"
+      ],
+      "strengths": [
+        "Heparin Sodium 헤파린나트륨 50IU/g"
+      ],
+      "itemSeqs": [
+        "A11AOOOOO9487"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-6BD318556E455A08"
+      ],
+      "productNames": [
+        "콘투락투벡스겔"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-D0CEF00B11166B78",
+      "sourceNames": [
+        "Cepae Soft Ext.(1.8→1) 세파연조엑스(1.8→1) 100mg/g"
+      ],
+      "strengths": [
+        "Cepae Soft Ext.(1.8→1) 세파연조엑스(1.8→1) 100mg/g"
+      ],
+      "itemSeqs": [
+        "A11AOOOOO9487"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-6BD318556E455A08"
+      ],
+      "productNames": [
+        "콘투락투벡스겔"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-AF9ACE89B25F937F",
+      "sourceNames": [
+        "Heparin Sodium 헤파린나트륨 500IU/g"
+      ],
+      "strengths": [
+        "Heparin Sodium 헤파린나트륨 500IU/g"
+      ],
+      "itemSeqs": [
+        "2019053100012"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-FDA7287AEEF813D5"
+      ],
+      "productNames": [
+        "스카덤 클리어겔"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-419581F026A51FAA",
+      "sourceNames": [
+        "Chondroitin Sulfate Sodium 콘드로이틴설페이트나트륨 1.2g / 1포(8 그램) 중-",
+        "Chondroitin Sulfate Sodium 콘드로이틴설페이트나트륨 1.2g / 1포(12 그램) 중-"
+      ],
+      "strengths": [
+        "Chondroitin Sulfate Sodium 콘드로이틴설페이트나트륨 1.2g / 1포(8 그램) 중-",
+        "Chondroitin Sulfate Sodium 콘드로이틴설페이트나트륨 1.2g / 1포(12 그램) 중-"
+      ],
+      "itemSeqs": [
+        "2023112100003"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-5B148E1CA4DF0D12"
+      ],
+      "productNames": [
+        "맥스콘드로이틴1200경구용겔"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-311FFA0DA7369B96",
+      "sourceNames": [
+        "Coptis Rhizome Ext. Powder 황련엑스산 21mg"
+      ],
+      "strengths": [
+        "Coptis Rhizome Ext. Powder 황련엑스산 21mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0206"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-158E3A1B855F441E"
+      ],
+      "productNames": [
+        "하벤목에스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6D4A405C4F5B8C64",
+      "sourceNames": [
+        "Ethenzamide 에텐자미드 100mg"
+      ],
+      "strengths": [
+        "Ethenzamide 에텐자미드 100mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0206"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-158E3A1B855F441E"
+      ],
+      "productNames": [
+        "하벤목에스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-C0FB1B587238675C",
+      "sourceNames": [
+        "Platycodon Root 50% Ethanol Dried Ext. (10→1) 길경50%에탄올건조엑스(10→1) 20mg"
+      ],
+      "strengths": [
+        "Platycodon Root 50% Ethanol Dried Ext. (10→1) 길경50%에탄올건조엑스(10→1) 20mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0206"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-158E3A1B855F441E"
+      ],
+      "productNames": [
+        "하벤목에스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-955F947F628181A4",
+      "sourceNames": [
+        "Pamabrom 파마브롬 25mg"
+      ],
+      "strengths": [
+        "Pamabrom 파마브롬 25mg"
+      ],
+      "itemSeqs": [
+        "2013011800015",
+        "2024032000001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-3580D165B330CA73",
+        "PRD-HEALTHKR-8A4721541896BF22"
+      ],
+      "productNames": [
+        "이지엔6이브(병)",
+        "퓨어펜연질캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-03BE8EBFDBDDF8EC",
+      "sourceNames": [
+        "Magnesium Oxide 산화마그네슘 50mg (마그네슘(으)로서 30.15mg)",
+        "Magnesium Oxide 산화마그네슘 60mg"
+      ],
+      "strengths": [
+        "Magnesium Oxide 산화마그네슘 50mg (마그네슘(으)로서 30.15mg)",
+        "Magnesium Oxide 산화마그네슘 60mg"
+      ],
+      "itemSeqs": [
+        "2024032000001",
+        "2021122200006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-8A4721541896BF22",
+        "PRD-HEALTHKR-3B61DC6F1E066703"
+      ],
+      "productNames": [
+        "퓨어펜연질캡슐",
+        "훼스탈슈퍼자임"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-EE3E0727093B4EE3",
+      "sourceNames": [
+        "Riboflavin 리보플라빈 2mg"
+      ],
+      "strengths": [
+        "Riboflavin 리보플라빈 2mg"
+      ],
+      "itemSeqs": [
+        "2024032000001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-8A4721541896BF22"
+      ],
+      "productNames": [
+        "퓨어펜연질캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-AE7B63A0585C60D7",
+      "sourceNames": [
+        "편금주초 31.25mg"
+      ],
+      "strengths": [
+        "편금주초 31.25mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881"
+      ],
+      "productNames": [
+        "무통환(영선제통음)"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-03380295D9D0A0C9",
+      "sourceNames": [
+        "Angelica Dahurica Root 백지 31.25mg"
+      ],
+      "strengths": [
+        "Angelica Dahurica Root 백지 31.25mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881"
+      ],
+      "productNames": [
+        "무통환(영선제통음)"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-979C67C726D5C6E1",
+      "sourceNames": [
+        "Angelica Gigas Root 당귀 18.75mg",
+        "Angelica Gigas Root 당귀 50mg",
+        "Angelica Gigas Root 당귀 20mg",
+        "Angelica Gigas Root 당귀 89.1mg"
+      ],
+      "strengths": [
+        "Angelica Gigas Root 당귀 18.75mg",
+        "Angelica Gigas Root 당귀 50mg",
+        "Angelica Gigas Root 당귀 20mg",
+        "Angelica Gigas Root 당귀 89.1mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11AGGGGG7026",
+        "A11ABBBBB2010",
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-0E5A2D7361C7CE94",
+        "PRD-HEALTHKR-08400520FC85198D",
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "장편환",
+        "절효환",
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-13E1C3DB8F6A3974",
+      "sourceNames": [
+        "Aralia Continentalis Root 독활 31.25mg"
+      ],
+      "strengths": [
+        "Aralia Continentalis Root 독활 31.25mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881"
+      ],
+      "productNames": [
+        "무통환(영선제통음)"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-57320130AD32811B",
+      "sourceNames": [
+        "Cimicifuga Rhizome 승마 18.75mg"
+      ],
+      "strengths": [
+        "Cimicifuga Rhizome 승마 18.75mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881"
+      ],
+      "productNames": [
+        "무통환(영선제통음)"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-015F93F1BA1523CE",
+      "sourceNames": [
+        "Clematis Radix 위령선 31.25mg"
+      ],
+      "strengths": [
+        "Clematis Radix 위령선 31.25mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881"
+      ],
+      "productNames": [
+        "무통환(영선제통음)"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6C0BA4C0F109E137",
+      "sourceNames": [
+        "Cnidium Rhizome 천궁 31.25mg",
+        "Cnidium Rhizome 천궁 50mg",
+        "Cnidium Rhizome 천궁 89.1mg"
+      ],
+      "strengths": [
+        "Cnidium Rhizome 천궁 31.25mg",
+        "Cnidium Rhizome 천궁 50mg",
+        "Cnidium Rhizome 천궁 89.1mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11AGGGGG7026",
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-0E5A2D7361C7CE94",
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "장편환",
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-B7C12AED101E017D",
+      "sourceNames": [
+        "Ephedra Herb 마황 62.5mg",
+        "Ephedra Herb 마황 1.33g / 수침연조엑스 2.54g 중",
+        "Ephedra Herb 마황 1g",
+        "Ephedra Herb 마황 1.33g/75mL",
+        "Ephedra Herb 마황 0.66g/75mL",
+        "Ephedra Herb 마황 670mg / 1포(20 밀리리터) 중-",
+        "Ephedra Herb 마황 1.33g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Ephedra Herb 마황 280mg",
+        "Ephedra Herb 마황 0.825g/100mL"
+      ],
+      "strengths": [
+        "Ephedra Herb 마황 62.5mg",
+        "Ephedra Herb 마황 1.33g / 수침연조엑스 2.54g 중",
+        "Ephedra Herb 마황 1g",
+        "Ephedra Herb 마황 1.33g/75mL",
+        "Ephedra Herb 마황 0.66g/75mL",
+        "Ephedra Herb 마황 670mg / 1포(20 밀리리터) 중-",
+        "Ephedra Herb 마황 1.33g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Ephedra Herb 마황 280mg",
+        "Ephedra Herb 마황 0.825g/100mL"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11AKP08G1445",
+        "A11AGGGGG7012",
+        "A11AKP08G1151",
+        "2012091400010",
+        "2019090900165",
+        "A11A1500A0493",
+        "2019071200031",
+        "2012091400011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-5C22A30FE8BF41E7",
+        "PRD-HEALTHKR-AD5397460805501C",
+        "PRD-HEALTHKR-F59D06E08AD132B7",
+        "PRD-HEALTHKR-995BEFAEE1A25563",
+        "PRD-HEALTHKR-156F5EC241CA099E",
+        "PRD-HEALTHKR-E3BBB51BA35F5B40",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-F1755A3EBB87A0BF"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "한솔갈근탕",
+        "기가천과립",
+        "경방갈근탕액",
+        "경남보감탕액",
+        "센코프액",
+        "한신갈근탕",
+        "코감콜",
+        "경남보감탕노즈액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6B07FA5E1DBF97E4",
+      "sourceNames": [
+        "Licorice 감초 18.75mg",
+        "Licorice 감초 23mg",
+        "Licorice 감초 1.25mg (글리시리진산(으)로서 0.045mg) / 소환(175mg) 중",
+        "Licorice 감초 10mg / 대환(1.4g) 중",
+        "Licorice 감초 334mg",
+        "Licorice 감초 1g",
+        "Licorice 감초 23.25mg / 1포 (2.4g) 중",
+        "Licorice 감초 0.67g / 수침연조엑스 2.54g 중",
+        "Licorice 감초 0.67g",
+        "Licorice 감초 0.67g (글리시리진산(으)로서 3.3mg) / 1포(3g) 중",
+        "Licorice 감초 0.67g/75mL",
+        "Licorice 감초 0.33g/75mL",
+        "Licorice 감초 852mg / 1포(20g) 중",
+        "Licorice 감초 0.93mg",
+        "Licorice 감초 0.67g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Licorice 감초 852mg",
+        "Licorice 감초 168mg",
+        "Licorice 감초 110mg / 1포 (10mL) 중",
+        "Licorice 감초 167mg/20mL",
+        "Licorice 감초 0.42g / 1포 (20g) 중",
+        "Licorice 감초 56.1mg",
+        "Licorice 감초 0.495g/100mL",
+        "Licorice 감초 0.333g / 100ml 중"
+      ],
+      "strengths": [
+        "Licorice 감초 18.75mg",
+        "Licorice 감초 23mg",
+        "Licorice 감초 1.25mg (글리시리진산(으)로서 0.045mg) / 소환(175mg) 중",
+        "Licorice 감초 10mg / 대환(1.4g) 중",
+        "Licorice 감초 334mg",
+        "Licorice 감초 1g",
+        "Licorice 감초 23.25mg / 1포 (2.4g) 중",
+        "Licorice 감초 0.67g / 수침연조엑스 2.54g 중",
+        "Licorice 감초 0.67g",
+        "Licorice 감초 0.67g (글리시리진산(으)로서 3.3mg) / 1포(3g) 중",
+        "Licorice 감초 0.67g/75mL",
+        "Licorice 감초 0.33g/75mL",
+        "Licorice 감초 852mg / 1포(20g) 중",
+        "Licorice 감초 0.93mg",
+        "Licorice 감초 0.67g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Licorice 감초 852mg",
+        "Licorice 감초 168mg",
+        "Licorice 감초 110mg / 1포 (10mL) 중",
+        "Licorice 감초 167mg/20mL",
+        "Licorice 감초 0.42g / 1포 (20g) 중",
+        "Licorice 감초 56.1mg",
+        "Licorice 감초 0.495g/100mL",
+        "Licorice 감초 0.333g / 100ml 중"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11AKP07L0377",
+        "A11A2670A0001",
+        "krqpwvlvb3q6f",
+        "A11AKP09B0079",
+        "A11AGGGGG7032",
+        "A11AKP08G1445",
+        "A11AGGGGG7012",
+        "A11AGGGGG7016",
+        "A11A1520B0109",
+        "2021121400003",
+        "A11AKP08G1151",
+        "2012091400010",
+        "2023120400001",
+        "A11A1500B0070",
+        "A11A1500A0493",
+        "A11AKP08G1443",
+        "2019071200031",
+        "2022021000010",
+        "A11AKP08L0153",
+        "2024011800001",
+        "2022120700002",
+        "A11AKP07L0179",
+        "A11AKP07L0378",
+        "A11AKP07L0357",
+        "2012091400011",
+        "2012091400009"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-58CF470586806A38",
+        "PRD-HEALTHKR-E6BAEDF4F117CDD7",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-5C22A30FE8BF41E7",
+        "PRD-HEALTHKR-AD5397460805501C",
+        "PRD-HEALTHKR-2F35414326B1710D",
+        "PRD-HEALTHKR-8A4727FADDAFC26D",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-F59D06E08AD132B7",
+        "PRD-HEALTHKR-995BEFAEE1A25563",
+        "PRD-HEALTHKR-DC837CC0882F30A0",
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-E3BBB51BA35F5B40",
+        "PRD-HEALTHKR-8D3363329BA06B80",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-A5FFD17F8BABAB06",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-1402C543995C2A2D",
+        "PRD-HEALTHKR-96BF62AD9A62A50B",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-000D6ABCD59849E9",
+        "PRD-HEALTHKR-A2C380F4DE5A4413",
+        "PRD-HEALTHKR-F1755A3EBB87A0BF",
+        "PRD-HEALTHKR-C4DF94999C531699"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "해천환",
+        "보화소합원(소환)",
+        "상위정",
+        "위평원과립",
+        "청상기가환(청상보하환)",
+        "한솔갈근탕",
+        "기가천과립",
+        "맥기천과립",
+        "맥기원과립",
+        "한풍올가에스",
+        "경방갈근탕액",
+        "경남보감탕액",
+        "쎄파렉신연조엑스",
+        "보인환",
+        "한신갈근탕",
+        "한신은교산",
+        "코감콜",
+        "베나치오키즈",
+        "베나치오액",
+        "보화소합원",
+        "베나치오이지",
+        "에스톰액",
+        "커버든엑스과립(위령탕)",
+        "스토마큐",
+        "숙신환",
+        "경남보감탕노즈액",
+        "경남보감탕코프액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-73FEF2C972CADDAD",
+      "sourceNames": [
+        "Ostericum Root 강활 31.25mg",
+        "Ostericum Root 강활 10mg"
+      ],
+      "strengths": [
+        "Ostericum Root 강활 31.25mg",
+        "Ostericum Root 강활 10mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5943929674AE7A0C",
+      "sourceNames": [
+        "Peony Root 백작약 62.5mg",
+        "Peony Root 백작약 1g"
+      ],
+      "strengths": [
+        "Peony Root 백작약 62.5mg",
+        "Peony Root 백작약 1g"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11AKP07L0179"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-B028CFAE38D32EB0"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "커버든엑스과립(위령탕)"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-A5AA0448C02948A0",
+      "sourceNames": [
+        "Platycodon Root 길경 31.25mg",
+        "Platycodon Root 길경 70mg",
+        "Platycodon Root 길경 70mg / 1포 (2.4g) 중",
+        "Platycodon Root 길경 852mg / 1포(20g) 중",
+        "Platycodon Root 길경 300mg / 1포(20 밀리리터) 중-",
+        "Platycodon Root 길경 2.8mg",
+        "Platycodon Root 길경 852mg"
+      ],
+      "strengths": [
+        "Platycodon Root 길경 31.25mg",
+        "Platycodon Root 길경 70mg",
+        "Platycodon Root 길경 70mg / 1포 (2.4g) 중",
+        "Platycodon Root 길경 852mg / 1포(20g) 중",
+        "Platycodon Root 길경 300mg / 1포(20 밀리리터) 중-",
+        "Platycodon Root 길경 2.8mg",
+        "Platycodon Root 길경 852mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "2023120400001",
+        "2019090900165",
+        "A11A1500B0070",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-156F5EC241CA099E",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "해천환",
+        "청상기가환(청상보하환)",
+        "쎄파렉신연조엑스",
+        "센코프액",
+        "보인환",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-DEF3CA7872C49EDF",
+      "sourceNames": [
+        "Poncirus Fruit 지실 31.25mg",
+        "Poncirus Fruit 지실 70mg",
+        "Poncirus Fruit 지실 70mg / 1포 (2.4g) 중",
+        "Poncirus Fruit 지실 342mg",
+        "Poncirus Fruit 지실 2.8mg",
+        "Poncirus Fruit 지실 184.8mg"
+      ],
+      "strengths": [
+        "Poncirus Fruit 지실 31.25mg",
+        "Poncirus Fruit 지실 70mg",
+        "Poncirus Fruit 지실 70mg / 1포 (2.4g) 중",
+        "Poncirus Fruit 지실 342mg",
+        "Poncirus Fruit 지실 2.8mg",
+        "Poncirus Fruit 지실 184.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11AKP08G1247",
+        "A11A1500B0070",
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-A9817CC9D1C64E79",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "해천환",
+        "청상기가환(청상보하환)",
+        "경방마자인환",
+        "보인환",
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5EFC53E2B1099BDD",
+      "sourceNames": [
+        "Pueraria Root 갈근 31.25mg",
+        "Pueraria Root 갈근 2.5mg / 소환(175mg) 중",
+        "Pueraria Root 갈근 20mg / 대환(1.4g) 중",
+        "Pueraria Root 갈근 2.67g / 수침연조엑스 2.54g 중",
+        "Pueraria Root 갈근 2.67g/75mL",
+        "Pueraria Root 갈근 1.32g/75mL",
+        "Pueraria Root 갈근 2.67g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Pueraria Root 갈근 2.5g / 75mL 중"
+      ],
+      "strengths": [
+        "Pueraria Root 갈근 31.25mg",
+        "Pueraria Root 갈근 2.5mg / 소환(175mg) 중",
+        "Pueraria Root 갈근 20mg / 대환(1.4g) 중",
+        "Pueraria Root 갈근 2.67g / 수침연조엑스 2.54g 중",
+        "Pueraria Root 갈근 2.67g/75mL",
+        "Pueraria Root 갈근 1.32g/75mL",
+        "Pueraria Root 갈근 2.67g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Pueraria Root 갈근 2.5g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11A2670A0001",
+        "A11AKP08G1445",
+        "A11AKP08G1151",
+        "2012091400010",
+        "A11A1500A0493",
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-5C22A30FE8BF41E7",
+        "PRD-HEALTHKR-F59D06E08AD132B7",
+        "PRD-HEALTHKR-995BEFAEE1A25563",
+        "PRD-HEALTHKR-E3BBB51BA35F5B40",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "보화소합원(소환)",
+        "한솔갈근탕",
+        "경방갈근탕액",
+        "경남보감탕액",
+        "한신갈근탕",
+        "보화소합원",
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-F54DD6A3DA5109EC",
+      "sourceNames": [
+        "Saposhnikovia Root 방풍 31.25mg",
+        "Saposhnikovia Root 방풍 10mg"
+      ],
+      "strengths": [
+        "Saposhnikovia Root 방풍 31.25mg",
+        "Saposhnikovia Root 방풍 10mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6853CD300DC1EF05",
+      "sourceNames": [
+        "Schizonepeta Spike 형개 31.25mg",
+        "Schizonepeta Spike 형개 568mg / 1포(20g) 중",
+        "Schizonepeta Spike 형개 568mg"
+      ],
+      "strengths": [
+        "Schizonepeta Spike 형개 31.25mg",
+        "Schizonepeta Spike 형개 568mg / 1포(20g) 중",
+        "Schizonepeta Spike 형개 568mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0284",
+        "2023120400001",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-B3F6FE2649E70881",
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "무통환(영선제통음)",
+        "쎄파렉신연조엑스",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-66D0DBA6B000C625",
+      "sourceNames": [
+        "Trichosanthes Seed 괄루인 70mg",
+        "Trichosanthes Seed 괄루인 2.8mg"
+      ],
+      "strengths": [
+        "Trichosanthes Seed 괄루인 70mg",
+        "Trichosanthes Seed 괄루인 2.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11A1500B0070"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-F13E781BA5DB6E61"
+      ],
+      "productNames": [
+        "해천환",
+        "보인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-41B1F7FD3AF177C5",
+      "sourceNames": [
+        "Alisma Rhizome 택사 70mg",
+        "Alisma Rhizome 택사 70mg / 1포 (2.4g) 중",
+        "Alisma Rhizome 택사 1g / 1포(3g) 중",
+        "Alisma Rhizome 택사 2.8mg",
+        "Alisma Rhizome 택사 1g",
+        "Alisma Rhizome 택사 0.625g / 75mL 중"
+      ],
+      "strengths": [
+        "Alisma Rhizome 택사 70mg",
+        "Alisma Rhizome 택사 70mg / 1포 (2.4g) 중",
+        "Alisma Rhizome 택사 1g / 1포(3g) 중",
+        "Alisma Rhizome 택사 2.8mg",
+        "Alisma Rhizome 택사 1g",
+        "Alisma Rhizome 택사 0.625g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "2021121400003",
+        "A11A1500B0070",
+        "A11AKP07L0179",
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "한풍올가에스",
+        "보인환",
+        "커버든엑스과립(위령탕)",
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-47ADA7E3FD3A52A8",
+      "sourceNames": [
+        "Apricot Kernel 행인 70mg",
+        "Apricot Kernel 행인 70mg / 1포 (2.4g) 중",
+        "Apricot Kernel 행인 426mg",
+        "Apricot Kernel 행인 300mg / 1포(20 밀리리터) 중-",
+        "Apricot Kernel 행인 2.8mg"
+      ],
+      "strengths": [
+        "Apricot Kernel 행인 70mg",
+        "Apricot Kernel 행인 70mg / 1포 (2.4g) 중",
+        "Apricot Kernel 행인 426mg",
+        "Apricot Kernel 행인 300mg / 1포(20 밀리리터) 중-",
+        "Apricot Kernel 행인 2.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11AKP08G1247",
+        "2019090900165",
+        "A11A1500B0070"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-A9817CC9D1C64E79",
+        "PRD-HEALTHKR-156F5EC241CA099E",
+        "PRD-HEALTHKR-F13E781BA5DB6E61"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "경방마자인환",
+        "센코프액",
+        "보인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-C6DC2B2307CFFB8E",
+      "sourceNames": [
+        "Asparagus Tuber 천문동 70mg",
+        "Asparagus Tuber 천문동 70mg / 1포 (2.4g) 중",
+        "Asparagus Tuber 천문동 2.8mg"
+      ],
+      "strengths": [
+        "Asparagus Tuber 천문동 70mg",
+        "Asparagus Tuber 천문동 70mg / 1포 (2.4g) 중",
+        "Asparagus Tuber 천문동 2.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11A1500B0070"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-F13E781BA5DB6E61"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "보인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-641846CBBB3E6F8C",
+      "sourceNames": [
+        "Coptis Rhizome 황련 70mg",
+        "Coptis Rhizome 황련 110mg",
+        "Coptis Rhizome 황련 0.33g",
+        "Coptis Rhizome 황련 2.8mg",
+        "Coptis Rhizome 황련 184.8mg"
+      ],
+      "strengths": [
+        "Coptis Rhizome 황련 70mg",
+        "Coptis Rhizome 황련 110mg",
+        "Coptis Rhizome 황련 0.33g",
+        "Coptis Rhizome 황련 2.8mg",
+        "Coptis Rhizome 황련 184.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "krqpwvlvb3q6f",
+        "A11AKP09B0079",
+        "A11A1500B0070",
+        "A11AKP07L0378",
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-58CF470586806A38",
+        "PRD-HEALTHKR-E6BAEDF4F117CDD7",
+        "PRD-HEALTHKR-DC837CC0882F30A0",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-000D6ABCD59849E9",
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "해천환",
+        "상위정",
+        "위평원과립",
+        "보인환",
+        "스토마큐",
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-326710DF1D76162C",
+      "sourceNames": [
+        "Cornus Fruit 산수유 93.5mg",
+        "Cornus Fruit 산수유 93.5mg / 1포 (2.4g) 중",
+        "Cornus Fruit 산수유 3.74mg"
+      ],
+      "strengths": [
+        "Cornus Fruit 산수유 93.5mg",
+        "Cornus Fruit 산수유 93.5mg / 1포 (2.4g) 중",
+        "Cornus Fruit 산수유 3.74mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11A1500B0070"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-F13E781BA5DB6E61"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "보인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-0057CCC9A768F095",
+      "sourceNames": [
+        "Dioscorea Rhizome 산약 93.5mg",
+        "Dioscorea Rhizome 산약 93.5mg / 1포 (2.4g) 중",
+        "Dioscorea Rhizome 산약 20mg",
+        "Dioscorea Rhizome 산약 3.74mg"
+      ],
+      "strengths": [
+        "Dioscorea Rhizome 산약 93.5mg",
+        "Dioscorea Rhizome 산약 93.5mg / 1포 (2.4g) 중",
+        "Dioscorea Rhizome 산약 20mg",
+        "Dioscorea Rhizome 산약 3.74mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11ABBBBB2010",
+        "A11A1500B0070"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-08400520FC85198D",
+        "PRD-HEALTHKR-F13E781BA5DB6E61"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "절효환",
+        "보인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-AFBF9DF744C67F72",
+      "sourceNames": [
+        "Fritillaria Thunbergii Bulb 패모 70mg",
+        "Fritillaria Thunbergii Bulb 패모 70mg / 1포 (2.4g) 중",
+        "Fritillaria Thunbergii Bulb 패모 2.8mg"
+      ],
+      "strengths": [
+        "Fritillaria Thunbergii Bulb 패모 70mg",
+        "Fritillaria Thunbergii Bulb 패모 70mg / 1포 (2.4g) 중",
+        "Fritillaria Thunbergii Bulb 패모 2.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11A1500B0070"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-F13E781BA5DB6E61"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "보인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-68672286629444B6",
+      "sourceNames": [
+        "Liriope Tuber 맥문동 70mg",
+        "Liriope Tuber 맥문동 70mg / 1포 (2.4g) 중",
+        "Liriope Tuber 맥문동 3.33g",
+        "Liriope Tuber 맥문동 2.8mg",
+        "Liriope Tuber 맥문동 1.332g / 100ml 중"
+      ],
+      "strengths": [
+        "Liriope Tuber 맥문동 70mg",
+        "Liriope Tuber 맥문동 70mg / 1포 (2.4g) 중",
+        "Liriope Tuber 맥문동 3.33g",
+        "Liriope Tuber 맥문동 2.8mg",
+        "Liriope Tuber 맥문동 1.332g / 100ml 중"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11AGGGGG7016",
+        "A11A1520B0109",
+        "A11A1500B0070",
+        "2012091400009"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-2F35414326B1710D",
+        "PRD-HEALTHKR-8A4727FADDAFC26D",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-C4DF94999C531699"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "맥기천과립",
+        "맥기원과립",
+        "보인환",
+        "경남보감탕코프액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-697C14D5BF6FEF78",
+      "sourceNames": [
+        "Moutan Root Bark 목단피 70mg",
+        "Moutan Root Bark 목단피 70mg / 1포 (2.4g) 중",
+        "Moutan Root Bark 목단피 400mg",
+        "Moutan Root Bark 목단피 2.8mg"
+      ],
+      "strengths": [
+        "Moutan Root Bark 목단피 70mg",
+        "Moutan Root Bark 목단피 70mg / 1포 (2.4g) 중",
+        "Moutan Root Bark 목단피 400mg",
+        "Moutan Root Bark 목단피 2.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "r4tv2ahltipre",
+        "A11A1500B0070"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-9AB77DAF9CDD82D2",
+        "PRD-HEALTHKR-F13E781BA5DB6E61"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "게리단",
+        "보인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-CE946F900EAF5C8C",
+      "sourceNames": [
+        "Pinellia Tuber 반하 70mg",
+        "Pinellia Tuber 반하 567mg",
+        "Pinellia Tuber 반하 1.67g",
+        "Pinellia Tuber 반하 70mg / 1포 (2.4g) 중",
+        "Pinellia Tuber 반하 2g",
+        "Pinellia Tuber 반하 2.8mg",
+        "Pinellia Tuber 반하 280mg",
+        "Pinellia Tuber 반하 184.8mg",
+        "Pinellia Tuber 반하 1.25g / 75mL 중",
+        "Pinellia Tuber 반하 0.825g/100mL",
+        "Pinellia Tuber 반하 0.832g / 100ml 중"
+      ],
+      "strengths": [
+        "Pinellia Tuber 반하 70mg",
+        "Pinellia Tuber 반하 567mg",
+        "Pinellia Tuber 반하 1.67g",
+        "Pinellia Tuber 반하 70mg / 1포 (2.4g) 중",
+        "Pinellia Tuber 반하 2g",
+        "Pinellia Tuber 반하 2.8mg",
+        "Pinellia Tuber 반하 280mg",
+        "Pinellia Tuber 반하 184.8mg",
+        "Pinellia Tuber 반하 1.25g / 75mL 중",
+        "Pinellia Tuber 반하 0.825g/100mL",
+        "Pinellia Tuber 반하 0.832g / 100ml 중"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "krqpwvlvb3q6f",
+        "A11AKP09B0079",
+        "A11AGGGGG7032",
+        "A11AGGGGG7012",
+        "A11AGGGGG7016",
+        "A11A1520B0109",
+        "A11A1500B0070",
+        "2019071200031",
+        "A11AKP07L0378",
+        "A11AKP07L0357",
+        "A11AKP07L0109",
+        "A11A1240A0068",
+        "2012091400011",
+        "2012091400009"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-58CF470586806A38",
+        "PRD-HEALTHKR-E6BAEDF4F117CDD7",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-AD5397460805501C",
+        "PRD-HEALTHKR-2F35414326B1710D",
+        "PRD-HEALTHKR-8A4727FADDAFC26D",
+        "PRD-HEALTHKR-DC837CC0882F30A0",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-000D6ABCD59849E9",
+        "PRD-HEALTHKR-A2C380F4DE5A4413",
+        "PRD-HEALTHKR-E4C4252C2C39F436",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE",
+        "PRD-HEALTHKR-F1755A3EBB87A0BF",
+        "PRD-HEALTHKR-C4DF94999C531699"
+      ],
+      "productNames": [
+        "해천환",
+        "상위정",
+        "위평원과립",
+        "청상기가환(청상보하환)",
+        "기가천과립",
+        "맥기천과립",
+        "맥기원과립",
+        "보인환",
+        "코감콜",
+        "스토마큐",
+        "숙신환",
+        "건양탕",
+        "취어스액",
+        "경남보감탕노즈액",
+        "경남보감탕코프액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-34F066D73B5DF1D4",
+      "sourceNames": [
+        "Poria 복령 70mg",
+        "Poria 복령 62.5mg",
+        "Poria 복령 70mg / 1포 (2.4g) 중",
+        "Poria 복령 1g / 1포(3g) 중",
+        "Poria 복령 400mg",
+        "Poria 복령 2.8mg",
+        "Poria 복령 1g",
+        "Poria 복령 1.67g",
+        "Poria 복령 1.25g / 75mL 중"
+      ],
+      "strengths": [
+        "Poria 복령 70mg",
+        "Poria 복령 62.5mg",
+        "Poria 복령 70mg / 1포 (2.4g) 중",
+        "Poria 복령 1g / 1포(3g) 중",
+        "Poria 복령 400mg",
+        "Poria 복령 2.8mg",
+        "Poria 복령 1g",
+        "Poria 복령 1.67g",
+        "Poria 복령 1.25g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7026",
+        "A11AGGGGG7032",
+        "2021121400003",
+        "r4tv2ahltipre",
+        "A11A1500B0070",
+        "A11AKP07L0179",
+        "A11AKP07L0109",
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-0E5A2D7361C7CE94",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-9AB77DAF9CDD82D2",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-E4C4252C2C39F436",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "해천환",
+        "장편환",
+        "청상기가환(청상보하환)",
+        "한풍올가에스",
+        "게리단",
+        "보인환",
+        "커버든엑스과립(위령탕)",
+        "건양탕",
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-EA58C07B79EA9BD3",
+      "sourceNames": [
+        "Schisandra Fruit 오미자 70mg",
+        "Schisandra Fruit 오미자 70mg / 1포 (2.4g) 중",
+        "Schisandra Fruit 오미자 1g",
+        "Schisandra Fruit 오미자 20mg",
+        "Schisandra Fruit 오미자 2.8mg",
+        "Schisandra Fruit 오미자 280mg",
+        "Schisandra Fruit 오미자 0.825g/100mL"
+      ],
+      "strengths": [
+        "Schisandra Fruit 오미자 70mg",
+        "Schisandra Fruit 오미자 70mg / 1포 (2.4g) 중",
+        "Schisandra Fruit 오미자 1g",
+        "Schisandra Fruit 오미자 20mg",
+        "Schisandra Fruit 오미자 2.8mg",
+        "Schisandra Fruit 오미자 280mg",
+        "Schisandra Fruit 오미자 0.825g/100mL"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11AGGGGG7012",
+        "A11ABBBBB2010",
+        "A11A1500B0070",
+        "2019071200031",
+        "2012091400011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-AD5397460805501C",
+        "PRD-HEALTHKR-08400520FC85198D",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-F1755A3EBB87A0BF"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "기가천과립",
+        "절효환",
+        "보인환",
+        "코감콜",
+        "경남보감탕노즈액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-EF0FACC4E89BD660",
+      "sourceNames": [
+        "Scutellaria Root 황금 70mg",
+        "Scutellaria Root 황금 334mg",
+        "Scutellaria Root 황금 1g",
+        "Scutellaria Root 황금 70mg / 1포 (2.4g) 중",
+        "Scutellaria Root 황금 2.8mg"
+      ],
+      "strengths": [
+        "Scutellaria Root 황금 70mg",
+        "Scutellaria Root 황금 334mg",
+        "Scutellaria Root 황금 1g",
+        "Scutellaria Root 황금 70mg / 1포 (2.4g) 중",
+        "Scutellaria Root 황금 2.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "krqpwvlvb3q6f",
+        "A11AKP09B0079",
+        "A11AGGGGG7032",
+        "A11A1500B0070",
+        "A11AKP07L0378"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-58CF470586806A38",
+        "PRD-HEALTHKR-E6BAEDF4F117CDD7",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-DC837CC0882F30A0",
+        "PRD-HEALTHKR-F13E781BA5DB6E61",
+        "PRD-HEALTHKR-000D6ABCD59849E9"
+      ],
+      "productNames": [
+        "해천환",
+        "상위정",
+        "위평원과립",
+        "청상기가환(청상보하환)",
+        "보인환",
+        "스토마큐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-4AFE419F1D83380F",
+      "sourceNames": [
+        "Steamed Rehmannia Root 숙지황 187.5mg",
+        "Steamed Rehmannia Root 숙지황 187.5mg / 1포 (2.4g) 중",
+        "Steamed Rehmannia Root 숙지황 30mg",
+        "Steamed Rehmannia Root 숙지황 7.5mg"
+      ],
+      "strengths": [
+        "Steamed Rehmannia Root 숙지황 187.5mg",
+        "Steamed Rehmannia Root 숙지황 187.5mg / 1포 (2.4g) 중",
+        "Steamed Rehmannia Root 숙지황 30mg",
+        "Steamed Rehmannia Root 숙지황 7.5mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0377",
+        "A11AGGGGG7032",
+        "A11ABBBBB2010",
+        "A11A1500B0070"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-45133A8F46017723",
+        "PRD-HEALTHKR-A4BAD210B4C01D9A",
+        "PRD-HEALTHKR-08400520FC85198D",
+        "PRD-HEALTHKR-F13E781BA5DB6E61"
+      ],
+      "productNames": [
+        "해천환",
+        "청상기가환(청상보하환)",
+        "절효환",
+        "보인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-EFD73963A4229A31",
+      "sourceNames": [
+        "Amomi Tsao-ko Fructus 초과 1.25mg / 소환(175mg) 중",
+        "Amomi Tsao-ko Fructus 초과 10mg / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Amomi Tsao-ko Fructus 초과 1.25mg / 소환(175mg) 중",
+        "Amomi Tsao-ko Fructus 초과 10mg / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-771E3D26CBD1ED57",
+      "sourceNames": [
+        "Amomum Fruit 사인 2.5mg / 소환(175mg) 중",
+        "Amomum Fruit 사인 20mg / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Amomum Fruit 사인 2.5mg / 소환(175mg) 중",
+        "Amomum Fruit 사인 20mg / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-913BAD9A9C30C3E0",
+      "sourceNames": [
+        "Borneolum 용뇌 0.625mg (총 보르네올(으)로서 0.72mg) / 소환(175mg) 중",
+        "Borneolum 용뇌 5mg (총 보르네올(으)로서 5.8mg) / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Borneolum 용뇌 0.625mg (총 보르네올(으)로서 0.72mg) / 소환(175mg) 중",
+        "Borneolum 용뇌 5mg (총 보르네올(으)로서 5.8mg) / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-F3A028EB76698D39",
+      "sourceNames": [
+        "Chaenomelis Fructus 모과 15mg / 소환(175mg) 중",
+        "Chaenomelis Fructus 모과 120mg / 대환(1.4g) 중",
+        "Chaenomelis Fructus 모과 1.25g / 75mL 중"
+      ],
+      "strengths": [
+        "Chaenomelis Fructus 모과 15mg / 소환(175mg) 중",
+        "Chaenomelis Fructus 모과 120mg / 대환(1.4g) 중",
+        "Chaenomelis Fructus 모과 1.25g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001",
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원",
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-BC767DFDA6B407C9",
+      "sourceNames": [
+        "Cyperus Rhizome 향부자 2.5mg / 소환(175mg) 중",
+        "Cyperus Rhizome 향부자 20mg / 대환(1.4g) 중",
+        "Cyperus Rhizome 향부자 551.1mg"
+      ],
+      "strengths": [
+        "Cyperus Rhizome 향부자 2.5mg / 소환(175mg) 중",
+        "Cyperus Rhizome 향부자 20mg / 대환(1.4g) 중",
+        "Cyperus Rhizome 향부자 551.1mg"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001",
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원",
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-FB8373664800DA48",
+      "sourceNames": [
+        "Hordeum Fruit Germination 맥아 2.5mg / 소환(175mg) 중",
+        "Hordeum Fruit Germination 맥아 20mg / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Hordeum Fruit Germination 맥아 2.5mg / 소환(175mg) 중",
+        "Hordeum Fruit Germination 맥아 20mg / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5C786410A39D65DB",
+      "sourceNames": [
+        "Massa Medicata Fermentata 신곡 2.5mg / 소환(175mg) 중",
+        "Massa Medicata Fermentata 신곡 20mg / 대환(1.4g) 중",
+        "Massa Medicata Fermentata 신곡 184.8mg",
+        "Massa Medicata Fermentata 신곡 0.875g / 75mL 중"
+      ],
+      "strengths": [
+        "Massa Medicata Fermentata 신곡 2.5mg / 소환(175mg) 중",
+        "Massa Medicata Fermentata 신곡 20mg / 대환(1.4g) 중",
+        "Massa Medicata Fermentata 신곡 184.8mg",
+        "Massa Medicata Fermentata 신곡 0.875g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001",
+        "A11AKP07L0357",
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63",
+        "PRD-HEALTHKR-A2C380F4DE5A4413",
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원",
+        "숙신환",
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-0DE7A491CD0031AB",
+      "sourceNames": [
+        "Patriniae Radix 패장 1.25mg / 소환(175mg) 중",
+        "Patriniae Radix 패장 10mg / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Patriniae Radix 패장 1.25mg / 소환(175mg) 중",
+        "Patriniae Radix 패장 10mg / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-BD6389BB1F65D480",
+      "sourceNames": [
+        "Piperis Longi Fructus 필발 1.25mg / 소환(175mg) 중",
+        "Piperis Longi Fructus 필발 10mg / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Piperis Longi Fructus 필발 1.25mg / 소환(175mg) 중",
+        "Piperis Longi Fructus 필발 10mg / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-C95DEABA3E17DD96",
+      "sourceNames": [
+        "Red Sandal Wood 자단향 6.25mg / 소환(175mg) 중",
+        "Red Sandal Wood 자단향 50mg / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Red Sandal Wood 자단향 6.25mg / 소환(175mg) 중",
+        "Red Sandal Wood 자단향 50mg / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-7CADFBB858F29867",
+      "sourceNames": [
+        "Santali Albi Lignum 백단향 0.625mg / 소환(175mg) 중",
+        "Santali Albi Lignum 백단향 5mg / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Santali Albi Lignum 백단향 0.625mg / 소환(175mg) 중",
+        "Santali Albi Lignum 백단향 5mg / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-CD320CFC364563EA",
+      "sourceNames": [
+        "Cinnamon Bark 계피 10mg / 대환(1.4g) 중"
+      ],
+      "strengths": [
+        "Cinnamon Bark 계피 10mg / 대환(1.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11A2670A0001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C1655FDF3F4C2C84",
+        "PRD-HEALTHKR-9F478A14D17A1A63"
+      ],
+      "productNames": [
+        "보화소합원(소환)",
+        "보화소합원"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-60F9606E4F5C1347",
+      "sourceNames": [
+        "Ethinyl Estradiol 에티닐에스트라디올 0.03mg",
+        "Ethinyl Estradiol 에티닐에스트라디올 0.02mg",
+        "Ethinyl Estradiol 에티닐에스트라디올 0.015mg"
+      ],
+      "strengths": [
+        "Ethinyl Estradiol 에티닐에스트라디올 0.03mg",
+        "Ethinyl Estradiol 에티닐에스트라디올 0.02mg",
+        "Ethinyl Estradiol 에티닐에스트라디올 0.015mg"
+      ],
+      "itemSeqs": [
+        "A11AKP08G2716",
+        "2012090700001",
+        "A11ABBBBB2499",
+        "2017080100007",
+        "2014031900008",
+        "2020031300008"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-0421AF34EA0063CB",
+        "PRD-HEALTHKR-42C8E1137C846B0A",
+        "PRD-HEALTHKR-8512DD84D1586795",
+        "PRD-HEALTHKR-811EC897EC502673",
+        "PRD-HEALTHKR-587EEC8975E037B2",
+        "PRD-HEALTHKR-8B6ACA109EDFEBDA"
+      ],
+      "productNames": [
+        "마이보라",
+        "센스리베",
+        "머시론정",
+        "센스데이",
+        "디어미정",
+        "디어미순"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-A0A2A7E36BC43FF5",
+      "sourceNames": [
+        "Gestodene 게스토덴 0.075mg",
+        "Gestodene 게스토덴 0.06mg"
+      ],
+      "strengths": [
+        "Gestodene 게스토덴 0.075mg",
+        "Gestodene 게스토덴 0.06mg"
+      ],
+      "itemSeqs": [
+        "A11AKP08G2716",
+        "2012090700001",
+        "2014031900008",
+        "2020031300008"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-0421AF34EA0063CB",
+        "PRD-HEALTHKR-42C8E1137C846B0A",
+        "PRD-HEALTHKR-587EEC8975E037B2",
+        "PRD-HEALTHKR-8B6ACA109EDFEBDA"
+      ],
+      "productNames": [
+        "마이보라",
+        "센스리베",
+        "디어미정",
+        "디어미순"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-0BA8424AE3DC45E7",
+      "sourceNames": [
+        "Desogestrel 데소게스트렐 0.15mg"
+      ],
+      "strengths": [
+        "Desogestrel 데소게스트렐 0.15mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2499",
+        "2017080100007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-8512DD84D1586795",
+        "PRD-HEALTHKR-811EC897EC502673"
+      ],
+      "productNames": [
+        "머시론정",
+        "센스데이"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-61BF28CCC7969CC6",
+      "sourceNames": [
+        "Ginseng 인삼 334mg",
+        "Ginseng 인삼 1g",
+        "Ginseng 인삼 50mg",
+        "Ginseng 인삼 0.67g",
+        "Ginseng 인삼 20mg",
+        "Ginseng 인삼 0.333g / 100ml 중"
+      ],
+      "strengths": [
+        "Ginseng 인삼 334mg",
+        "Ginseng 인삼 1g",
+        "Ginseng 인삼 50mg",
+        "Ginseng 인삼 0.67g",
+        "Ginseng 인삼 20mg",
+        "Ginseng 인삼 0.333g / 100ml 중"
+      ],
+      "itemSeqs": [
+        "krqpwvlvb3q6f",
+        "A11AKP09B0079",
+        "A11AGGGGG7026",
+        "A11AGGGGG7016",
+        "A11A1520B0109",
+        "A11ABBBBB2010",
+        "A11AKP07L0378",
+        "2012091400009"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-58CF470586806A38",
+        "PRD-HEALTHKR-E6BAEDF4F117CDD7",
+        "PRD-HEALTHKR-0E5A2D7361C7CE94",
+        "PRD-HEALTHKR-2F35414326B1710D",
+        "PRD-HEALTHKR-8A4727FADDAFC26D",
+        "PRD-HEALTHKR-DC837CC0882F30A0",
+        "PRD-HEALTHKR-08400520FC85198D",
+        "PRD-HEALTHKR-000D6ABCD59849E9",
+        "PRD-HEALTHKR-C4DF94999C531699"
+      ],
+      "productNames": [
+        "상위정",
+        "위평원과립",
+        "장편환",
+        "맥기천과립",
+        "맥기원과립",
+        "절효환",
+        "스토마큐",
+        "경남보감탕코프액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-184824A555CF99A8",
+      "sourceNames": [
+        "Jujube 대추 334mg",
+        "Jujube 대추 1g",
+        "Jujube 대추 1.33g / 수침연조엑스 2.54g 중",
+        "Jujube 대추 1g / 1포(3g) 중",
+        "Jujube 대추 1.33g/75mL",
+        "Jujube 대추 0.66g/75mL",
+        "Jujube 대추 1.33g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Jujube 대추 0.498g / 100ml 중"
+      ],
+      "strengths": [
+        "Jujube 대추 334mg",
+        "Jujube 대추 1g",
+        "Jujube 대추 1.33g / 수침연조엑스 2.54g 중",
+        "Jujube 대추 1g / 1포(3g) 중",
+        "Jujube 대추 1.33g/75mL",
+        "Jujube 대추 0.66g/75mL",
+        "Jujube 대추 1.33g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Jujube 대추 0.498g / 100ml 중"
+      ],
+      "itemSeqs": [
+        "krqpwvlvb3q6f",
+        "A11AKP09B0079",
+        "A11AKP08G1445",
+        "A11AGGGGG7016",
+        "A11A1520B0109",
+        "2021121400003",
+        "A11AKP08G1151",
+        "2012091400010",
+        "A11A1500A0493",
+        "A11AKP07L0179",
+        "A11AKP07L0378",
+        "2012091400009"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-58CF470586806A38",
+        "PRD-HEALTHKR-E6BAEDF4F117CDD7",
+        "PRD-HEALTHKR-5C22A30FE8BF41E7",
+        "PRD-HEALTHKR-2F35414326B1710D",
+        "PRD-HEALTHKR-8A4727FADDAFC26D",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-F59D06E08AD132B7",
+        "PRD-HEALTHKR-995BEFAEE1A25563",
+        "PRD-HEALTHKR-DC837CC0882F30A0",
+        "PRD-HEALTHKR-E3BBB51BA35F5B40",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-000D6ABCD59849E9",
+        "PRD-HEALTHKR-C4DF94999C531699"
+      ],
+      "productNames": [
+        "상위정",
+        "위평원과립",
+        "한솔갈근탕",
+        "맥기천과립",
+        "맥기원과립",
+        "한풍올가에스",
+        "경방갈근탕액",
+        "경남보감탕액",
+        "한신갈근탕",
+        "커버든엑스과립(위령탕)",
+        "스토마큐",
+        "경남보감탕코프액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-F9240125E8D5CA8C",
+      "sourceNames": [
+        "Hulled Millet 속미 50mg"
+      ],
+      "strengths": [
+        "Hulled Millet 속미 50mg"
+      ],
+      "itemSeqs": [
+        "A11AGGGGG7026"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-0E5A2D7361C7CE94"
+      ],
+      "productNames": [
+        "장편환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1EDCB182CF1E308C",
+      "sourceNames": [
+        "Peony Root 작약 50mg",
+        "Peony Root 작약 1g / 수침연조엑스 2.54g 중",
+        "Peony Root 작약 1g",
+        "Peony Root 작약 1g (패오니플로린(으)로서 3.2mg) / 1포(3g) 중",
+        "Peony Root 작약 1g/75mL",
+        "Peony Root 작약 342mg",
+        "Peony Root 작약 0.495g/75mL",
+        "Peony Root 작약 20mg",
+        "Peony Root 작약 400mg",
+        "Peony Root 작약 1.00g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Peony Root 작약 280mg",
+        "Peony Root 작약 0.42g / 1포 (20g) 중",
+        "Peony Root 작약 148.5mg",
+        "Peony Root 작약 0.825g/100mL"
+      ],
+      "strengths": [
+        "Peony Root 작약 50mg",
+        "Peony Root 작약 1g / 수침연조엑스 2.54g 중",
+        "Peony Root 작약 1g",
+        "Peony Root 작약 1g (패오니플로린(으)로서 3.2mg) / 1포(3g) 중",
+        "Peony Root 작약 1g/75mL",
+        "Peony Root 작약 342mg",
+        "Peony Root 작약 0.495g/75mL",
+        "Peony Root 작약 20mg",
+        "Peony Root 작약 400mg",
+        "Peony Root 작약 1.00g / 1회용량 (3.5그램) 중 - 건조엑스조성",
+        "Peony Root 작약 280mg",
+        "Peony Root 작약 0.42g / 1포 (20g) 중",
+        "Peony Root 작약 148.5mg",
+        "Peony Root 작약 0.825g/100mL"
+      ],
+      "itemSeqs": [
+        "A11AGGGGG7026",
+        "A11AKP08G1445",
+        "A11AGGGGG7012",
+        "2021121400003",
+        "A11AKP08G1151",
+        "A11AKP08G1247",
+        "2012091400010",
+        "A11ABBBBB2010",
+        "r4tv2ahltipre",
+        "A11A1500A0493",
+        "2019071200031",
+        "2022120700002",
+        "A11AKP07L0357",
+        "2012091400011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-0E5A2D7361C7CE94",
+        "PRD-HEALTHKR-5C22A30FE8BF41E7",
+        "PRD-HEALTHKR-AD5397460805501C",
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-F59D06E08AD132B7",
+        "PRD-HEALTHKR-A9817CC9D1C64E79",
+        "PRD-HEALTHKR-995BEFAEE1A25563",
+        "PRD-HEALTHKR-08400520FC85198D",
+        "PRD-HEALTHKR-9AB77DAF9CDD82D2",
+        "PRD-HEALTHKR-E3BBB51BA35F5B40",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-96BF62AD9A62A50B",
+        "PRD-HEALTHKR-A2C380F4DE5A4413",
+        "PRD-HEALTHKR-F1755A3EBB87A0BF"
+      ],
+      "productNames": [
+        "장편환",
+        "한솔갈근탕",
+        "기가천과립",
+        "한풍올가에스",
+        "경방갈근탕액",
+        "경방마자인환",
+        "경남보감탕액",
+        "절효환",
+        "게리단",
+        "한신갈근탕",
+        "코감콜",
+        "에스톰액",
+        "숙신환",
+        "경남보감탕노즈액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-E84A091AD990A249",
+      "sourceNames": [
+        "Trichosanthes Seed 과루인 70mg / 1포 (2.4g) 중"
+      ],
+      "strengths": [
+        "Trichosanthes Seed 과루인 70mg / 1포 (2.4g) 중"
+      ],
+      "itemSeqs": [
+        "A11AGGGGG7032"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-A4BAD210B4C01D9A"
+      ],
+      "productNames": [
+        "청상기가환(청상보하환)"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-A4646D16DDF41697",
+      "sourceNames": [
+        "Cinnamomi Ramulus 계지 1g / 수침연조엑스 2.54g 중",
+        "Cinnamomi Ramulus 계지 1g",
+        "Cinnamomi Ramulus 계지 1g/75mL",
+        "Cinnamomi Ramulus 계지 400mg",
+        "Cinnamomi Ramulus 계지 1.00g / 1회용량 (3.5그램) 중 - 건조엑스조성"
+      ],
+      "strengths": [
+        "Cinnamomi Ramulus 계지 1g / 수침연조엑스 2.54g 중",
+        "Cinnamomi Ramulus 계지 1g",
+        "Cinnamomi Ramulus 계지 1g/75mL",
+        "Cinnamomi Ramulus 계지 400mg",
+        "Cinnamomi Ramulus 계지 1.00g / 1회용량 (3.5그램) 중 - 건조엑스조성"
+      ],
+      "itemSeqs": [
+        "A11AKP08G1445",
+        "A11AGGGGG7012",
+        "A11AKP08G1151",
+        "r4tv2ahltipre",
+        "A11A1500A0493"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-5C22A30FE8BF41E7",
+        "PRD-HEALTHKR-AD5397460805501C",
+        "PRD-HEALTHKR-F59D06E08AD132B7",
+        "PRD-HEALTHKR-9AB77DAF9CDD82D2",
+        "PRD-HEALTHKR-E3BBB51BA35F5B40"
+      ],
+      "productNames": [
+        "한솔갈근탕",
+        "기가천과립",
+        "경방갈근탕액",
+        "게리단",
+        "한신갈근탕"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-36A5E8584D659CE4",
+      "sourceNames": [
+        "Asiasarum Root 세신 1g",
+        "Asiasarum Root 세신 168mg",
+        "Asiasarum Root 세신 0.495g/100mL"
+      ],
+      "strengths": [
+        "Asiasarum Root 세신 1g",
+        "Asiasarum Root 세신 168mg",
+        "Asiasarum Root 세신 0.495g/100mL"
+      ],
+      "itemSeqs": [
+        "A11AGGGGG7012",
+        "2019071200031",
+        "2012091400011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-AD5397460805501C",
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-F1755A3EBB87A0BF"
+      ],
+      "productNames": [
+        "기가천과립",
+        "코감콜",
+        "경남보감탕노즈액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-21075CF5D9CE7434",
+      "sourceNames": [
+        "Oryzae Semen 갱미 3.33g",
+        "Oryzae Semen 갱미 1.66g / 100ml 중"
+      ],
+      "strengths": [
+        "Oryzae Semen 갱미 3.33g",
+        "Oryzae Semen 갱미 1.66g / 100ml 중"
+      ],
+      "itemSeqs": [
+        "A11AGGGGG7016",
+        "A11A1520B0109",
+        "2012091400009"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-2F35414326B1710D",
+        "PRD-HEALTHKR-8A4727FADDAFC26D",
+        "PRD-HEALTHKR-C4DF94999C531699"
+      ],
+      "productNames": [
+        "맥기천과립",
+        "맥기원과립",
+        "경남보감탕코프액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1B33DB94DC81AA71",
+      "sourceNames": [
+        "Atractylodes Rhizome White 백출 1g / 1포(3g) 중",
+        "Atractylodes Rhizome White 백출 20mg",
+        "Atractylodes Rhizome White 백출 1g",
+        "Atractylodes Rhizome White 백출 551.1mg"
+      ],
+      "strengths": [
+        "Atractylodes Rhizome White 백출 1g / 1포(3g) 중",
+        "Atractylodes Rhizome White 백출 20mg",
+        "Atractylodes Rhizome White 백출 1g",
+        "Atractylodes Rhizome White 백출 551.1mg"
+      ],
+      "itemSeqs": [
+        "2021121400003",
+        "A11ABBBBB2010",
+        "A11AKP07L0179",
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-08400520FC85198D",
+        "PRD-HEALTHKR-B028CFAE38D32EB0",
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "한풍올가에스",
+        "절효환",
+        "커버든엑스과립(위령탕)",
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-9C86175298BAC57B",
+      "sourceNames": [
+        "Chuling 저령 1g / 1포(3g) 중",
+        "Chuling 저령 1g"
+      ],
+      "strengths": [
+        "Chuling 저령 1g / 1포(3g) 중",
+        "Chuling 저령 1g"
+      ],
+      "itemSeqs": [
+        "2021121400003",
+        "A11AKP07L0179"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-31FEA497255AF4E3",
+        "PRD-HEALTHKR-B028CFAE38D32EB0"
+      ],
+      "productNames": [
+        "한풍올가에스",
+        "커버든엑스과립(위령탕)"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6313BDB58FFE67C2",
+      "sourceNames": [
+        "Cannabis Semen 마인 840mg"
+      ],
+      "strengths": [
+        "Cannabis Semen 마인 840mg"
+      ],
+      "itemSeqs": [
+        "A11AKP08G1247"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-A9817CC9D1C64E79"
+      ],
+      "productNames": [
+        "경방마자인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-85E96CC8092099EA",
+      "sourceNames": [
+        "Rhubarb 대황 684mg"
+      ],
+      "strengths": [
+        "Rhubarb 대황 684mg"
+      ],
+      "itemSeqs": [
+        "A11AKP08G1247"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-A9817CC9D1C64E79"
+      ],
+      "productNames": [
+        "경방마자인환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-CB4AB2860BA251B6",
+      "sourceNames": [
+        "Cetylpyridinium Chloride Hydrate 세틸피리디늄염화물수화물 3mg/mL",
+        "Cetylpyridinium Chloride Hydrate 세틸피리디늄염화물수화물 5mg/mL"
+      ],
+      "strengths": [
+        "Cetylpyridinium Chloride Hydrate 세틸피리디늄염화물수화물 3mg/mL",
+        "Cetylpyridinium Chloride Hydrate 세틸피리디늄염화물수화물 5mg/mL"
+      ],
+      "itemSeqs": [
+        "2015011500012",
+        "2020051500019"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-2DE8616777D7C962",
+        "PRD-HEALTHKR-C923AEF5B92A9A30"
+      ],
+      "productNames": [
+        "목앤스프레이",
+        "모글원큐스프레이"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-2FC41CB88B18D711",
+      "sourceNames": [
+        "Soluble Azulene 수용성아줄렌 0.2mg/mL",
+        "Soluble Azulene 수용성아줄렌 1mg"
+      ],
+      "strengths": [
+        "Soluble Azulene 수용성아줄렌 0.2mg/mL",
+        "Soluble Azulene 수용성아줄렌 1mg"
+      ],
+      "itemSeqs": [
+        "2015011500012",
+        "2021122200006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-2DE8616777D7C962",
+        "PRD-HEALTHKR-3B61DC6F1E066703"
+      ],
+      "productNames": [
+        "목앤스프레이",
+        "훼스탈슈퍼자임"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-FA0F02170AB9D196",
+      "sourceNames": [
+        "Arctii Semen 우방자 712mg / 1포(20g) 중",
+        "Arctii Semen 우방자 712mg"
+      ],
+      "strengths": [
+        "Arctii Semen 우방자 712mg / 1포(20g) 중",
+        "Arctii Semen 우방자 712mg"
+      ],
+      "itemSeqs": [
+        "2023120400001",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "쎄파렉신연조엑스",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-702241824AE42BD2",
+      "sourceNames": [
+        "Forsythia Fruit 연교 1420mg / 1포(20g) 중",
+        "Forsythia Fruit 연교 1420mg"
+      ],
+      "strengths": [
+        "Forsythia Fruit 연교 1420mg / 1포(20g) 중",
+        "Forsythia Fruit 연교 1420mg"
+      ],
+      "itemSeqs": [
+        "2023120400001",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "쎄파렉신연조엑스",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1399C79ACC9E44DD",
+      "sourceNames": [
+        "Gazelle Horn 영양각 44mg / 1포(20g) 중",
+        "Gazelle Horn 영양각 44mg"
+      ],
+      "strengths": [
+        "Gazelle Horn 영양각 44mg / 1포(20g) 중",
+        "Gazelle Horn 영양각 44mg"
+      ],
+      "itemSeqs": [
+        "2023120400001",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "쎄파렉신연조엑스",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-8E858AE752BDB859",
+      "sourceNames": [
+        "Glycine Semen Preparatum 두시 712mg / 1포(20g) 중",
+        "Glycine Semen Preparatum 두시 712mg"
+      ],
+      "strengths": [
+        "Glycine Semen Preparatum 두시 712mg / 1포(20g) 중",
+        "Glycine Semen Preparatum 두시 712mg"
+      ],
+      "itemSeqs": [
+        "2023120400001",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "쎄파렉신연조엑스",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-167364B4FF9AB1F5",
+      "sourceNames": [
+        "Lonicera Flower 금은화 1420mg / 1포(20g) 중",
+        "Lonicera Flower 금은화 1420mg"
+      ],
+      "strengths": [
+        "Lonicera Flower 금은화 1420mg / 1포(20g) 중",
+        "Lonicera Flower 금은화 1420mg"
+      ],
+      "itemSeqs": [
+        "2023120400001",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "쎄파렉신연조엑스",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-4C16ACD4BD76FB93",
+      "sourceNames": [
+        "Lophatheri Herba 담죽엽 568mg / 1포(20g) 중",
+        "Lophatheri Herba 담죽엽 568mg"
+      ],
+      "strengths": [
+        "Lophatheri Herba 담죽엽 568mg / 1포(20g) 중",
+        "Lophatheri Herba 담죽엽 568mg"
+      ],
+      "itemSeqs": [
+        "2023120400001",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "쎄파렉신연조엑스",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-389B772CA170F770",
+      "sourceNames": [
+        "Mentha Herb 박하 852mg / 1포(20g) 중",
+        "Mentha Herb 박하 852mg"
+      ],
+      "strengths": [
+        "Mentha Herb 박하 852mg / 1포(20g) 중",
+        "Mentha Herb 박하 852mg"
+      ],
+      "itemSeqs": [
+        "2023120400001",
+        "A11AKP08G1443"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-C10A899BCDC042E9",
+        "PRD-HEALTHKR-8D3363329BA06B80"
+      ],
+      "productNames": [
+        "쎄파렉신연조엑스",
+        "한신은교산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-69906909691FCD34",
+      "sourceNames": [
+        "Perilla Herb 자소엽 100mg / 1포(20 밀리리터) 중-",
+        "Perilla Herb 자소엽 0.67g"
+      ],
+      "strengths": [
+        "Perilla Herb 자소엽 100mg / 1포(20 밀리리터) 중-",
+        "Perilla Herb 자소엽 0.67g"
+      ],
+      "itemSeqs": [
+        "2019090900165",
+        "A11AKP07L0109"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-156F5EC241CA099E",
+        "PRD-HEALTHKR-E4C4252C2C39F436"
+      ],
+      "productNames": [
+        "센코프액",
+        "건양탕"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-9B8252FEA412ADDC",
+      "sourceNames": [
+        "Chlorhexidine Gluconate Solution 클로르헥시딘글루콘산염액 0.01mL/mL"
+      ],
+      "strengths": [
+        "Chlorhexidine Gluconate Solution 클로르헥시딘글루콘산염액 0.01mL/mL"
+      ],
+      "itemSeqs": [
+        "A11A3060A0344"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-574D5BD1C9A6EC74"
+      ],
+      "productNames": [
+        "누보클렌"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-29E068AAA0D33378",
+      "sourceNames": [
+        "Dibucaine Hydrochloride 디부카인염산염 1mg/mL",
+        "Dibucaine Hydrochloride 디부카인염산염 0.1g/100mL"
+      ],
+      "strengths": [
+        "Dibucaine Hydrochloride 디부카인염산염 1mg/mL",
+        "Dibucaine Hydrochloride 디부카인염산염 0.1g/100mL"
+      ],
+      "itemSeqs": [
+        "A11A3060A0344",
+        "2012121800007",
+        "A11AKP08F1048"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-574D5BD1C9A6EC74",
+        "PRD-HEALTHKR-AB5BFA901E1174ED",
+        "PRD-HEALTHKR-9299B815AD6FE734"
+      ],
+      "productNames": [
+        "누보클렌",
+        "세네풀에스액",
+        "애니클렌액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-692221DFBC40DCD7",
+      "sourceNames": [
+        "Naphazoline Hydrochloride 나파졸린염산염 1mg/mL",
+        "Naphazoline Hydrochloride 나파졸린염산염 0.1g/100mL"
+      ],
+      "strengths": [
+        "Naphazoline Hydrochloride 나파졸린염산염 1mg/mL",
+        "Naphazoline Hydrochloride 나파졸린염산염 0.1g/100mL"
+      ],
+      "itemSeqs": [
+        "A11A3060A0344",
+        "2012121800007",
+        "A11AKP08F1048"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-574D5BD1C9A6EC74",
+        "PRD-HEALTHKR-AB5BFA901E1174ED",
+        "PRD-HEALTHKR-9299B815AD6FE734"
+      ],
+      "productNames": [
+        "누보클렌",
+        "세네풀에스액",
+        "애니클렌액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-918513F69C9BDF65",
+      "sourceNames": [
+        "Acrinol 아크리놀 2mg"
+      ],
+      "strengths": [
+        "Acrinol 아크리놀 2mg"
+      ],
+      "itemSeqs": [
+        "A11AKP08G2163"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-CB05B83C3E7A2F71"
+      ],
+      "productNames": [
+        "니라마이드산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-AB72F24F9E0C41E1",
+      "sourceNames": [
+        "Tannic Acid 탄닌산 5mg"
+      ],
+      "strengths": [
+        "Tannic Acid 탄닌산 5mg"
+      ],
+      "itemSeqs": [
+        "A11AKP08G2163"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-CB05B83C3E7A2F71"
+      ],
+      "productNames": [
+        "니라마이드산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-F9380625F1EA5467",
+      "sourceNames": [
+        "Zinc Oxide 산화아연 100mg"
+      ],
+      "strengths": [
+        "Zinc Oxide 산화아연 100mg"
+      ],
+      "itemSeqs": [
+        "A11AKP08G2163"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-CB05B83C3E7A2F71"
+      ],
+      "productNames": [
+        "니라마이드산"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-010F896A7EBF52C0",
+      "sourceNames": [
+        "Benzalkonium Chloride Solution 벤잘코늄염화물액 0.2mL (벤잘코늄염화물(으)로서 0.1g)"
+      ],
+      "strengths": [
+        "Benzalkonium Chloride Solution 벤잘코늄염화물액 0.2mL (벤잘코늄염화물(으)로서 0.1g)"
+      ],
+      "itemSeqs": [
+        "2012121800007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-AB5BFA901E1174ED"
+      ],
+      "productNames": [
+        "세네풀에스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-51CC44D1A4AA1AC4",
+      "sourceNames": [
+        "Chlorhexidine Gluconate Solution(20%) 클로르헥시딘글루콘산염액(20%) 1mL/100mL"
+      ],
+      "strengths": [
+        "Chlorhexidine Gluconate Solution(20%) 클로르헥시딘글루콘산염액(20%) 1mL/100mL"
+      ],
+      "itemSeqs": [
+        "A11AKP08F1048"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9299B815AD6FE734"
+      ],
+      "productNames": [
+        "애니클렌액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-3C84036BB42EE0D4",
+      "sourceNames": [
+        "Dipotassium Glycyrrhizinate 글리시리진산디칼륨 5mg/g"
+      ],
+      "strengths": [
+        "Dipotassium Glycyrrhizinate 글리시리진산디칼륨 5mg/g"
+      ],
+      "itemSeqs": [
+        "2016072600007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-F0829CA5E5C890FC"
+      ],
+      "productNames": [
+        "로시놀 더블액션 크림"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-417F1FC10759C61E",
+      "sourceNames": [
+        "DL-Methionine DL-메티오닌 12.5mg"
+      ],
+      "strengths": [
+        "DL-Methionine DL-메티오닌 12.5mg"
+      ],
+      "itemSeqs": [
+        "A11ALLLLL0102"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-FBB0E2A85B403500"
+      ],
+      "productNames": [
+        "복합써스펜좌약"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-9A93025F4B92E2C4",
+      "sourceNames": [
+        "Achyranthes Root 우슬 20mg"
+      ],
+      "strengths": [
+        "Achyranthes Root 우슬 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-865E84D837036CEE",
+      "sourceNames": [
+        "Astragalus Root 황기 20mg"
+      ],
+      "strengths": [
+        "Astragalus Root 황기 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-CA2950B220253A02",
+      "sourceNames": [
+        "Cuscutae Semen 토사자 20mg"
+      ],
+      "strengths": [
+        "Cuscutae Semen 토사자 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-4EA72941FAE13854",
+      "sourceNames": [
+        "Eucommia Bark 두충 20mg"
+      ],
+      "strengths": [
+        "Eucommia Bark 두충 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1DAE877A863D5239",
+      "sourceNames": [
+        "Lycium Fruit 구기자 20mg"
+      ],
+      "strengths": [
+        "Lycium Fruit 구기자 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-51117026201F103B",
+      "sourceNames": [
+        "Phellodendron Bark 황백 20mg"
+      ],
+      "strengths": [
+        "Phellodendron Bark 황백 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1167B90961269CF6",
+      "sourceNames": [
+        "Psoraleae Semen 보골지 20mg"
+      ],
+      "strengths": [
+        "Psoraleae Semen 보골지 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-9AD233592DE16B35",
+      "sourceNames": [
+        "Sinomenium Stem 방기 10mg"
+      ],
+      "strengths": [
+        "Sinomenium Stem 방기 10mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-90557E9255D0643F",
+      "sourceNames": [
+        "Testudinis Plastrum 구판 20mg"
+      ],
+      "strengths": [
+        "Testudinis Plastrum 구판 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6E3C7AE383579CC6",
+      "sourceNames": [
+        "Tigus Os 호골 20mg"
+      ],
+      "strengths": [
+        "Tigus Os 호골 20mg"
+      ],
+      "itemSeqs": [
+        "A11ABBBBB2010"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-08400520FC85198D"
+      ],
+      "productNames": [
+        "절효환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-371E58A025BC9AC1",
+      "sourceNames": [
+        "Peach Kernel 도인 400mg"
+      ],
+      "strengths": [
+        "Peach Kernel 도인 400mg"
+      ],
+      "itemSeqs": [
+        "r4tv2ahltipre"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-9AB77DAF9CDD82D2"
+      ],
+      "productNames": [
+        "게리단"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6C09FE95984E353B",
+      "sourceNames": [
+        "Galgeun-Tang Dried Ext. 갈근탕건조엑스 2.14g / 1회용량 (3.5그램) 중"
+      ],
+      "strengths": [
+        "Galgeun-Tang Dried Ext. 갈근탕건조엑스 2.14g / 1회용량 (3.5그램) 중"
+      ],
+      "itemSeqs": [
+        "A11A1500A0493"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E3BBB51BA35F5B40"
+      ],
+      "productNames": [
+        "한신갈근탕"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-CE6246B8066B3D8D",
+      "sourceNames": [
+        "Tipepidine Hibenzate 티페피딘히벤즈산염 12.5mg",
+        "Tipepidine Hibenzate 티페피딘히벤즈산염 12.5mg / 100ml 중"
+      ],
+      "strengths": [
+        "Tipepidine Hibenzate 티페피딘히벤즈산염 12.5mg",
+        "Tipepidine Hibenzate 티페피딘히벤즈산염 12.5mg / 100ml 중"
+      ],
+      "itemSeqs": [
+        "2019071200031",
+        "2012091400009"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E8D28ECA92A8C2DA",
+        "PRD-HEALTHKR-C4DF94999C531699"
+      ],
+      "productNames": [
+        "코감콜",
+        "경남보감탕코프액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1E73504F26BF6443",
+      "sourceNames": [
+        "Cellulase 셀룰라제 10mg",
+        "Cellulase 셀룰라제 9mg",
+        "Cellulase 셀룰라제 50mg"
+      ],
+      "strengths": [
+        "Cellulase 셀룰라제 10mg",
+        "Cellulase 셀룰라제 9mg",
+        "Cellulase 셀룰라제 50mg"
+      ],
+      "itemSeqs": [
+        "A11A0740B0009",
+        "A11A0740B0011",
+        "A11AKP08F0896",
+        "A11A0340A0324",
+        "2017071200002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-8C7D91DAF17764F8",
+        "PRD-HEALTHKR-402DDD6ED32DD071",
+        "PRD-HEALTHKR-83A6999385AB4A98",
+        "PRD-HEALTHKR-01C5DF5ADF653708",
+        "PRD-HEALTHKR-1BCB50F069DF5AEC",
+        "PRD-HEALTHKR-E9D11C36D305FA61"
+      ],
+      "productNames": [
+        "훼스탈플러스",
+        "훼스탈골드",
+        "위엔젤정",
+        "판키아제정",
+        "스토마제"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1E54E25833AAA04A",
+      "sourceNames": [
+        "Pancreatin 판크레아틴 315mg",
+        "Pancreatin 판크레아틴 150mg",
+        "Pancreatin 판크레아틴 50mg",
+        "Pancreatin 판크레아틴 170mg",
+        "Pancreatin 판크레아틴 175mg"
+      ],
+      "strengths": [
+        "Pancreatin 판크레아틴 315mg",
+        "Pancreatin 판크레아틴 150mg",
+        "Pancreatin 판크레아틴 50mg",
+        "Pancreatin 판크레아틴 170mg",
+        "Pancreatin 판크레아틴 175mg"
+      ],
+      "itemSeqs": [
+        "A11A0740B0009",
+        "A11A0740B0011",
+        "A11A3780A0129",
+        "2023041200002",
+        "A11AKP08F0896",
+        "A11A0340A0324",
+        "2017071200002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-8C7D91DAF17764F8",
+        "PRD-HEALTHKR-402DDD6ED32DD071",
+        "PRD-HEALTHKR-83A6999385AB4A98",
+        "PRD-HEALTHKR-73CE19343E3E91DD",
+        "PRD-HEALTHKR-F24AAFD552538528",
+        "PRD-HEALTHKR-55E0AC791808E155",
+        "PRD-HEALTHKR-01C5DF5ADF653708",
+        "PRD-HEALTHKR-1BCB50F069DF5AEC",
+        "PRD-HEALTHKR-E9D11C36D305FA61"
+      ],
+      "productNames": [
+        "훼스탈플러스",
+        "훼스탈골드",
+        "다제스",
+        "활짝정",
+        "위엔젤정",
+        "판키아제정",
+        "스토마제"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-BD272DA670AFC7F9",
+      "sourceNames": [
+        "Prozyme 프로자임 35mg"
+      ],
+      "strengths": [
+        "Prozyme 프로자임 35mg"
+      ],
+      "itemSeqs": [
+        "2021122200006"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-3B61DC6F1E066703"
+      ],
+      "productNames": [
+        "훼스탈슈퍼자임"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-E61391C8F4DBF160",
+      "sourceNames": [
+        "Prozyme 6 프로자임6 10mg"
+      ],
+      "strengths": [
+        "Prozyme 6 프로자임6 10mg"
+      ],
+      "itemSeqs": [
+        "A11A0740B0011"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-83A6999385AB4A98"
+      ],
+      "productNames": [
+        "훼스탈골드"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5852B9BE409EB0C7",
+      "sourceNames": [
+        "Berberine Tannate 베르베린탄닌산염 100mg"
+      ],
+      "strengths": [
+        "Berberine Tannate 베르베린탄닌산염 100mg"
+      ],
+      "itemSeqs": [
+        "2019082200037"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-70C00325151FA4D7"
+      ],
+      "productNames": [
+        "리어스탑"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-8DA4B87D59D45207",
+      "sourceNames": [
+        "Bismuth Subnitrate 비스무트차질산염 200mg",
+        "Bismuth Subnitrate 비스무트차질산염 100mg"
+      ],
+      "strengths": [
+        "Bismuth Subnitrate 비스무트차질산염 200mg",
+        "Bismuth Subnitrate 비스무트차질산염 100mg"
+      ],
+      "itemSeqs": [
+        "2019082200037",
+        "2022032100002",
+        "2022011200014"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-70C00325151FA4D7",
+        "PRD-HEALTHKR-7C29633216EA328F",
+        "PRD-HEALTHKR-002929435C512F51"
+      ],
+      "productNames": [
+        "리어스탑",
+        "마가렉스",
+        "락토프린"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-80338BE3C91507F5",
+      "sourceNames": [
+        "Scopolia Ext.(10倍散) 스코폴리아엑스10배산 100mg"
+      ],
+      "strengths": [
+        "Scopolia Ext.(10倍散) 스코폴리아엑스10배산 100mg"
+      ],
+      "itemSeqs": [
+        "2019082200037"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-70C00325151FA4D7"
+      ],
+      "productNames": [
+        "리어스탑"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-56EEF594252DB4A3",
+      "sourceNames": [
+        "Acrinol Hydrate 아크리놀수화물 10mg"
+      ],
+      "strengths": [
+        "Acrinol Hydrate 아크리놀수화물 10mg"
+      ],
+      "itemSeqs": [
+        "2022032100002",
+        "2022011200014"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-7C29633216EA328F",
+        "PRD-HEALTHKR-002929435C512F51"
+      ],
+      "productNames": [
+        "마가렉스",
+        "락토프린"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-3377D259CF242372",
+      "sourceNames": [
+        "Berberine Chloride Hydrate 베르베린염화물수화물 20mg"
+      ],
+      "strengths": [
+        "Berberine Chloride Hydrate 베르베린염화물수화물 20mg"
+      ],
+      "itemSeqs": [
+        "2022032100002",
+        "2022011200014"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-7C29633216EA328F",
+        "PRD-HEALTHKR-002929435C512F51"
+      ],
+      "productNames": [
+        "마가렉스",
+        "락토프린"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-3616A25D7F23FDDB",
+      "sourceNames": [
+        "Lactobacillus Sporogenes 락토바실루스스포로게네스균 5mg (1.0 × 10^7 개 이상)",
+        "Lactobacillus Sporogenes 락토바실루스스포로게네스균 20mg"
+      ],
+      "strengths": [
+        "Lactobacillus Sporogenes 락토바실루스스포로게네스균 5mg (1.0 × 10^7 개 이상)",
+        "Lactobacillus Sporogenes 락토바실루스스포로게네스균 20mg"
+      ],
+      "itemSeqs": [
+        "2022032100002",
+        "2022011200014",
+        "2011110400004"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-7C29633216EA328F",
+        "PRD-HEALTHKR-002929435C512F51",
+        "PRD-HEALTHKR-B0C37F964E4C0EA7"
+      ],
+      "productNames": [
+        "마가렉스",
+        "락토프린",
+        "더블락"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-135958C0C6191871",
+      "sourceNames": [
+        "Scopolia Ext. 스코폴리아엑스 5mg",
+        "Scopolia Ext. 스코폴리아엑스 5mg (총 알칼로이드(으)로서 50μg)"
+      ],
+      "strengths": [
+        "Scopolia Ext. 스코폴리아엑스 5mg",
+        "Scopolia Ext. 스코폴리아엑스 5mg (총 알칼로이드(으)로서 50μg)"
+      ],
+      "itemSeqs": [
+        "2022032100002",
+        "2022011200014",
+        "2021071300001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-7C29633216EA328F",
+        "PRD-HEALTHKR-002929435C512F51",
+        "PRD-HEALTHKR-390F4C26DA5C4153"
+      ],
+      "productNames": [
+        "마가렉스",
+        "락토프린",
+        "위엔스탈"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-172B51E2DFBACF0C",
+      "sourceNames": [
+        "Citrus Unshiu Peel Dried Ext.(5→1) 진피건조엑스(5→1) 11.2mg (진피(으)로서 56mg)",
+        "Citrus Unshiu Peel Dried Ext.(5→1) 진피건조엑스(5→1) 8.4mg (진피(으)로서 42mg)"
+      ],
+      "strengths": [
+        "Citrus Unshiu Peel Dried Ext.(5→1) 진피건조엑스(5→1) 11.2mg (진피(으)로서 56mg)",
+        "Citrus Unshiu Peel Dried Ext.(5→1) 진피건조엑스(5→1) 8.4mg (진피(으)로서 42mg)"
+      ],
+      "itemSeqs": [
+        "2018061500010",
+        "2018080700007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-373D7428FCD1447F",
+        "PRD-HEALTHKR-A522AAED611BBDE0"
+      ],
+      "productNames": [
+        "동성정로환에프환",
+        "동성정로환에프정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-54591ADF80A67D0C",
+      "sourceNames": [
+        "Coptis Rhizome Powder 황련가루 16.7mg",
+        "Coptis Rhizome Powder 황련가루 12.5mg"
+      ],
+      "strengths": [
+        "Coptis Rhizome Powder 황련가루 16.7mg",
+        "Coptis Rhizome Powder 황련가루 12.5mg"
+      ],
+      "itemSeqs": [
+        "2018061500010",
+        "2018080700007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-373D7428FCD1447F",
+        "PRD-HEALTHKR-A522AAED611BBDE0"
+      ],
+      "productNames": [
+        "동성정로환에프환",
+        "동성정로환에프정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-CAA193B54D131E97",
+      "sourceNames": [
+        "Guaiacol 구아야콜 34mg",
+        "Guaiacol 구아야콜 25mg"
+      ],
+      "strengths": [
+        "Guaiacol 구아야콜 34mg",
+        "Guaiacol 구아야콜 25mg"
+      ],
+      "itemSeqs": [
+        "2018061500010",
+        "2018080700007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-373D7428FCD1447F",
+        "PRD-HEALTHKR-A522AAED611BBDE0"
+      ],
+      "productNames": [
+        "동성정로환에프환",
+        "동성정로환에프정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-F05C4CD10D26C383",
+      "sourceNames": [
+        "Phellodendron Bark Ext. Powder 황백엑스산 54.1mg (황백(으)로서 400.88mg)",
+        "Phellodendron Bark Ext. Powder 황백엑스산 40.6mg"
+      ],
+      "strengths": [
+        "Phellodendron Bark Ext. Powder 황백엑스산 54.1mg (황백(으)로서 400.88mg)",
+        "Phellodendron Bark Ext. Powder 황백엑스산 40.6mg"
+      ],
+      "itemSeqs": [
+        "2018061500010",
+        "2018080700007"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-373D7428FCD1447F",
+        "PRD-HEALTHKR-A522AAED611BBDE0"
+      ],
+      "productNames": [
+        "동성정로환에프환",
+        "동성정로환에프정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-DAA1CF66EDB87542",
+      "sourceNames": [
+        "Powdered Licorice 감초가루 16.7mg",
+        "Powdered Licorice 감초가루 12.5mg",
+        "Powdered Licorice 감초가루 25mg (글리시리진산(으)로서 0.63mg)"
+      ],
+      "strengths": [
+        "Powdered Licorice 감초가루 16.7mg",
+        "Powdered Licorice 감초가루 12.5mg",
+        "Powdered Licorice 감초가루 25mg (글리시리진산(으)로서 0.63mg)"
+      ],
+      "itemSeqs": [
+        "2018061500010",
+        "2018080700007",
+        "2021071300001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-373D7428FCD1447F",
+        "PRD-HEALTHKR-A522AAED611BBDE0",
+        "PRD-HEALTHKR-390F4C26DA5C4153"
+      ],
+      "productNames": [
+        "동성정로환에프환",
+        "동성정로환에프정",
+        "위엔스탈"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-04E22A10312CB3DF",
+      "sourceNames": [
+        "Dicyclomine Hydrochloride 디시클로민염산염 5mg"
+      ],
+      "strengths": [
+        "Dicyclomine Hydrochloride 디시클로민염산염 5mg"
+      ],
+      "itemSeqs": [
+        "A11A2060A0084"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-D1C686FB1AAE7D03"
+      ],
+      "productNames": [
+        "싸이베린"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6A49FB5633B4C0AA",
+      "sourceNames": [
+        "Papaverine Hydrochloride 파파베린염산염 15mg"
+      ],
+      "strengths": [
+        "Papaverine Hydrochloride 파파베린염산염 15mg"
+      ],
+      "itemSeqs": [
+        "A11A2060A0084"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-D1C686FB1AAE7D03"
+      ],
+      "productNames": [
+        "싸이베린"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-002696637B977D91",
+      "sourceNames": [
+        "Scopolamine Butylbromide 부틸스코폴라민브롬화물 10mg"
+      ],
+      "strengths": [
+        "Scopolamine Butylbromide 부틸스코폴라민브롬화물 10mg"
+      ],
+      "itemSeqs": [
+        "A11AOOOOO2522",
+        "A11AHHHHH0014",
+        "2009071505474"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-57B57CA2F11AEB9E",
+        "PRD-HEALTHKR-8575EB0E4B67705E",
+        "PRD-HEALTHKR-E80E93033D1E5D7C"
+      ],
+      "productNames": [
+        "포나민",
+        "샤이닝",
+        "부스코판플러스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-665370DC28A4D3CE",
+      "sourceNames": [
+        "Cinnamon Bark 70% Ethanol Tinc.(1→5) 육계70%에탄올틴크(1→5) 0.035mL/mL"
+      ],
+      "strengths": [
+        "Cinnamon Bark 70% Ethanol Tinc.(1→5) 육계70%에탄올틴크(1→5) 0.035mL/mL"
+      ],
+      "itemSeqs": [
+        "A11A3550A0164"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01BC372E2D787244"
+      ],
+      "productNames": [
+        "백초시럽플러스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-31BF147C0684A85A",
+      "sourceNames": [
+        "Coptis RhizomeㆍPhellodendron Bark 50% Ethanol Ext.(1→2.5) 황련ㆍ황백50%에탄올추출액(1→2.5) 0.058mL/mL"
+      ],
+      "strengths": [
+        "Coptis RhizomeㆍPhellodendron Bark 50% Ethanol Ext.(1→2.5) 황련ㆍ황백50%에탄올추출액(1→2.5) 0.058mL/mL"
+      ],
+      "itemSeqs": [
+        "A11A3550A0164"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01BC372E2D787244"
+      ],
+      "productNames": [
+        "백초시럽플러스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-8FFCE2A80D7224BD",
+      "sourceNames": [
+        "Gambir 20% Ethanol Ext. (1→2.5) 아선약20%에탄올추출액(1→2.5) 0.085mL/mL"
+      ],
+      "strengths": [
+        "Gambir 20% Ethanol Ext. (1→2.5) 아선약20%에탄올추출액(1→2.5) 0.085mL/mL"
+      ],
+      "itemSeqs": [
+        "A11A3550A0164"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01BC372E2D787244"
+      ],
+      "productNames": [
+        "백초시럽플러스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-C81EEEE58D21C7E7",
+      "sourceNames": [
+        "Gentian Root and Rhizome Ethanol Ext.(1→0.88) 용담에탄올추출액(1→0.88) 0.008mL/mL"
+      ],
+      "strengths": [
+        "Gentian Root and Rhizome Ethanol Ext.(1→0.88) 용담에탄올추출액(1→0.88) 0.008mL/mL"
+      ],
+      "itemSeqs": [
+        "A11A3550A0164"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01BC372E2D787244"
+      ],
+      "productNames": [
+        "백초시럽플러스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-698DCB8D49F70302",
+      "sourceNames": [
+        "Ginseng Fluid Ext. 인삼유동엑스 0.003mL/mL"
+      ],
+      "strengths": [
+        "Ginseng Fluid Ext. 인삼유동엑스 0.003mL/mL"
+      ],
+      "itemSeqs": [
+        "A11A3550A0164"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01BC372E2D787244"
+      ],
+      "productNames": [
+        "백초시럽플러스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5AFCDA13AB098ACC",
+      "sourceNames": [
+        "Licorice Ext. 감초엑스 10mg/mL"
+      ],
+      "strengths": [
+        "Licorice Ext. 감초엑스 10mg/mL"
+      ],
+      "itemSeqs": [
+        "A11A3550A0164"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01BC372E2D787244"
+      ],
+      "productNames": [
+        "백초시럽플러스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-29524FF69840FB9F",
+      "sourceNames": [
+        "Scutellaria Root Soft Ext.(2.5→1) 황금연조엑스(2.5→1) 1.2mg/mL"
+      ],
+      "strengths": [
+        "Scutellaria Root Soft Ext.(2.5→1) 황금연조엑스(2.5→1) 1.2mg/mL"
+      ],
+      "itemSeqs": [
+        "A11A3550A0164"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01BC372E2D787244"
+      ],
+      "productNames": [
+        "백초시럽플러스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-1D43FE27D554A041",
+      "sourceNames": [
+        "Ascorbic Acid 아스코르브산 150mg"
+      ],
+      "strengths": [
+        "Ascorbic Acid 아스코르브산 150mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0271",
+        "y0uwsrxlvahx3"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-41DF1B360E00E958",
+        "PRD-HEALTHKR-137313AC7326C850"
+      ],
+      "productNames": [
+        "덴파사캡슐",
+        "이모나캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-4DA082BA91AE3B79",
+      "sourceNames": [
+        "Tocopherol Acetate 50% 토코페롤아세테이트2배산 10mg",
+        "Tocopherol Acetate 50% 토코페롤아세테이트2배산 10mg (토코페롤아세테이트(으)로서 5mg)"
+      ],
+      "strengths": [
+        "Tocopherol Acetate 50% 토코페롤아세테이트2배산 10mg",
+        "Tocopherol Acetate 50% 토코페롤아세테이트2배산 10mg (토코페롤아세테이트(으)로서 5mg)"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0271",
+        "pmewl0drvmfc7",
+        "A11AKP08D0143",
+        "y0uwsrxlvahx3"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-41DF1B360E00E958",
+        "PRD-HEALTHKR-F80B8D345CB8AC77",
+        "PRD-HEALTHKR-94BC4F71817742DC",
+        "PRD-HEALTHKR-137313AC7326C850"
+      ],
+      "productNames": [
+        "덴파사캡슐",
+        "덴타자임",
+        "덴타포스",
+        "이모나캡슐"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-340162C167FC54AE",
+      "sourceNames": [
+        "Mume Fruit 오매 223.3mg / 1포(10mL) 중",
+        "Mume Fruit 오매 446mg / 1포 (10mL) 중",
+        "Mume Fruit 오매 949.98mg/20mL"
+      ],
+      "strengths": [
+        "Mume Fruit 오매 223.3mg / 1포(10mL) 중",
+        "Mume Fruit 오매 446mg / 1포 (10mL) 중",
+        "Mume Fruit 오매 949.98mg/20mL"
+      ],
+      "itemSeqs": [
+        "2016040700006",
+        "2022021000010",
+        "2024011800001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-EBF45E41590E9718",
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-1402C543995C2A2D"
+      ],
+      "productNames": [
+        "꼬마활명수액",
+        "베나치오키즈",
+        "베나치오이지"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-283A5515DF645BBF",
+      "sourceNames": [
+        "Fennel 회향 63.3mg / 1포 (10mL) 중",
+        "Fennel 회향 150mg/20mL",
+        "Fennel 회향 0.18g / 1포 (20g) 중"
+      ],
+      "strengths": [
+        "Fennel 회향 63.3mg / 1포 (10mL) 중",
+        "Fennel 회향 150mg/20mL",
+        "Fennel 회향 0.18g / 1포 (20g) 중"
+      ],
+      "itemSeqs": [
+        "2022021000010",
+        "A11AKP08L0153",
+        "2024011800001",
+        "2022120700002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-AD01A527A2423F91",
+        "PRD-HEALTHKR-A5FFD17F8BABAB06",
+        "PRD-HEALTHKR-1402C543995C2A2D",
+        "PRD-HEALTHKR-96BF62AD9A62A50B"
+      ],
+      "productNames": [
+        "베나치오키즈",
+        "베나치오액",
+        "베나치오이지",
+        "에스톰액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-135028DB3C17B515",
+      "sourceNames": [
+        "CellulaseⅡ 셀룰라제Ⅱ 15mg"
+      ],
+      "strengths": [
+        "CellulaseⅡ 셀룰라제Ⅱ 15mg"
+      ],
+      "itemSeqs": [
+        "A11A3780A0129"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-73CE19343E3E91DD",
+        "PRD-HEALTHKR-F24AAFD552538528"
+      ],
+      "productNames": [
+        "다제스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-F10BD91511959B57",
+      "sourceNames": [
+        "Papain 파파인 50mg"
+      ],
+      "strengths": [
+        "Papain 파파인 50mg"
+      ],
+      "itemSeqs": [
+        "A11A3780A0129"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-73CE19343E3E91DD",
+        "PRD-HEALTHKR-F24AAFD552538528"
+      ],
+      "productNames": [
+        "다제스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-01931179248F3334",
+      "sourceNames": [
+        "Pepsin 펩신 25mg"
+      ],
+      "strengths": [
+        "Pepsin 펩신 25mg"
+      ],
+      "itemSeqs": [
+        "A11A3780A0129"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-73CE19343E3E91DD",
+        "PRD-HEALTHKR-F24AAFD552538528"
+      ],
+      "productNames": [
+        "다제스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-AF9BC3E071CB61D9",
+      "sourceNames": [
+        "Diastase 디아스타제 15mg"
+      ],
+      "strengths": [
+        "Diastase 디아스타제 15mg"
+      ],
+      "itemSeqs": [
+        "A11A3780A0129"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-73CE19343E3E91DD",
+        "PRD-HEALTHKR-F24AAFD552538528"
+      ],
+      "productNames": [
+        "다제스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-12132279C97458AF",
+      "sourceNames": [
+        "Pancrelipase 판크레리파제 13mg"
+      ],
+      "strengths": [
+        "Pancrelipase 판크레리파제 13mg"
+      ],
+      "itemSeqs": [
+        "A11A3780A0129"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-73CE19343E3E91DD",
+        "PRD-HEALTHKR-F24AAFD552538528"
+      ],
+      "productNames": [
+        "다제스"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-A405304C17DF5D1B",
+      "sourceNames": [
+        "Curcuma Root 울금 0.36g / 1포 (20g) 중"
+      ],
+      "strengths": [
+        "Curcuma Root 울금 0.36g / 1포 (20g) 중"
+      ],
+      "itemSeqs": [
+        "2022120700002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-96BF62AD9A62A50B"
+      ],
+      "productNames": [
+        "에스톰액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-58D56E554CBC5807",
+      "sourceNames": [
+        "Hawthorn Fruit 산사 1.34g / 1포 (20g) 중"
+      ],
+      "strengths": [
+        "Hawthorn Fruit 산사 1.34g / 1포 (20g) 중"
+      ],
+      "itemSeqs": [
+        "2022120700002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-96BF62AD9A62A50B"
+      ],
+      "productNames": [
+        "에스톰액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-95E469A9A6D46AC1",
+      "sourceNames": [
+        "Powdered Amomum Fruit 사인가루 50mg"
+      ],
+      "strengths": [
+        "Powdered Amomum Fruit 사인가루 50mg"
+      ],
+      "itemSeqs": [
+        "2023041200002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-55E0AC791808E155"
+      ],
+      "productNames": [
+        "활짝정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-D353632FFFB53391",
+      "sourceNames": [
+        "Powdered Ginger 건강가루 50mg"
+      ],
+      "strengths": [
+        "Powdered Ginger 건강가루 50mg"
+      ],
+      "itemSeqs": [
+        "2023041200002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-55E0AC791808E155"
+      ],
+      "productNames": [
+        "활짝정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6B9CC6C6BF68FF5B",
+      "sourceNames": [
+        "OX Bile Dry Ext. 우담즙건조엑스 25mg",
+        "OX Bile Dry Ext. 우담즙건조엑스 25mg (콜산(으)로서 11.25mg)"
+      ],
+      "strengths": [
+        "OX Bile Dry Ext. 우담즙건조엑스 25mg",
+        "OX Bile Dry Ext. 우담즙건조엑스 25mg (콜산(으)로서 11.25mg)"
+      ],
+      "itemSeqs": [
+        "A11AKP08F0896",
+        "A11A0340A0324",
+        "2017071200002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01C5DF5ADF653708",
+        "PRD-HEALTHKR-1BCB50F069DF5AEC",
+        "PRD-HEALTHKR-E9D11C36D305FA61"
+      ],
+      "productNames": [
+        "위엔젤정",
+        "판키아제정",
+        "스토마제"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5D3D38B2F3D06E24",
+      "sourceNames": [
+        "Dimethicone 디메티콘 25mg"
+      ],
+      "strengths": [
+        "Dimethicone 디메티콘 25mg"
+      ],
+      "itemSeqs": [
+        "A11AKP08F0896",
+        "A11A0340A0324",
+        "2017071200002"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-01C5DF5ADF653708",
+        "PRD-HEALTHKR-1BCB50F069DF5AEC",
+        "PRD-HEALTHKR-E9D11C36D305FA61"
+      ],
+      "productNames": [
+        "위엔젤정",
+        "판키아제정",
+        "스토마제"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-B226E179928AED3D",
+      "sourceNames": [
+        "Perillae Fructus 자소자 108.9mg"
+      ],
+      "strengths": [
+        "Perillae Fructus 자소자 108.9mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-84C98198A1EA28EC",
+      "sourceNames": [
+        "Amomum Cardamomum Fruit 백두구 89.1mg"
+      ],
+      "strengths": [
+        "Amomum Cardamomum Fruit 백두구 89.1mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-98B3810034E6393C",
+      "sourceNames": [
+        "Aucklandiae Radix 목향 19.8mg"
+      ],
+      "strengths": [
+        "Aucklandiae Radix 목향 19.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-EBF87C3525484BA5",
+      "sourceNames": [
+        "Poria Cum Radix 복신 184.8mg"
+      ],
+      "strengths": [
+        "Poria Cum Radix 복신 184.8mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-FD2ED00F2FA84106",
+      "sourceNames": [
+        "Raphani Semen 내복자 108.9mg"
+      ],
+      "strengths": [
+        "Raphani Semen 내복자 108.9mg"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0357"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-A2C380F4DE5A4413"
+      ],
+      "productNames": [
+        "숙신환"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-38D74BBE281D472F",
+      "sourceNames": [
+        "Diastase·Protease·Cellulase2000IV 디아스타제·프로테아제·셀룰라제2000IV 20mg"
+      ],
+      "strengths": [
+        "Diastase·Protease·Cellulase2000IV 디아스타제·프로테아제·셀룰라제2000IV 20mg"
+      ],
+      "itemSeqs": [
+        "2021071300001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-390F4C26DA5C4153"
+      ],
+      "productNames": [
+        "위엔스탈"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-6C6AC834551C142A",
+      "sourceNames": [
+        "Magnesium Aluminometasilicate 메타규산알루민산마그네슘 40mg"
+      ],
+      "strengths": [
+        "Magnesium Aluminometasilicate 메타규산알루민산마그네슘 40mg"
+      ],
+      "itemSeqs": [
+        "2021071300001"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-390F4C26DA5C4153"
+      ],
+      "productNames": [
+        "위엔스탈"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-7D05B2BF623F4FDC",
+      "sourceNames": [
+        "Raw Ginger 생강 1.33g"
+      ],
+      "strengths": [
+        "Raw Ginger 생강 1.33g"
+      ],
+      "itemSeqs": [
+        "A11AKP07L0109"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-E4C4252C2C39F436"
+      ],
+      "productNames": [
+        "건양탕"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-275511FAE7662EC2",
+      "sourceNames": [
+        "Calcium Carbonate 탄산칼슘 3.25g",
+        "Calcium Carbonate 탄산칼슘 3.25g/100mL"
+      ],
+      "strengths": [
+        "Calcium Carbonate 탄산칼슘 3.25g",
+        "Calcium Carbonate 탄산칼슘 3.25g/100mL"
+      ],
+      "itemSeqs": [
+        "2014022800018",
+        "2014061600003",
+        "A11AKP08G0782"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-305F85362AB31B5E",
+        "PRD-HEALTHKR-983C5C51489DC019",
+        "PRD-HEALTHKR-54A79F106554905B"
+      ],
+      "productNames": [
+        "바로스콘더블액션",
+        "노루모듀얼액션현탁액",
+        "개비스콘더블액션"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-2FBA98A9A97F5C58",
+      "sourceNames": [
+        "Sodium Alginate 알긴산나트륨 5g",
+        "Sodium Alginate 알긴산나트륨 5g/100mL"
+      ],
+      "strengths": [
+        "Sodium Alginate 알긴산나트륨 5g",
+        "Sodium Alginate 알긴산나트륨 5g/100mL"
+      ],
+      "itemSeqs": [
+        "2014022800018",
+        "2014061600003",
+        "A11AKP08G0782"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-305F85362AB31B5E",
+        "PRD-HEALTHKR-983C5C51489DC019",
+        "PRD-HEALTHKR-54A79F106554905B"
+      ],
+      "productNames": [
+        "바로스콘더블액션",
+        "노루모듀얼액션현탁액",
+        "개비스콘더블액션"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-0FDD33D9A24438BF",
+      "sourceNames": [
+        "Dried Aluminum Hydroxide Gel 건조수산화알루미늄겔 124.9mg"
+      ],
+      "strengths": [
+        "Dried Aluminum Hydroxide Gel 건조수산화알루미늄겔 124.9mg"
+      ],
+      "itemSeqs": [
+        "A11AJJJJJ0093"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-71136BFE90F4BE7D"
+      ],
+      "productNames": [
+        "트리겔정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-DA611CCFCA5940E9",
+      "sourceNames": [
+        "Oxethazaine 옥세타자인 5mg"
+      ],
+      "strengths": [
+        "Oxethazaine 옥세타자인 5mg"
+      ],
+      "itemSeqs": [
+        "A11AJJJJJ0093"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-71136BFE90F4BE7D"
+      ],
+      "productNames": [
+        "트리겔정"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-04771F609DB71F4E",
+      "sourceNames": [
+        "glycine semen nigra 흑두 2.5g / 75mL 중"
+      ],
+      "strengths": [
+        "glycine semen nigra 흑두 2.5g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-29E67260219F143D",
+      "sourceNames": [
+        "Phaseoli Angularis Semen 적소두 2.5g / 75mL 중"
+      ],
+      "strengths": [
+        "Phaseoli Angularis Semen 적소두 2.5g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "취어스액"
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-653CE25C732C22B2",
+      "sourceNames": [
+        "Phaseoli Radiati Semen 녹두 2.5g / 75mL 중"
+      ],
+      "strengths": [
+        "Phaseoli Radiati Semen 녹두 2.5g / 75mL 중"
+      ],
+      "itemSeqs": [
+        "A11A1240A0068"
+      ],
+      "productIds": [
+        "PRD-HEALTHKR-F30AF8B1FFA49EDE"
+      ],
+      "productNames": [
+        "취어스액"
+      ]
+    }
+  ]
+}
