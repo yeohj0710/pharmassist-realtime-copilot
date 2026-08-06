@@ -3,28 +3,28 @@
   "candidateOnly": true,
   "clinicalUseProhibited": true,
   "worklistCount": 210,
-  "registeredCount": 18,
-  "skippedCount": 192,
+  "registeredCount": 20,
+  "skippedCount": 190,
   "entries": [
     {
       "ingredient_id": "ING-UNMAPPED_201109334_4",
       "display_name_ko": "구아이페네신",
       "display_name_en": "구아이페네신",
       "normalized_name": "구아이페네신",
-      "mfds_ingredient_code": "D000493",
+      "mfds_ingredient_code": null,
       "status": "active",
       "candidateOnly": true,
       "clinicalUseProhibited": true,
       "source_snapshot_ids": [
-        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
       ],
       "source_refs": [
         {
           "claim_id": "REG-MFDS-ING-ING-UNMAPPED_201109334_4",
-          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
-          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
-          "locator": "MFDS official ingredient field: ingredient name field",
-          "verified_at": "2026-08-06T09:29:57.935Z"
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
         }
       ],
       "source_names": [
@@ -44,20 +44,20 @@
       "display_name_ko": "구아이페네신",
       "display_name_en": "구아이페네신",
       "normalized_name": "구아이페네신",
-      "mfds_ingredient_code": "D000493",
+      "mfds_ingredient_code": null,
       "status": "active",
       "candidateOnly": true,
       "clinicalUseProhibited": true,
       "source_snapshot_ids": [
-        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
       ],
       "source_refs": [
         {
           "claim_id": "REG-MFDS-ING-ING-UNMAPPED_202302949_6",
-          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
-          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
-          "locator": "MFDS official ingredient field: ingredient name field",
-          "verified_at": "2026-08-06T09:29:57.935Z"
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
         }
       ],
       "source_names": [
@@ -73,28 +73,94 @@
       }
     },
     {
-      "ingredient_id": "ING-UNMAPPED_199801026_1",
-      "display_name_ko": "[D000803]Pancreatin(판크레아틴)",
-      "display_name_en": "[D000803]Pancreatin(판크레아틴)",
-      "normalized_name": "d000803pancreatin판크레아틴",
-      "mfds_ingredient_code": "D000425",
+      "ingredient_id": "ING-UNMAPPED_201708580_4",
+      "display_name_ko": "DL-카르니틴염산염",
+      "display_name_en": "DL-카르니틴염산염",
+      "normalized_name": "dl카르니틴염산염",
+      "mfds_ingredient_code": null,
       "status": "active",
       "candidateOnly": true,
       "clinicalUseProhibited": true,
       "source_snapshot_ids": [
-        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
       ],
       "source_refs": [
         {
-          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_199801026_1",
-          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
-          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
-          "locator": "MFDS official ingredient field: ingredient name field",
-          "verified_at": "2026-08-06T09:30:02.834Z"
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_201708580_4",
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
         }
       ],
       "source_names": [
-        "판크레아틴"
+        "DL-카르니틴염산염"
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-UNMAPPED_199801026_2",
+      "display_name_ko": "셀룰라제",
+      "display_name_en": "셀룰라제",
+      "normalized_name": "셀룰라제",
+      "mfds_ingredient_code": null,
+      "status": "active",
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "source_snapshot_ids": [
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_199801026_2",
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
+        }
+      ],
+      "source_names": [
+        "셀룰라제"
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-UNMAPPED_201200854_3",
+      "display_name_ko": "센노사이드칼슘",
+      "display_name_en": "센노사이드칼슘",
+      "normalized_name": "센노사이드칼슘",
+      "mfds_ingredient_code": null,
+      "status": "active",
+      "candidateOnly": true,
+      "clinicalUseProhibited": true,
+      "source_snapshot_ids": [
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_201200854_3",
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
+        }
+      ],
+      "source_names": [
+        "센노사이드칼슘"
       ],
       "review": {
         "expires_at": null,
@@ -661,6 +727,11 @@
       "candidates": [
         {
           "name": "스코폴라민브롬화수소산염수화물",
+          "dataset": "permit",
+          "sourceSnapshotId": "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
+        },
+        {
+          "name": "스코폴라민브롬화수소산염수화물",
           "dataset": "dur-ingredient:pwnm-taboo",
           "sourceSnapshotId": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
         },
@@ -672,34 +743,36 @@
       ]
     },
     {
-      "ingredientId": "ING-UNMAPPED_201708580_4",
+      "ingredientId": "ING-UNMAPPED_199801026_1",
       "sourceNames": [
-        "DL-카르니틴염산염"
-      ],
-      "itemSeqs": [
-        "201708580"
-      ],
-      "reason": "not_found_in_official_permit_or_dur_ingredient"
-    },
-    {
-      "ingredientId": "ING-UNMAPPED_199801026_2",
-      "sourceNames": [
-        "셀룰라제"
+        "판크레아틴"
       ],
       "itemSeqs": [
         "199801026"
       ],
-      "reason": "not_found_in_official_permit_or_dur_ingredient"
-    },
-    {
-      "ingredientId": "ING-UNMAPPED_201200854_3",
-      "sourceNames": [
-        "센노사이드칼슘"
-      ],
-      "itemSeqs": [
-        "201200854"
-      ],
-      "reason": "not_found_in_official_permit_or_dur_ingredient"
+      "reason": "ambiguous_official_ingredient_name",
+      "candidates": [
+        {
+          "name": "판크레아틴",
+          "dataset": "permit",
+          "sourceSnapshotId": "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
+        },
+        {
+          "name": "[D000803]Pancreatin(판크레아틴)",
+          "dataset": "dur-ingredient:cpcty-atent",
+          "sourceSnapshotId": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+        },
+        {
+          "name": "[D000803]Pancreatin(판크레아틴)",
+          "dataset": "dur-ingredient:mdctn-pd-atent",
+          "sourceSnapshotId": "SNAP-MFDS-DUR-INGREDIENT-02B38625E0A546FB"
+        },
+        {
+          "name": "[D000803]Pancreatin(판크레아틴)",
+          "dataset": "dur-ingredient:spcify-agrde-taboo",
+          "sourceSnapshotId": "SNAP-MFDS-DUR-INGREDIENT-1B518F70F10D4068"
+        }
+      ]
     },
     {
       "ingredientId": "ING-HEALTHKR-ADD9D69D873BA60E",
@@ -3228,6 +3301,31 @@
   ],
   "sources": [
     {
+      "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+      "source_id": "SRC-MFDS-PERMIT-15095677",
+      "provider": "mfds_permit",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+      "fetched_at": "2026-08-06T09:24:10.114Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+      "content_type": "application/json",
+      "parser_version": "mfds-permit-07-dtl06-v1",
+      "record_count": 42971,
+      "page_count": 1218,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
       "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
       "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
       "provider": "mfds_dur_ingredient",
@@ -3253,31 +3351,6 @@
       "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
     },
     {
-      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
-      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
-      "provider": "mfds_dur_ingredient",
-      "official": true,
-      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getCpctyAtentInfoList02",
-      "fetched_at": "2026-08-06T09:30:02.834Z",
-      "effective_at": null,
-      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
-      "usage_rights": "unknown",
-      "commercial_use": "allowed",
-      "cache_policy": "allowed",
-      "redistribution": "allowed",
-      "ai_context_use": "allowed",
-      "http_status": 200,
-      "content_sha256": "142aef113a2d891b5e53af1a7cc08a2d0178085e79f027c702dad669ab1defce",
-      "content_type": "application/json",
-      "parser_version": "mfds-dur-ingredient-03-v1",
-      "record_count": 708,
-      "page_count": 8,
-      "next_cursor": null,
-      "status": "parsed",
-      "raw_retention_policy": "none",
-      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
-    },
-    {
       "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-8C8CC0887FEE3A4D",
       "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
       "provider": "mfds_dur_ingredient",
@@ -3297,6 +3370,31 @@
       "parser_version": "mfds-dur-ingredient-03-v1",
       "record_count": 1836,
       "page_count": 19,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
+      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+      "provider": "mfds_dur_ingredient",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getCpctyAtentInfoList02",
+      "fetched_at": "2026-08-06T09:30:02.834Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "142aef113a2d891b5e53af1a7cc08a2d0178085e79f027c702dad669ab1defce",
+      "content_type": "application/json",
+      "parser_version": "mfds-dur-ingredient-03-v1",
+      "record_count": 708,
+      "page_count": 8,
       "next_cursor": null,
       "status": "parsed",
       "raw_retention_policy": "none",

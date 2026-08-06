@@ -11,6 +11,12 @@ const sourceRoot = resolve(appRoot, "data", "actual-candidate-source");
 const outputRoot = resolve(appRoot, "data", "actual-candidate-pack");
 const packPath = resolve(outputRoot, "pack.json");
 const worklistPath = resolve(outputRoot, "mfds-ingredient-worklist.json");
+const pathwayCatalogPath = resolve(
+  appRoot,
+  "data",
+  "clinical-pathways",
+  "pathways.json",
+);
 
 const durIngredientDatasets = [
   "dur-ingredient:usjnt-taboo",
@@ -78,11 +84,22 @@ const flattenedStrings = (value) => {
   return [];
 };
 
+const materialIngredientNames = (value) =>
+  flattenedStrings(value).flatMap((text) =>
+    [...text.matchAll(/성분명\s*:\s*([^|;]+)/gu)]
+      .map((match) => match[1].trim())
+      .filter(Boolean),
+  );
+
 const officialIngredientValues = (record) => {
   const values = [];
   if (typeof record.ingredientName === "string")
     values.push(record.ingredientName);
   for (const [key, value] of Object.entries(record.fields ?? {})) {
+    if (key === "MATERIAL_NAME") {
+      values.push(...materialIngredientNames(value));
+      continue;
+    }
     if (
       /(?:INGR|INGREDIENT|SUBSTANCE|MATERIAL|ACTIVE[_ ]?COMPONENT)/iu.test(
         key,
@@ -178,11 +195,16 @@ const snapshotSource = (snapshot) => {
   };
 };
 
-const sourceRefFor = (snapshot, ingredientId, field) => ({
+const sourceRefFor = (
+  snapshot,
+  ingredientId,
+  field,
+  sourceLabel = "ingredient",
+) => ({
   claim_id: `REG-MFDS-ING-${ingredientId}`,
   source_id: snapshot.source_id,
   source_snapshot_id: snapshot.source_snapshot_id,
-  locator: `MFDS official ingredient field: ${field}`,
+  locator: `MFDS official ${sourceLabel} field: ${field}`,
   verified_at: snapshot.fetched_at,
 });
 
@@ -239,8 +261,70 @@ const recordIdentifier = (record) =>
 const nonEmpty = (value) =>
   typeof value === "string" && value.trim().length > 0 ? value : null;
 
+const permitIngredientRows = (permit) => {
+  const materialName = flattenedStrings(permit.fields?.MATERIAL_NAME).join("|");
+  const rows = [
+    ...materialName.matchAll(
+      /성분명\s*:\s*([^|]+)(?:\|분량\s*:\s*([^|]+))?(?:\|단위\s*:\s*([^|]+))?/gu,
+    ),
+  ]
+    .map((match) => {
+      return {
+        ingredient: match[1].trim(),
+        strength:
+          [match[2]?.trim(), match[3]?.trim()].filter(Boolean).join(" ") ||
+          null,
+      };
+    })
+    .filter((row) => row.ingredient.length > 0)
+    .filter((row, index, values) => {
+      const key = `${row.ingredient}|${row.strength ?? ""}`;
+      return (
+        values.findIndex(
+          (candidate) =>
+            `${candidate.ingredient}|${candidate.strength ?? ""}` === key,
+        ) === index
+      );
+    });
+  if (rows.length > 0) return rows;
+  const mainIngredient = nonEmpty(permit.fields?.MAIN_ITEM_INGR);
+  return mainIngredient ? [{ ingredient: mainIngredient, strength: null }] : [];
+};
+
+const permitDosageForm = (permit, product) =>
+  nonEmpty(permit.fields?.DOSAGE_FORM) ??
+  nonEmpty(permit.fields?.FORM_NAME) ??
+  nonEmpty(product.dosage_form);
+
 const main = async () => {
   const pack = await readJson(packPath);
+  const pathwayCatalog = await readJson(pathwayCatalogPath);
+  const pathwayIdByProtocolId = new Map(
+    (pathwayCatalog.pathways ?? []).map((pathway) => [
+      String(pathway.protocolId ?? ""),
+      String(pathway.pathwayId ?? ""),
+    ]),
+  );
+  const pathwayIdsByProductId = new Map();
+  for (const product of pack.products ?? []) {
+    const productId = String(product.product_id ?? "");
+    if (!productId) continue;
+    const pathwayIds = pathwayIdsByProductId.get(productId) ?? new Set();
+    for (const profile of [
+      ...(product.selection_profiles ?? []),
+      ...(product.pathway_profiles ?? []),
+    ]) {
+      const protocolId = String(
+        profile.protocol_id ?? profile.protocolId ?? "",
+      );
+      const pathwayId =
+        profile.pathway_id ??
+        profile.pathwayId ??
+        pathwayIdByProtocolId.get(protocolId);
+      if (pathwayId) pathwayIds.add(String(pathwayId));
+    }
+    if (pathwayIds.size > 0) pathwayIdsByProductId.set(productId, pathwayIds);
+  }
   let worklist;
   try {
     worklist = await readJson(worklistPath);
@@ -269,9 +353,40 @@ const main = async () => {
   const sourceByItemSeq = new Map(
     sourceProducts.map((product) => [String(product.item_seq), product]),
   );
-  const indicationTargets = new Set(
-    sourceProducts.map((product) => String(product.item_seq)),
+  const indicationProductsByItemSeq = new Map(sourceByItemSeq);
+  let previousIndicationCandidates = { entries: [] };
+  try {
+    previousIndicationCandidates = await readJson(
+      resolve(outputRoot, "mfds-indication-candidates.json"),
+    );
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  const packProductsByItemSeq = new Map(
+    (pack.products ?? []).map((product) => [String(product.item_seq), product]),
   );
+  for (const entry of previousIndicationCandidates.entries ?? []) {
+    const itemSeq = String(entry.itemSeq ?? "");
+    const product = packProductsByItemSeq.get(itemSeq);
+    if (itemSeq && product && !indicationProductsByItemSeq.has(itemSeq))
+      indicationProductsByItemSeq.set(itemSeq, {
+        item_seq: itemSeq,
+        product_id: product.product_id,
+      });
+  }
+  for (const product of pack.products ?? []) {
+    const itemSeq = String(product.item_seq ?? "");
+    if (
+      itemSeq &&
+      !nonEmpty(product.indication_summary) &&
+      !indicationProductsByItemSeq.has(itemSeq)
+    )
+      indicationProductsByItemSeq.set(itemSeq, {
+        item_seq: itemSeq,
+        product_id: product.product_id,
+      });
+  }
+  const indicationTargets = new Set(indicationProductsByItemSeq.keys());
   const easyByItemSeq = new Map();
   for await (const record of streamKrDrugDataset("easy-drug")) {
     if (indicationTargets.has(String(record.itemSeq)))
@@ -281,6 +396,9 @@ const main = async () => {
   const permitTargets = new Set([
     ...indicationTargets,
     ...worklist.entries.flatMap((entry) => entry.itemSeqs),
+    ...(pack.products ?? [])
+      .filter((product) => pathwayIdsByProductId.has(product.product_id))
+      .map((product) => String(product.item_seq)),
   ]);
   const permitByItemSeq = new Map();
   for await (const record of streamKrDrugDataset("permit")) {
@@ -309,7 +427,7 @@ const main = async () => {
           ...match,
           dataset: "permit",
           record: permit,
-          field: "MAIN_ITEM_INGR/INGR_NAME",
+          field: "MATERIAL_NAME/성분명",
         });
     }
     for (const { dataset, record } of durRecords) {
@@ -401,7 +519,7 @@ const main = async () => {
   const indicationEntries = [];
   const indicationSkipped = [];
   const indicationSources = new Map();
-  for (const product of sourceProducts) {
+  for (const product of indicationProductsByItemSeq.values()) {
     const itemSeq = String(product.item_seq);
     const easy = easyByItemSeq.get(itemSeq);
     const permit = permitByItemSeq.get(itemSeq);
@@ -435,25 +553,45 @@ const main = async () => {
       sourceDataset: selected.dataset,
       sourceField: selected.field,
       source_snapshot_id: source.source_snapshot_id,
-      source_ref: sourceRefFor(snapshot, product.product_id, selected.field),
+      source_ref: sourceRefFor(
+        snapshot,
+        product.product_id,
+        selected.field,
+        "indication",
+      ),
     });
   }
 
-  const productTargets = new Map(
-    sourceProducts.map((product) => [String(product.item_seq), product]),
-  );
+  const productTargets = new Map();
+  for (const product of pack.products ?? []) {
+    if ((product.dur_flags ?? []).length !== 0) continue;
+    const itemSeq = String(product.item_seq ?? "");
+    if (!itemSeq) continue;
+    const target = productTargets.get(itemSeq) ?? {
+      itemSeq,
+      products: [],
+    };
+    target.products.push(product);
+    productTargets.set(itemSeq, target);
+  }
   const durProductEntries = [];
+  const durProductMatchedItemSeqs = new Set();
   for await (const record of streamKrDrugDataset("dur-product")) {
     const itemSeq = String(record.itemSeq);
-    const product = productTargets.get(itemSeq);
-    if (!product) continue;
+    const target = productTargets.get(itemSeq);
+    if (!target) continue;
+    durProductMatchedItemSeqs.add(itemSeq);
     const snapshot = sourceSnapshotFor("dur-product", manifests);
+    const productIds = target.products.map((product) => product.product_id);
+    const productNames = target.products.map((product) => product.display_name);
     durProductEntries.push({
       candidateOnly: true,
       clinicalUseProhibited: true,
       candidateType: "product",
       itemSeq,
-      productId: product.product_id,
+      productId: productIds[0],
+      productIds,
+      productNames,
       durRecordId: recordIdentifier(record),
       matchMode: "itemSeq-exact",
       fields: record.fields,
@@ -461,28 +599,117 @@ const main = async () => {
       source: snapshotSource(snapshot),
     });
   }
+  const durProductSkipped = [...productTargets.keys()]
+    .filter((itemSeq) => !durProductMatchedItemSeqs.has(itemSeq))
+    .map((itemSeq) => {
+      const productIds = productTargets
+        .get(itemSeq)
+        .products.map((product) => product.product_id);
+      return {
+        itemSeq,
+        productId: productIds[0],
+        productIds,
+        reason: "not_found_in_official_dur_product",
+      };
+    });
 
-  const durIngredientEntries = [];
-  for (const entry of worklist.entries) {
-    for (const match of ingredientMatches.get(entry.ingredientId) ?? []) {
-      if (!match.dataset.startsWith("dur-ingredient:")) continue;
-      const snapshot = match.snapshot;
-      durIngredientEntries.push({
-        candidateOnly: true,
-        clinicalUseProhibited: true,
-        candidateType: "ingredient",
-        ingredientId: entry.ingredientId,
-        sourceName: match.sourceName,
-        officialName: match.officialName,
-        dataset: match.dataset,
-        durRecordId: recordIdentifier(match.record),
-        matchMode: "official-name-exact",
-        fields: match.record.fields,
-        source_snapshot_id: snapshot.source_snapshot_id,
-        source: snapshotSource(snapshot),
-      });
+  const durIngredientTargets = new Map();
+  for (const productTarget of productTargets.values()) {
+    for (const product of productTarget.products) {
+      for (const ingredient of product.active_ingredients ?? []) {
+        const ingredientId = ingredient.ingredient_id;
+        if (!ingredientId) continue;
+        const target = durIngredientTargets.get(ingredientId) ?? {
+          ingredientId,
+          sourceNames: new Set(),
+          productIds: new Set(),
+          productNames: new Set(),
+        };
+        target.sourceNames.add(ingredient.name ?? "");
+        target.productIds.add(product.product_id);
+        target.productNames.add(product.display_name);
+        durIngredientTargets.set(ingredientId, target);
+      }
     }
   }
+  const durIngredientMatches = new Map();
+  for (const target of durIngredientTargets.values()) {
+    const candidates = [];
+    for (const { dataset, record } of durRecords) {
+      const match = bestNameMatch(
+        [...target.sourceNames],
+        officialIngredientValues(record),
+      );
+      if (match)
+        candidates.push({
+          ...match,
+          dataset,
+          record,
+          field: "ingredient name field",
+        });
+    }
+    const unique = new Map();
+    for (const candidate of candidates) {
+      const snapshot = sourceSnapshotFor(candidate.dataset, manifests);
+      const key = `${candidate.dataset}|${normalized(candidate.officialName)}|${recordIdentifier(candidate.record)}|${snapshot?.source_snapshot_id}`;
+      if (!unique.has(key)) unique.set(key, { ...candidate, snapshot });
+    }
+    durIngredientMatches.set(target.ingredientId, [...unique.values()]);
+  }
+
+  const durIngredientEntriesByKey = new Map();
+  const appendDurIngredientEntry = (ingredientId, target, match) => {
+    if (!match.dataset.startsWith("dur-ingredient:")) return;
+    const snapshot = match.snapshot;
+    const key = `${ingredientId}|${match.dataset}|${recordIdentifier(match.record)}|${snapshot?.source_snapshot_id}`;
+    const entry = durIngredientEntriesByKey.get(key) ?? {
+      candidateOnly: true,
+      clinicalUseProhibited: true,
+      candidateType: "ingredient",
+      ingredientId,
+      sourceName: match.sourceName,
+      officialName: match.officialName,
+      dataset: match.dataset,
+      durRecordId: recordIdentifier(match.record),
+      matchMode: "official-name-exact",
+      fields: match.record.fields,
+      source_snapshot_id: snapshot.source_snapshot_id,
+      source: snapshotSource(snapshot),
+      productIds: new Set(),
+      productNames: new Set(),
+    };
+    for (const productId of target.productIds ?? [])
+      entry.productIds.add(productId);
+    for (const productName of target.productNames ?? [])
+      entry.productNames.add(productName);
+    durIngredientEntriesByKey.set(key, entry);
+  };
+  for (const entry of worklist.entries) {
+    for (const match of ingredientMatches.get(entry.ingredientId) ?? []) {
+      appendDurIngredientEntry(entry.ingredientId, entry, match);
+    }
+  }
+  for (const target of durIngredientTargets.values())
+    for (const match of durIngredientMatches.get(target.ingredientId) ?? [])
+      appendDurIngredientEntry(target.ingredientId, target, match);
+  const durIngredientEntries = [...durIngredientEntriesByKey.values()].map(
+    (entry) => ({
+      ...entry,
+      productIds: [...entry.productIds],
+      productNames: [...entry.productNames],
+    }),
+  );
+  const durIngredientSkipped = [...durIngredientTargets.values()]
+    .filter(
+      (target) => !(durIngredientMatches.get(target.ingredientId)?.length ?? 0),
+    )
+    .map((target) => ({
+      ingredientId: target.ingredientId,
+      sourceNames: [...target.sourceNames].filter(Boolean),
+      productIds: [...target.productIds],
+      productNames: [...target.productNames],
+      reason: "not_found_in_official_dur_ingredient",
+    }));
 
   const healthKrRegistry = await readJson(
     resolve(appRoot, "data", "healthkr-product-registry", "registry.json"),
@@ -599,30 +826,39 @@ const main = async () => {
     });
   }
 
+  const differenceTargets = [];
+  for (const product of pack.products ?? []) {
+    for (const pathwayId of [
+      ...(pathwayIdsByProductId.get(product.product_id) ?? []),
+    ])
+      differenceTargets.push({ pathwayId, product });
+  }
+  differenceTargets.sort(
+    (left, right) =>
+      left.pathwayId.localeCompare(right.pathwayId) ||
+      String(left.product.item_seq).localeCompare(
+        String(right.product.item_seq),
+      ) ||
+      left.product.product_id.localeCompare(right.product.product_id),
+  );
   const differenceRows = [];
-  for (const product of sourceProducts) {
+  for (const { pathwayId, product } of differenceTargets) {
     const permit = permitByItemSeq.get(String(product.item_seq));
     if (!permit) continue;
     const permitSnapshot = manifests.permit.sourceSnapshot;
+    const ingredients = permitIngredientRows(permit);
     differenceRows.push({
       candidateOnly: true,
       clinicalUseProhibited: true,
+      pathwayId,
+      productName: permit.fields?.ITEM_NAME ?? product.display_name,
       productId: product.product_id,
       itemSeq: product.item_seq,
-      local: {
-        displayName: product.display_name,
-        manufacturer: product.manufacturer,
-        dosageForm: product.dosage_form,
-        activeIngredients: product.active_ingredients,
-      },
-      officialPermit: {
-        itemName: permit.fields?.ITEM_NAME ?? null,
-        manufacturer: permit.fields?.ENTP_NAME ?? null,
-        dosageForm: permit.fields?.DOSAGE_FORM ?? null,
-        activeIngredients:
-          permit.fields?.MAIN_ITEM_INGR ?? permit.fields?.INGR_NAME ?? null,
-        indication: permit.fields?.EE_DOC_DATA ?? null,
-      },
+      ingredient: ingredients.map((entry) => entry.ingredient),
+      strength: ingredients.map((entry) => entry.strength),
+      dosageForm: permitDosageForm(permit, product),
+      dosageFormOfficialRaw: permit.fields?.CHART ?? null,
+      indication: permit.fields?.EE_DOC_DATA ?? null,
       permitSource: snapshotSource(permitSnapshot),
     });
   }
@@ -657,8 +893,16 @@ const main = async () => {
     candidateOnly: true,
     clinicalUseProhibited: true,
     ingredientDatasetCount: durIngredientDatasets.length,
+    productTargetCount: productTargets.size,
+    productTargetProductCount: [...productTargets.values()].reduce(
+      (count, target) => count + target.products.length,
+      0,
+    ),
     productEntries: durProductEntries,
+    productSkipped: durProductSkipped,
+    ingredientTargetCount: durIngredientTargets.size,
     ingredientEntries: durIngredientEntries,
+    ingredientSkipped: durIngredientSkipped,
   });
   await write("mfds-permit-crosswalk-candidates.json", {
     schemaVersion: "1.0.0",
@@ -672,7 +916,18 @@ const main = async () => {
     schemaVersion: "1.0.0",
     candidateOnly: true,
     clinicalUseProhibited: true,
-    columns: ["productId", "itemSeq", "local", "officialPermit"],
+    columns: [
+      "pathwayId",
+      "itemSeq",
+      "productId",
+      "productName",
+      "ingredient",
+      "strength",
+      "dosageForm",
+      "dosageFormOfficialRaw",
+      "indication",
+      "permitSource",
+    ],
     rows: differenceRows,
   });
 
@@ -684,8 +939,16 @@ const main = async () => {
         ingredientWorklist: worklist.entries.length,
         ingredientRegistered: ingredientEntries.length,
         ingredientSkipped: skippedIngredients.length,
+        durProductTargets: productTargets.size,
+        durProductTargetProducts: [...productTargets.values()].reduce(
+          (count, target) => count + target.products.length,
+          0,
+        ),
         durProductCandidates: durProductEntries.length,
+        durProductSkipped: durProductSkipped.length,
+        durIngredientTargets: durIngredientTargets.size,
         durIngredientCandidates: durIngredientEntries.length,
+        durIngredientSkipped: durIngredientSkipped.length,
         failedLegacyCrosswalkCandidates: permitCrosswalkCandidates.length,
         sameItemSeqPairs: sameItemSeqPairs.length,
         permitDifferenceRows: differenceRows.length,

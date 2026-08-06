@@ -1309,6 +1309,31 @@
       "uncertainty": "Probed 2026-08-06 with a credentialed one-page request: HTTP 200, totalCount 4774, items carry efcyQesitm, useMethodQesitm, atpnWarnQesitm, atpnQesitm, intrcQesitm, seQesitm and depositMethodQesitm. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
     },
     {
+      "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+      "source_id": "SRC-MFDS-PERMIT-15095677",
+      "provider": "mfds_permit",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06",
+      "fetched_at": "2026-08-06T09:24:10.114Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "cd469a98c713ffa8b567c07c3e1b6d833475c5f34ec7c68187699cafb3486413",
+      "content_type": "application/json",
+      "parser_version": "mfds-permit-07-dtl06-v1",
+      "record_count": 42971,
+      "page_count": 1218,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
       "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
       "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
       "provider": "mfds_dur_ingredient",
@@ -1334,31 +1359,6 @@
       "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
     },
     {
-      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
-      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
-      "provider": "mfds_dur_ingredient",
-      "official": true,
-      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getCpctyAtentInfoList02",
-      "fetched_at": "2026-08-06T09:30:02.834Z",
-      "effective_at": null,
-      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
-      "usage_rights": "unknown",
-      "commercial_use": "allowed",
-      "cache_policy": "allowed",
-      "redistribution": "allowed",
-      "ai_context_use": "allowed",
-      "http_status": 200,
-      "content_sha256": "142aef113a2d891b5e53af1a7cc08a2d0178085e79f027c702dad669ab1defce",
-      "content_type": "application/json",
-      "parser_version": "mfds-dur-ingredient-03-v1",
-      "record_count": 708,
-      "page_count": 8,
-      "next_cursor": null,
-      "status": "parsed",
-      "raw_retention_policy": "none",
-      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
-    },
-    {
       "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-8C8CC0887FEE3A4D",
       "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
       "provider": "mfds_dur_ingredient",
@@ -1378,6 +1378,31 @@
       "parser_version": "mfds-dur-ingredient-03-v1",
       "record_count": 1836,
       "page_count": 19,
+      "next_cursor": null,
+      "status": "parsed",
+      "raw_retention_policy": "none",
+      "uncertainty": "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven. Portal Type-0 terms were recorded, but record-level third-party rights remain unresolved until activation review."
+    },
+    {
+      "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
+      "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
+      "provider": "mfds_dur_ingredient",
+      "official": true,
+      "source_url": "https://apis.data.go.kr/1471000/DURIrdntInfoService03/getCpctyAtentInfoList02",
+      "fetched_at": "2026-08-06T09:30:02.834Z",
+      "effective_at": null,
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "usage_rights": "unknown",
+      "commercial_use": "allowed",
+      "cache_policy": "allowed",
+      "redistribution": "allowed",
+      "ai_context_use": "allowed",
+      "http_status": 200,
+      "content_sha256": "142aef113a2d891b5e53af1a7cc08a2d0178085e79f027c702dad669ab1defce",
+      "content_type": "application/json",
+      "parser_version": "mfds-dur-ingredient-03-v1",
+      "record_count": 708,
+      "page_count": 8,
       "next_cursor": null,
       "status": "parsed",
       "raw_retention_policy": "none",
@@ -6458,18 +6483,18 @@
       "display_name_ko": "구아이페네신",
       "display_name_en": "구아이페네신",
       "normalized_name": "구아이페네신",
-      "mfds_ingredient_code": "D000493",
+      "mfds_ingredient_code": null,
       "status": "active",
       "source_snapshot_ids": [
-        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
       ],
       "source_refs": [
         {
           "claim_id": "REG-MFDS-ING-ING-UNMAPPED_201109334_4",
-          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
-          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
-          "locator": "MFDS official ingredient field: ingredient name field",
-          "verified_at": "2026-08-06T09:29:57.935Z"
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
         }
       ],
       "review": {
@@ -6486,18 +6511,18 @@
       "display_name_ko": "구아이페네신",
       "display_name_en": "구아이페네신",
       "normalized_name": "구아이페네신",
-      "mfds_ingredient_code": "D000493",
+      "mfds_ingredient_code": null,
       "status": "active",
       "source_snapshot_ids": [
-        "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20"
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
       ],
       "source_refs": [
         {
           "claim_id": "REG-MFDS-ING-ING-UNMAPPED_202302949_6",
-          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
-          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-DF3F1D26C9A35C20",
-          "locator": "MFDS official ingredient field: ingredient name field",
-          "verified_at": "2026-08-06T09:29:57.935Z"
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
         }
       ],
       "review": {
@@ -6510,22 +6535,78 @@
       }
     },
     {
-      "ingredient_id": "ING-UNMAPPED_199801026_1",
-      "display_name_ko": "[D000803]Pancreatin(판크레아틴)",
-      "display_name_en": "[D000803]Pancreatin(판크레아틴)",
-      "normalized_name": "d000803pancreatin판크레아틴",
-      "mfds_ingredient_code": "D000425",
+      "ingredient_id": "ING-UNMAPPED_201708580_4",
+      "display_name_ko": "DL-카르니틴염산염",
+      "display_name_en": "DL-카르니틴염산염",
+      "normalized_name": "dl카르니틴염산염",
+      "mfds_ingredient_code": null,
       "status": "active",
       "source_snapshot_ids": [
-        "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B"
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
       ],
       "source_refs": [
         {
-          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_199801026_1",
-          "source_id": "SRC-MFDS-DUR-INGREDIENT-15056780",
-          "source_snapshot_id": "SNAP-MFDS-DUR-INGREDIENT-142AEF113A2D891B",
-          "locator": "MFDS official ingredient field: ingredient name field",
-          "verified_at": "2026-08-06T09:30:02.834Z"
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_201708580_4",
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-UNMAPPED_199801026_2",
+      "display_name_ko": "셀룰라제",
+      "display_name_en": "셀룰라제",
+      "normalized_name": "셀룰라제",
+      "mfds_ingredient_code": null,
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_199801026_2",
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
+        }
+      ],
+      "review": {
+        "expires_at": null,
+        "notes": "MFDS official ingredient name candidate; pharmacist review pending. Local research preview activation only; production approval remains pending.",
+        "official_source_verified": true,
+        "pharmacist_approved": false,
+        "reviewed_at": null,
+        "reviewer_ids": []
+      }
+    },
+    {
+      "ingredient_id": "ING-UNMAPPED_201200854_3",
+      "display_name_ko": "센노사이드칼슘",
+      "display_name_en": "센노사이드칼슘",
+      "normalized_name": "센노사이드칼슘",
+      "mfds_ingredient_code": null,
+      "status": "active",
+      "source_snapshot_ids": [
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8"
+      ],
+      "source_refs": [
+        {
+          "claim_id": "REG-MFDS-ING-ING-UNMAPPED_201200854_3",
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official ingredient field: MATERIAL_NAME/성분명",
+          "verified_at": "2026-08-06T09:24:10.114Z"
         }
       ],
       "review": {
@@ -7008,7 +7089,7 @@
           "claim_id": "REG-MFDS-ING-PRD-ACTIFED_197000053",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -7094,7 +7175,7 @@
           "claim_id": "REG-MFDS-ING-PRD-BONALING_A_197000076",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -7187,7 +7268,7 @@
           "claim_id": "REG-MFDS-ING-PRD-CLARITIN_200905692",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -7687,7 +7768,7 @@
           "claim_id": "REG-MFDS-ING-PRD-EZ6_ANI_200400463",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8045,7 +8126,7 @@
           "claim_id": "REG-MFDS-ING-PRD-GEVORIN_V_202107495",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8351,7 +8432,7 @@
           "claim_id": "REG-MFDS-ING-PRD-HATISONE_1_200402651",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8440,7 +8521,7 @@
           "claim_id": "REG-MFDS-ING-PRD-I2O_MINI_201105482",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8509,7 +8590,7 @@
           "claim_id": "REG-MFDS-ING-PRD-MUTERAN_200_198701129",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8584,7 +8665,7 @@
           "claim_id": "REG-MFDS-ING-PRD-ORAMED_198500023",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8664,7 +8745,7 @@
           "claim_id": "REG-MFDS-ING-PRD-PORTAGEL_200201403",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8754,7 +8835,7 @@
           "claim_id": "REG-MFDS-ING-PRD-SEONGGWANG_POVIDONE_199900422",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8823,7 +8904,7 @@
           "claim_id": "REG-MFDS-ING-PRD-STREPSILS_HONEY_LEMON_200906877",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -8909,7 +8990,7 @@
           "claim_id": "REG-MFDS-ING-PRD-ZYRTEC_200610765",
           "source_id": "SRC-MFDS-EASY-DRUG-15075057",
           "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
-          "locator": "MFDS official ingredient field: efcyQesitm",
+          "locator": "MFDS official indication field: efcyQesitm",
           "verified_at": "2026-08-06T04:33:03.722Z"
         },
         {
@@ -9035,6 +9116,7 @@
       "status": "active",
       "source_snapshot_ids": [
         "SNAP-MFDS-ENRICHMENT-201109334-20260714",
+        "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "source_refs": [
@@ -9046,6 +9128,13 @@
           "verified_at": "2026-07-14T12:05:36+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ENRICHED_201109334",
+          "source_id": "SRC-MFDS-PERMIT-15095677",
+          "source_snapshot_id": "SNAP-MFDS-PERMIT-CD469A98C713FFA8",
+          "locator": "MFDS official indication field: EE_DOC_DATA",
+          "verified_at": "2026-08-06T09:24:10.114Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ENRICHED_201109334",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -9054,6 +9143,7 @@
         }
       ],
       "dur_flags": [],
+      "indication_summary": "<DOC title=\"효능효과\" type=\"EE\">\r\n  <SECTION title=\"\">\r\n    <ARTICLE title=\"\">\r\n      <PARAGRAPH tagName=\"p\" textIndent=\"\" marginLeft=\"\"><![CDATA[감기의 제증상(여러증상)(콧물, 코막힘, 재채기, 인후(목구멍)통, 기침, 가래, 오한, 발열, 두통, 관절통, 근육통)의 완화]]></PARAGRAPH>\r\n    </ARTICLE>\r\n  </SECTION>\r\n</DOC>",
       "selection_profiles": [
         {
           "protocol_id": "PTC-DRY_COUGH",
@@ -9165,6 +9255,7 @@
       "status": "active",
       "source_snapshot_ids": [
         "SNAP-MFDS-ENRICHMENT-202302949-20260714",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "source_refs": [
@@ -9176,6 +9267,13 @@
           "verified_at": "2026-07-14T12:05:36+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ENRICHED_202302949",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official indication field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ENRICHED_202302949",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -9184,6 +9282,7 @@
         }
       ],
       "dur_flags": [],
+      "indication_summary": "이 약은 콧물, 코막힘, 재채기, 인후통, 기침, 가래, 춥고 떨리는 증상의 오한, 발열, 두통, 관절통, 근육통 등 감기의 여러 증상의 완화에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-DRY_COUGH",
@@ -9260,6 +9359,7 @@
       "status": "active",
       "source_snapshot_ids": [
         "SNAP-MFDS-ENRICHMENT-199200475-20260714",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "source_refs": [
@@ -9271,6 +9371,13 @@
           "verified_at": "2026-07-14T12:05:36+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ENRICHED_199200475",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official indication field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ENRICHED_199200475",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -9279,6 +9386,7 @@
         }
       ],
       "dur_flags": [],
+      "indication_summary": "이 약은 급ㆍ만성기관지염, 기관지천식, 후두염, 부비동염, 낭성섬유증의 질환에서 객담배출곤란에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-PRODUCTIVE_COUGH",
@@ -9319,6 +9427,7 @@
       "status": "active",
       "source_snapshot_ids": [
         "SNAP-MFDS-ENRICHMENT-199902656-20260714",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "source_refs": [
@@ -9330,6 +9439,13 @@
           "verified_at": "2026-07-14T12:05:36+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ENRICHED_199902656",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official indication field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ENRICHED_199902656",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -9338,6 +9454,7 @@
         }
       ],
       "dur_flags": [],
+      "indication_summary": "이 약은 급ㆍ만성기관지염, 기관지천식, 후두염, 부비동염, 낭성섬유증의 질환에서 객담배출곤란에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-PRODUCTIVE_COUGH",
@@ -9537,6 +9654,7 @@
       "status": "active",
       "source_snapshot_ids": [
         "SNAP-MFDS-ENRICHMENT-201708580-20260714",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "source_refs": [
@@ -9548,6 +9666,13 @@
           "verified_at": "2026-07-14T12:05:36+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ENRICHED_201708580",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official indication field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ENRICHED_201708580",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -9556,6 +9681,7 @@
         }
       ],
       "dur_flags": [],
+      "indication_summary": "이 약은 위산과다, 속쓰림, 위부불쾌감, 위부팽만감, 체함, 구역, 구토, 위통, 신트림, 식욕감퇴(식욕부진), 소화불량, 과식에 사용합니다.",
       "selection_profiles": [
         {
           "protocol_id": "PTC-ABDOMINAL_PAIN_VOMITING",
@@ -9870,6 +9996,7 @@
       "status": "active",
       "source_snapshot_ids": [
         "SNAP-MFDS-ENRICHMENT-201200854-20260714",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "source_refs": [
@@ -9881,6 +10008,13 @@
           "verified_at": "2026-07-14T12:05:36+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ENRICHED_201200854",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official indication field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ENRICHED_201200854",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -9889,6 +10023,7 @@
         }
       ],
       "dur_flags": [],
+      "indication_summary": "이 약은 변비와 변비에 수반하는 치질, 복부팽만, 장내이상발효, 머리무거움, 안면홍조, 식욕부진(식욕감퇴)의 완화에 사용합니다.",
       "selection_profiles": [
         {
           "protocol_id": "PTC-CONSTIPATION",
@@ -9929,6 +10064,7 @@
       "status": "active",
       "source_snapshot_ids": [
         "SNAP-MFDS-ENRICHMENT-201504877-20260714",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "source_refs": [
@@ -9940,6 +10076,13 @@
           "verified_at": "2026-07-14T12:05:36+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ENRICHED_201504877",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official indication field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ENRICHED_201504877",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -9948,6 +10091,7 @@
         }
       ],
       "dur_flags": [],
+      "indication_summary": "이 약은 감기로 인한 발열 및 동통(통증), 두통, 신경통, 근육통, 월경통, 염좌통(삔 통증)과 치통, 관절통, 류마티양 동통(통증)에 사용합니다.\n",
       "selection_profiles": [
         {
           "protocol_id": "PTC-FEVER",
@@ -10036,6 +10180,7 @@
       "status": "active",
       "source_snapshot_ids": [
         "SNAP-MFDS-ENRICHMENT-201600490-20260714",
+        "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
         "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387"
       ],
       "source_refs": [
@@ -10047,6 +10192,13 @@
           "verified_at": "2026-07-14T12:05:36+09:00"
         },
         {
+          "claim_id": "REG-MFDS-ING-PRD-ENRICHED_201600490",
+          "source_id": "SRC-MFDS-EASY-DRUG-15075057",
+          "source_snapshot_id": "SNAP-MFDS-EASY-DRUG-B64922A2C7290118",
+          "locator": "MFDS official indication field: efcyQesitm",
+          "verified_at": "2026-08-06T04:33:03.722Z"
+        },
+        {
           "claim_id": "FIELD-PRACTICE-PRD-ENRICHED_201600490",
           "source_id": "SRC-CENTRALPARK-OTC-PRACTICE",
           "source_snapshot_id": "SNAP-CENTRALPARK-OTC-PRACTICE-779E353077AD7387",
@@ -10055,6 +10207,7 @@
         }
       ],
       "dur_flags": [],
+      "indication_summary": "이 약은 알레르기성 비염 증상(재채기, 콧물, 가려움, 눈의 작열감)의 일시적인 완화, 만성 특발성 두드러기 증상 완화에 사용합니다.",
       "selection_profiles": [
         {
           "protocol_id": "PTC-ALLERGIC_RHINITIS",
@@ -51321,10 +51474,29 @@
       ]
     },
     {
-      "product_ingredient_id": "PRI-ENRICHED_199801026_UNMAPPED_199801026_1",
+      "product_ingredient_id": "PRI-ENRICHED_201708580_UNMAPPED_201708580_4",
+      "product_id": "PRD-ENRICHED_201708580",
+      "ingredient_id": "ING-UNMAPPED_201708580_4",
+      "strength_text": "150mg/20g",
+      "normalized_amount": null,
+      "normalized_unit": null,
+      "role": "active",
+      "is_active": true,
+      "source_refs": [
+        {
+          "claim_id": "REG-ENR-201708580",
+          "source_id": "SRC-MFDS-ENRICHMENT-201708580",
+          "source_snapshot_id": "SNAP-MFDS-ENRICHMENT-201708580-20260714",
+          "locator": "식약처 품목정보 및 약학정보원 교차 확인 (item_seq=201708580)",
+          "verified_at": "2026-07-14T12:05:36+09:00"
+        }
+      ]
+    },
+    {
+      "product_ingredient_id": "PRI-ENRICHED_199801026_UNMAPPED_199801026_2",
       "product_id": "PRD-ENRICHED_199801026",
-      "ingredient_id": "ING-UNMAPPED_199801026_1",
-      "strength_text": "315mg/1정",
+      "ingredient_id": "ING-UNMAPPED_199801026_2",
+      "strength_text": "10mg/1정",
       "normalized_amount": null,
       "normalized_unit": null,
       "role": "active",
@@ -51401,6 +51573,25 @@
       "product_id": "PRD-ENRICHED_201200854",
       "ingredient_id": "ING-DOCUSATE_SODIUM",
       "strength_text": "10mg/1정",
+      "normalized_amount": null,
+      "normalized_unit": null,
+      "role": "active",
+      "is_active": true,
+      "source_refs": [
+        {
+          "claim_id": "REG-ENR-201200854",
+          "source_id": "SRC-MFDS-ENRICHMENT-201200854",
+          "source_snapshot_id": "SNAP-MFDS-ENRICHMENT-201200854-20260714",
+          "locator": "식약처 품목정보 및 약학정보원 교차 확인 (item_seq=201200854)",
+          "verified_at": "2026-07-14T12:05:36+09:00"
+        }
+      ]
+    },
+    {
+      "product_ingredient_id": "PRI-ENRICHED_201200854_UNMAPPED_201200854_3",
+      "product_id": "PRD-ENRICHED_201200854",
+      "ingredient_id": "ING-UNMAPPED_201200854_3",
+      "strength_text": "5mg/1정(센노사이드 A+B로서 1.97mg)",
       "normalized_amount": null,
       "normalized_unit": null,
       "role": "active",
