@@ -23,3 +23,7 @@ reports/*.tmp
 release/
 etc/pharmacy-product-catalog-candidate/
 .DS_Store
+
+# 13MB API 수집 산출물. 키만 있으면 pnpm data:sync:mfds-otc 로 재생성된다.
+# 출처 기록인 manifest.json 은 추적한다.
+app/data/mfds-otc-candidate/catalog.jsonl

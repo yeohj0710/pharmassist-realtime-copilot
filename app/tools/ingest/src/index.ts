@@ -63,7 +63,7 @@ export const MFDS_PROVIDERS: Readonly<Record<ProviderId, ProviderDefinition>> =
       parserVersion: "mfds-easy-drug-v1",
       termsUrl: "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
       uncertainty:
-        "No credentialed response was fetched in this patch; verify current Swagger fields before activation.",
+        "Probed 2026-08-06 with a credentialed one-page request: HTTP 200, totalCount 4774, items carry efcyQesitm, useMethodQesitm, atpnWarnQesitm, atpnQesitm, intrcQesitm, seQesitm and depositMethodQesitm.",
     },
     mfds_permit: {
       id: "mfds_permit",
@@ -71,15 +71,21 @@ export const MFDS_PROVIDERS: Readonly<Record<ProviderId, ProviderDefinition>> =
       official: true,
       portalUrl: "https://www.data.go.kr/data/15095677/openapi.do",
       baseUrl: "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07",
-      operationPath: "getDrugPrdtPrmsnDtlInq07",
+      // Probed 2026-08-06: the portal's Swagger lists getDrugPrdtPrmsnInq07,
+      // getDrugPrdtPrmsnDtlInq06 and getDrugPrdtMcpnDtlInq07. The detail
+      // operation is pinned at 06 while the service is 07; asking for
+      // ...DtlInq07 answers NO_OPENAPI_SERVICE_ERROR. Detail carries
+      // MATERIAL_NAME, ETC_OTC_CODE and the EE/UD/NB document ids, which is
+      // what the pack needs, so it is the default over the list operation.
+      operationPath: "getDrugPrdtPrmsnDtlInq06",
       operationPathEnv: "MFDS_PERMIT_OPERATION_PATH",
       serviceKeyEnv: "MFDS_PERMIT_SERVICE_KEY",
       pageSize: 100,
       requestsPerSecond: 3,
-      parserVersion: "mfds-permit-07-v1",
+      parserVersion: "mfds-permit-07-dtl06-v1",
       termsUrl: "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
       uncertainty:
-        "Operation path is an activation-time setting; confirm current Swagger and the main_item_ingr/TAMT_SEQ revision before production.",
+        "Probed 2026-08-06: HTTP 200, totalCount 42971 on getDrugPrdtPrmsnDtlInq06. The operation path stays an activation-time setting; MFDS pins detail at 06 while the service is 07, so re-check Swagger before each run.",
     },
     mfds_dur_product: {
       id: "mfds_dur_product",
@@ -95,23 +101,32 @@ export const MFDS_PROVIDERS: Readonly<Record<ProviderId, ProviderDefinition>> =
       parserVersion: "mfds-dur-product-03-v1",
       termsUrl: "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
       uncertainty:
-        "No credentialed response was fetched in this patch; operation names and response aliases must be verified in current Swagger.",
+        "Probed 2026-08-06: HTTP 200, totalCount 23463 on getDurPrdlstInfoList03.",
     },
     mfds_dur_ingredient: {
       id: "mfds_dur_ingredient",
       sourceId: "SRC-MFDS-DUR-INGREDIENT-15056780",
       official: true,
       portalUrl: "https://www.data.go.kr/data/15056780/openapi.do",
-      baseUrl: "https://apis.data.go.kr/1471000/DURIrdntInfoService02",
-      operationPath: "getDurIrdntInfoList02",
+      // Probed 2026-08-06: the service is at 03, not 02, and there is no
+      // single ingredient list. It is split by DUR type —
+      // getUsjntTabooInfoList02 (병용금기), getPwnmTabooInfoList02 (임부금기),
+      // getCpctyAtentInfoList02 (용량주의), getMdctnPdAtentInfoList02
+      // (투여기간주의), getOdsnAtentInfoList02 (노인주의),
+      // getSpcifyAgrdeTabooInfoList02 (특정연령대금기),
+      // getEfcyDplctInfoList02 (효능군중복). Each has to be fetched on its
+      // own; the default below is the largest and the operation path env
+      // override selects the others.
+      baseUrl: "https://apis.data.go.kr/1471000/DURIrdntInfoService03",
+      operationPath: "getUsjntTabooInfoList02",
       operationPathEnv: "MFDS_DUR_INGREDIENT_OPERATION_PATH",
       serviceKeyEnv: "MFDS_DUR_INGREDIENT_SERVICE_KEY",
       pageSize: 100,
       requestsPerSecond: 3,
-      parserVersion: "mfds-dur-ingredient-02-v1",
+      parserVersion: "mfds-dur-ingredient-03-v1",
       termsUrl: "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
       uncertainty:
-        "No credentialed response was fetched in this patch; operation names and response aliases must be verified in current Swagger.",
+        "Probed 2026-08-06: HTTP 200 on getUsjntTabooInfoList02 (1836) and getPwnmTabooInfoList02 (1459). Each DUR type is a separate operation, so a full ingredient picture needs all seven.",
     },
   };
 
