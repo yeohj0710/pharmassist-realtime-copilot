@@ -748,6 +748,7 @@ newSources.push({
     "지역약국 실무실습 정리자료에서 제품 간 선택 기준을 구조화한 연구 미리보기입니다. 규제 근거 또는 약사 승인으로 간주하지 않으며 저작권과 재배포 권리는 확인 전입니다.",
 });
 const newProducts = [];
+const unmappedIngredientSeeds = [];
 const newProductIngredients = [];
 const enrichmentIndex = [];
 for (const item of productEnrichment) {
@@ -764,6 +765,22 @@ for (const item of productEnrichment) {
   if (!existing) {
     const { source: enrichmentSnapshot, ref } = enrichmentSource(item);
     newSources.push(enrichmentSnapshot);
+    // ING-UNMAPPED_* 는 이름 대조에 실패해서 붙은 자리표시자다. 이름이
+    // 없어서가 아니라 라벨 원문("Guaifenesin 구아이페네신 2.5mg/mL")이
+    // 등록명과 글자가 달라서였다. 실제 등록은 sourceIngredientName 이
+    // 선언된 뒤에 한다. 여기서는 재료만 모은다.
+    item.active_ingredients.forEach((active, index) => {
+      const ingredientId =
+        ingredientIdByName.get(normalizedIngredientName(active.name)) ??
+        `ING-UNMAPPED_${item.item_seq}_${index + 1}`;
+      if (!ingredientId.startsWith("ING-UNMAPPED_")) return;
+      unmappedIngredientSeeds.push({
+        ingredientId,
+        rawName: active.name,
+        snapshotId: enrichmentSnapshot.source_snapshot_id,
+        ref,
+      });
+    });
     newProducts.push({
       product_id: productId,
       display_name: item.display_name,
@@ -1603,6 +1620,36 @@ for (const record of healthKrImportedRecords) {
     record.registryRecordId,
   );
   const sourceRef = healthKrSourceRef(record);
+  // 복합제는 치료 단위로 ING-FORMULA 하나에 묶인다. 그건 옵션을 만드는
+  // 방식이고 그대로 둔다. 다만 제품은 개별 성분 id 를 그대로 참조하므로,
+  // 그 id 들도 이름을 가져야 한다. 여기서 등록하는 것은 이름뿐이고 옵션도
+  // 주장도 늘지 않는다. 이름이 없으면 성분을 훑는 검사가 빈 문자열을 보고
+  // 조용히 통과한다.
+  for (const ingredient of mapping?.ingredientMappings ?? [])
+    if (
+      ingredient.ingredientId &&
+      !existingIngredientIds.has(ingredient.ingredientId) &&
+      !generatedIngredientById.has(ingredient.ingredientId)
+    ) {
+      const displayName = sourceIngredientName(ingredient.sourceText);
+      if (displayName)
+        generatedIngredientById.set(ingredient.ingredientId, {
+          ingredient_id: ingredient.ingredientId,
+          display_name_ko: displayName,
+          display_name_en: displayName,
+          normalized_name: normalizedIngredientIdentity(displayName),
+          mfds_ingredient_code: null,
+          status: "active",
+          source_snapshot_ids: [healthKrSnapshotId],
+          source_refs: [
+            {
+              ...sourceRef,
+              claim_id: `REG-ING-${ingredient.ingredientId.replace(/^ING-/u, "")}`,
+            },
+          ],
+          review: generatedReview,
+        });
+    }
   for (const ingredient of therapeuticIngredientMappings(record, mapping)) {
     if (
       !existingIngredientIds.has(ingredient.ingredientId) &&
@@ -1653,6 +1700,36 @@ for (const record of healthKrImportedRecords) {
     }
   }
 }
+// 자리표시자로 남은 성분을 허가 라벨에 적힌 이름으로 등록한다. 이름이
+// 없어서 미등록이었던 게 아니라, 라벨 원문과 등록명의 글자가 달라 대조에
+// 실패했을 뿐이다. 등록되지 않은 성분은 성분을 훑는 검사가 빈 문자열을
+// 보고 조용히 통과하는 구멍이 되므로 남겨두지 않는다.
+for (const seed of unmappedIngredientSeeds) {
+  if (
+    existingIngredientIds.has(seed.ingredientId) ||
+    generatedIngredientById.has(seed.ingredientId)
+  )
+    continue;
+  const displayName = sourceIngredientName(seed.rawName);
+  if (!displayName) continue;
+  generatedIngredientById.set(seed.ingredientId, {
+    ingredient_id: seed.ingredientId,
+    display_name_ko: displayName,
+    display_name_en: displayName,
+    normalized_name: normalizedIngredientIdentity(displayName),
+    mfds_ingredient_code: null,
+    status: "active",
+    source_snapshot_ids: [seed.snapshotId],
+    source_refs: [
+      {
+        ...seed.ref,
+        claim_id: `REG-ING-${seed.ingredientId.replace(/^ING-/u, "")}`,
+      },
+    ],
+    review: generatedReview,
+  });
+}
+
 const generatedIngredients = [...generatedIngredientById.values()];
 const generatedProtocolOptions = [];
 const generatedClaims = [];
@@ -2732,7 +2809,13 @@ for (const ingredient of [
   ...mfdsRegisteredIngredients,
 ])
   if (ingredient.display_name_ko) {
-    packIngredientVocabulary.add(ingredient.display_name_ko);
+    // 두 글자 생약명은 일상어와 겹친다. 초과(Amomi Tsao-ko Fructus)와
+    // 건강(말린 생강)이 실재하는 성분명이라, 부분일치로 검사하면 "5개를
+    // 초과하지 마세요" 같은 문장이 성분 참조로 잡힌다. 짧은 이름은
+    // 부분일치로 판정할 수 없으므로 어휘에서 뺀다. 성분 자체는 그대로
+    // 등록되고, 이름을 못 쓰는 게 아니라 이 검사만 손대지 않는다.
+    if (ingredient.display_name_ko.length >= 3)
+      packIngredientVocabulary.add(ingredient.display_name_ko);
     registeredIngredientNameById.set(
       ingredient.ingredient_id,
       ingredient.display_name_ko,
