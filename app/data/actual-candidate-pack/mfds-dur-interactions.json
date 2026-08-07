@@ -1,0 +1,647 @@
+{
+  "schemaVersion": "1.0.0",
+  "candidateOnly": true,
+  "clinicalUseProhibited": true,
+  "generatedAt": "2026-08-07T10:25:35.268Z",
+  "source": {
+    "dataset": "MFDS DUR 성분정보 (DURIrdntInfoService03)",
+    "localPath": "C:/dev/kr-drug-data/dur-ingredient",
+    "scannedRecords": 4851
+  },
+  "matchedIngredients": 7,
+  "findings": [
+    {
+      "ingredientId": "ING-HEALTHKR-5D95D0336FE469A6",
+      "ingredientName": "케토코나졸",
+      "counterpartKo": "로바스타틴",
+      "counterpartEn": "Lovastatin",
+      "prohibitionContent": "횡문근융해증을 비롯한 근육질환 등 중증 이상반응\n",
+      "notificationDate": "20090303",
+      "ingredientCode": "D000769",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-503391330422C768",
+          "displayName": "비가졸"
+        },
+        {
+          "productId": "PRD-HEALTHKR-D6A3F8E3F581F171",
+          "displayName": "비가졸액"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-IBUPROFEN",
+      "ingredientName": "이부프로펜",
+      "counterpartKo": "메토트렉세이트",
+      "counterpartEn": "Methotrexate",
+      "prohibitionContent": "혈액학적 독성\n",
+      "notificationDate": "20090303",
+      "ingredientCode": "D000363",
+      "affectedProducts": [
+        {
+          "productId": "PRD-EZ6_ANI_200400463",
+          "displayName": "이지엔6애니연질캡슐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-9BEA0AE2415D4672",
+          "displayName": "챕프이부펜해열소염"
+        },
+        {
+          "productId": "PRD-HEALTHKR-F159635D220881D2",
+          "displayName": "이큐펜키즈아이시럽(이부프로펜)"
+        },
+        {
+          "productId": "PRD-HEALTHKR-2F72EF38A0300E75",
+          "displayName": "챔프이부펜시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-3580D165B330CA73",
+          "displayName": "이지엔6이브(병)"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8A4721541896BF22",
+          "displayName": "퓨어펜연질캡슐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-A8D6E1E8116292C5",
+          "displayName": "파인큐이부펜시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-11A7E3A9FCA954F5",
+          "displayName": "어린이 부루펜시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-A618CB3BCA698186",
+          "displayName": "콜대원키즈이부펜시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-FDF0433534BF2EF8",
+          "displayName": "이큐펜키즈아이시럽(이부프로펜)"
+        },
+        {
+          "productId": "PRD-HEALTHKR-1BDF9CB306E473AF",
+          "displayName": "콜록키즈이부펜시럽"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5D95D0336FE469A6",
+      "ingredientName": "케토코나졸",
+      "counterpartKo": "미다졸람",
+      "counterpartEn": "Midazolam",
+      "prohibitionContent": "midazolam 의 약리학적 효과 및 작용증가\n",
+      "notificationDate": "20090303",
+      "ingredientCode": "D000769",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-503391330422C768",
+          "displayName": "비가졸"
+        },
+        {
+          "productId": "PRD-HEALTHKR-D6A3F8E3F581F171",
+          "displayName": "비가졸액"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5D95D0336FE469A6",
+      "ingredientName": "케토코나졸",
+      "counterpartKo": "트리아졸람",
+      "counterpartEn": "Triazolam",
+      "prohibitionContent": "triazolam 의 약리학적 효과 및 작용증가\n",
+      "notificationDate": "20090303",
+      "ingredientCode": "D000769",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-503391330422C768",
+          "displayName": "비가졸"
+        },
+        {
+          "productId": "PRD-HEALTHKR-D6A3F8E3F581F171",
+          "displayName": "비가졸액"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5D95D0336FE469A6",
+      "ingredientName": "케토코나졸",
+      "counterpartKo": "이소니아지드",
+      "counterpartEn": "Isoniazid",
+      "prohibitionContent": "효소유도로 인한 ketoconazole의 혈중농도 저하\n",
+      "notificationDate": "20080401",
+      "ingredientCode": "D000769",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-503391330422C768",
+          "displayName": "비가졸"
+        },
+        {
+          "productId": "PRD-HEALTHKR-D6A3F8E3F581F171",
+          "displayName": "비가졸액"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-5D95D0336FE469A6",
+      "ingredientName": "케토코나졸",
+      "counterpartKo": "리팜피신",
+      "counterpartEn": "Rifampicin",
+      "prohibitionContent": "효소유도로 인한 ketoconazole의 혈중농도 저하\n",
+      "notificationDate": "20080401",
+      "ingredientCode": "D000769",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-503391330422C768",
+          "displayName": "비가졸"
+        },
+        {
+          "productId": "PRD-HEALTHKR-D6A3F8E3F581F171",
+          "displayName": "비가졸액"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-PSEUDOEPHEDRINE_HCL",
+      "ingredientName": "슈도에페드린염산염",
+      "counterpartKo": "모클로베미드",
+      "counterpartEn": "Moclobemide",
+      "prohibitionContent": "고혈압, 빈맥 유발\n",
+      "notificationDate": "20080401",
+      "ingredientCode": "D000448",
+      "affectedProducts": [
+        {
+          "productId": "PRD-ACTIFED_197000053",
+          "displayName": "액티피드정"
+        },
+        {
+          "productId": "PRD-ENRICHED_201109334",
+          "displayName": "그날엔콜드연질캡슐"
+        },
+        {
+          "productId": "PRD-ENRICHED_202302949",
+          "displayName": "그날엔콜드에이연질캡슐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-E4BC833BBBAD9C50",
+          "displayName": "챔프노트코감기"
+        },
+        {
+          "productId": "PRD-HEALTHKR-95308DCCA77EDA7C",
+          "displayName": "챔프노즈시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-702B18060B5CD8AC",
+          "displayName": "하벤큐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-7C4E414929C03FB7",
+          "displayName": "하벤파워골드"
+        },
+        {
+          "productId": "PRD-HEALTHKR-C005D51CFAB96172",
+          "displayName": "그린코플시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-7B33886E366F97C2",
+          "displayName": "그린노즈에스"
+        },
+        {
+          "productId": "PRD-HEALTHKR-64E6C24AC6751D59",
+          "displayName": "모드콜노즈시럽"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-PSEUDOEPHEDRINE_HCL",
+      "ingredientName": "슈도에페드린염산염",
+      "counterpartKo": "셀레길린염산염",
+      "counterpartEn": "Selegiline Hydrochloride",
+      "prohibitionContent": "고혈압, 빈맥 유발\n",
+      "notificationDate": "20080401",
+      "ingredientCode": "D000448",
+      "affectedProducts": [
+        {
+          "productId": "PRD-ACTIFED_197000053",
+          "displayName": "액티피드정"
+        },
+        {
+          "productId": "PRD-ENRICHED_201109334",
+          "displayName": "그날엔콜드연질캡슐"
+        },
+        {
+          "productId": "PRD-ENRICHED_202302949",
+          "displayName": "그날엔콜드에이연질캡슐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-E4BC833BBBAD9C50",
+          "displayName": "챔프노트코감기"
+        },
+        {
+          "productId": "PRD-HEALTHKR-95308DCCA77EDA7C",
+          "displayName": "챔프노즈시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-702B18060B5CD8AC",
+          "displayName": "하벤큐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-7C4E414929C03FB7",
+          "displayName": "하벤파워골드"
+        },
+        {
+          "productId": "PRD-HEALTHKR-C005D51CFAB96172",
+          "displayName": "그린코플시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-7B33886E366F97C2",
+          "displayName": "그린노즈에스"
+        },
+        {
+          "productId": "PRD-HEALTHKR-64E6C24AC6751D59",
+          "displayName": "모드콜노즈시럽"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HYDROCORTISONE",
+      "ingredientName": "히드로코르티손",
+      "counterpartKo": "스파플록사신",
+      "counterpartEn": "Sparfloxacin",
+      "prohibitionContent": "1. 아킬레스건 파열 및 손상<특히 노인>\n2. 심혈관계 부작용 증가",
+      "notificationDate": "20080401",
+      "ingredientCode": "D000522",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HATISONE_1_200402651",
+          "displayName": "하티손로션1%(히드로코르티손)"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-41E94FC492B5CD36",
+      "ingredientName": "디클로페낙",
+      "counterpartKo": "케토롤락",
+      "counterpartEn": "Ketorolac",
+      "prohibitionContent": null,
+      "notificationDate": "20161230",
+      "ingredientCode": "D000506",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-AFF96101B92266E8",
+          "displayName": "조아구강청액"
+        },
+        {
+          "productId": "PRD-HEALTHKR-946A9136840114C9",
+          "displayName": "아프니벤큐액"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-DEXTROMETHORPHAN_HBR_HYDRATE",
+      "ingredientName": "덱스트로메토르판브롬화수소산염수화물",
+      "counterpartKo": "라사길린",
+      "counterpartEn": "Rasagiline",
+      "prohibitionContent": "경련, 반사항진, 이상고열, 혼수 등",
+      "notificationDate": "20171106",
+      "ingredientCode": "D000200",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HAESOCOPU_S_201900312",
+          "displayName": "해소코푸에스시럽"
+        },
+        {
+          "productId": "PRD-ENRICHED_201109334",
+          "displayName": "그날엔콜드연질캡슐"
+        },
+        {
+          "productId": "PRD-ENRICHED_202302949",
+          "displayName": "그날엔콜드에이연질캡슐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-67F575E18F9A3A0A",
+          "displayName": "종합감기약 타세놀 콜드캡슐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-39ED65AE0D5FE2A1",
+          "displayName": "모드콜콜드시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-702B18060B5CD8AC",
+          "displayName": "하벤큐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-158E3A1B855F441E",
+          "displayName": "하벤목에스"
+        },
+        {
+          "productId": "PRD-HEALTHKR-7C4E414929C03FB7",
+          "displayName": "하벤파워골드"
+        },
+        {
+          "productId": "PRD-HEALTHKR-0EDD5B01B7D99E24",
+          "displayName": "해소코푸에스시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-984B09ED1DB8B07F",
+          "displayName": "코푸시럽에스"
+        },
+        {
+          "productId": "PRD-HEALTHKR-C005D51CFAB96172",
+          "displayName": "그린코플시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-EC93469E35A1F2AC",
+          "displayName": "그린콜샷에스"
+        },
+        {
+          "productId": "PRD-HEALTHKR-58E02DB06AE998A8",
+          "displayName": "모드콜코프시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-52F4348365F4FEF6",
+          "displayName": "모드콜콜드시럽"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-60F9606E4F5C1347",
+      "ingredientName": "에티닐에스트라디올",
+      "counterpartKo": "옴비타스비르",
+      "counterpartEn": "Ombitasvir",
+      "prohibitionContent": "ALT 수치 상승이 정상최고치(ULN) 대비 5배 이상 나오는 빈도가 유의적으로 높게 나타남",
+      "notificationDate": "20190522",
+      "ingredientCode": "D000749",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-0421AF34EA0063CB",
+          "displayName": "마이보라"
+        },
+        {
+          "productId": "PRD-HEALTHKR-42C8E1137C846B0A",
+          "displayName": "센스리베"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8512DD84D1586795",
+          "displayName": "머시론정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-811EC897EC502673",
+          "displayName": "센스데이"
+        },
+        {
+          "productId": "PRD-HEALTHKR-587EEC8975E037B2",
+          "displayName": "디어미정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8B6ACA109EDFEBDA",
+          "displayName": "디어미순"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-60F9606E4F5C1347",
+      "ingredientName": "에티닐에스트라디올",
+      "counterpartKo": "옴비타스비르",
+      "counterpartEn": "Ombitasvir",
+      "prohibitionContent": "ALT 수치 상승이 정상최고치(ULN) 대비 5배 이상 나오는 빈도가 유의적으로 높게 나타남",
+      "notificationDate": "20190522",
+      "ingredientCode": "D000749",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-0421AF34EA0063CB",
+          "displayName": "마이보라"
+        },
+        {
+          "productId": "PRD-HEALTHKR-42C8E1137C846B0A",
+          "displayName": "센스리베"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8512DD84D1586795",
+          "displayName": "머시론정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-811EC897EC502673",
+          "displayName": "센스데이"
+        },
+        {
+          "productId": "PRD-HEALTHKR-587EEC8975E037B2",
+          "displayName": "디어미정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8B6ACA109EDFEBDA",
+          "displayName": "디어미순"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-60F9606E4F5C1347",
+      "ingredientName": "에티닐에스트라디올",
+      "counterpartKo": "옴비타스비르",
+      "counterpartEn": "Ombitasvir",
+      "prohibitionContent": "ALT 수치 상승이 정상최고치 (ULN) 대비 5배 이상 나오는 빈도가 유의적으로 높게 나타남",
+      "notificationDate": "20190522",
+      "ingredientCode": "D000749",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-0421AF34EA0063CB",
+          "displayName": "마이보라"
+        },
+        {
+          "productId": "PRD-HEALTHKR-42C8E1137C846B0A",
+          "displayName": "센스리베"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8512DD84D1586795",
+          "displayName": "머시론정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-811EC897EC502673",
+          "displayName": "센스데이"
+        },
+        {
+          "productId": "PRD-HEALTHKR-587EEC8975E037B2",
+          "displayName": "디어미정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8B6ACA109EDFEBDA",
+          "displayName": "디어미순"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-60F9606E4F5C1347",
+      "ingredientName": "에티닐에스트라디올",
+      "counterpartKo": "옴비타스비르",
+      "counterpartEn": "Ombitasvir",
+      "prohibitionContent": "ALT 수치 상승이 정상최고치(ULN) 대비 5배 이상 나오는 빈도가 유의적으로 높게 나타남",
+      "notificationDate": "20190522",
+      "ingredientCode": "D000749",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-0421AF34EA0063CB",
+          "displayName": "마이보라"
+        },
+        {
+          "productId": "PRD-HEALTHKR-42C8E1137C846B0A",
+          "displayName": "센스리베"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8512DD84D1586795",
+          "displayName": "머시론정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-811EC897EC502673",
+          "displayName": "센스데이"
+        },
+        {
+          "productId": "PRD-HEALTHKR-587EEC8975E037B2",
+          "displayName": "디어미정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8B6ACA109EDFEBDA",
+          "displayName": "디어미순"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-60F9606E4F5C1347",
+      "ingredientName": "에티닐에스트라디올",
+      "counterpartKo": "옴비타스비르",
+      "counterpartEn": "Ombitasvir",
+      "prohibitionContent": "ALT 수치 상승이 정상치 상한 기준보다 20배 이상 높게 나타나는 데 영향이 있음",
+      "notificationDate": "20190522",
+      "ingredientCode": "D000749",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-0421AF34EA0063CB",
+          "displayName": "마이보라"
+        },
+        {
+          "productId": "PRD-HEALTHKR-42C8E1137C846B0A",
+          "displayName": "센스리베"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8512DD84D1586795",
+          "displayName": "머시론정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-811EC897EC502673",
+          "displayName": "센스데이"
+        },
+        {
+          "productId": "PRD-HEALTHKR-587EEC8975E037B2",
+          "displayName": "디어미정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8B6ACA109EDFEBDA",
+          "displayName": "디어미순"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-60F9606E4F5C1347",
+      "ingredientName": "에티닐에스트라디올",
+      "counterpartKo": "옴비타스비르",
+      "counterpartEn": "Ombitasvir",
+      "prohibitionContent": "ALT 수치가 정상치 상한 기준보다 20배 이상 높게 나타나는 데 영향이 있음",
+      "notificationDate": "20190522",
+      "ingredientCode": "D000749",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-0421AF34EA0063CB",
+          "displayName": "마이보라"
+        },
+        {
+          "productId": "PRD-HEALTHKR-42C8E1137C846B0A",
+          "displayName": "센스리베"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8512DD84D1586795",
+          "displayName": "머시론정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-811EC897EC502673",
+          "displayName": "센스데이"
+        },
+        {
+          "productId": "PRD-HEALTHKR-587EEC8975E037B2",
+          "displayName": "디어미정"
+        },
+        {
+          "productId": "PRD-HEALTHKR-8B6ACA109EDFEBDA",
+          "displayName": "디어미순"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-PSEUDOEPHEDRINE_HCL",
+      "ingredientName": "슈도에페드린염산염",
+      "counterpartKo": "라사길린",
+      "counterpartEn": "Rasagiline",
+      "prohibitionContent": "고혈압, 빈맥 유발 ",
+      "notificationDate": "20201228",
+      "ingredientCode": "D000448",
+      "affectedProducts": [
+        {
+          "productId": "PRD-ACTIFED_197000053",
+          "displayName": "액티피드정"
+        },
+        {
+          "productId": "PRD-ENRICHED_201109334",
+          "displayName": "그날엔콜드연질캡슐"
+        },
+        {
+          "productId": "PRD-ENRICHED_202302949",
+          "displayName": "그날엔콜드에이연질캡슐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-E4BC833BBBAD9C50",
+          "displayName": "챔프노트코감기"
+        },
+        {
+          "productId": "PRD-HEALTHKR-95308DCCA77EDA7C",
+          "displayName": "챔프노즈시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-702B18060B5CD8AC",
+          "displayName": "하벤큐"
+        },
+        {
+          "productId": "PRD-HEALTHKR-7C4E414929C03FB7",
+          "displayName": "하벤파워골드"
+        },
+        {
+          "productId": "PRD-HEALTHKR-C005D51CFAB96172",
+          "displayName": "그린코플시럽"
+        },
+        {
+          "productId": "PRD-HEALTHKR-7B33886E366F97C2",
+          "displayName": "그린노즈에스"
+        },
+        {
+          "productId": "PRD-HEALTHKR-64E6C24AC6751D59",
+          "displayName": "모드콜노즈시럽"
+        }
+      ]
+    },
+    {
+      "ingredientId": "ING-HEALTHKR-41E94FC492B5CD36",
+      "ingredientName": "디클로페낙",
+      "counterpartKo": "메토트렉세이트",
+      "counterpartEn": "Methotrexate",
+      "prohibitionContent": "-신세뇨관에서 Methotrexate 배설이 지연되어 Methotrexate 혈액학적 독성 증가",
+      "notificationDate": "20251223",
+      "ingredientCode": "D000506",
+      "affectedProducts": [
+        {
+          "productId": "PRD-HEALTHKR-AFF96101B92266E8",
+          "displayName": "조아구강청액"
+        },
+        {
+          "productId": "PRD-HEALTHKR-946A9136840114C9",
+          "displayName": "아프니벤큐액"
+        }
+      ]
+    }
+  ]
+}

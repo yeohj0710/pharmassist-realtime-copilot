@@ -42,7 +42,7 @@
     "data:build:pharmacist-review": "node scripts/build-pharmacist-review-queue.mjs && prettier --write data/actual-candidate-pack/pharmacist-review-queue.json",
     "snapshot:utterance": "vitest run --config vitest.config.ts apps/web/src/utterance-snapshot.test.ts",
     "data:build:situation-overlays": "node scripts/build-situation-overlays.mjs && prettier --write data/actual-research-overlays/option-selection-generated.json",
-    "data:build:pack": "pnpm data:build:mfds-derived && node scripts/build-actual-preview-pack.mjs && pnpm data:build:situation-overlays && node scripts/build-actual-preview-pack.mjs && node scripts/book1-merge.mjs && pnpm data:build:pharmacist-review && node scripts/book1-check.mjs",
+    "data:build:pack": "pnpm data:build:mfds-derived && node scripts/build-actual-preview-pack.mjs && pnpm data:build:situation-overlays && node scripts/build-mfds-dur-interactions.mjs && node scripts/build-actual-preview-pack.mjs && node scripts/book1-merge.mjs && pnpm data:build:pharmacist-review && node scripts/book1-check.mjs",
     "check": "pnpm lint && pnpm format:check && pnpm schema:check && pnpm typecheck && pnpm test && pnpm build && pnpm docs:check"
   },
   "devDependencies": {

@@ -12991,6 +12991,14 @@
           ],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=1"
         }
+      ],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
       ]
     },
     {
@@ -13716,6 +13724,10 @@
           "practical_points": [],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=2"
         }
+      ],
+      "interactions": [
+        "메토트렉세이트",
+        "Methotrexate"
       ]
     },
     {
@@ -14237,7 +14249,10 @@
       "storage": "기밀용기, 실온(1~30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "해소코푸에스시럽"
       ],
@@ -14330,6 +14345,10 @@
           "practical_points": [],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=7"
         }
+      ],
+      "interactions": [
+        "스파플록사신",
+        "Sparfloxacin"
       ]
     },
     {
@@ -15045,6 +15064,14 @@
           "practical_points": [],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=2"
         }
+      ],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
       ]
     },
     {
@@ -15184,6 +15211,14 @@
           "practical_points": [],
           "evidence_source": "SRC-CENTRALPARK-OTC-PRACTICE#page=2"
         }
+      ],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
       ]
     },
     {
@@ -16642,7 +16677,14 @@
       "storage": "차광기밀용기, 25℃ 이하 보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [],
       "permit_cancelled": false,
       "jurisdiction": "KR",
@@ -17651,7 +17693,8 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [
         "챔프이부펜시럽",
@@ -18301,7 +18344,10 @@
       "storage": "밀폐용기, 실온(1~30ºC)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "메디콜캡슐",
         "알파콜에프캡슐",
@@ -22620,7 +22666,8 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [],
       "permit_cancelled": false,
@@ -23646,7 +23693,8 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [
         "챔프이부펜시럽",
@@ -23821,7 +23869,14 @@
       "storage": "차광기밀용기, 25℃ 이하 보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [],
       "permit_cancelled": false,
       "jurisdiction": "KR",
@@ -24806,7 +24861,10 @@
       "storage": "기밀용기, 실온(1~30 ˚C)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "모드콜콜드시럽"
       ],
@@ -26843,7 +26901,12 @@
         "Ziprasidone Mesilate",
         "Ziprasidone Mesylate Trihydrate",
         "Zolpidem",
-        "Zolpidem Tartrate"
+        "Zolpidem Tartrate",
+        "로바스타틴",
+        "미다졸람",
+        "트리아졸람",
+        "이소니아지드",
+        "리팜피신"
       ],
       "same_ingredient_products": [
         "나졸액",
@@ -28584,7 +28647,14 @@
       "storage": "기밀용기, 실온(1∼30℃) 보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "그날엔콜드에이연질캡슐",
         "래피콜콜드연질캡슐",
@@ -28849,7 +28919,10 @@
       "storage": "기밀용기, 실온(1-30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "하벤목에스캡슐"
       ],
@@ -29110,7 +29183,14 @@
       "storage": "기밀용기, 실온(1~30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "하벤파워골드캡슐"
       ],
@@ -29388,7 +29468,9 @@
       "valid_term": "",
       "insurance": "비급여",
       "interactions": [
-        "Ibuprofen"
+        "Ibuprofen",
+        "메토트렉세이트",
+        "Methotrexate"
       ],
       "same_ingredient_products": [
         "미가펜이브연질캡슐",
@@ -30073,7 +30155,9 @@
       "valid_term": "",
       "insurance": "비급여",
       "interactions": [
-        "Ibuprofen"
+        "Ibuprofen",
+        "메토트렉세이트",
+        "Methotrexate"
       ],
       "same_ingredient_products": [
         "퓨어펜연질캡슐"
@@ -31047,7 +31131,10 @@
       "storage": "기밀용기, 실온(1~30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "옴비타스비르",
+        "Ombitasvir"
+      ],
       "same_ingredient_products": [
         "동아제약마이보라정",
         "마이보라정",
@@ -31180,7 +31267,10 @@
       "storage": "기밀용기, 실온(1~30℃) 보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "옴비타스비르",
+        "Ombitasvir"
+      ],
       "same_ingredient_products": [
         "디어미정",
         "멜리안정",
@@ -31314,7 +31404,10 @@
       "storage": "밀폐용기, 실온보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "옴비타스비르",
+        "Ombitasvir"
+      ],
       "same_ingredient_products": [
         "릴리애정",
         "머시론정",
@@ -31450,7 +31543,10 @@
       "storage": "밀폐용기, 실온(1~30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "옴비타스비르",
+        "Ombitasvir"
+      ],
       "same_ingredient_products": [
         "릴리애정",
         "머시론정",
@@ -31586,7 +31682,10 @@
       "storage": "기밀용기, 실온(1~30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "옴비타스비르",
+        "Ombitasvir"
+      ],
       "same_ingredient_products": [
         "디어미정",
         "멜리안정",
@@ -31720,7 +31819,10 @@
       "storage": "기밀용기, 실온(1∼30 ℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "옴비타스비르",
+        "Ombitasvir"
+      ],
       "same_ingredient_products": [
         "디어미순정"
       ],
@@ -35355,7 +35457,9 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "케토롤락",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [
         "아프니벤큐액",
@@ -35815,7 +35919,9 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "케토롤락",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [
         "아프니벤큐액",
@@ -36694,7 +36800,10 @@
       "storage": "기밀용기, 실온(1~30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "해소코푸에스시럽"
       ],
@@ -36840,7 +36949,10 @@
       "storage": "기밀용기, 실온(1~30 ℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "코푸시럽에스",
         "코푸엔에스시럽"
@@ -37956,7 +38068,8 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [
         "파인큐이부펜시럽"
@@ -39333,7 +39446,8 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [
         "어린이부루펜시럽(80mL)"
@@ -40901,7 +41015,8 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [],
       "permit_cancelled": false,
@@ -41101,7 +41216,14 @@
       "storage": "기밀용기, 실온(1∼30 ℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [],
       "permit_cancelled": false,
       "jurisdiction": "KR",
@@ -41323,7 +41445,10 @@
       "storage": "기밀용기,실온(1~30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "그린콜샷에스시럽",
         "코리투살에프콜드시럽",
@@ -41505,7 +41630,14 @@
       "storage": "차광기밀용기, 실온(1~30℃)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "그린노즈에스시럽"
       ],
@@ -41662,7 +41794,14 @@
       "storage": "차광기밀용기, 25℃이하보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "모클로베미드",
+        "Moclobemide",
+        "셀레길린염산염",
+        "Selegiline Hydrochloride",
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "모드콜노즈시럽"
       ],
@@ -41790,7 +41929,10 @@
       "storage": "기밀용기, 실온(1~30 ˚C)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [],
       "permit_cancelled": false,
       "jurisdiction": "KR",
@@ -42045,7 +42187,10 @@
       "storage": "기밀용기, 실온(1~30 ˚C)보관",
       "valid_term": "",
       "insurance": "비급여",
-      "interactions": [],
+      "interactions": [
+        "라사길린",
+        "Rasagiline"
+      ],
       "same_ingredient_products": [
         "모드콜콜드시럽"
       ],
@@ -42588,7 +42733,8 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [],
       "permit_cancelled": false,
@@ -43254,7 +43400,8 @@
         "Warfarin",
         "Warfarin Potassium",
         "Warfarin Sodium",
-        "Warfarin Sodium Clathrate"
+        "Warfarin Sodium Clathrate",
+        "메토트렉세이트"
       ],
       "same_ingredient_products": [],
       "permit_cancelled": false,
@@ -55456,7 +55603,12 @@
         "Ziprasidone Mesilate",
         "Ziprasidone Mesylate Trihydrate",
         "Zolpidem",
-        "Zolpidem Tartrate"
+        "Zolpidem Tartrate",
+        "로바스타틴",
+        "미다졸람",
+        "트리아졸람",
+        "이소니아지드",
+        "리팜피신"
       ],
       "same_ingredient_products": [
         "나졸액",

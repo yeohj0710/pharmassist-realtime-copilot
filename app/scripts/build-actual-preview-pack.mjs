@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { existsSync, readFileSync } from "node:fs";
 import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
@@ -2999,6 +3000,35 @@ if (staleUnreached.length)
     `Unreached-protocol notes describe a link that now exists: ${staleUnreached.join(", ")}`,
   );
 
+// 식약처 DUR 병용금기를 제품의 interactions 에 얹는다. 엔진은 손님이 지금
+// 먹는 약을 이 목록과 대조해 후보를 제외하므로(recommendation/src/index.ts),
+// 여기에 들어가야 실제로 작동한다. 후보 파일이 없으면 조용히 넘어간다 —
+// 첫 패스에서는 아직 만들어지지 않았기 때문이다.
+const durInteractionsPath = join(
+  root,
+  "data/actual-candidate-pack/mfds-dur-interactions.json",
+);
+const durInteractionNamesByProductId = new Map();
+if (existsSync(durInteractionsPath)) {
+  const durCandidates = JSON.parse(readFileSync(durInteractionsPath, "utf8"));
+  for (const finding of durCandidates.findings ?? [])
+    for (const affected of finding.affectedProducts ?? []) {
+      if (!durInteractionNamesByProductId.has(affected.productId))
+        durInteractionNamesByProductId.set(affected.productId, new Set());
+      const names = durInteractionNamesByProductId.get(affected.productId);
+      if (finding.counterpartKo) names.add(finding.counterpartKo);
+      if (finding.counterpartEn) names.add(finding.counterpartEn);
+    }
+}
+const productsWithDurInteractions = runtimeProducts.map((product) => {
+  const extra = durInteractionNamesByProductId.get(product.product_id);
+  if (!extra?.size) return product;
+  return {
+    ...product,
+    interactions: [...new Set([...(product.interactions ?? []), ...extra])],
+  };
+});
+
 const pack = {
   packId: "PACK-PHARMASSIST-KR-OTC-ACTUAL-20260713",
   version: "1.0.0-research-preview",
@@ -3017,7 +3047,7 @@ const pack = {
     ...item,
     review: previewReview(item.review),
   })),
-  products: runtimeProducts,
+  products: productsWithDurInteractions,
   productIngredients: runtimeProductIngredients,
   claims: [...claims, ...generatedClaims].map((sourceItem) => ({
     ...applyProtocolDenylistToClaim(sourceItem),
