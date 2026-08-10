@@ -1,0 +1,322 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import zlib from 'node:zlib';
+import crypto from 'node:crypto';
+import { promisify } from 'node:util';
+
+const gunzip = promisify(zlib.gunzip);
+const gzip = promisify(zlib.gzip);
+
+const BASE = 'https://health.kr';
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
+const INPUT_B64 = process.env.KPIC_INPUT || 'automation/kpic-enrichment/input.json.gz.b64';
+const OUTPUT_DIR = process.env.KPIC_OUTPUT || 'automation/kpic-enrichment/output';
+const WORKERS = Math.max(1, Math.min(8, Number(process.env.KPIC_WORKERS || 6)));
+const SEARCH_VARIANTS = Math.max(1, Math.min(6, Number(process.env.KPIC_SEARCH_VARIANTS || 5)));
+const REQUEST_DELAY_MS = Math.max(0, Number(process.env.KPIC_REQUEST_DELAY_MS || 80));
+const startedAt = Date.now();
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const sha256 = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
+const nowSeoul = () => new Date(Date.now() + 9 * 3600_000).toISOString().replace('Z', '+09:00');
+
+function decodeEntities(value) {
+  return String(value ?? '')
+    .replace(/&nbsp;|&#160;/gi, ' ')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&amp;/gi, '&')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)));
+}
+
+function cleanRich(value) {
+  if (value === undefined || value === null) return '';
+  let s = String(value).normalize('NFKC');
+  s = s
+    .replace(/\r\n?/g, '\n')
+    .replace(/brbr/gi, '\n')
+    .replace(/br(?=\s*<)/gi, '\n')
+    .replace(/<br\s*\/?\s*>/gi, '\n')
+    .replace(/<\/?p\b[^>]*>/gi, '\n')
+    .replace(/<\/?div\b[^>]*>/gi, '\n')
+    .replace(/<\/?tr\b[^>]*>/gi, '\n')
+    .replace(/<\/?(?:td|th)\b[^>]*>/gi, '\t')
+    .replace(/<\/?li\b[^>]*>/gi, '\n')
+    .replace(/<\/?(?:table|tbody|thead|ul|ol)\b[^>]*>/gi, '\n')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/\[&[A-Z0-9]+\]/g, '')
+    .replace(/\u3000/g, ' ');
+  s = decodeEntities(s)
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n[ \t]+/g, '\n')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  return s;
+}
+
+function cleanOneLine(value) {
+  return cleanRich(value).replace(/\s*\n\s*/g, ' | ').replace(/\s{2,}/g, ' ').trim();
+}
+
+function normalizeName(value) {
+  return String(value ?? '')
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/[^0-9a-z가-힣]+/g, '');
+}
+
+function typoCorrect(value) {
+  let s = String(value ?? '').normalize('NFKC');
+  const replacements = [
+    [/챕프/g, '챔프'],
+    [/고햠량/g, '고함량'],
+    [/먼역/g, '면역'],
+    [/풋그림/g, '풋크림'],
+    [/기넥슨/g, '기넥신'],
+    [/챔프노트/g, '챔프노즈'],
+    [/메가엽산54g/gi, '메가엽산'],
+    [/캅셀/g, '캡슐'],
+    [/중령/g, '중형'],
+    [/먼탈/g, '멘탈'],
+    [/알러지/g, '알레르기'],
+  ];
+  for (const [from, to] of replacements) s = s.replace(from, to);
+  return s;
+}
+
+function stripDescriptors(value) {
+  let s = typoCorrect(value)
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/\[[^\]]*\]/g, ' ')
+    .replace(/(?:종합감기약|수면유도제|어린이멀미약|액상스틱형|스틱형|부드럽고\s*효과빠른|식물성변비약|해열진통|해열소염|종합감기|코감기|목감기|알레르기|감기약|멀미약|변비약|진통제|소화제)/g, ' ')
+    .replace(/(?:빨강|파랑|병포장|대용량|소용량)/g, ' ')
+    .replace(/\b\d+(?:\.\d+)?\s*(?:mg|mcg|μg|g|kg|ml|l|iu|%|정|캡슐|c|t|p|포|병|매|ea|개|s)\b/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return s;
+}
+
+function removeCompanyPrefix(value) {
+  return String(value ?? '')
+    .replace(/^(?:부채표|광동|한미|대웅|유한|녹십자|종근당|동아|일동|보령|경남|신신|한풍|정우|태극|동국|일양)\s*/g, '')
+    .trim();
+}
+
+function removeFormSuffix(value) {
+  return String(value ?? '')
+    .replace(/(?:연질캡슐|경질캡슐|캡슐|장용정|정제|츄어블정|구강용해필름|필름|점안액|현탁액|시럽|외용액|액|연고|크림|겔|좌약|과립|산|스프레이|에어로솔|로젠지|트로키)\s*$/g, '')
+    .trim();
+}
+
+function buildAliases(record) {
+  const raw = String(record.name || record.app_name || '').normalize('NFKC').trim();
+  const candidates = [
+    raw,
+    typoCorrect(raw),
+    raw.replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim(),
+    stripDescriptors(raw),
+    removeCompanyPrefix(stripDescriptors(raw)),
+    removeFormSuffix(stripDescriptors(raw)),
+  ];
+  const tokens = raw.split(/\s+/).filter(Boolean);
+  if (tokens.length > 1) {
+    candidates.push(tokens.slice(-2).join(' '));
+    candidates.push(tokens.at(-1));
+  }
+  return [...new Set(candidates.map((s) => s.trim()).filter((s) => normalizeName(s).length >= 2))];
+}
+
+function dice(a, b) {
+  if (a === b) return 1;
+  if (a.length < 2 || b.length < 2) return 0;
+  const counts = new Map();
+  for (let i = 0; i < a.length - 1; i++) {
+    const x = a.slice(i, i + 2);
+    counts.set(x, (counts.get(x) || 0) + 1);
+  }
+  let overlap = 0;
+  for (let i = 0; i < b.length - 1; i++) {
+    const x = b.slice(i, i + 2);
+    const n = counts.get(x) || 0;
+    if (n > 0) {
+      counts.set(x, n - 1);
+      overlap++;
+    }
+  }
+  return (2 * overlap) / (a.length + b.length - 2);
+}
+
+function levenshteinSimilarity(a, b) {
+  if (a === b) return 1;
+  if (!a.length || !b.length) return 0;
+  if (Math.abs(a.length - b.length) > Math.max(a.length, b.length) * 0.7) return 0;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  let cur = new Array(b.length + 1);
+  for (let i = 1; i <= a.length; i++) {
+    cur[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      cur[j] = Math.min(cur[j - 1] + 1, prev[j] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    [prev, cur] = [cur, prev];
+  }
+  return 1 - prev[b.length] / Math.max(a.length, b.length);
+}
+
+const FORM_PATTERNS = [
+  ['점안액', /점안액|안약/],
+  ['좌약', /좌약/],
+  ['연고', /연고/],
+  ['크림', /크림/],
+  ['겔', /겔|젤/],
+  ['시럽', /시럽/],
+  ['현탁액', /현탁액/],
+  ['액', /(?:외용액|액제|액)(?:\b|$)/],
+  ['연질캡슐', /연질캡슐/],
+  ['캡슐', /캡슐|캅셀/],
+  ['장용정', /장용정/],
+  ['정', /(?:정제|정)(?:\b|$)/],
+  ['과립', /과립/],
+  ['산', /(?:산제|산)(?:\b|$)/],
+  ['필름', /필름/],
+  ['스프레이', /스프레이|분무/],
+  ['에어로솔', /에어로솔|에어졸/],
+  ['패치', /패치|첩부/],
+  ['로젠지', /로젠지|트로키/],
+];
+
+function detectForms(value) {
+  const s = String(value ?? '').normalize('NFKC');
+  return new Set(FORM_PATTERNS.filter(([, re]) => re.test(s)).map(([form]) => form));
+}
+
+const INGREDIENT_HINTS = [
+  ['acetaminophen', /아세트아미노펜|acetaminophen/i],
+  ['ibuprofen', /이부프로펜|ibuprofen/i],
+  ['dexibuprofen', /덱시부프로펜|dexibuprofen/i],
+  ['naproxen', /나프록센|naproxen/i],
+  ['diosmin', /디오스민|diosmin/i],
+  ['cetirizine', /세티리진|cetirizine/i],
+  ['loratadine', /로라타딘|loratadine/i],
+  ['fexofenadine', /펙소페나딘|fexofenadine/i],
+  ['doxylamine', /독시라민|doxylamine/i],
+  ['diphenhydramine', /디펜히드라민|diphenhydramine/i],
+  ['nicotine', /니코틴|nicotine/i],
+  ['fusid', /후시딘|퓨시드|fusid/i],
+  ['terbinafine', /테르비나핀|terbinafine/i],
+  ['clotrimazole', /클로트리마졸|clotrimazole/i],
+  ['bisacodyl', /비사코딜|bisacodyl/i],
+  ['minoxidil', /미녹시딜|minoxidil/i],
+  ['guaifenesin', /구아이페네신|guaifenesin/i],
+];
+
+function ingredientHints(value) {
+  return new Set(INGREDIENT_HINTS.filter(([, re]) => re.test(String(value ?? ''))).map(([key]) => key));
+}
+
+function baseNameScore(record, candidate) {
+  const aliases = buildAliases(record);
+  const c = normalizeName(candidate.drug_name || '');
+  let best = 0;
+  let bestAlias = '';
+  for (const alias of aliases) {
+    const a = normalizeName(alias);
+    if (!a || !c) continue;
+    let score = 0;
+    if (a === c) score = 100;
+    else if (a.includes(c) || c.includes(a)) {
+      const ratio = Math.min(a.length, c.length) / Math.max(a.length, c.length);
+      score = 80 + ratio * 18;
+    } else {
+      score = Math.max(dice(a, c) * 88, levenshteinSimilarity(a, c) * 86);
+    }
+    if (score > best) {
+      best = score;
+      bestAlias = alias;
+    }
+  }
+
+  const appForms = detectForms(record.name || record.app_name || '');
+  const candForms = detectForms(`${candidate.drug_name || ''} ${candidate.drug_form || ''}`);
+  if (appForms.size && candForms.size) {
+    const overlap = [...appForms].some((x) => candForms.has(x) || (x === '정' && candForms.has('장용정')) || (x === '캡슐' && candForms.has('연질캡슐')));
+    best += overlap ? 3.5 : -7;
+  }
+
+  const appHints = ingredientHints(record.name || record.app_name || '');
+  const candHints = ingredientHints(`${candidate.drug_name || ''} ${candidate.ingr_mg || ''} ${candidate.list_sunb_name || ''}`);
+  if (appHints.size) {
+    const overlap = [...appHints].some((x) => candHints.has(x));
+    best += overlap ? 7 : -13;
+  }
+  if (candidate.produce === 'O') best += 0.5;
+  return { score: Math.max(0, Math.min(100, best)), bestAlias };
+}
+
+function parseIngredientDetails(sunb) {
+  const raw = String(sunb ?? '');
+  const details = [];
+  const re = /<a\s+[^>]*href=["']([^"']*ingd_code=([^"'&]+)[^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi;
+  let m;
+  while ((m = re.exec(raw))) {
+    const label = cleanOneLine(m[3]);
+    if (!label) continue;
+    details.push({
+      label,
+      ingredient_code: m[2],
+      source_url: m[1].startsWith('http') ? m[1] : BASE + m[1],
+    });
+  }
+  if (!details.length) {
+    const labels = raw
+      .split(/@\|?|\|/)
+      .map(cleanOneLine)
+      .filter(Boolean);
+    return labels.map((label) => ({ label, ingredient_code: '', source_url: '' }));
+  }
+  return details;
+}
+
+function imageKind(url) {
+  return /\/sb_photo\//i.test(url) ? 'pill' : 'package';
+}
+
+function detailToUpdates(detail, record, matchScore, matchMeta = {}) {
+  const checkedAt = nowSeoul();
+  const manufacturerParts = String(detail.upso_name || '').split('|');
+  while (manufacturerParts.length < 6) manufacturerParts.push('');
+  const ingredientDetails = parseIngredientDetails(detail.sunb);
+  const ingredients = ingredientDetails.map((x) => x.label).filter(Boolean);
+  const packImages = String(detail.pack_img || '').split('@').map((x) => x.trim()).filter(Boolean);
+  const rawImages = [...packImages, detail.drug_pic].filter(Boolean);
+  const officialImages = [...new Set(rawImages)].map((url) => ({
+    url,
+    kind: imageKind(url),
+    source_url: `${BASE}/searchDrug/result_drug.asp?drug_cd=${encodeURIComponent(detail.drug_code)}`,
+    source_dataset_id: 'kpic-drug-detail',
+    license: '',
+    fetched_at: checkedAt,
+  }));
+  const primaryImage = officialImages.find((x) => x.kind === 'package') || officialImages[0] || null;
+
+  const efficacy = cleanRich(detail.effect);
+  const dosage = cleanRich(detail.dosage);
+  const precautions = cleanRich(detail.caution);
+  const storage = cleanRich(detail.stmt);
+  const dosageForm = cleanOneLine(detail.drug_form);
+  const route = cleanOneLine(detail.dosage_route);
+  const packUnit = cleanRich(detail.drug_box);
+  const manufacturer = cleanOneLine(manufacturerParts[0]);
+  const additives = cleanOneLine(detail.additives);
+  const kpicAtc = cleanRich(detail.kpic_atc);
+  const medicationGuide = cleanRich(detail.mediguide);
+  const medicationSummary = cleanRich(detail.medititle);
+  const insuranceDetail = cleanRich(detail.noins);
+  const insurance = cleanOneLine(detail.boh) || (insuranceDetail.includes('비급여') ? '비급여' : '');
+  const required = {
+    ingredients: ingredients.len

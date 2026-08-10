@@ -1,0 +1,177 @@
+name: KPIC Enrichment 2026-07-16
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'automation/kpic-enrichment/**'
+      - '.github/workflows/kpic-enrichment-20260716.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kpic-enrichment-20260716-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Reconstruct, patch, and verify batch input
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64
+          import gzip
+          import hashlib
+          import json
+          import lzma
+
+          root = Path('automation/kpic-enrichment')
+
+          script_parts = sorted(root.glob('enrich.mjs.part.*'))
+          assert len(script_parts) == 3, f'unexpected script part count: {len(script_parts)}'
+          script = b''.join(p.read_bytes() for p in script_parts)
+          assert hashlib.sha256(script).hexdigest() == 'd3bc3366ff83ab8c4dc4214fc93da47a6374992ae6b48b3de96f24cfcc788e51'
+          (root / 'enrich.mjs').write_bytes(script)
+
+          input_parts = sorted(root.glob('input2.xz.hex.part.*'))
+          assert len(input_parts) == 6, f'unexpected input part count: {len(input_parts)}'
+          hex_text = ''.join(p.read_text(encoding='utf-8') for p in input_parts).strip()
+          assert len(hex_text) == 47008, f'unexpected hex length: {len(hex_text)}'
+          assert hashlib.sha256(hex_text.encode()).hexdigest() == '1427bad5611b166978c44c4ace0434e1290636e54be3828324a6cf6621bd9df0'
+
+          packed = bytes.fromhex(hex_text)
+          assert hashlib.sha256(packed).hexdigest() == 'ff8bfa6dd89b225768ff78ed8a25c3901cd81d53d45b51b05cd4d69479a1d51d'
+          raw = lzma.decompress(packed)
+          assert hashlib.sha256(raw).hexdigest() == '39025dc31ddc000e7e65e24bad6d647937e389d8894fbbb758514cab0641091b'
+          records = json.loads(raw)
+          assert isinstance(records, list) and len(records) == 776, f'unexpected record count: {len(records)}'
+          assert sorted(int(x['source_order']) for x in records) == list(range(1, 777))
+
+          encoded = base64.b64encode(gzip.compress(raw, compresslevel=9, mtime=0))
+          (root / 'input.json.gz.b64').write_bytes(encoded)
+
+          force_matches = {
+            '10':'x1yz9ddq5chfc','12':'2017090500003','18':'2016071900002','31':'A11A0570A0353',
+            '32':'A11AKP08F0397','35':'A11A0570A0357','65':'A11AKP08A0151','70':'2023071900001',
+            '83':'A11ABBBBB0727','85':'A11A2260A0456','87':'2009071505939','88':'2024092700001',
+            '99':'2021121000002','207':'2023112100003','218':'A11A0250A0668','265':'4mmn5udgx7cjw',
+            '271':'A11AKP07L0284','272':'A11AKP07L0377','294':'A11AKP09B0079','296':'A11AGGGGG7032',
+            '297':'A11AKP08G1445','301':'r2akid2k0uy5q','303':'A11AKP08F1059','305':'A11AKP08G3824',
+            '306':'A11A1520B0109','307':'2021121400003','309':'A11AOOOOO1910','314':'A11AGGGGG7028',
+            '316':'A11AKP08F1055','317':'A11AKP07L0178','325':'2024081400010','326':'2020031300007',
+            '327':'hdyu0svvvqwjv','328':'A11AOOOOO2696','329':'2019052200054','330':'A11AKP07K0065',
+            '331':'A11AKP07K0065','334':'2021072700003','362':'f29ua8m9p963y','366':'A11A0340A0060',
+            '383':'A11ABBBBB2010','385':'A11ABBBBB0727','386':'r4tv2ahltipre','388':'2015120200002',
+            '389':'A11A1500B0070','390':'A11A1500A0493','391':'A11AKP08G1443','392':'A11A1500A0437',
+            '394':'A11A0090A0320','406':'2018061500010','445':'A11AKP07L0378','447':'A11AKP07L0357',
+            '450':'A11A2070A0226','454':'A11AKP07L0109','465':'2021030800001','498':'A11A1240A0068',
+            '589':'2009071505962','610':'A11AKP08G3600','656':'A11ABBBBB0727','661':'A11AGGGGG7011',
+            '662':'A11A1120B0112','664':'dxidqwscpgzj6','667':'A11AEEEEE0465','668':'A11A1500A0402',
+            '669':'2021060100013','670':'A11ABBBBB0727','671':'A11A1240A0063','672':'A11A2260A0456',
+            '688':'2023081700001','756':'2013101100013','758':'2021031100002'
+          }
+
+          p = root / 'enrich.mjs'
+          text = p.read_text(encoding='utf-8')
+          old = text
+          text = text.replace(
+              "let s = String(value ?? '').normalize('NFKC');",
+              "let s = decodeEntities(String(value ?? '').normalize('NFKC'));",
+              1,
+          )
+          text = text.replace(
+              "s = decodeEntities(s)\n    .replace(/[ \\t]+\\n/g, '\\n')",
+              "s = decodeEntities(s)\n    .replace(/<[^>]+>/g, '')\n    .replace(/[ \\t]+\\n/g, '\\n')",
+              1,
+          )
+          text = text.replace(
+              "efficacy: efficacy.length > 2,",
+              "efficacy: efficacy.length > 0,",
+              1,
+          )
+          text = text.replace(
+              "const startedAt = Date.now();",
+              "const startedAt = Date.now();\nconst FORCE_MATCHES = Object.freeze(" + json.dumps(force_matches, ensure_ascii=False, separators=(',', ':')) + ");",
+              1,
+          )
+          marker = "async function processRecord(record, session, stats) {\n"
+          injection = r'''  const forcedCode = FORCE_MATCHES[String(record.source_order)] || '';
+  if (forcedCode) {
+    try {
+      const detail = await fetchDetail(forcedCode);
+      const forcedScoreData = baseNameScore(record, {
+        drug_name: detail.drug_name,
+        drug_form: detail.drug_form,
+        ingr_mg: detail.sunb,
+        list_sunb_name: detail.list_sunb_name,
+        produce: 'O',
+      });
+      stats.newConfirmed++;
+      const updates = detailToUpdates(detail, record, 99, {
+        method: 'curated_force_map',
+        alias: forcedScoreData.bestAlias,
+        margin: 99,
+        queries: [],
+        rationale: `제품명·용량·제형 검토 후 품목코드 ${forcedCode}로 확정`,
+      });
+      updates.official_qc_flags = [...new Set([...(updates.official_qc_flags || []), 'curated_match'])];
+      return { ...record, ...updates };
+    } catch (error) {
+      stats.detailErrors++;
+      record.__forcedDetailError = `${forcedCode}: ${error.message}`;
+    }
+  }
+'''
+          text = text.replace(marker, marker + injection, 1)
+          assert text != old
+          assert text.count('curated_force_map') == 1
+          assert text.count("efficacy: efficacy.length > 0,") == 1
+          p.write_text(text, encoding='utf-8')
+          print(f'VERIFIED records={len(records)} script_bytes={len(script)} input_bytes={len(raw)} patched_sha256={hashlib.sha256(text.encode()).hexdigest()} forced={len(force_matches)}')
+          PY
+          node --check automation/kpic-enrichment/enrich.mjs
+
+      - name: Run health.kr enrichment
+        env:
+          KPIC_WORKERS: '6'
+          KPIC_SEARCH_VARIANTS: '5'
+          KPIC_REQUEST_DELAY_MS: '80'
+        run: node automation/kpic-enrichment/enrich.mjs
+
+      - name: Verify output files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          out = Path('automation/kpic-enrichment/output')
+          result = json.loads((out / 'enrichment-queue.json').read_text())
+          report = json.loads((out / 'enrichment-report.json').read_text())
+          assert len(result) == 776
+          assert report['total_records'] == 776
+          assert report['core_fields_preserved'] is True
+          assert report['source_order_contiguous_1_to_n'] is True
+          assert report['quality_checks']['heading_only_records'] == 0
+          print('OUTPUT_VERIFIED', json.dumps(report, ensure_ascii=False))
+          PY
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kpic-enrichment-result
+          path: automation/kpic-enrichment/output/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
