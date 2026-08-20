@@ -63,8 +63,8 @@ const hashFiles = (files) => {
 };
 
 if (existsSync(linkDir)) {
-  rmSync(distLinkDir, { recursive: true, force: true });
-  cpSync(linkDir, distLinkDir, { recursive: true });
+  // The linked project belongs at the app root. Copying it into `dist` makes
+  // Vercel's generated timestamps part of the public payload hash.
 } else {
   run(
     [
@@ -80,6 +80,7 @@ if (existsSync(linkDir)) {
   );
   cpSync(distLinkDir, linkDir, { recursive: true });
 }
+rmSync(distLinkDir, { recursive: true, force: true });
 
 // Ship the same-origin AI interpretation functions with the static bundle.
 // The intent catalog is generated from the audited research-preview pack so
@@ -109,8 +110,6 @@ writeFileSync(
   path.join(functionsTarget, "_lib", "intent-catalog.mjs"),
   `export const intentCatalog = ${JSON.stringify(intentCatalog)};\n`,
 );
-cpSync(path.join(webDir, "vercel.json"), path.join(distDir, "vercel.json"));
-
 rmSync(path.join(distDir, ".env.local"), { force: true });
 
 // Deploy stamp for long-lived tabs: the SPA keeps its loaded bundle until a
