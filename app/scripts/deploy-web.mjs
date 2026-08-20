@@ -1,9 +1,12 @@
+import { createHash } from "node:crypto";
 import {
   cpSync,
   existsSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -15,6 +18,8 @@ const webDir = path.join(appRoot, "apps", "web");
 const distDir = path.join(webDir, "dist");
 const linkDir = path.join(webDir, ".vercel");
 const distLinkDir = path.join(distDir, ".vercel");
+const deployState = path.join(appRoot, "etc", "codex-deploy-state", "pharmassist.sha256");
+const checkOnly = process.argv.includes("--check");
 
 if (!existsSync(path.join(distDir, "index.html"))) {
   console.error(
@@ -33,6 +38,28 @@ const run = (args, cwd) => {
         })
       : spawnSync("npx", args, { cwd, stdio: "inherit" });
   if (result.status !== 0) process.exit(result.status ?? 1);
+};
+
+const filesUnder = (dir) => {
+  if (!existsSync(dir)) return [];
+  const files = [];
+  for (const name of readdirSync(dir)) {
+    const file = path.join(dir, name);
+    if (statSync(file).isDirectory()) files.push(...filesUnder(file));
+    else files.push(file);
+  }
+  return files;
+};
+
+const hashFiles = (files) => {
+  const hash = createHash("sha256");
+  for (const file of files.sort()) {
+    hash.update(path.relative(distDir, file).replaceAll("\\", "/"));
+    hash.update("\0");
+    hash.update(readFileSync(file));
+    hash.update("\0");
+  }
+  return hash.digest("hex");
 };
 
 if (existsSync(linkDir)) {
@@ -84,13 +111,38 @@ writeFileSync(
 );
 cpSync(path.join(webDir, "vercel.json"), path.join(distDir, "vercel.json"));
 
+rmSync(path.join(distDir, ".env.local"), { force: true });
+
 // Deploy stamp for long-lived tabs: the SPA keeps its loaded bundle until a
 // reload, so the app polls this file at safe moments (new consultation, tab
-// re-focus while idle) and reloads itself when the stamp changes.
+// re-focus while idle) and reloads itself when the stamp changes. The stamp is
+// derived from the deploy payload, so an unchanged payload does not create a
+// new deployment merely because the clock moved.
+const payloadFiles = filesUnder(distDir).filter(
+  (file) => path.basename(file) !== "version.json",
+);
+const payloadHash = hashFiles(payloadFiles);
 writeFileSync(
   path.join(distDir, "version.json"),
-  `${JSON.stringify({ deployedAt: new Date().toISOString() })}\n`,
+  `${JSON.stringify({ deployedAt: payloadHash })}\n`,
 );
 
-rmSync(path.join(distDir, ".env.local"), { force: true });
-run(["vercel", "deploy", "--prod", "--yes"], distDir);
+const currentHash = hashFiles(filesUnder(distDir));
+const previousHash = existsSync(deployState)
+  ? readFileSync(deployState, "utf8").trim()
+  : "";
+if (currentHash === previousHash) {
+  console.log("배포할 변경 없음 — Vercel 배포를 건너뛴다.");
+  process.exit(0);
+}
+if (checkOnly) {
+  console.log("배포 산출물이 바뀌었다 — 실제 배포는 실행하지 않았다.");
+  process.exit(0);
+}
+
+// Build locally and upload the prebuilt output so Vercel does not run a second
+// remote build for the same already-generated SPA payload.
+run(["vercel", "build", "--prod", "--yes"], webDir);
+run(["vercel", "deploy", "--prebuilt", "--prod", "--yes"], webDir);
+mkdirSync(path.dirname(deployState), { recursive: true });
+writeFileSync(deployState, `${currentHash}\n`, "utf8");
